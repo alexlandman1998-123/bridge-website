@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --page-bg: #f7f3ed;
+  --text-primary: #171412;
+  --text-secondary: #6f6457;
+  --border-soft: rgba(44, 37, 30, 0.08);
+  --shadow-soft: 0 14px 34px rgba(19, 17, 15, 0.05);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv11' 1;
+}
+
+section {
+  scroll-margin-top: 110px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.bridge-site-bg {
+  background:
+    radial-gradient(circle at top left, rgba(214, 193, 164, 0.22), transparent 26%),
+    radial-gradient(circle at 84% 10%, rgba(203, 216, 234, 0.2), transparent 20%),
+    radial-gradient(circle at 50% 100%, rgba(221, 205, 184, 0.14), transparent 22%),
+    linear-gradient(180deg, #f7f3ed 0%, #f4eee6 42%, #faf8f5 100%);
+}
+
+.bridge-glass {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(249, 246, 241, 0.72) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 18px 42px rgba(24, 23, 22, 0.06);
+  backdrop-filter: blur(18px);
+}
+
+.bridge-button-primary,
+.bridge-button-secondary {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.bridge-button-primary {
+  color: #ffffff;
+  background: linear-gradient(135deg, #151311, #2a2723);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 24px rgba(20, 20, 20, 0.14);
+}
+
+.bridge-button-primary:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 16px 28px rgba(20, 20, 20, 0.18);
+}
+
+.bridge-button-secondary {
+  color: #171412;
+  border: 1px solid rgba(222, 211, 198, 0.95);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 8px 18px rgba(19, 17, 15, 0.03);
+}
+
+.bridge-button-secondary:hover {
+  border-color: rgba(177, 154, 121, 0.45);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 22px rgba(19, 17, 15, 0.05);
+}
+
+.bridge-nav-link {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #5f5750;
+  white-space: nowrap;
+  transition: color 180ms ease;
+}
+
+.bridge-nav-link::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -0.7rem;
+  left: 0;
+  height: 1px;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transform-origin: center;
+  background: linear-gradient(90deg, transparent, rgba(122, 98, 67, 0.92), transparent);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.bridge-nav-link:hover {
+  color: #171412;
+}
+
+.bridge-nav-link:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
