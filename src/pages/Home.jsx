@@ -19,6 +19,9 @@ import {
 } from 'lucide-react'
 import AuthModal from '../components/AuthModal'
 
+const appAuthUrl = `${import.meta.env.VITE_BRIDGE_APP_URL || 'https://bridge-nine-blond.vercel.app'}/auth`
+const developmentsUrl = 'https://bridge-listings.vercel.app'
+
 const navItems = [
   { label: 'Product', href: '#product', hasMenu: true },
   { label: 'Solutions', href: '#solutions', hasMenu: true },
@@ -1067,7 +1070,7 @@ function StickyRoleModulesSection() {
   )
 }
 
-function Header({ onLaunchApp }) {
+function Header() {
   const [openMenu, setOpenMenu] = useState(null)
   const [open, setOpen] = useState(false)
 
@@ -1113,14 +1116,20 @@ function Header({ onLaunchApp }) {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <button
-            type="button"
+          <a
+            href={appAuthUrl}
             className="bridge-button-secondary border-black/8 bg-white/82 px-5 py-2.5 text-[0.95rem] shadow-none"
-            onClick={onLaunchApp}
           >
             Login / Sign up
-          </button>
-          <a href="#roles" className="bridge-button-primary px-6 py-2.5">
+          </a>
+          <a
+            href={developmentsUrl}
+            className="bridge-button-primary px-6 py-2.5"
+            onClick={(event) => {
+              event.preventDefault()
+              window.location.assign(developmentsUrl)
+            }}
+          >
             View Developments
           </a>
         </div>
@@ -1155,7 +1164,7 @@ function Header({ onLaunchApp }) {
                     {item.label}
                   </a>
 
-                  {item.hasMenu && megaMenus[item.label] ? (
+                  {item.hasMenu && megaMenus[item.label]?.groups ? (
                     <div className="rounded-[24px] border border-[#29231d] bg-[linear-gradient(180deg,#171412_0%,#1f1c18_100%)] p-4">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#a69887]">
                         {megaMenus[item.label].eyebrow}
@@ -1184,22 +1193,23 @@ function Header({ onLaunchApp }) {
                 </div>
               ))}
               <a
-                href="#roles"
+                href={developmentsUrl}
                 className="bridge-button-primary mt-2 justify-center"
-                onClick={() => setOpen(false)}
+                onClick={(event) => {
+                  event.preventDefault()
+                  setOpen(false)
+                  window.location.assign(developmentsUrl)
+                }}
               >
                 View Developments
               </a>
-              <button
-                type="button"
+              <a
+                href={appAuthUrl}
                 className="bridge-button-secondary justify-center"
-                onClick={() => {
-                  setOpen(false)
-                  onLaunchApp()
-                }}
+                onClick={() => setOpen(false)}
               >
                 Login / Sign up
-              </button>
+              </a>
             </div>
           </motion.div>
         ) : null}
@@ -1490,7 +1500,7 @@ export default function Home() {
 
   return (
     <div id="top" className="bridge-site-bg min-h-screen text-[#171412]">
-      <Header onLaunchApp={openLogin} />
+      <Header />
 
       <main>
         <section className="relative overflow-hidden px-4 pb-8 pt-4 lg:px-6 lg:pb-10 lg:pt-5">

@@ -104,7 +104,14 @@ export default function Contact() {
               <ArrowLeft className="h-4 w-4" />
               Back Home
             </a>
-            <a href="/#roles" className="bridge-button-primary px-6 py-2.5">
+            <a
+              href="https://bridge-listings.vercel.app"
+              className="bridge-button-primary px-6 py-2.5"
+              onClick={(event) => {
+                event.preventDefault()
+                window.location.assign('https://bridge-listings.vercel.app')
+              }}
+            >
               View Developments
             </a>
           </div>
