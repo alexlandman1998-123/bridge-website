@@ -411,19 +411,6 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                   )}
                 </div>
 
-                <div className="mt-6 rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-[#a19382]">
-                    Module logic
-                  </p>
-                  <div className="mt-4 grid gap-3">
-                    {Object.values(moduleOptions).map((item) => (
-                      <div key={item.label} className="rounded-[18px] border border-white/8 bg-black/10 px-4 py-4">
-                        <div className="text-sm font-semibold text-[#faf6f0]">{item.label}</div>
-                        <div className="mt-1 text-sm leading-6 text-[#c9c0b5]">{item.description}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               <div className="flex min-h-0 flex-col overflow-hidden">

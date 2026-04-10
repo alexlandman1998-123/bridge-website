@@ -1,30 +1,35 @@
-import { motion } from 'framer-motion'
+import CTAButton from '../components/CTAButton'
 
-export default function CTAButton({
-  children,
-  href = '#contact',
-  variant = 'primary',
-  className = '',
-}) {
-  const baseClass =
-    'inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-
-  const variants = {
-    primary:
-      'bg-[#141414] text-[#F8F5EF] shadow-[0_18px_40px_rgba(20,20,20,0.14)] hover:bg-[#1F1F1F] focus-visible:outline-[#141414]',
-    secondary:
-      'border border-[#D8CFC3] bg-[#FFFDF9]/80 text-[#4F4A43] shadow-[0_12px_30px_rgba(20,20,20,0.05)] backdrop-blur-xl hover:bg-[#F5EFE6] hover:border-[#CDBEAB] hover:text-[#141414] focus-visible:outline-[#CDBEAB]',
-  }
-
+export default function CTASection() {
   return (
-    <motion.a
-      href={href}
-      whileHover={{ translateY: -1 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2 }}
-      className={`${baseClass} ${variants[variant]} ${className}`}
+    <section
+      id="contact"
+      className="bg-gradient-to-br from-slate-900 to-slate-800 py-16"
     >
-      {children}
-    </motion.a>
+      <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-0">
+        <div className="rounded-[32px] border border-white/10 bg-white/5 p-10">
+          <div className="space-y-6 text-white max-w-2xl">
+            <h2 className="text-3xl font-semibold">
+              Bring more structure to every property transaction.
+            </h2>
+
+            <p className="text-base text-white/80">
+              See how Bridge helps your team manage the full journey from offer
+              to handover with more clarity, control, and confidence.
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <CTAButton href="#contact">
+                Book a Demo
+              </CTAButton>
+
+              <CTAButton variant="secondary" href="#solutions">
+                Explore Solutions
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
