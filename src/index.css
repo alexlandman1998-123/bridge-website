@@ -3,11 +3,9 @@
 
 :root {
   color-scheme: light;
-  --page-bg: #f7f3ed;
+  --page-bg: #f7f2ea;
   --text-primary: #171412;
   --text-secondary: #6f6457;
-  --border-soft: rgba(44, 37, 30, 0.08);
-  --shadow-soft: 0 14px 34px rgba(19, 17, 15, 0.05);
 }
 
 html,
@@ -32,7 +30,7 @@ body {
 }
 
 section {
-  scroll-margin-top: 110px;
+  scroll-margin-top: 104px;
 }
 
 a {
@@ -47,32 +45,27 @@ textarea {
   font: inherit;
 }
 
-.bridge-site-bg {
-  background:
-    radial-gradient(circle at top left, rgba(214, 193, 164, 0.22), transparent 26%),
-    radial-gradient(circle at 84% 10%, rgba(203, 216, 234, 0.2), transparent 20%),
-    radial-gradient(circle at 50% 100%, rgba(221, 205, 184, 0.14), transparent 22%),
-    linear-gradient(180deg, #f7f3ed 0%, #f4eee6 42%, #faf8f5 100%);
+::selection {
+  background: rgba(234, 220, 199, 0.9);
+  color: #171412;
 }
 
-.bridge-glass {
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(249, 246, 241, 0.72) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 18px 42px rgba(24, 23, 22, 0.06);
-  backdrop-filter: blur(18px);
+.bridge-site-bg {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(234, 220, 199, 0.56), transparent 26%),
+    radial-gradient(circle at 100% 12%, rgba(255, 255, 255, 0.72), transparent 24%),
+    linear-gradient(180deg, #f7f2ea 0%, #fbf7f1 48%, #f7f2ea 100%);
 }
 
 .bridge-button-primary,
 .bridge-button-secondary {
   display: inline-flex;
-  min-height: 46px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   border-radius: 999px;
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.45rem;
   font-size: 0.95rem;
   font-weight: 600;
   white-space: nowrap;
@@ -86,65 +79,64 @@ textarea {
 
 .bridge-button-primary {
   color: #ffffff;
-  background: linear-gradient(135deg, #151311, #2a2723);
+  background: linear-gradient(135deg, #171412, #25201b);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 12px 24px rgba(20, 20, 20, 0.14);
+    0 16px 34px rgba(23, 20, 18, 0.16);
 }
 
 .bridge-button-primary:hover {
+  transform: translateY(-1px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 16px 28px rgba(20, 20, 20, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 40px rgba(23, 20, 18, 0.2);
 }
 
 .bridge-button-secondary {
   color: #171412;
-  border: 1px solid rgba(222, 211, 198, 0.95);
+  border: 1px solid rgba(229, 218, 203, 0.96);
   background: rgba(255, 255, 255, 0.72);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    0 8px 18px rgba(19, 17, 15, 0.03);
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 10px 26px rgba(23, 20, 18, 0.04);
 }
 
 .bridge-button-secondary:hover {
-  border-color: rgba(177, 154, 121, 0.45);
+  transform: translateY(-1px);
+  border-color: rgba(198, 178, 151, 0.84);
   background: rgba(255, 255, 255, 0.92);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 10px 22px rgba(19, 17, 15, 0.05);
 }
 
 .bridge-nav-link {
   position: relative;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #5f5750;
+  color: #60564c;
   white-space: nowrap;
   transition: color 180ms ease;
 }
 
-.bridge-nav-link::before {
+.bridge-nav-link::after {
   content: '';
   position: absolute;
   right: 0;
-  bottom: -0.7rem;
+  bottom: -0.55rem;
   left: 0;
   height: 1px;
-  opacity: 0;
   transform: scaleX(0.4);
+  opacity: 0;
   transform-origin: center;
-  background: linear-gradient(90deg, transparent, rgba(122, 98, 67, 0.92), transparent);
+  background: linear-gradient(90deg, transparent, rgba(128, 104, 73, 0.95), transparent);
   transition:
-    opacity 180ms ease,
-    transform 180ms ease;
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
 .bridge-nav-link:hover {
   color: #171412;
 }
 
-.bridge-nav-link:hover::before {
-  opacity: 1;
+.bridge-nav-link:hover::after {
   transform: scaleX(1);
+  opacity: 1;
 }
