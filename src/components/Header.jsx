@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import {
   FileText,
   Calculator,
   Activity,
+  MoveRight,
 } from 'lucide-react'
 
 const appAuthUrl = `${import.meta.env.VITE_BRIDGE_APP_URL || 'https://bridge-nine-blond.vercel.app'}/auth`
@@ -35,11 +36,41 @@ const megaMenus = {
       {
         title: 'Platform',
         items: [
-          { label: 'For Developers', href: '/#who-its-for', icon: Building2 },
-          { label: 'For Agents', href: '/#who-its-for', icon: Users },
-          { label: 'For Attorneys', href: '/#who-its-for', icon: Landmark },
-          { label: 'For Bond Originators', href: '/#who-its-for', icon: WalletCards },
-          { label: 'For Clients', href: '/#client-portal', icon: UserRound },
+          {
+            label: 'Developers',
+            href: '/#who-its-for',
+            icon: Building2,
+            description:
+              'Manage developments, sales progress, documents, and role players in one shared workspace.',
+          },
+          {
+            label: 'Agents',
+            href: '/#who-its-for',
+            icon: Users,
+            description:
+              'Track listings, leads, viewings, offers, and active transactions from first enquiry to registration.',
+          },
+          {
+            label: 'Attorneys',
+            href: '/#who-its-for',
+            icon: Landmark,
+            description:
+              'Manage transfer workflows, document requests, signing progress, and transaction updates.',
+          },
+          {
+            label: 'Bond Originators',
+            href: '/#who-its-for',
+            icon: WalletCards,
+            description:
+              'Track finance applications, buyer documents, bank feedback, and bond approval progress.',
+          },
+          {
+            label: 'Clients',
+            href: '/#client-portal',
+            icon: UserRound,
+            description:
+              'Give buyers and sellers a simple portal to follow progress, upload documents, and see next steps.',
+          },
         ],
       },
     ],
@@ -50,8 +81,20 @@ const megaMenus = {
       {
         title: 'Company',
         items: [
-          { label: 'About Bridge 9', href: '/#platform', icon: Info },
-          { label: 'Contact', href: '/contact', icon: Mail },
+          {
+            label: 'About Bridge 9',
+            href: '/#platform',
+            icon: Info,
+            description:
+              'See how Bridge 9 connects role players around one shared transaction workspace.',
+          },
+          {
+            label: 'Contact',
+            href: '/contact',
+            icon: Mail,
+            description:
+              'Speak to us about your workflow, team structure, and rollout priorities.',
+          },
         ],
       },
     ],
@@ -105,7 +148,7 @@ function MegaMenuPanel({ activeMenu, onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2 }}
-      className="pointer-events-auto mx-auto mt-3 w-[min(1320px,calc(100vw-1.5rem))] rounded-[34px] border border-[#dfd4c6] bg-[rgba(250,246,240,0.96)] p-6 shadow-[0_28px_80px_rgba(23,20,18,0.11)] backdrop-blur-xl"
+      className="pointer-events-auto w-full rounded-[34px] border border-[#dfd4c6] bg-[rgba(250,246,240,0.96)] p-6 shadow-[0_28px_80px_rgba(23,20,18,0.11)] backdrop-blur-xl"
       onMouseLeave={onClose}
     >
       {menu.type === 'cards' ? (
@@ -116,12 +159,20 @@ function MegaMenuPanel({ activeMenu, onClose }) {
               <a
                 key={item.label}
                 href={item.href}
-                className="group rounded-[22px] border border-[#e8ddd0] bg-white/92 p-5 transition hover:-translate-y-0.5 hover:border-[#cdb89f] hover:shadow-[0_16px_40px_rgba(23,20,18,0.08)]"
+                className="group rounded-[22px] border border-[#e8ddd0] bg-white/92 p-4 transition hover:-translate-y-0.5 hover:border-[#c6b098] hover:bg-white hover:shadow-[0_16px_40px_rgba(23,20,18,0.08)]"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-[14px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5b48]">
-                  <Icon className="h-4 w-4" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-[12px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5b48]">
+                  <Icon className="h-3.5 w-3.5" />
                 </div>
-                <p className="mt-4 text-[0.95rem] font-medium text-[#171412]">{item.label}</p>
+                <p className="mt-3 text-[0.86rem] font-semibold tracking-[-0.01em] text-[#171412]">
+                  {item.label}
+                </p>
+                <p className="mt-2 text-[0.74rem] leading-5 text-[#695f54]">
+                  {item.description}
+                </p>
+                <div className="mt-3 flex justify-end">
+                  <MoveRight className="h-3.5 w-3.5 text-[#8a745d] transition-transform duration-200 group-hover:translate-x-1" />
+                </div>
               </a>
             )
           })}
@@ -140,10 +191,11 @@ function MegaMenuPanel({ activeMenu, onClose }) {
                     <a
                       key={item.label}
                       href={item.href}
-                      className="flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-[#3a332d] transition hover:bg-[#f5ede2]"
+                      className="group flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-[#3a332d] transition hover:bg-[#f5ede2]"
                     >
                       <Icon className="h-4 w-4 text-[#7d6851]" />
-                      <span>{item.label}</span>
+                      <span className="flex-1">{item.label}</span>
+                      <MoveRight className="h-3.5 w-3.5 text-[#9a836a] transition-transform duration-200 group-hover:translate-x-1" />
                     </a>
                   )
                 })}
@@ -248,9 +300,12 @@ function MobileMenu({ onClose }) {
 }
 
 export default function Header() {
+  const headerRef = useRef(null)
+  const barRef = useRef(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null)
+  const [menuLayout, setMenuLayout] = useState({ top: 84, left: 0, width: 1200 })
 
   const hasActiveMenu = useMemo(() => Boolean(activeMenu && megaMenus[activeMenu]), [activeMenu])
 
@@ -264,9 +319,52 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (!hasActiveMenu) return
+
+    function closeOnScroll() {
+      setActiveMenu(null)
+    }
+
+    window.addEventListener('scroll', closeOnScroll, { passive: true })
+    return () => window.removeEventListener('scroll', closeOnScroll)
+  }, [hasActiveMenu])
+
+  useEffect(() => {
+    if (!hasActiveMenu) return
+
+    function updateMenuLayout() {
+      if (!barRef.current) return
+      const rect = barRef.current.getBoundingClientRect()
+      setMenuLayout({
+        top: rect.bottom + 10,
+        left: rect.left + rect.width / 2,
+        width: rect.width,
+      })
+    }
+
+    updateMenuLayout()
+    window.addEventListener('resize', updateMenuLayout)
+    return () => window.removeEventListener('resize', updateMenuLayout)
+  }, [hasActiveMenu])
+
+  useEffect(() => {
+    if (!hasActiveMenu) return
+
+    function handleOutsideClick(event) {
+      if (!headerRef.current) return
+      if (!headerRef.current.contains(event.target)) {
+        setActiveMenu(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [hasActiveMenu])
+
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 lg:px-6">
-      <div className="mx-auto w-[min(1320px,calc(100vw-1.5rem))]">
+    <header ref={headerRef} className="sticky top-0 z-50 px-3 pt-3 sm:px-4 lg:px-6">
+      <div ref={barRef} className="mx-auto w-[min(1320px,calc(100vw-1.5rem))]">
         <div
           className={`rounded-full border transition ${
             scrolled
@@ -329,8 +427,20 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="hidden lg:block" onMouseLeave={() => setActiveMenu(null)}>
-        <AnimatePresence>{hasActiveMenu ? <MegaMenuPanel activeMenu={activeMenu} onClose={() => setActiveMenu(null)} /> : null}</AnimatePresence>
+      <div
+        className="pointer-events-none fixed z-[70] hidden lg:block"
+        style={{
+          top: `${menuLayout.top}px`,
+          left: `${menuLayout.left}px`,
+          width: `${menuLayout.width}px`,
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <AnimatePresence>
+          {hasActiveMenu ? (
+            <MegaMenuPanel activeMenu={activeMenu} onClose={() => setActiveMenu(null)} />
+          ) : null}
+        </AnimatePresence>
       </div>
 
       <AnimatePresence>{mobileOpen ? <MobileMenu onClose={() => setMobileOpen(false)} /> : null}</AnimatePresence>
