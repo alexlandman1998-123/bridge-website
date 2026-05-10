@@ -20,7 +20,7 @@ import {
   MoveRight,
 } from 'lucide-react'
 
-const appAuthUrl = `${import.meta.env.VITE_BRIDGE_APP_URL || 'https://bridge-nine-blond.vercel.app'}/auth`
+const appAuthUrl = 'https://app.bridgenine.co.za'
 
 const navItems = [
   { label: 'Platform', href: '/#platform', hasMenu: true },

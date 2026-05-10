@@ -15,8 +15,10 @@ export default function ProductMockup() {
       transition={{ duration: 0.65, delay: 0.12 }}
       className="relative"
     >
-      <div className="relative overflow-hidden rounded-[38px] border border-[#24201b] bg-[#171412] p-7 text-white shadow-[0_38px_120px_rgba(23,20,18,0.18)] lg:p-9">
+      <div className="relative overflow-hidden rounded-[38px] border border-[#f0d5b2]/20 bg-[#1d1a17] p-7 text-white shadow-[0_34px_110px_rgba(0,0,0,0.45)] lg:p-9">
         <div className="pointer-events-none absolute inset-x-14 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="pointer-events-none absolute -right-14 -top-20 h-56 w-56 rounded-full bg-[#d7b182]/12 blur-3xl" />
+        <div className="pointer-events-none absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-[#b59674]/10 blur-2xl" />
 
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -36,7 +38,7 @@ export default function ProductMockup() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-[30px] border border-white/10 bg-white/[0.04] p-6">
+        <div className="mt-8 rounded-[30px] border border-white/14 bg-white/[0.05] p-6">
           <div className="flex items-center justify-between gap-4 text-sm text-white/70">
             <span>Progress</span>
             <span>68% complete</span>
