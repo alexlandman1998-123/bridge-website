@@ -148,7 +148,7 @@ function MegaMenuPanel({ activeMenu, onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2 }}
-      className="pointer-events-auto w-full rounded-[34px] border border-[#dfd4c6] bg-[rgba(250,246,240,0.96)] p-6 shadow-[0_28px_80px_rgba(23,20,18,0.11)] backdrop-blur-xl"
+      className="pointer-events-auto w-full rounded-[34px] border border-white/35 bg-[rgba(250,253,255,0.82)] p-6 shadow-[0_28px_80px_rgba(8,12,20,0.26)] backdrop-blur-2xl"
       onMouseLeave={onClose}
     >
       {menu.type === 'cards' ? (
@@ -159,7 +159,7 @@ function MegaMenuPanel({ activeMenu, onClose }) {
               <a
                 key={item.label}
                 href={item.href}
-                className="group rounded-[22px] border border-[#e8ddd0] bg-white/92 p-4 transition hover:-translate-y-0.5 hover:border-[#c6b098] hover:bg-white hover:shadow-[0_16px_40px_rgba(23,20,18,0.08)]"
+                className="group rounded-[22px] border border-white/45 bg-white/72 p-4 transition hover:-translate-y-0.5 hover:border-white/70 hover:bg-white/92 hover:shadow-[0_16px_40px_rgba(10,14,22,0.12)]"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-[12px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5b48]">
                   <Icon className="h-3.5 w-3.5" />
@@ -180,7 +180,7 @@ function MegaMenuPanel({ activeMenu, onClose }) {
       ) : (
         <div className="grid gap-4 lg:grid-cols-4">
           {menu.columns.map((column) => (
-            <div key={column.title} className="rounded-[24px] border border-[#e8ddd0] bg-white/92 p-5">
+            <div key={column.title} className="rounded-[24px] border border-white/45 bg-white/74 p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8b7760]">
                 {column.title}
               </p>
@@ -191,7 +191,7 @@ function MegaMenuPanel({ activeMenu, onClose }) {
                     <a
                       key={item.label}
                       href={item.href}
-                      className="group flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-[#3a332d] transition hover:bg-[#f5ede2]"
+                      className="group flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-[#3a332d] transition hover:bg-white/70"
                     >
                       <Icon className="h-4 w-4 text-[#7d6851]" />
                       <span className="flex-1">{item.label}</span>
@@ -224,7 +224,7 @@ function MobileMenu({ onClose }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
       transition={{ duration: 0.2 }}
-      className="mx-auto mt-3 w-[min(1320px,calc(100vw-1.5rem))] rounded-[28px] border border-[#e5dacb] bg-[rgba(252,248,242,0.96)] p-5 shadow-[0_20px_60px_rgba(23,20,18,0.08)] backdrop-blur-xl lg:hidden"
+      className="mx-auto mt-3 w-[min(1320px,calc(100vw-1.5rem))] rounded-[28px] border border-white/40 bg-[rgba(250,253,255,0.86)] p-5 shadow-[0_20px_60px_rgba(8,12,20,0.24)] backdrop-blur-2xl lg:hidden"
     >
       <nav className="space-y-2">
         {navItems.map((item) => {
@@ -246,7 +246,7 @@ function MobileMenu({ onClose }) {
           }
 
           return (
-            <div key={item.label} className="rounded-[16px] border border-[#e7dccf] bg-white/70">
+            <div key={item.label} className="rounded-[16px] border border-white/45 bg-white/66">
               <button
                 type="button"
                 className="flex w-full items-center justify-between px-4 py-3 text-left text-base font-medium text-[#171412]"
@@ -263,7 +263,7 @@ function MobileMenu({ onClose }) {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="overflow-hidden border-t border-[#efe4d7]"
+                    className="overflow-hidden border-t border-white/50"
                   >
                     <div className="space-y-1 p-3">
                       {menu.columns.flatMap((column) =>
@@ -271,7 +271,7 @@ function MobileMenu({ onClose }) {
                           <a
                             key={`${item.label}-${entry.label}`}
                             href={entry.href}
-                            className="block rounded-[12px] px-3 py-2.5 text-sm text-[#564b40] transition hover:bg-[#f7f0e6]"
+                            className="block rounded-[12px] px-3 py-2.5 text-sm text-[#564b40] transition hover:bg-white/72"
                             onClick={onClose}
                           >
                             {entry.label}
@@ -368,8 +368,8 @@ export default function Header() {
         <div
           className={`rounded-full border transition ${
             scrolled
-              ? 'border-[#e3d9cc] bg-[rgba(248,244,238,0.86)] shadow-[0_18px_50px_rgba(23,20,18,0.08)] backdrop-blur-xl'
-              : 'border-white/70 bg-[rgba(255,252,248,0.74)] backdrop-blur-lg'
+              ? 'border-white/35 bg-[rgba(248,252,255,0.68)] shadow-[0_18px_50px_rgba(8,12,20,0.24)] backdrop-blur-2xl'
+              : 'border-white/45 bg-[rgba(248,252,255,0.56)] shadow-[0_12px_34px_rgba(8,12,20,0.16)] backdrop-blur-xl'
           }`}
         >
           <div className="flex items-center justify-between px-4 py-3 sm:px-5 lg:px-6">
@@ -392,8 +392,8 @@ export default function Header() {
                       href={item.href}
                       className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-medium transition xl:px-5 ${
                         activeMenu === item.label
-                          ? 'bg-[#f2e9dc] text-[#171412]'
-                          : 'text-[#5f564c] hover:bg-white/72 hover:text-[#171412]'
+                          ? 'bg-white/64 text-[#171412]'
+                          : 'text-[#4f5661] hover:bg-white/50 hover:text-[#171412]'
                       }`}
                     >
                       <span>{item.label}</span>
@@ -416,7 +416,7 @@ export default function Header() {
 
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e5dacb] bg-white/70 text-[#171412] lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/45 bg-white/58 text-[#171412] lg:hidden"
               onClick={() => setMobileOpen((value) => !value)}
               aria-expanded={mobileOpen}
               aria-label="Toggle menu"
