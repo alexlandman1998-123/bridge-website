@@ -14,7 +14,6 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import FeatureCard from '../components/FeatureCard'
 import ModuleCard from '../components/ModuleCard'
 import RoleCard from '../components/RoleCard'
 import SectionContainer from '../components/SectionContainer'
@@ -45,42 +44,14 @@ const problemCards = [
 ]
 
 const platformRoles = [
-  {
-    icon: Building2,
-    title: 'Developer',
-    description:
-      'Track sales progress, unit status, buyer onboarding, documents, and portfolio performance.',
-  },
-  {
-    icon: Users,
-    title: 'Agent',
-    description:
-      'Manage leads, listings, viewings, offers, client onboarding, and active transactions.',
-  },
-  {
-    icon: Landmark,
-    title: 'Attorney',
-    description:
-      'Track transfer progress, FICA, signing, guarantees, lodgement, and registration.',
-  },
-  {
-    icon: WalletCards,
-    title: 'Bond Originator',
-    description:
-      'Manage applications, buyer documents, bank feedback, approvals, and bond instructions.',
-  },
-  {
-    icon: UserRound,
-    title: 'Client',
-    description:
-      'Get a simple, safe portal showing progress, documents, next steps, and updates.',
-  },
-  {
-    icon: BuildingIcon,
-    title: 'Managing Agent',
-    description:
-      'Receive cleaner handover information after registration and support better post-sale management.',
-  },
+  { icon: Handshake, title: 'Seller', x: 50, y: 8 },
+  { icon: UserRound, title: 'Buyer', x: 76, y: 20 },
+  { icon: Building2, title: 'Developer', x: 90, y: 50 },
+  { icon: Users, title: 'Agent', x: 76, y: 80 },
+  { icon: Landmark, title: 'Bond Attorney', x: 50, y: 92 },
+  { icon: Landmark, title: 'Transfer Attorney', x: 24, y: 80 },
+  { icon: WalletCards, title: 'Bond Originator', x: 10, y: 50 },
+  { icon: BuildingIcon, title: 'Managing Agent', x: 24, y: 20 },
 ]
 
 const moduleCards = [
@@ -264,62 +235,90 @@ const roleCards = [
 ]
 
 function PlatformNetwork() {
-  const left = platformRoles.slice(0, 2)
-  const right = platformRoles.slice(2, 4)
-  const bottom = platformRoles.slice(4)
-
   return (
-    <div className="mt-14 space-y-6">
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.15fr_1fr] lg:items-center">
-        <div className="space-y-6">
-          {left.map((role) => (
-            <FeatureCard key={role.title} icon={role.icon} title={role.title} description={role.description} />
+    <div className="mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55 }}
+        className="relative hidden h-[700px] overflow-hidden rounded-[38px] border border-[#e2d8cb] bg-[linear-gradient(180deg,#f8f5ef_0%,#f4eee5_100%)] shadow-[0_26px_76px_rgba(23,20,18,0.1)] lg:block"
+      >
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {platformRoles.map((role) => (
+            <line
+              key={`line-${role.title}`}
+              x1="50"
+              y1="50"
+              x2={role.x}
+              y2={role.y}
+              stroke="rgba(126,108,84,0.35)"
+              strokeWidth="0.22"
+              strokeDasharray="0.8 0.8"
+            />
           ))}
-        </div>
+        </svg>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55 }}
-          className="relative overflow-hidden rounded-[32px] border border-[#ddd2c3] bg-[#171412] p-8 text-white shadow-[0_32px_90px_rgba(23,20,18,0.16)]"
-        >
-          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="absolute left-1/2 top-1/2 w-[410px] -translate-x-1/2 -translate-y-1/2 rounded-[30px] border border-[#2c2621] bg-[#171412] p-7 text-white shadow-[0_32px_90px_rgba(23,20,18,0.24)]">
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#cdb69b]">
             Transaction workspace
           </p>
-          <h3 className="mt-5 text-[2rem] font-semibold tracking-[-0.05em] text-white lg:text-[2.4rem]">
-            One shared record for the deal itself.
+          <h3 className="mt-4 text-[2.2rem] font-semibold tracking-[-0.05em] text-white">
+            Transaction
           </h3>
-          <p className="mt-4 max-w-[36rem] text-[0.98rem] leading-8 text-white/72">
-            Bridge 9 keeps progress, documents, comments, responsibilities, and client updates attached to the same transaction from offer through handover.
+          <p className="mt-4 text-[0.96rem] leading-7 text-white/72">
+            One shared record connects every stakeholder from offer through handover.
           </p>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {[
-              'Shared workflow stages',
-              'Document requests and reviews',
-              'Role-player visibility',
-              'Client updates and support context',
-            ].map((item) => (
-              <div key={item} className="rounded-[20px] border border-white/10 bg-white/[0.05] px-4 py-4 text-sm text-white/80">
-                {item}
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <div className="space-y-6">
-          {right.map((role) => (
-            <FeatureCard key={role.title} icon={role.icon} title={role.title} description={role.description} />
-          ))}
         </div>
-      </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {bottom.map((role) => (
-          <FeatureCard key={role.title} icon={role.icon} title={role.title} description={role.description} />
-        ))}
+        {platformRoles.map((role, index) => {
+          const Icon = role.icon
+
+          return (
+            <motion.div
+              key={role.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.35, delay: index * 0.04 }}
+              className="absolute w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-[22px] border border-[#e2d8cb] bg-white/95 p-4 shadow-[0_14px_34px_rgba(23,20,18,0.08)]"
+              style={{ left: `${role.x}%`, top: `${role.y}%` }}
+            >
+              <div className="flex h-8 w-8 items-center justify-center rounded-[12px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5c4a]">
+                <Icon className="h-4 w-4" />
+              </div>
+              <p className="mt-3 text-[0.95rem] font-semibold text-[#171412]">{role.title}</p>
+            </motion.div>
+          )
+        })}
+      </motion.div>
+
+      <div className="grid gap-4 lg:hidden">
+        <div className="rounded-[30px] border border-[#2c2621] bg-[#171412] p-6 text-white">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#cdb69b]">
+            Transaction workspace
+          </p>
+          <h3 className="mt-4 text-[2rem] font-semibold tracking-[-0.05em] text-white">
+            Transaction
+          </h3>
+          <p className="mt-3 text-sm leading-7 text-white/72">
+            One shared record connects every stakeholder from offer through handover.
+          </p>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {platformRoles.map((role) => {
+            const Icon = role.icon
+            return (
+              <div key={`mobile-${role.title}`} className="rounded-[20px] border border-[#e2d8cb] bg-white p-4">
+                <div className="flex h-8 w-8 items-center justify-center rounded-[12px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5c4a]">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <p className="mt-2.5 text-sm font-semibold text-[#171412]">{role.title}</p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
@@ -673,7 +672,7 @@ export default function Home() {
           </div>
         </SectionContainer>
 
-        <SectionContainer id="platform" tone="soft">
+        <SectionContainer id="platform" tone="soft" className="pt-8 lg:pt-12">
           <SectionHeading
             eyebrow="Platform"
             title="One platform. Every role connected."
