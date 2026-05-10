@@ -5,9 +5,9 @@ import SectionContainer from '../components/SectionContainer'
 
 export default function Hero() {
   return (
-    <section id="top" className="pt-8 lg:pt-10">
-      <SectionContainer className="pt-0">
-        <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+    <section id="top" className="pt-1 lg:pt-2">
+      <SectionContainer className="pb-12 pt-3 lg:pb-16 lg:pt-4">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="max-w-[560px]">
             <motion.p
               initial={{ opacity: 0, y: 18 }}
@@ -33,7 +33,7 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.12 }}
               className="mt-6 max-w-[520px] text-[1.03rem] leading-8 text-[#675d52] lg:text-[1.08rem]"
             >
-              Bridge 9 brings developers, agents, conveyancers, bond originators, and buyers into one connected transaction workspace — so everyone can see progress, manage documents, track responsibilities, and keep clients informed.
+              Bridge 9 brings developers, agents, conveyancers, bond originators, and clients into one shared transaction workspace — so everyone can track progress, manage documents, and stay aligned from offer to registration.
             </motion.p>
 
             <motion.div
@@ -55,19 +55,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.24 }}
-              className="mt-10 grid gap-4 sm:grid-cols-3"
+              className="mt-8 grid gap-3 sm:grid-cols-3"
             >
               {[
-                ['Progress stays visible', 'Workflow, documents, and roles stay attached to the transaction.'],
-                ['Clients stay informed', 'A safer, calmer portal without endless follow-up.'],
+                ['Progress stays visible', 'Workflow and ownership stay attached to the transaction.'],
+                ['Clients stay informed', 'Clear steps without repeated follow-up loops.'],
                 ['Reporting stays live', 'Leadership sees movement without manual rebuilds.'],
               ].map(([title, copy]) => (
                 <div
                   key={title}
-                  className="rounded-[24px] border border-[#e4d9cb] bg-white/78 p-4 shadow-[0_14px_34px_rgba(23,20,18,0.04)] backdrop-blur-md"
+                  className="rounded-[20px] border border-[#e4d9cb] bg-white/78 p-3.5 shadow-[0_12px_30px_rgba(23,20,18,0.04)] backdrop-blur-md"
                 >
-                  <p className="text-sm font-medium text-[#171412]">{title}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#72675b]">{copy}</p>
+                  <p className="text-[0.82rem] font-semibold text-[#171412]">{title}</p>
+                  <p className="mt-1.5 text-[0.78rem] leading-5 text-[#72675b]">{copy}</p>
                 </div>
               ))}
             </motion.div>
