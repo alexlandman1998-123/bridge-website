@@ -7,13 +7,13 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="pt-4 lg:pt-6"
+      className="-mt-[106px] pt-[112px] lg:-mt-[118px] lg:pt-[126px]"
       style={{
         background:
           'radial-gradient(circle at 72% 38%, rgba(186, 157, 121, 0.14), transparent 36%), linear-gradient(180deg, #121212 0%, #161514 72%, #151412 100%)',
       }}
     >
-      <SectionContainer className="pb-12 pt-4 lg:pb-16 lg:pt-6">
+      <SectionContainer className="pb-12 pt-3 lg:pb-16 lg:pt-5">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="max-w-[560px]">
             <motion.h1
