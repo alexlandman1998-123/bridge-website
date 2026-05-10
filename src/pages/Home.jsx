@@ -634,24 +634,42 @@ export default function Home() {
       <main>
         <Hero />
 
-        <SectionContainer id="problem">
-          <SectionHeading
-            eyebrow="The problem"
-            title="Property deals don’t fail because people aren’t working. They fail because everyone is working separately."
-            description="Without one shared transaction workspace, updates fragment, accountability gets lost, and buyers are left asking the same questions twice."
-            className="max-w-[860px]"
-          />
+        <SectionContainer id="problem" className="pb-14 pt-2 lg:pb-20 lg:pt-4">
+          <div className="rounded-[36px] border border-[#2d2823] bg-[#171412] p-7 text-white shadow-[0_30px_90px_rgba(23,20,18,0.18)] lg:p-11">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#cdb69b]">
+              THE PROBLEM
+            </p>
+            <h2 className="mt-5 max-w-[980px] text-[2.2rem] font-semibold leading-[0.98] tracking-[-0.05em] text-[#f6f0e7] lg:text-[3rem]">
+              Property deals don’t fail because people aren’t working. They fail because everyone is working separately.
+            </h2>
+            <p className="mt-5 max-w-[760px] text-[1rem] leading-8 text-[#b6a99a]">
+              Without one shared transaction workspace, updates fragment, accountability gets lost, and buyers are left asking the same questions twice.
+            </p>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {problemCards.map((card, index) => (
-              <FeatureCard
-                key={card.title}
-                icon={card.icon}
-                title={card.title}
-                description={card.description}
-                delay={index * 0.06}
-              />
-            ))}
+            <div className="mt-10 grid gap-4 lg:grid-cols-3">
+              {problemCards.map((card, index) => {
+                const Icon = card.icon
+
+                return (
+                  <motion.div
+                    key={card.title}
+                    initial={{ opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: 0.45, delay: index * 0.06 }}
+                    className="rounded-[24px] border border-white/12 bg-white/[0.06] p-5"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/14 bg-white/[0.05] text-[#eadcc7]">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <h3 className="mt-4 text-[1.08rem] font-semibold tracking-[-0.03em] text-white">
+                      {card.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-7 text-white/74">{card.description}</p>
+                  </motion.div>
+                )
+              })}
+            </div>
           </div>
         </SectionContainer>
 
