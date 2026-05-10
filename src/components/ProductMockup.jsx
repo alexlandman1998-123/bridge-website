@@ -64,28 +64,6 @@ export default function ProductMockup() {
           </div>
         </div>
       </div>
-
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -left-4 top-12 hidden rounded-[22px] border border-[#e4d9cb] bg-white/92 px-4 py-3.5 shadow-[0_18px_44px_rgba(23,20,18,0.08)] backdrop-blur-md lg:block"
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8b7760]">
-          Client update
-        </p>
-        <p className="mt-1.5 text-sm font-medium text-[#171412]">Client notified: Finance stage active.</p>
-      </motion.div>
-
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -bottom-4 right-8 hidden rounded-[22px] border border-[#e4d9cb] bg-white/92 px-4 py-3.5 shadow-[0_18px_44px_rgba(23,20,18,0.08)] backdrop-blur-md lg:block"
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8b7760]">
-          Document status
-        </p>
-        <p className="mt-1.5 text-sm font-medium text-[#171412]">Finance pack 4/5 reviewed.</p>
-      </motion.div>
     </motion.div>
   )
 }

@@ -1,28 +1,19 @@
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, BarChart3, ListChecks, MessageSquareMore, Workflow } from 'lucide-react'
 import ProductMockup from '../components/ProductMockup'
 import SectionContainer from '../components/SectionContainer'
 
 export default function Hero() {
   return (
-    <section id="top" className="pt-1 lg:pt-2">
-      <SectionContainer className="pb-12 pt-3 lg:pb-16 lg:pt-4">
+    <section id="top" className="pt-4 lg:pt-6">
+      <SectionContainer className="pb-12 pt-4 lg:pb-16 lg:pt-6">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="max-w-[560px]">
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#8b7760]"
-            >
-              Shared property transaction workspace
-            </motion.p>
-
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.05 }}
-              className="mt-6 text-[3.7rem] font-semibold leading-[0.9] tracking-[-0.08em] text-[#171412] sm:text-[4.9rem] lg:text-[5.6rem]"
+              className="text-[3.35rem] font-semibold leading-[0.92] tracking-[-0.07em] text-[#171412] sm:text-[4.35rem] lg:text-[4.95rem]"
             >
               Property transactions. Finally connected.
             </motion.h1>
@@ -31,16 +22,16 @@ export default function Hero() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.12 }}
-              className="mt-6 max-w-[520px] text-[1.03rem] leading-8 text-[#675d52] lg:text-[1.08rem]"
+              className="mt-5 max-w-[520px] text-[1.03rem] leading-8 text-[#675d52]"
             >
-              Bridge 9 brings developers, agents, conveyancers, bond originators, and clients into one shared transaction workspace — so everyone can track progress, manage documents, and stay aligned from offer to registration.
+              Bridge 9 connects developers, agents, conveyancers, bond originators, and clients in one shared workspace.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.18 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              className="mt-7 flex flex-col gap-3 sm:flex-row"
             >
               <a href="/contact" className="bridge-button-primary">
                 Book a Demo
@@ -50,31 +41,56 @@ export default function Hero() {
                 View Platform
               </a>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.24 }}
-              className="mt-8 grid gap-3 sm:grid-cols-3"
-            >
-              {[
-                ['Progress stays visible', 'Workflow and ownership stay attached to the transaction.'],
-                ['Clients stay informed', 'Clear steps without repeated follow-up loops.'],
-                ['Reporting stays live', 'Leadership sees movement without manual rebuilds.'],
-              ].map(([title, copy]) => (
-                <div
-                  key={title}
-                  className="rounded-[20px] border border-[#e4d9cb] bg-white/78 p-3.5 shadow-[0_12px_30px_rgba(23,20,18,0.04)] backdrop-blur-md"
-                >
-                  <p className="text-[0.82rem] font-semibold text-[#171412]">{title}</p>
-                  <p className="mt-1.5 text-[0.78rem] leading-5 text-[#72675b]">{copy}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           <ProductMockup />
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.24 }}
+          className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        >
+          {[
+            {
+              title: 'Workflow & ownership',
+              copy: 'Stay attached to every transaction.',
+              icon: Workflow,
+            },
+            {
+              title: 'Clients stay informed',
+              copy: 'Automatic updates, fewer follow-ups.',
+              icon: MessageSquareMore,
+            },
+            {
+              title: 'Clear steps',
+              copy: 'Structured process, no loops.',
+              icon: ListChecks,
+            },
+            {
+              title: 'Reporting stays live',
+              copy: 'Leadership sees movement.',
+              icon: BarChart3,
+            },
+          ].map((item) => {
+            const Icon = item.icon
+            return (
+              <div
+                key={item.title}
+                className="rounded-[22px] border border-[#e4d9cb] bg-white/82 p-4 shadow-[0_12px_30px_rgba(23,20,18,0.04)] backdrop-blur-md"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-[14px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5c4a]">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <p className="mt-3 text-[0.96rem] font-semibold tracking-[-0.02em] text-[#171412]">
+                  {item.title}
+                </p>
+                <p className="mt-1.5 text-[0.86rem] leading-6 text-[#72675b]">{item.copy}</p>
+              </div>
+            )
+          })}
+        </motion.div>
       </SectionContainer>
     </section>
   )
