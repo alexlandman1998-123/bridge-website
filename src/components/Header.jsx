@@ -224,7 +224,7 @@ export default function Header() {
   const mobileSolutionItems = solutionItems.map((item) => ({ label: item.label, href: '/#roles' }))
 
   return (
-    <header className="pointer-events-none sticky top-0 z-50 px-4 py-3 md:px-6">
+    <header className="pointer-events-none sticky top-0 z-50 bg-[#080808] px-4 py-3 md:px-6">
       <motion.div
         className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-[#eadcc7]"
         style={{ scaleX: shouldReduceMotion ? 0 : scaleX }}
