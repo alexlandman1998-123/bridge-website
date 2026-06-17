@@ -189,7 +189,39 @@ const roleCards = [
 ]
 
 const trustGroups = ['Tuckers', 'Agency Logos', 'Developer Logos', 'Originator Logos']
-const heroHeadlineLines = ['Property transactions', 'have been waiting', 'for this.']
+const heroHeadlineLines = ['One transaction.', 'Every party', 'connected.']
+const heroPartyCards = [
+  {
+    icon: Users,
+    title: 'Agent',
+    copy: 'Move the deal after the offer is signed.',
+  },
+  {
+    icon: UserRound,
+    title: 'Buyer',
+    copy: 'See what is needed and what happens next.',
+  },
+  {
+    icon: UserRound,
+    title: 'Seller',
+    copy: 'Stay close to progress through registration.',
+  },
+  {
+    icon: Landmark,
+    title: 'Attorney',
+    copy: 'Receive cleaner files and clearer context.',
+  },
+  {
+    icon: WalletCards,
+    title: 'Bond Originator',
+    copy: 'Keep finance visible to the right parties.',
+  },
+  {
+    icon: Building2,
+    title: 'Developer',
+    copy: 'See every sale moving through transfer.',
+  },
+]
 const connectedParties = ['Buyer', 'Seller', 'Agent', 'Attorney', 'Finance']
 const connectedStages = ['Offer', 'Documents', 'Finance', 'Transfer', 'Registration']
 const socialProofCards = [
@@ -246,10 +278,11 @@ function MiniStatus({ label, value, float = false }) {
 function TransactionWorkspaceVisual({ floating = false }) {
   const shouldReduceMotion = useReducedMotion()
   const rows = [
-    ['Offer accepted', 'Complete'],
-    ['Buyer onboarding', 'Complete'],
-    ['Finance application', 'Active'],
-    ['Transfer instruction', 'Next'],
+    ['Offer Accepted', 'Complete', 'done'],
+    ['Buyer Onboarding', 'Complete', 'done'],
+    ['Finance Application', 'Active', 'open'],
+    ['Transfer Instruction', 'Next', 'open'],
+    ['Registration', 'Waiting', 'open'],
   ]
 
   return (
@@ -260,14 +293,14 @@ function TransactionWorkspaceVisual({ floating = false }) {
           <h3 className="mt-2 text-[1.4rem] font-extrabold text-[#171412] md:text-[2rem]">Unit 14 · Junoah Estate</h3>
         </div>
         <div className="hidden rounded-full bg-[#171412] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white sm:block">
-          Finance
+          In Progress
         </div>
       </div>
 
       <div className="grid gap-5 p-5 md:grid-cols-[1.2fr_0.8fr] md:p-8">
         <div className="rounded-[26px] bg-white p-5 shadow-[0_18px_50px_rgba(23,20,18,0.06)] md:p-7">
           <div className="flex items-center justify-between text-sm font-bold text-[#6f6457]">
-            <span>Overall Progress</span>
+            <span>Transaction Progress</span>
             <span>72%</span>
           </div>
           <div className="mt-4 h-2 rounded-full bg-[#efe6db]">
@@ -281,10 +314,14 @@ function TransactionWorkspaceVisual({ floating = false }) {
           </div>
 
           <div className="mt-7 space-y-3">
-            {rows.map(([label, status]) => (
+            {rows.map(([label, status, state]) => (
               <div key={label} className="flex items-center justify-between gap-4 rounded-[18px] border border-[#eee4d8] bg-[#fffaf4] px-4 py-4 transition duration-300 group-hover/product:border-[#d8c4aa] group-hover/product:bg-white">
                 <div className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#171412]" />
+                  <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[11px] font-black ${
+                    state === 'done' ? 'border-[#171412] bg-[#171412] text-white' : 'border-[#cdbda8] text-[#8b7760]'
+                  }`}>
+                    {state === 'done' ? '✓' : '○'}
+                  </span>
                   <span className="text-sm font-bold text-[#312b25]">{label}</span>
                 </div>
                 <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#8b7760]">{status}</span>
@@ -295,9 +332,9 @@ function TransactionWorkspaceVisual({ floating = false }) {
 
         <div className="grid gap-4">
           <MiniStatus label="Next Step" value="Attorney instruction" float={floating} />
-          <MiniStatus label="Outstanding" value="2 buyer documents" float={floating} />
+          <MiniStatus label="Outstanding Documents" value="2 buyer documents" float={floating} />
           <MiniStatus label="Latest Activity" value="Payslip requested" float={floating} />
-          <MiniStatus label="Parties" value="4 connected" float={floating} />
+          <MiniStatus label="Connected Parties" value="4 connected" float={floating} />
         </div>
       </div>
     </div>
@@ -405,6 +442,28 @@ function HeroMockup() {
         <TransactionWorkspaceVisual floating />
       </BrowserDeviceFrame>
     </div>
+  )
+}
+
+function HeroPartyStrip() {
+  return (
+    <FadeUp className="mt-12 lg:mt-14">
+      <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]">
+        BUILT FOR EVERY PARTY INVOLVED
+      </p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+        {heroPartyCards.map((card) => {
+          const Icon = card.icon
+          return (
+            <div key={card.title} className="rounded-[24px] border border-white/10 bg-white/[0.055] p-5 text-white shadow-[0_20px_60px_rgba(0,0,0,0.14)] backdrop-blur-xl">
+              <Icon className="h-5 w-5 text-[#eadcc7]" />
+              <h3 className="mt-5 text-lg font-extrabold tracking-[-0.03em] text-white">{card.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-white/62">{card.copy}</p>
+            </div>
+          )
+        })}
+      </div>
+    </FadeUp>
   )
 }
 
@@ -788,14 +847,14 @@ export default function Home() {
             <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:gap-24">
               <div className="max-w-[680px]">
                 <motion.p
-                  className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]"
+                  className="text-sm font-bold uppercase tracking-[0.34em] text-[#cdb69b] md:text-base"
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: motionEaseOut }}
                 >
-                  The New Standard For Property Transactions
+                  THE NEW STANDARD FOR PROPERTY TRANSACTIONS
                 </motion.p>
-                <h1 className="mt-6 text-[2.85rem] font-extrabold leading-[0.96] text-[#f5f1eb] sm:text-[3.25rem] md:text-[4.5rem] xl:text-[5.8rem]">
+                <h1 className="mt-6 text-[3rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#f5f1eb] sm:text-[3.45rem] md:text-[5.5rem] xl:text-[6.75rem]">
                   {heroHeadlineLines.map((line, index) => (
                     <motion.span
                       key={line}
@@ -810,15 +869,12 @@ export default function Home() {
                 </h1>
 
                 <motion.p
-                  className="mt-6 max-w-[560px] text-[1.125rem] leading-8 text-[#c9bdb0] xl:text-[1.35rem] xl:leading-9"
+                  className="mt-6 max-w-full text-[1.125rem] font-medium leading-8 text-[#c9bdb0] lg:max-w-[520px] xl:text-[1.3rem] xl:leading-9"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.46, ease: motionEaseOut }}
                 >
-                  From offer to registration, Arch9 gives every party one shared view of the deal.
-                  <br />
-                  <br />
-                  No chasing. No scattered documents. No guessing where things stand.
+                  Arch9 brings agents, buyers, sellers, attorneys and finance teams into one shared workspace from offer to registration.
                 </motion.p>
 
                 <motion.div
@@ -827,12 +883,12 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.58, ease: motionEaseOut }}
                 >
-                  <a href="/contact" className="bridge-button-primary bridge-button-light">
+                  <a href="/contact" className="bridge-button-primary bridge-button-light w-full sm:w-auto">
                     Book a Demo
                     <ArrowRight className="h-4 w-4" />
                   </a>
-                  <a href="#platform" className="bridge-button-secondary border-white/18 bg-white/[0.06] text-white">
-                    See the Platform
+                  <a href="#how-it-works" className="bridge-button-secondary w-full border-white/18 bg-white/[0.06] text-white sm:w-auto">
+                    See How It Works
                   </a>
                 </motion.div>
               </div>
@@ -845,6 +901,7 @@ export default function Home() {
                 <HeroMockup />
               </motion.div>
             </div>
+            <HeroPartyStrip />
           </SectionContainer>
         </section>
 
