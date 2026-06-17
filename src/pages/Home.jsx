@@ -189,7 +189,7 @@ const roleCards = [
 ]
 
 const trustGroups = ['Tuckers', 'Agency Logos', 'Developer Logos', 'Originator Logos']
-const heroHeadlineLines = ['One transaction.', 'Every party', 'connected.']
+const heroHeadlineLines = ['One transaction.', 'Every party connected.']
 const heroPartyCards = [
   {
     icon: Users,
@@ -249,7 +249,8 @@ function BrowserDeviceFrame({ children, dark = false, label = 'Arch9' }) {
         <span className="arch-browser-dot" />
         <span className="arch-browser-dot" />
         <span className="arch-browser-dot" />
-        <span className={`ml-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${dark ? 'bg-white/10 text-white/52' : 'bg-[#f3eee7] text-[#887765]'}`}>
+        <span className={`ml-2 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${dark ? 'bg-white/10 text-[#B9B1A7]' : 'bg-[#0D1613] text-[#F3EEE6]'}`}>
+          <span className="h-1.5 w-1.5 rounded-full bg-[#86E4C2]" />
           {label}
         </span>
       </div>
@@ -264,13 +265,13 @@ function MiniStatus({ label, value, float = false }) {
 
   return (
     <motion.div
-      className="rounded-[18px] border border-[#eadfce] bg-[#fffaf4] p-4"
+      className="rounded-[18px] border border-[rgba(243,238,230,0.12)] bg-[#0D1613] p-4"
       animate={canFloat ? { y: [0, -4, 0] } : undefined}
       transition={canFloat ? { duration: 7, repeat: Infinity, ease: 'easeInOut' } : undefined}
       style={{ willChange: canFloat ? 'transform' : 'auto' }}
     >
-      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#8b7760]">{label}</p>
-      <p className="mt-2 text-sm font-bold text-[#171412]">{value}</p>
+      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#86E4C2]">{label}</p>
+      <p className="mt-2 text-sm font-bold text-[#F3EEE6]">{value}</p>
     </motion.div>
   )
 }
@@ -286,26 +287,26 @@ function TransactionWorkspaceVisual({ floating = false }) {
   ]
 
   return (
-    <div className="group/product overflow-hidden rounded-[28px] border border-[#e8ddcf] bg-[#fbf7f1]">
-      <div className="flex items-center justify-between border-b border-[#e6dccf] bg-white px-5 py-4 md:px-8">
+    <div className="group/product overflow-hidden rounded-[28px] border border-[rgba(243,238,230,0.12)] bg-[#071E1A]">
+      <div className="flex items-center justify-between border-b border-[rgba(243,238,230,0.12)] bg-[#0D1613] px-5 py-4 md:px-8">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8b7760]">Transaction Workspace</p>
-          <h3 className="mt-2 text-[1.4rem] font-extrabold text-[#171412] md:text-[2rem]">Unit 14 · Junoah Estate</h3>
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#86E4C2]">Transaction Workspace</p>
+          <h3 className="mt-2 text-[1.4rem] font-extrabold text-[#F3EEE6] md:text-[2rem]">Unit 14 · Junoah Estate</h3>
         </div>
-        <div className="hidden rounded-full bg-[#171412] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white sm:block">
+        <div className="hidden rounded-full border border-[rgba(134,228,194,0.22)] bg-[#050807] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F3EEE6] sm:block">
           In Progress
         </div>
       </div>
 
       <div className="grid gap-5 p-5 md:grid-cols-[1.2fr_0.8fr] md:p-8">
-        <div className="rounded-[26px] bg-white p-5 shadow-[0_18px_50px_rgba(23,20,18,0.06)] md:p-7">
-          <div className="flex items-center justify-between text-sm font-bold text-[#6f6457]">
+        <div className="rounded-[26px] border border-[rgba(243,238,230,0.12)] bg-[#0D1613] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.18)] md:p-7">
+          <div className="flex items-center justify-between text-sm font-bold text-[#B9B1A7]">
             <span>Transaction Progress</span>
-            <span>72%</span>
+            <span className="text-[#F3EEE6]">72%</span>
           </div>
-          <div className="mt-4 h-2 rounded-full bg-[#efe6db]">
+          <div className="mt-4 h-2 rounded-full bg-[#050807]">
             <motion.div
-              className="h-2 rounded-full bg-[#171412]"
+              className="h-2 rounded-full bg-[#86E4C2]"
               initial={{ width: shouldReduceMotion ? '72%' : 0 }}
               whileInView={{ width: '72%' }}
               viewport={{ once: true, amount: 0.4 }}
@@ -315,16 +316,16 @@ function TransactionWorkspaceVisual({ floating = false }) {
 
           <div className="mt-7 space-y-3">
             {rows.map(([label, status, state]) => (
-              <div key={label} className="flex items-center justify-between gap-4 rounded-[18px] border border-[#eee4d8] bg-[#fffaf4] px-4 py-4 transition duration-300 group-hover/product:border-[#d8c4aa] group-hover/product:bg-white">
+              <div key={label} className="flex items-center justify-between gap-4 rounded-[18px] border border-[rgba(243,238,230,0.12)] bg-[#071E1A] px-4 py-4 transition duration-300 group-hover/product:border-[rgba(134,228,194,0.22)]">
                 <div className="flex items-center gap-3">
                   <span className={`flex h-5 w-5 items-center justify-center rounded-full border text-[11px] font-black ${
-                    state === 'done' ? 'border-[#171412] bg-[#171412] text-white' : 'border-[#cdbda8] text-[#8b7760]'
+                    state === 'done' ? 'border-[#86E4C2] bg-[#86E4C2] text-[#050807]' : state === 'open' && status === 'Active' ? 'border-[#86E4C2] text-[#86E4C2]' : 'border-[#B9B1A7]/42 text-[#B9B1A7]'
                   }`}>
-                    {state === 'done' ? '✓' : '○'}
+                    {state === 'done' ? '✓' : ''}
                   </span>
-                  <span className="text-sm font-bold text-[#312b25]">{label}</span>
+                  <span className="text-sm font-bold text-[#F3EEE6]">{label}</span>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#8b7760]">{status}</span>
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#B9B1A7]">{status}</span>
               </div>
             ))}
           </div>
@@ -354,7 +355,7 @@ function DocumentCollectionVisual() {
     <div className="group/docs overflow-hidden rounded-[28px] border border-white/10 bg-[#111111] text-white">
       <div className="grid gap-6 p-5 md:grid-cols-[0.75fr_1.25fr] md:p-8">
         <div className="rounded-[26px] border border-white/10 bg-white/[0.05] p-5 md:p-7">
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#cdb69b]">Buyer Portal</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#86E4C2]">Buyer Portal</p>
           <h3 className="mt-4 text-[1.8rem] font-extrabold leading-tight text-white">Documents needed</h3>
           <p className="mt-4 text-base leading-7 text-white/66">
             The client sees what to upload, what has arrived and what still needs attention.
@@ -408,9 +409,9 @@ function ClientPortalVisual() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {['Offer', 'Finance', 'Transfer'].map((item, index) => (
-              <div key={item} className="rounded-[20px] border border-[#eadfce] bg-[#fffaf4] p-4">
-                <div className={`h-2 rounded-full ${index < 2 ? 'bg-[#171412]' : 'bg-[#d8c7b5]'}`} />
-                <p className="mt-4 text-sm font-bold text-[#171412]">{item}</p>
+              <div key={item} className="rounded-[20px] border border-[rgba(243,238,230,0.12)] bg-[#0D1613] p-4">
+                <div className={`h-2 rounded-full ${index < 2 ? 'bg-[#86E4C2]' : 'bg-[#B9B1A7]/32'}`} />
+                <p className="mt-4 text-sm font-bold text-[#F3EEE6]">{item}</p>
               </div>
             ))}
           </div>
@@ -447,22 +448,41 @@ function HeroMockup() {
 
 function HeroPartyStrip() {
   return (
-    <FadeUp className="mt-12 lg:mt-14">
-      <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]">
+    <FadeUp className="mt-8 lg:mt-14">
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86E4C2]">
         BUILT FOR EVERY PARTY INVOLVED
       </p>
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="-mx-6 mt-5 flex snap-x gap-7 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-6">
         {heroPartyCards.map((card) => {
           const Icon = card.icon
           return (
-            <div key={card.title} className="rounded-[24px] border border-white/10 bg-white/[0.055] p-5 text-white shadow-[0_20px_60px_rgba(0,0,0,0.14)] backdrop-blur-xl">
-              <Icon className="h-5 w-5 text-[#eadcc7]" />
-              <h3 className="mt-5 text-lg font-extrabold tracking-[-0.03em] text-white">{card.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-white/62">{card.copy}</p>
+            <div key={card.title} className="w-[86px] shrink-0 snap-start text-center sm:w-auto sm:rounded-[24px] sm:border sm:border-[rgba(243,238,230,0.12)] sm:bg-white/[0.06] sm:p-5 sm:shadow-[0_22px_68px_rgba(0,0,0,0.2)] sm:backdrop-blur-xl">
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(134,228,194,0.22)] bg-[#0D1613] text-[#86E4C2]">
+                <Icon className="h-4 w-4" />
+              </div>
+              <h3 className="mt-3 text-sm font-extrabold tracking-[-0.03em] text-[#F3EEE6] sm:text-lg">{card.title}</h3>
+              <p className="mt-2 hidden text-sm leading-6 text-[#B9B1A7] sm:block">{card.copy}</p>
             </div>
           )
         })}
       </div>
+    </FadeUp>
+  )
+}
+
+function ProblemTeaser() {
+  return (
+    <FadeUp className="mt-10 rounded-[28px] bg-[#F3EEE6] p-6 text-[#050807] sm:p-8 lg:hidden">
+      <p className="text-xs font-black uppercase tracking-[0.18em] text-[#071E1A]">The Problem</p>
+      <h2 className="mt-4 text-[2.65rem] font-extrabold leading-[0.94] tracking-[-0.04em]">
+        Sold in 7 days.
+        <br />
+        Registered in 93.
+      </h2>
+      <a href="#problem" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#071E1A]">
+        See why transactions stall
+        <ArrowRight className="h-4 w-4" />
+      </a>
     </FadeUp>
   )
 }
@@ -485,7 +505,7 @@ function SignatureMomentSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(234,220,199,0.16),transparent_34%),linear-gradient(180deg,#080808_0%,#111111_55%,#080808_100%)]" />
       <div className="relative mx-auto grid w-full max-w-[1280px] gap-12 px-6 md:px-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center xl:px-16">
         <FadeUp>
-          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]">The Arch9 Moment</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#86E4C2]">The Arch9 Moment</p>
           <h2 className="mt-5 max-w-[620px] text-[2.65rem] font-extrabold leading-[0.95] tracking-[-0.045em] text-white md:text-[4.2rem] xl:text-[5.2rem]">
             Finally, everyone moves together.
           </h2>
@@ -504,9 +524,9 @@ function SignatureMomentSection() {
           <svg className="absolute inset-0 h-full w-full" viewBox="0 0 820 620" aria-hidden="true">
             <defs>
               <linearGradient id="archConnection" x1="0" x2="1">
-                <stop offset="0%" stopColor="#eadcc7" stopOpacity="0.15" />
-                <stop offset="50%" stopColor="#eadcc7" stopOpacity="0.86" />
-                <stop offset="100%" stopColor="#eadcc7" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#86E4C2" stopOpacity="0.15" />
+                <stop offset="50%" stopColor="#86E4C2" stopOpacity="0.86" />
+                <stop offset="100%" stopColor="#86E4C2" stopOpacity="0.15" />
               </linearGradient>
             </defs>
             {[
@@ -540,14 +560,14 @@ function SignatureMomentSection() {
                 transition={{ duration: 0.55, delay: index * 0.08, ease: motionEaseOut }}
               >
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#cdb69b]">Connected</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#86E4C2]">Connected</p>
                   <p className="mt-2 text-lg font-bold text-white">{party}</p>
                 </div>
               </motion.div>
             ))}
 
             <div className="col-span-2 md:col-span-3">
-              <div className="relative mx-auto mt-4 max-w-[640px] rounded-[34px] border border-[#eadcc7]/18 bg-[#f8f6f2] p-5 text-[#080808] shadow-[0_34px_110px_rgba(0,0,0,0.32)] md:p-7">
+              <div className="relative mx-auto mt-4 max-w-[640px] rounded-[34px] border border-[rgba(134,228,194,0.22)] bg-[#F3EEE6] p-5 text-[#050807] shadow-[0_34px_110px_rgba(0,0,0,0.32)] md:p-7">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#887765]">Live Transaction</p>
@@ -590,7 +610,7 @@ function ProblemSection() {
     <SectionContainer id="problem" tone="dark">
       <div>
         <FadeUp>
-          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]">The Problem</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#86E4C2]">The Problem</p>
           <h2 className="mt-5 max-w-[900px] text-[2.25rem] font-extrabold leading-none text-[#f5f1eb] md:text-[3.25rem] xl:text-[4.35rem]">
             Everyone is working. Nobody is aligned.
           </h2>
@@ -605,7 +625,7 @@ function ProblemSection() {
             const Icon = card.icon
             return (
               <StaggerItem key={card.title} className="rounded-[28px] border border-white/10 bg-white/[0.05] p-7 md:p-8">
-                <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-white/[0.08] text-[#eadcc7]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-white/[0.08] text-[#86E4C2]">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-7 text-[1.45rem] font-bold text-white">{card.title}</h3>
@@ -662,7 +682,7 @@ function HowItWorksSection() {
   return (
     <SectionContainer id="how-it-works" tone="dark">
       <FadeUp className="mx-auto max-w-[840px] text-center">
-        <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#cdb69b]">How It Works</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#86E4C2]">How It Works</p>
         <h2 className="mt-4 text-[2.25rem] font-extrabold leading-none text-white md:text-[3.25rem] xl:text-[4.35rem]">
           From offer to registration.
         </h2>
@@ -674,7 +694,7 @@ function HowItWorksSection() {
       <div ref={timelineRef} className="relative mx-auto mt-14 grid max-w-[1020px] gap-5 md:gap-7">
         <div className="absolute bottom-8 left-7 top-8 hidden w-px bg-white/10 md:block" />
         <motion.div
-          className="absolute bottom-8 left-7 top-8 hidden w-px origin-top bg-[#eadcc7] md:block"
+          className="absolute bottom-8 left-7 top-8 hidden w-px origin-top bg-[#86E4C2] md:block"
           style={{ scaleY: shouldReduceMotion ? 1 : timelineScale }}
         />
         {processSteps.map((step, index) => {
@@ -692,7 +712,7 @@ function HowItWorksSection() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f7efe0] text-[#171412] md:mx-auto">
                   <Icon className="h-6 w-6" />
                 </div>
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#cdb69b] md:mt-4 md:text-center">Step {index + 1}</p>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#86E4C2] md:mt-4 md:text-center">Step {index + 1}</p>
               </div>
               <div>
                 <h3 className="text-[1.45rem] font-bold text-white md:text-[1.8rem]">{step.title}</h3>
@@ -743,11 +763,11 @@ function RolesSection() {
             <StaggerItem
               key={role.title}
               className="group min-h-[310px] w-[304px] shrink-0 snap-start rounded-[30px] border border-[#e4d9cb] bg-white p-6 shadow-[0_14px_34px_rgba(23,20,18,0.04)] xl:w-auto"
-              whileHover={{ y: -6, borderColor: '#cdb69b' }}
+              whileHover={{ y: -6, borderColor: '#86E4C2' }}
               transition={{ duration: 0.25, ease: motionEaseOut }}
             >
               <motion.div
-                className="flex h-12 w-12 items-center justify-center rounded-[16px] border border-[#eadfce] bg-[#faf6ef] text-[#6d5c4a]"
+                className="flex h-12 w-12 items-center justify-center rounded-[16px] border border-[rgba(134,228,194,0.22)] bg-[#0D1613] text-[#86E4C2]"
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.25, ease: motionEaseOut }}
               >
@@ -755,9 +775,9 @@ function RolesSection() {
               </motion.div>
               <h3 className="mt-7 text-[1.35rem] font-bold text-[#171412]">{role.title}</h3>
               <p className="mt-3 text-base leading-7 text-[#6f6457]">{role.copy}</p>
-              <div className="mt-7 rounded-[20px] border border-[#eadfce] bg-[#fffaf4] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8b7760]">Preview</p>
-                <p className="mt-2 text-sm font-bold text-[#171412]">{role.preview}</p>
+              <div className="mt-7 rounded-[20px] border border-[rgba(243,238,230,0.12)] bg-[#0D1613] p-4">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#86E4C2]">Preview</p>
+                <p className="mt-2 text-sm font-bold text-[#F3EEE6]">{role.preview}</p>
               </div>
             </StaggerItem>
           )
@@ -790,7 +810,7 @@ function TrustSection() {
 
       <div className="mt-5 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
         <FadeIn className="rounded-[34px] border border-[#d9cbbb] bg-[#080808] p-7 text-white shadow-[0_34px_100px_rgba(8,8,8,0.2)] md:p-9">
-          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#cdb69b]">Launch Partners</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#86E4C2]">Launch Partners</p>
           <h3 className="mt-5 text-[2rem] font-extrabold leading-[0.98] tracking-[-0.04em] md:text-[2.8rem]">
             A trust system ready for real industry proof.
           </h3>
@@ -837,24 +857,24 @@ export default function Home() {
       <main>
         <section
           id="top"
-          className="bg-[#171412]"
+          className="bg-[#050807]"
           style={{
             background:
-              'radial-gradient(circle at 82% 18%, rgba(186, 157, 121, 0.16), transparent 32%), linear-gradient(180deg, #121212 0%, #171412 100%)',
+              'radial-gradient(circle at 70% 30%, rgba(134,228,194,0.10), transparent 38%), linear-gradient(180deg, #050807 0%, #071E1A 54%, #050807 100%)',
           }}
         >
-          <SectionContainer className="pb-[72px] pt-12 md:pb-24 md:pt-16 xl:pb-[120px] xl:pt-20">
-            <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:gap-24">
+          <SectionContainer className="pb-[56px] pt-[112px] md:pb-24 md:pt-32 xl:pb-[120px] xl:pt-36">
+            <div className="grid gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:gap-24">
               <div className="max-w-[680px]">
                 <motion.p
-                  className="text-sm font-bold uppercase tracking-[0.34em] text-[#cdb69b] md:text-base"
+                  className="text-xs font-bold uppercase tracking-[0.18em] text-[#86E4C2] md:text-base"
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: motionEaseOut }}
                 >
                   THE NEW STANDARD FOR PROPERTY TRANSACTIONS
                 </motion.p>
-                <h1 className="mt-6 text-[3rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#f5f1eb] sm:text-[3.45rem] md:text-[5.5rem] xl:text-[6.75rem]">
+                <h1 className="mt-5 text-[3rem] font-extrabold leading-[0.94] tracking-[-0.04em] text-[#F3EEE6] sm:text-[3.45rem] md:text-[5.6rem] xl:text-[6.75rem]">
                   {heroHeadlineLines.map((line, index) => (
                     <motion.span
                       key={line}
@@ -869,25 +889,25 @@ export default function Home() {
                 </h1>
 
                 <motion.p
-                  className="mt-6 max-w-full text-[1.125rem] font-medium leading-8 text-[#c9bdb0] lg:max-w-[520px] xl:text-[1.3rem] xl:leading-9"
+                  className="mt-5 max-w-full text-[1.125rem] font-medium leading-[1.45] text-[#B9B1A7] lg:max-w-[560px] xl:text-[1.375rem]"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.46, ease: motionEaseOut }}
                 >
-                  Arch9 brings agents, buyers, sellers, attorneys and finance teams into one shared workspace from offer to registration.
+                  Agents. Buyers. Sellers. Attorneys. Finance teams. One shared view from offer to registration.
                 </motion.p>
 
                 <motion.div
-                  className="mt-8 grid gap-3 sm:flex"
+                  className="mt-7 grid gap-3 sm:flex"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.58, ease: motionEaseOut }}
                 >
-                  <a href="/contact" className="bridge-button-primary bridge-button-light w-full sm:w-auto">
+                  <a href="/contact" className="bridge-button-primary bridge-button-light min-h-14 w-full sm:w-auto">
                     Book a Demo
                     <ArrowRight className="h-4 w-4" />
                   </a>
-                  <a href="#how-it-works" className="bridge-button-secondary w-full border-white/18 bg-white/[0.06] text-white sm:w-auto">
+                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[rgba(243,238,230,0.42)] bg-transparent text-[#F3EEE6] sm:w-auto">
                     See How It Works
                   </a>
                 </motion.div>
@@ -902,6 +922,7 @@ export default function Home() {
               </motion.div>
             </div>
             <HeroPartyStrip />
+            <ProblemTeaser />
           </SectionContainer>
         </section>
 

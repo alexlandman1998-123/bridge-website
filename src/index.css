@@ -8,7 +8,7 @@
   --surface-soft: #fdfaf5;
   --dark: #080808;
   --dark-surface: #111111;
-  --accent: #eadcc7;
+  --accent: #86e4c2;
   --text-primary: #080808;
   --text-secondary: #63594d;
   --text-muted: #887765;
@@ -55,8 +55,8 @@ textarea {
 }
 
 ::selection {
-  background: rgba(234, 220, 199, 0.9);
-  color: #080808;
+  background: rgba(134, 228, 194, 0.72);
+  color: #050807;
 }
 
 .bridge-site-bg {
@@ -81,44 +81,44 @@ textarea {
 
 .arch-browser-frame {
   overflow: hidden;
-  border: 1px solid rgba(8, 8, 8, 0.1);
+  border: 1px solid rgba(243, 238, 230, 0.12);
   border-radius: 32px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)),
-    #ffffff;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    #071e1a;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    0 34px 120px rgba(8, 8, 8, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 34px 120px rgba(0, 0, 0, 0.28);
 }
 
 .arch-browser-frame-dark {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(243, 238, 230, 0.12);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
-    #111111;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    #071e1a;
 }
 
 .arch-browser-bar {
   display: flex;
   align-items: center;
   gap: 0.44rem;
-  border-bottom: 1px solid rgba(8, 8, 8, 0.08);
+  border-bottom: 1px solid rgba(243, 238, 230, 0.12);
   padding: 0.9rem 1rem;
 }
 
 .arch-browser-frame-dark .arch-browser-bar {
-  border-bottom-color: rgba(255, 255, 255, 0.1);
+  border-bottom-color: rgba(243, 238, 230, 0.12);
 }
 
 .arch-browser-dot {
   width: 0.56rem;
   height: 0.56rem;
   border-radius: 999px;
-  background: rgba(8, 8, 8, 0.18);
+  background: rgba(243, 238, 230, 0.28);
 }
 
 .arch-browser-frame-dark .arch-browser-dot {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(243, 238, 230, 0.28);
 }
 
 .arch-mobile-frame {
@@ -150,16 +150,16 @@ textarea {
 }
 
 .bridge-button-primary {
-  color: #ffffff;
-  background: linear-gradient(135deg, #080808, #1a1713);
+  color: #f3eee6;
+  background: linear-gradient(135deg, #050807, #0d1613);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 18px 38px rgba(8, 8, 8, 0.2);
 }
 
 .bridge-button-light {
-  color: #080808;
-  background: linear-gradient(180deg, #fff7e8, #eadcc7);
+  color: #050807;
+  background: #f3eee6;
 }
 
 .bridge-button-primary:hover {
@@ -170,9 +170,9 @@ textarea {
 }
 
 .bridge-button-secondary {
-  color: #080808;
-  border: 1px solid rgba(8, 8, 8, 0.09);
-  background: rgba(255, 255, 255, 0.68);
+  color: #f3eee6;
+  border: 1px solid rgba(243, 238, 230, 0.24);
+  background: rgba(255, 255, 255, 0.06);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.88),
     0 10px 30px rgba(8, 8, 8, 0.06);
@@ -180,8 +180,8 @@ textarea {
 
 .bridge-button-secondary:hover {
   transform: scale(1.02);
-  border-color: rgba(198, 178, 151, 0.84);
-  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(134, 228, 194, 0.42);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .bridge-button-primary:active,
@@ -193,7 +193,7 @@ textarea {
 .bridge-button-secondary:focus-visible,
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #b79e7f;
+  outline: 2px solid #86e4c2;
   outline-offset: 3px;
 }
 
