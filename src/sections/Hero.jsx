@@ -31,7 +31,7 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.12 }}
               className="mt-5 max-w-[520px] text-[1.03rem] leading-8 text-[#c9bdb0]"
             >
-              Bridge 9 connects developers, agents, conveyancers, bond originators, and clients in one shared workspace.
+              Arch9 connects developers, agents, conveyancers, bond originators, and clients in one shared view.
             </motion.p>
 
             <motion.div

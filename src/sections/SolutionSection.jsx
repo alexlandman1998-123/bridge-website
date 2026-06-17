@@ -15,7 +15,7 @@ const solutionPillars = [
     icon: Building,
   },
   {
-    title: 'Structured workflow',
+    title: 'Structured process',
     description:
       'Built-in stages keep every task anchored to the right part of the transaction.',
     icon: ClipboardList,
@@ -60,7 +60,7 @@ export default function SolutionSection() {
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-0">
         <SectionHeading
           title="One shared platform for the people moving the deal forward."
-          description="Bridge brings the key stakeholders in a property transaction into one structured system, so progress is visible, responsibilities are clear, and the process moves with less friction."
+          description="Arch9 brings the key stakeholders in a property transaction into one shared system, so progress is visible, responsibilities are clear, and the deal keeps moving."
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">

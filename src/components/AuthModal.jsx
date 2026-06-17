@@ -22,7 +22,7 @@ const moduleOptions = {
   },
   conveyancer: {
     label: 'Conveyancer operations',
-    description: 'Legal workflow control, document readiness, and team coordination.',
+    description: 'Legal process control, document readiness, and team coordination.',
     billingLabel: 'Team + matter volume',
     helper: 'Best when billing depends on seats and monthly matters.',
   },
@@ -405,8 +405,8 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                   ) : (
                     <>
                       <SummaryPill label="Step 1" value="Name, surname, email, password" />
-                      <SummaryPill label="Step 2" value="Company details and operating module" />
-                      <SummaryPill label="Step 3" value="Billing contact and module-based setup" />
+                      <SummaryPill label="Step 2" value="Company details and primary view" />
+                      <SummaryPill label="Step 3" value="Billing contact and setup details" />
                     </>
                   )}
                 </div>
@@ -423,7 +423,7 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                       <p className="mt-1 text-sm text-[#726659]">
                         {mode === 'login'
                           ? 'Keep existing-user entry quick and obvious.'
-                          : 'Capture the details needed to provision the right Bridge workspace.'}
+                          : 'Capture the details needed to provision the right Arch9 workspace.'}
                       </p>
                     </div>
 
@@ -650,7 +650,7 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                                 type="text"
                                 value={signupForm.companyName}
                                 onChange={(event) => updateSignupField('companyName', event.target.value)}
-                                placeholder="Bridge Property Group"
+                                placeholder="Arch9 Property Group"
                                 autoComplete="organization"
                               />
                             </Field>
@@ -682,10 +682,10 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                           <>
                             <div className="rounded-[24px] border border-[#ece2d8] bg-white/80 p-5">
                               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8d7a65]">
-                                Primary module
+                                Primary view
                               </p>
                               <h4 className="mt-3 text-[1.1rem] font-semibold tracking-[-0.03em] text-[#171412]">
-                                Which Bridge module will this team use first?
+                                Which Arch9 view will this team use first?
                               </h4>
                               <p className="mt-2 text-sm leading-6 text-[#6f6457]">
                                 This choice shapes onboarding, workspace defaults, and billing configuration.
@@ -725,7 +725,7 @@ export default function AuthModal({ initialMode = 'login', onClose }) {
                             <div className="rounded-[28px] border border-[#1d1a17] bg-[linear-gradient(180deg,#171412_0%,#201d19_100%)] p-5 text-white">
                               <div className="flex items-start justify-between gap-5">
                                 <div>
-                                  <p className="text-[10px] uppercase tracking-[0.24em] text-[#9f9180]">Selected module</p>
+                          <p className="text-[10px] uppercase tracking-[0.24em] text-[#9f9180]">Selected view</p>
                                   <h4 className="mt-3 text-[1.2rem] font-semibold text-[#faf6f0]">
                                     {moduleOptions[signupForm.module].label}
                                   </h4>

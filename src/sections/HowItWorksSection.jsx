@@ -5,7 +5,7 @@ const timelineStages = [
   {
     title: 'Offer / Reservation',
     description:
-      'Terms logged, reservation deposit tracked, and documents collated.',
+      'Terms logged, reservation deposits recorded, and documents collated.',
   },
   {
     title: 'Bond Process',
@@ -13,14 +13,14 @@ const timelineStages = [
       'Bond lodgement, approvals, and trust accounting monitored in one place.',
   },
   {
-    title: 'Transfer Workflow',
+    title: 'Transfer Process',
     description:
       'Deeds office requirements, checklists, and fee settlements stay visible.',
   },
   {
     title: 'Registration',
     description:
-      'Final sign-offs, registration status, and certificates are tracked live.',
+      'Final sign-offs, registration status, and certificates stay visible live.',
   },
   {
     title: 'Handover',
@@ -63,7 +63,7 @@ export default function HowItWorksSection() {
         <SectionHeading
           eyebrow="Transaction lifecycle"
           title="A clearer path from accepted offer to final handover."
-          description="Bridge gives every stakeholder a more legible process from accepted offer through to registration and final handover."
+          description="Arch9 gives every stakeholder a more legible path from accepted offer through to registration and final handover."
         />
 
         <div className="mt-10 space-y-2">

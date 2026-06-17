@@ -12,8 +12,8 @@ export default function TrustSection() {
     <section id="trust" className="border-b border-slate-200 bg-white py-16">
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-0">
         <SectionHeading
-          title="Built for high-trust property workflows"
-          description="Bridge limits friction by matching real conveyancing stages with role-specific responsibilities."
+          title="Built for high-trust property transactions"
+          description="Arch9 limits friction by matching real conveyancing stages with role-specific responsibilities."
         />
 
         <div className="mt-8 space-y-4">

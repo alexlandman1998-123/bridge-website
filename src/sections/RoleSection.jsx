@@ -11,25 +11,25 @@ const roleCards = [
   {
     id: 'role-developers',
     title: 'Developers',
-    description: 'Track units, deals, and progress across your developments.',
+    description: 'Keep developments, deals, and progress in view.',
     icon: Layers,
   },
   {
     id: 'role-conveyancers',
     title: 'Conveyancers',
-    description: 'Manage workflows, documents, and milestones with more structure.',
+    description: 'Keep legal steps, documents, and milestones aligned.',
     icon: FileText,
   },
   {
     id: 'role-agents',
     title: 'Agents',
-    description: 'Stay visible across every deal after the sale is made.',
+    description: 'Stay close to every deal after the sale is made.',
     icon: Sparkles,
   },
   {
     id: 'role-buyers',
     title: 'Buyers',
-    description: 'Follow your transaction clearly and know what comes next.',
+    description: 'Know what is happening and what comes next.',
     icon: Home,
   },
 ]
@@ -65,8 +65,8 @@ export default function RoleRoutingSection() {
     <section id="roles" className="bg-[#F5F2EC] py-16">
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-0">
         <SectionHeading
-          title="Built for every key role in the transaction."
-          description="Bridge gives each stakeholder a clearer, more relevant view of the transaction without losing shared visibility across the full process."
+          title="One platform. Different views."
+          description="Each stakeholder sees what matters most without losing the shared transaction context."
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">

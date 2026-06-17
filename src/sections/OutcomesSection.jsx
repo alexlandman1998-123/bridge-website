@@ -6,7 +6,7 @@ const outcomes = [
   'Less back-and-forth between stakeholders',
   'Faster movement through key stages',
   'Better client communication',
-  'More professional process management',
+  'Clearer transaction oversight',
   'Stronger internal control and reporting',
 ]
 
@@ -15,7 +15,7 @@ export default function OutcomesSection() {
     <section id="outcomes" className="bg-[#F5F2EC] py-16">
       <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-0">
         <SectionHeading
-          title="Why teams use Bridge"
+          title="Why teams use Arch9"
           description="Commercial teams, conveyancers, agents, and buyers all share the same source of truth."
         />
 

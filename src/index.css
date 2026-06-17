@@ -3,9 +3,18 @@
 
 :root {
   color-scheme: light;
-  --page-bg: #f7f2ea;
-  --text-primary: #171412;
-  --text-secondary: #6f6457;
+  --page-bg: #f8f6f2;
+  --surface: #ffffff;
+  --surface-soft: #fdfaf5;
+  --dark: #080808;
+  --dark-surface: #111111;
+  --accent: #eadcc7;
+  --text-primary: #080808;
+  --text-secondary: #63594d;
+  --text-muted: #887765;
+  --border-soft: rgba(8, 8, 8, 0.08);
+  --shadow-card: 0 20px 60px rgba(12, 10, 8, 0.08);
+  --shadow-panel: 0 40px 120px rgba(8, 8, 8, 0.16);
 }
 
 html,
@@ -47,64 +56,145 @@ textarea {
 
 ::selection {
   background: rgba(234, 220, 199, 0.9);
-  color: #171412;
+  color: #080808;
 }
 
 .bridge-site-bg {
   background:
-    radial-gradient(circle at 0% 0%, rgba(234, 220, 199, 0.56), transparent 26%),
-    radial-gradient(circle at 100% 12%, rgba(255, 255, 255, 0.72), transparent 24%),
-    linear-gradient(180deg, #f7f2ea 0%, #fbf7f1 48%, #f7f2ea 100%);
+    radial-gradient(circle at 4% 0%, rgba(234, 220, 199, 0.48), transparent 28%),
+    radial-gradient(circle at 96% 14%, rgba(255, 255, 255, 0.82), transparent 26%),
+    linear-gradient(180deg, #f8f6f2 0%, #fffdf8 44%, #f8f6f2 100%);
+}
+
+.arch-premium-card {
+  border: 1px solid rgba(8, 8, 8, 0.075);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(24px);
+}
+
+.arch-dark-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+}
+
+.arch-browser-frame {
+  overflow: hidden;
+  border: 1px solid rgba(8, 8, 8, 0.1);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)),
+    #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 34px 120px rgba(8, 8, 8, 0.18);
+}
+
+.arch-browser-frame-dark {
+  border-color: rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
+    #111111;
+}
+
+.arch-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.44rem;
+  border-bottom: 1px solid rgba(8, 8, 8, 0.08);
+  padding: 0.9rem 1rem;
+}
+
+.arch-browser-frame-dark .arch-browser-bar {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.arch-browser-dot {
+  width: 0.56rem;
+  height: 0.56rem;
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.18);
+}
+
+.arch-browser-frame-dark .arch-browser-dot {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.arch-mobile-frame {
+  border: 1px solid rgba(8, 8, 8, 0.14);
+  border-radius: 42px;
+  background: #080808;
+  box-shadow: 0 28px 90px rgba(8, 8, 8, 0.2);
 }
 
 .bridge-button-primary,
 .bridge-button-secondary {
   display: inline-flex;
-  min-height: 48px;
+  min-height: 52px;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   border-radius: 999px;
-  padding: 0.85rem 1.45rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 0.95rem 1.55rem;
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease,
-    color 180ms ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .bridge-button-primary {
   color: #ffffff;
-  background: linear-gradient(135deg, #171412, #25201b);
+  background: linear-gradient(135deg, #080808, #1a1713);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 16px 34px rgba(23, 20, 18, 0.16);
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 38px rgba(8, 8, 8, 0.2);
+}
+
+.bridge-button-light {
+  color: #080808;
+  background: linear-gradient(180deg, #fff7e8, #eadcc7);
 }
 
 .bridge-button-primary:hover {
-  transform: translateY(-1px);
+  transform: scale(1.02);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 18px 40px rgba(23, 20, 18, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 24px 52px rgba(8, 8, 8, 0.24);
 }
 
 .bridge-button-secondary {
-  color: #171412;
-  border: 1px solid rgba(229, 218, 203, 0.96);
-  background: rgba(255, 255, 255, 0.72);
+  color: #080808;
+  border: 1px solid rgba(8, 8, 8, 0.09);
+  background: rgba(255, 255, 255, 0.68);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    0 10px 26px rgba(23, 20, 18, 0.04);
+    0 10px 30px rgba(8, 8, 8, 0.06);
 }
 
 .bridge-button-secondary:hover {
-  transform: translateY(-1px);
+  transform: scale(1.02);
   border-color: rgba(198, 178, 151, 0.84);
   background: rgba(255, 255, 255, 0.92);
+}
+
+.bridge-button-primary:active,
+.bridge-button-secondary:active {
+  transform: scale(0.99);
+}
+
+.bridge-button-primary:focus-visible,
+.bridge-button-secondary:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #b79e7f;
+  outline-offset: 3px;
 }
 
 .bridge-nav-link {
@@ -113,7 +203,6 @@ textarea {
   font-weight: 500;
   color: #60564c;
   white-space: nowrap;
-  transition: color 180ms ease;
 }
 
 .bridge-nav-link::after {
@@ -127,9 +216,6 @@ textarea {
   opacity: 0;
   transform-origin: center;
   background: linear-gradient(90deg, transparent, rgba(128, 104, 73, 0.95), transparent);
-  transition:
-    transform 180ms ease,
-    opacity 180ms ease;
 }
 
 .bridge-nav-link:hover {
@@ -139,4 +225,20 @@ textarea {
 .bridge-nav-link:hover::after {
   transform: scaleX(1);
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bridge-button-primary,
+  .bridge-button-secondary,
+  .bridge-nav-link,
+  .bridge-nav-link::after {
+    transition: none;
+  }
+
+  .bridge-button-primary:hover,
+  .bridge-button-secondary:hover,
+  .bridge-button-primary:active,
+  .bridge-button-secondary:active {
+    transform: none;
+  }
 }

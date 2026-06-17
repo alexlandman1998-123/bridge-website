@@ -9,7 +9,7 @@ export default function SectionContainer({
   const toneClass = {
     default: '',
     soft: 'bg-[rgba(255,250,244,0.52)]',
-    dark: 'bg-[#171412] text-white',
+    dark: 'bg-[#080808] text-white',
   }[tone]
 
   return (

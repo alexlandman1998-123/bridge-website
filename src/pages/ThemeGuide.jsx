@@ -12,7 +12,7 @@ export default function ThemeGuide() {
         <div className="space-y-4">
           <p className={theme.typography.eyebrow}>Theme guide</p>
           <h1 className="text-[56px] font-semibold leading-[0.92] tracking-[-0.06em]">
-            Bridge design system
+            Arch9 design system
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
             This page is your central visual reference. Adjust the theme files,
@@ -99,10 +99,10 @@ export default function ThemeGuide() {
         </section>
 
         <section className="space-y-6">
-          <SectionHeading
-            title="Dark product block"
-            description="This is the signature Bridge product look."
-          />
+        <SectionHeading
+          title="Dark product block"
+          description="This is the signature Arch9 product look."
+        />
 
           <div className="rounded-[42px] border border-slate-200/80 bg-[#061126] p-6 shadow-[0_40px_120px_rgba(15,23,42,0.20)]">
             <div className="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,#09162E_0%,#071021_100%)] p-8 text-white">

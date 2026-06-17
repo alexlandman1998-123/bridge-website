@@ -7,7 +7,7 @@ const personaCards = [
     title: 'Developers',
     status: 'Portfolio view',
     description:
-      'Track stock, transaction movement, buyer progress, and development-level visibility from one shared operational view.',
+      'See stock, transaction movement, buyer progress, and development-level visibility from one shared operational view.',
     items: [
       'Development progress visibility',
       'Stock and deal oversight',
@@ -20,13 +20,13 @@ const personaCards = [
     step: '2',
     label: 'Persona',
     title: 'Conveyancers',
-    status: 'Workflow control',
+    status: 'Process control',
     description:
-      'Manage legal steps, document readiness, and transaction milestones in a structured environment built for active matters.',
+      'Keep legal steps, document readiness, and transaction milestones in a structured environment built for active matters.',
     items: [
       'Matter-stage visibility',
       'Document coordination',
-      'Milestone tracking',
+      'Milestone visibility',
     ],
     progress: 84,
     tone: 'secondary',
@@ -145,12 +145,12 @@ export default function WorkflowStackSection() {
           </h2>
 
           <p className="mt-8 max-w-[760px] text-[18px] leading-9 text-white/55">
-            Bridge is not just a workflow. It gives each persona a clearer,
-            more useful operational view while keeping everyone connected to
-            the same transaction reality.
+            Arch9 is not just a process. It gives each persona a clearer,
+            more useful view while keeping everyone connected to the same
+            transaction reality.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap gap-3">
             <div className="rounded-full border border-[#D8CBB8]/20 bg-[#D8CBB8]/10 px-5 py-4 text-sm font-medium text-[#E9DCCA]">
               Developers
             </div>

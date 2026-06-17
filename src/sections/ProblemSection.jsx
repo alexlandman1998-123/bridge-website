@@ -31,7 +31,7 @@ export default function ProblemSection() {
   return (
     <Section id="problem" className="border-t border-slate-200" warm>
       <SectionHeading
-        title="Property transactions are still managed across too many disconnected systems."
+        title="Property transactions are still spread across too many disconnected systems."
         description="Most deals are still coordinated through emails, WhatsApp messages, spreadsheets, phone calls, and fragmented updates between different parties."
       />
 

@@ -23,7 +23,7 @@ export default function ProductMockup() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#cdb69b]">
-              Transaction workspace
+              Live deal view
             </p>
             <h2 className="mt-3 text-[1.75rem] font-semibold tracking-[-0.05em] text-white lg:text-[2.25rem]">
               Unit 14 · Junoah Estate
@@ -40,7 +40,7 @@ export default function ProductMockup() {
 
         <div className="mt-8 rounded-[30px] border border-white/14 bg-white/[0.05] p-6">
           <div className="flex items-center justify-between gap-4 text-sm text-white/70">
-            <span>Progress</span>
+            <span>Overall Progress</span>
             <span>68% complete</span>
           </div>
           <div className="mt-4 h-2 rounded-full bg-white/10">

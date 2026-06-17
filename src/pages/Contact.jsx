@@ -4,10 +4,10 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 const moduleOptions = [
-  'Developer Module',
-  'Agent Module',
-  'Attorney Module',
-  'Bond Originator Module',
+  'Developer view',
+  'Agent view',
+  'Attorney view',
+  'Bond originator view',
   'Client Portal',
 ]
 
@@ -84,7 +84,7 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
-    document.title = 'Book a Demo | Bridge 9'
+    document.title = 'Book a Demo | Arch9'
   }, [])
 
   const selectedModulesLabel = useMemo(() => {
@@ -110,7 +110,7 @@ export default function Contact() {
   function handleSubmit(event) {
     event.preventDefault()
     localStorage.setItem(
-      'bridge9_demo_request',
+      'arch9_demo_request',
       JSON.stringify({ ...form, submittedAt: new Date().toISOString() })
     )
     setSubmitted(true)
@@ -130,7 +130,7 @@ export default function Contact() {
               Bring the right context into the first conversation.
             </h1>
             <p className="mt-5 text-[1rem] leading-8 text-[#6d6257]">
-              Tell us how your team currently handles deals, documents, handoffs, and client updates. We will use that to shape the most relevant walkthrough.
+              Tell us how your team currently moves deals, shares updates, and handles documents. We will use that to shape the most relevant walkthrough.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -138,16 +138,16 @@ export default function Contact() {
                 {
                   icon: Building2,
                   title: 'Business context',
-                  copy: 'What type of property workflow you manage and how the transaction moves today.',
+                  copy: 'What kind of property transactions you handle and how the deal currently moves.',
                 },
                 {
                   icon: FolderKanban,
-                  title: 'Module fit',
-                  copy: 'Which Bridge 9 module matters first and what the rollout should cover.',
+                  title: 'First focus',
+                  copy: 'Which part of Arch9 matters first and what the rollout should cover.',
                 },
                 {
                   icon: Workflow,
-                  title: 'Workflow friction',
+                  title: 'Friction points',
                   copy: 'Where visibility, documents, or client updates are breaking down.',
                 },
                 {
@@ -208,7 +208,7 @@ export default function Contact() {
                   Conversation form
                 </p>
                 <h2 className="mt-4 text-[2rem] font-semibold tracking-[-0.05em] text-[#171412]">
-                  Tell us how your transaction workflow works today.
+                  Tell us how your transaction moves today.
                 </h2>
                 <p className="mt-3 text-sm leading-7 text-[#6f6457]">
                   Specific answers make the first demo more useful.
@@ -272,7 +272,7 @@ export default function Contact() {
                     </Field>
                   </div>
 
-                  <Field label="Which modules matter first?" hint="Select the views or workflows you want to improve first.">
+                  <Field label="Which views matter first?" hint="Select the views you want to improve first.">
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
                       {moduleOptions.map((module) => {
                         const active = form.modules.includes(module)
@@ -295,7 +295,7 @@ export default function Contact() {
                     </div>
                   </Field>
 
-                  <Field label="Current Workflow" hint="How does a typical transaction move through your team today?">
+                  <Field label="Current Process" hint="How does a typical transaction move through your team today?">
                     <Textarea value={form.currentWorkflow} onChange={(event) => updateField('currentWorkflow', event.target.value)} />
                   </Field>
 

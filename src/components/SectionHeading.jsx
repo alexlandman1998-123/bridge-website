@@ -19,7 +19,7 @@ export default function SectionHeading({
       <h2 className={theme.typography.h2}>{title}</h2>
 
       {description && (
-        <p className="max-w-2xl text-[1rem] leading-8 text-[#6f6457]">
+        <p className="max-w-2xl text-[1.125rem] leading-8 text-[#6f6457] xl:text-[1.25rem] xl:leading-9">
           {description}
         </p>
       )}

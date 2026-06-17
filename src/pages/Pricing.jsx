@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -7,40 +8,56 @@ const plans = [
   {
     name: 'Starter',
     price: 'From R7,500 / month',
-    copy: 'For smaller teams starting with one module and one workflow stream.',
+    copy: 'For smaller teams bringing one transaction stream into one clear place.',
     points: [
-      'Core transaction workspace',
-      'Role-based access for core users',
-      'Document workflow tracking',
-      'Client portal baseline',
+      'A clear home for the deal',
+      'Right access for the right people',
+      'Documents and progress in view',
+      'Client visibility from day one',
     ],
   },
   {
     name: 'Growth',
     price: 'From R18,500 / month',
-    copy: 'For growing teams running multiple roles and active transaction books.',
+    copy: 'For growing teams with more people, more files, and more deals to keep aligned.',
     points: [
       'Everything in Starter',
-      'Module rollout across teams',
-      'Reporting and performance dashboards',
-      'Workflow support and onboarding',
+      'Roll out across more teams',
+      'See movement and bottlenecks clearly',
+      'Guided onboarding and rollout support',
     ],
     featured: true,
   },
   {
     name: 'Enterprise',
     price: 'Custom',
-    copy: 'For high-volume operations requiring custom rollout and governance.',
+    copy: 'For high-volume operations that need more control and a tailored rollout.',
     points: [
       'Everything in Growth',
       'Dedicated implementation support',
-      'Advanced controls and governance',
-      'Commercial terms aligned to scale',
+      'Governance for larger teams',
+      'Commercial terms shaped to scale',
     ],
   },
 ]
 
 export default function Pricing() {
+  useEffect(() => {
+    document.title = 'Pricing | Arch9'
+
+    let description = document.querySelector('meta[name="description"]')
+    if (!description) {
+      description = document.createElement('meta')
+      description.setAttribute('name', 'description')
+      document.head.appendChild(description)
+    }
+
+    description.setAttribute(
+      'content',
+      'Arch9 pricing is shaped around your transaction volume, team size, and rollout scope.'
+    )
+  }, [])
+
   return (
     <div className="bridge-site-bg min-h-screen text-[#171412]">
       <Header />
@@ -52,10 +69,10 @@ export default function Pricing() {
               Pricing
             </p>
             <h1 className="mt-6 text-[3.2rem] font-semibold leading-[0.92] tracking-[-0.07em] text-[#171412] sm:text-[4.2rem] lg:text-[4.8rem]">
-              Pricing built around your workflow complexity.
+              Pricing shaped around how your team moves together.
             </h1>
             <p className="mx-auto mt-5 max-w-[680px] text-[1rem] leading-8 text-[#6e6357]">
-              Bridge 9 pricing is based on the number of roles, modules, and transaction volume you need to run in one shared workspace.
+              Arch9 pricing is based on the number of roles, transactions, and rollout scope you need in one shared system.
             </p>
           </div>
         </SectionContainer>
@@ -103,10 +120,10 @@ export default function Pricing() {
         <SectionContainer>
           <div className="rounded-[34px] border border-[#201b16] bg-[#171412] p-8 text-white shadow-[0_30px_90px_rgba(23,20,18,0.14)] lg:p-12">
             <h2 className="text-[2.2rem] font-semibold leading-[0.98] tracking-[-0.05em] lg:text-[3rem]">
-              Need a custom rollout plan?
+              Need a rollout tailored to your team?
             </h2>
             <p className="mt-4 max-w-[44rem] text-[1rem] leading-8 text-white/72">
-              We scope pricing against your real transaction model, role setup, expected volume, and implementation sequence.
+              We scope pricing against your transaction model, role setup, expected volume, and implementation sequence.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href="/contact" className="bridge-button-primary">
