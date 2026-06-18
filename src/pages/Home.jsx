@@ -101,34 +101,24 @@ const showcaseData = [
 
 const processSteps = [
   {
-    icon: CheckCircle2,
-    title: 'Offer Accepted',
-    copy: 'The transaction begins with the agreed terms and key parties in place.',
+    icon: Send,
+    title: 'Capture the deal',
+    copy: 'The agent starts the transaction once the offer is signed.',
   },
   {
-    icon: UserPlus,
-    title: 'Parties Invited',
-    copy: 'Agents, attorneys, bond originators and clients join the same view.',
+    icon: Users,
+    title: 'Onboard the parties',
+    copy: 'Buyers and sellers submit the right information and documents through guided portals.',
   },
   {
-    icon: FolderCheck,
-    title: 'Documents Collected',
-    copy: 'Required files are requested, submitted and kept with the deal.',
-  },
-  {
-    icon: Banknote,
-    title: 'Finance Managed',
-    copy: 'Bond progress and bank feedback stay visible to the right people.',
-  },
-  {
-    icon: Scale,
-    title: 'Transfer Progresses',
-    copy: 'Legal steps, signing and lodgement move with clearer context.',
+    icon: Building2,
+    title: 'Route the work',
+    copy: 'Attorneys, bond originators and internal teams receive the context they need.',
   },
   {
     icon: BadgeCheck,
-    title: 'Registration Complete',
-    copy: 'Final milestones close the loop and everyone knows the outcome.',
+    title: 'Track to registration',
+    copy: 'Every party can see what has happened, what is outstanding, and what comes next.',
   },
 ]
 
@@ -189,37 +179,43 @@ const roleCards = [
 ]
 
 const trustGroups = ['Tuckers', 'Agency Logos', 'Developer Logos', 'Originator Logos']
-const heroHeadlineLines = ['One transaction.', 'Every party connected.']
+const heroHeadlineLines = ['Property transactions.', 'Finally connected.']
 const heroPartyCards = [
   {
     icon: Users,
     title: 'Agent',
-    copy: 'Move the deal after the offer is signed.',
+    outcome: 'Get paid sooner.',
+    copy: 'Keep deals moving after the offer is signed.',
   },
   {
     icon: UserRound,
     title: 'Buyer',
-    copy: 'See what is needed and what happens next.',
+    outcome: 'Know what happens next.',
+    copy: 'See what is needed and where the transaction stands.',
   },
   {
     icon: UserRound,
     title: 'Seller',
-    copy: 'Stay close to progress through registration.',
+    outcome: 'Stay close to progress.',
+    copy: 'Track the path from sale to registration.',
   },
   {
     icon: Landmark,
     title: 'Attorney',
-    copy: 'Receive cleaner files and clearer context.',
+    outcome: 'Receive cleaner files.',
+    copy: 'Work with better context from day one.',
   },
   {
     icon: WalletCards,
     title: 'Bond Originator',
-    copy: 'Keep finance visible to the right parties.',
+    outcome: 'Keep finance visible.',
+    copy: 'Make application status clear to the right parties.',
   },
   {
     icon: Building2,
     title: 'Developer',
-    copy: 'See every sale moving through transfer.',
+    outcome: 'See every sale moving.',
+    copy: 'Track transactions across projects and teams.',
   },
 ]
 const connectedParties = ['Buyer', 'Seller', 'Agent', 'Attorney', 'Finance']
@@ -242,22 +238,21 @@ const socialProofCards = [
   },
 ]
 
-function BrowserDeviceFrame({ children, dark = false, label = 'Arch9' }) {
-  return (
-    <div className={`arch-browser-frame ${dark ? 'arch-browser-frame-dark' : ''}`}>
-      <div className="arch-browser-bar">
-        <span className="arch-browser-dot" />
-        <span className="arch-browser-dot" />
-        <span className="arch-browser-dot" />
-        <span className={`ml-2 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${dark ? 'bg-white/10 text-[#B9B1A7]' : 'bg-[#0D1613] text-[#F3EEE6]'}`}>
-          <span className="h-1.5 w-1.5 rounded-full bg-[#86E4C2]" />
-          {label}
-        </span>
-      </div>
-      <div className="p-2 md:p-4">{children}</div>
-    </div>
-  )
-}
+const journeyStages = [
+  ['Offer Signed', 'Complete', 'done'],
+  ['Buyer Onboarded', 'Complete', 'done'],
+  ['Finance Approved', 'In progress', 'active'],
+  ['Transfer Instructed', 'Next', 'next'],
+  ['Registered', 'Waiting', 'waiting'],
+]
+
+const journeyParties = [
+  ['Agent', Users],
+  ['Buyer', UserRound],
+  ['Seller', UserRound],
+  ['Attorney', Landmark],
+  ['Finance', WalletCards],
+]
 
 function MiniStatus({ label, value, float = false }) {
   const shouldReduceMotion = useReducedMotion()
@@ -290,7 +285,7 @@ function TransactionWorkspaceVisual({ floating = false }) {
     <div className="group/product overflow-hidden rounded-[28px] border border-[rgba(243,238,230,0.12)] bg-[#071E1A]">
       <div className="flex items-center justify-between border-b border-[rgba(243,238,230,0.12)] bg-[#0D1613] px-5 py-4 md:px-8">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#86E4C2]">Transaction Workspace</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#86E4C2]">Transaction</p>
           <h3 className="mt-2 text-[1.4rem] font-extrabold text-[#F3EEE6] md:text-[2rem]">Unit 14 · Junoah Estate</h3>
         </div>
         <div className="hidden rounded-full border border-[rgba(134,228,194,0.22)] bg-[#050807] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#F3EEE6] sm:block">
@@ -333,9 +328,9 @@ function TransactionWorkspaceVisual({ floating = false }) {
 
         <div className="grid gap-4">
           <MiniStatus label="Next Step" value="Attorney instruction" float={floating} />
-          <MiniStatus label="Outstanding Documents" value="2 buyer documents" float={floating} />
-          <MiniStatus label="Latest Activity" value="Payslip requested" float={floating} />
-          <MiniStatus label="Connected Parties" value="4 connected" float={floating} />
+          <MiniStatus label="Documents needed" value="2 buyer documents" float={floating} />
+          <MiniStatus label="Latest update" value="Payslip requested" float={floating} />
+          <MiniStatus label="Parties connected" value="4 connected" float={floating} />
         </div>
       </div>
     </div>
@@ -436,54 +431,111 @@ function ClientPortalVisual() {
   )
 }
 
-function HeroMockup() {
+function HeroJourneyVisual() {
   return (
-    <div className="mx-auto w-full max-w-[760px] lg:max-w-none">
-      <BrowserDeviceFrame dark label="Live transaction">
-        <TransactionWorkspaceVisual floating />
-      </BrowserDeviceFrame>
+    <div className="relative mx-auto w-full max-w-[720px] lg:max-w-none">
+      <div className="absolute -inset-10 rounded-full bg-[radial-gradient(circle,rgba(0,69,48,0.12),transparent_62%)]" />
+      <div className="relative overflow-hidden rounded-[34px] border border-[#0A3028]/10 bg-white/58 p-4 shadow-[0_28px_90px_rgba(5,8,7,0.12)] backdrop-blur-xl sm:p-6">
+        <div className="grid gap-4 sm:grid-cols-[0.85fr_1.15fr] sm:items-center">
+          <div className="flex items-center gap-4 rounded-[26px] border border-[#0A3028]/10 bg-[#F8F4EC]/88 p-4 shadow-[0_18px_48px_rgba(5,8,7,0.08)]">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[20px] bg-[#071E1A] text-[#F3EEE6]">
+              <Building2 className="h-8 w-8" />
+            </div>
+            <div>
+              <h3 className="text-lg font-extrabold tracking-[-0.03em] text-[#05120F]">Unit 14 · Junoah Estate</h3>
+              <p className="mt-1 text-sm font-bold text-[#006B4D]">Registration in progress</p>
+              <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-[#31433D]">
+                <Users className="h-4 w-4" />
+                5 parties connected
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-[26px] border border-[#0A3028]/10 bg-white/72 p-4">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#006B4D]">Property journey</p>
+            <div className="mt-4 h-px bg-[#0A3028]/14" />
+            <div className="mt-4 grid gap-3">
+              {journeyStages.map(([stage, status, state]) => (
+                <div
+                  key={stage}
+                  className={`flex items-center justify-between gap-3 rounded-[18px] border px-4 py-3 ${
+                    state === 'active'
+                      ? 'border-[#0A3028] bg-[#071E1A] text-[#F3EEE6] shadow-[0_18px_42px_rgba(7,30,26,0.22)]'
+                      : 'border-[#0A3028]/10 bg-[#F8F4EC]/78 text-[#05120F]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs font-black ${
+                        state === 'done'
+                          ? 'border-[#006B4D] bg-[#006B4D] text-white'
+                          : state === 'active'
+                            ? 'border-[#86E4C2] text-[#86E4C2]'
+                            : 'border-[#0A3028]/32 text-[#0A3028]/54'
+                      }`}
+                    >
+                      {state === 'done' ? '✓' : ''}
+                    </span>
+                    <span className="text-sm font-extrabold">{stage}</span>
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-[0.14em] ${state === 'active' ? 'text-[#86E4C2]' : 'text-[#5B6B64]'}`}>
+                    {status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
+          {journeyParties.map(([party, Icon]) => (
+            <div key={party} className="relative rounded-[18px] border border-[#0A3028]/10 bg-white/76 px-3 py-3 shadow-[0_14px_34px_rgba(5,8,7,0.08)]">
+              <div className="flex items-center gap-2">
+                <Icon className="h-4 w-4 text-[#071E1A]" />
+                <div>
+                  <p className="text-xs font-extrabold text-[#05120F]">{party}</p>
+                  <p className="text-[11px] font-medium text-[#5B6B64]">Connected</p>
+                </div>
+              </div>
+              <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-[#24B47E]" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
 
-function HeroPartyStrip() {
+function RoleOutcomesSection() {
   return (
-    <FadeUp className="mt-8 lg:mt-14">
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86E4C2]">
-        BUILT FOR EVERY PARTY INVOLVED
-      </p>
-      <div className="-mx-6 mt-5 flex snap-x gap-7 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-6">
-        {heroPartyCards.map((card) => {
-          const Icon = card.icon
-          return (
-            <div key={card.title} className="w-[86px] shrink-0 snap-start text-center sm:w-auto sm:rounded-[24px] sm:border sm:border-[rgba(243,238,230,0.12)] sm:bg-white/[0.06] sm:p-5 sm:shadow-[0_22px_68px_rgba(0,0,0,0.2)] sm:backdrop-blur-xl">
-              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(134,228,194,0.22)] bg-[#0D1613] text-[#86E4C2]">
-                <Icon className="h-4 w-4" />
-              </div>
-              <h3 className="mt-3 text-sm font-extrabold tracking-[-0.03em] text-[#F3EEE6] sm:text-lg">{card.title}</h3>
-              <p className="mt-2 hidden text-sm leading-6 text-[#B9B1A7] sm:block">{card.copy}</p>
-            </div>
-          )
-        })}
-      </div>
-    </FadeUp>
-  )
-}
+    <section id="role-outcomes" className="bg-[#FFFCF6] py-[72px] md:py-24 xl:py-[112px]">
+      <div className="mx-auto w-full max-w-[1280px] px-6 md:px-10 xl:px-16">
+        <FadeUp className="mx-auto max-w-[760px] text-center">
+          <h2 className="text-[2.1rem] font-extrabold leading-[1] tracking-[-0.04em] text-[#05120F] md:text-[3.25rem]">
+            Built for every party in the transaction.
+          </h2>
+          <p className="mx-auto mt-4 max-w-[680px] text-[1.05rem] leading-7 text-[#4B5B55] md:text-[1.2rem]">
+            Each role gets the clarity they need, without another disconnected process.
+          </p>
+        </FadeUp>
 
-function ProblemTeaser() {
-  return (
-    <FadeUp className="mt-10 rounded-[28px] bg-[#F3EEE6] p-6 text-[#050807] sm:p-8 lg:hidden">
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-[#071E1A]">The Problem</p>
-      <h2 className="mt-4 text-[2.65rem] font-extrabold leading-[0.94] tracking-[-0.04em]">
-        Sold in 7 days.
-        <br />
-        Registered in 93.
-      </h2>
-      <a href="#problem" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#071E1A]">
-        See why transactions stall
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    </FadeUp>
+        <StaggerContainer className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6" stagger={0.07}>
+          {heroPartyCards.map((card) => {
+            const Icon = card.icon
+            return (
+              <StaggerItem key={card.title} className="rounded-[28px] border border-[#0A3028]/8 bg-[#F8F4EC] p-6 text-center shadow-[0_18px_54px_rgba(5,8,7,0.06)]">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#071E1A] text-[#F3EEE6]">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <p className="mt-6 text-lg font-extrabold text-[#05120F]">{card.title}</p>
+                <h3 className="mt-5 text-[1.05rem] font-extrabold leading-6 text-[#05120F]">{card.outcome}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#4B5B55]">{card.copy}</p>
+              </StaggerItem>
+            )
+          })}
+        </StaggerContainer>
+      </div>
+    </section>
   )
 }
 
@@ -570,7 +622,7 @@ function SignatureMomentSection() {
               <div className="relative mx-auto mt-4 max-w-[640px] rounded-[34px] border border-[rgba(134,228,194,0.22)] bg-[#F3EEE6] p-5 text-[#050807] shadow-[0_34px_110px_rgba(0,0,0,0.32)] md:p-7">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#887765]">Live Transaction</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#887765]">In progress</p>
                     <h3 className="mt-2 text-2xl font-extrabold tracking-[-0.04em]">Junoah Estate · Unit 14</h3>
                   </div>
                   <span className="rounded-full bg-[#080808] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white">72%</span>
@@ -671,58 +723,42 @@ function PlatformSection() {
 }
 
 function HowItWorksSection() {
-  const timelineRef = useRef(null)
-  const shouldReduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: timelineRef,
-    offset: ['start 70%', 'end 65%'],
-  })
-  const timelineScale = useTransform(scrollYProgress, [0, 1], [0, 1])
-
   return (
-    <SectionContainer id="how-it-works" tone="dark">
-      <FadeUp className="mx-auto max-w-[840px] text-center">
-        <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#86E4C2]">How It Works</p>
-        <h2 className="mt-4 text-[2.25rem] font-extrabold leading-none text-white md:text-[3.25rem] xl:text-[4.35rem]">
-          From offer to registration.
-        </h2>
-        <p className="mx-auto mt-6 max-w-[560px] text-[1.125rem] leading-8 text-white/70 xl:text-[1.25rem] xl:leading-9">
-          One transaction. Every party connected.
-        </p>
-      </FadeUp>
+    <section id="how-it-works" className="bg-[#F8F4EC] py-[72px] md:py-24 xl:py-[112px]">
+      <div className="mx-auto w-full max-w-[1280px] px-6 md:px-10 xl:px-16">
+        <FadeUp className="mx-auto max-w-[840px] text-center">
+          <h2 className="text-[2.1rem] font-extrabold leading-[1] tracking-[-0.04em] text-[#05120F] md:text-[3.35rem]">
+            How Arch9 connects the transaction.
+          </h2>
+        </FadeUp>
 
-      <div ref={timelineRef} className="relative mx-auto mt-14 grid max-w-[1020px] gap-5 md:gap-7">
-        <div className="absolute bottom-8 left-7 top-8 hidden w-px bg-white/10 md:block" />
-        <motion.div
-          className="absolute bottom-8 left-7 top-8 hidden w-px origin-top bg-[#86E4C2] md:block"
-          style={{ scaleY: shouldReduceMotion ? 1 : timelineScale }}
-        />
-        {processSteps.map((step, index) => {
-          const Icon = step.icon
-          return (
-            <motion.article
-              key={step.title}
-              className="relative grid gap-5 rounded-[30px] border border-white/10 bg-white/[0.05] p-6 md:grid-cols-[96px_1fr] md:items-center md:p-8"
-              initial={{ opacity: 0.45, y: shouldReduceMotion ? 0 : 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.42 }}
-              transition={{ duration: 0.55, ease: motionEaseOut }}
-            >
-              <div className="flex items-center gap-4 md:block">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f7efe0] text-[#171412] md:mx-auto">
-                  <Icon className="h-6 w-6" />
+        <div className="relative mx-auto mt-12 grid max-w-[1100px] gap-8 md:grid-cols-4">
+          <div className="absolute left-[12.5%] right-[12.5%] top-7 hidden h-px bg-[#0A3028]/20 md:block" />
+          {processSteps.map((step, index) => {
+            const Icon = step.icon
+            return (
+              <FadeUp key={step.title} delay={index * 0.06} className="relative text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#0A3028]/20 bg-[#071E1A] text-[#F3EEE6] shadow-[0_12px_34px_rgba(5,8,7,0.12)]">
+                  <span className="text-sm font-extrabold">{index + 1}</span>
                 </div>
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#86E4C2] md:mt-4 md:text-center">Step {index + 1}</p>
-              </div>
-              <div>
-                <h3 className="text-[1.45rem] font-bold text-white md:text-[1.8rem]">{step.title}</h3>
-                <p className="mt-3 text-base leading-7 text-white/68 md:text-[1.05rem]">{step.copy}</p>
-              </div>
-            </motion.article>
-          )
-        })}
+                <div className="mx-auto mt-8 flex h-20 w-20 items-center justify-center rounded-full border border-[#0A3028]/10 bg-[#FFFCF6] text-[#071E1A] shadow-[0_16px_44px_rgba(5,8,7,0.06)]">
+                  <Icon className="h-8 w-8" />
+                </div>
+                <h3 className="mt-5 text-lg font-extrabold text-[#05120F]">{step.title}</h3>
+                <p className="mx-auto mt-3 max-w-[230px] text-sm leading-6 text-[#4B5B55]">{step.copy}</p>
+              </FadeUp>
+            )
+          })}
+        </div>
+
+        <FadeUp className="mt-10 flex justify-center">
+          <a href="#how-it-works" className="bridge-button-primary px-7">
+            See How It Works
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </FadeUp>
       </div>
-    </SectionContainer>
+    </section>
   )
 }
 
@@ -857,24 +893,24 @@ export default function Home() {
       <main>
         <section
           id="top"
-          className="bg-[#050807]"
+          className="bg-[#F8F4EC]"
           style={{
             background:
-              'radial-gradient(circle at 70% 30%, rgba(134,228,194,0.10), transparent 38%), linear-gradient(180deg, #050807 0%, #071E1A 54%, #050807 100%)',
+              'radial-gradient(circle at 72% 28%, rgba(0,69,48,0.12), transparent 34%), linear-gradient(90deg, rgba(255,252,246,0.98) 0%, rgba(255,252,246,0.9) 42%, rgba(248,244,236,0.76) 100%)',
           }}
         >
-          <SectionContainer className="pb-[56px] pt-[112px] md:pb-24 md:pt-32 xl:pb-[120px] xl:pt-36">
+          <SectionContainer className="pb-[64px] pt-[116px] md:pb-24 md:pt-32 xl:pb-[112px] xl:pt-36">
             <div className="grid gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:gap-24">
               <div className="max-w-[680px]">
                 <motion.p
-                  className="text-xs font-bold uppercase tracking-[0.18em] text-[#86E4C2] md:text-base"
+                  className="text-xs font-bold uppercase tracking-[0.18em] text-[#006B4D] md:text-base"
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: motionEaseOut }}
                 >
-                  THE NEW STANDARD FOR PROPERTY TRANSACTIONS
+                  FROM OFFER TO REGISTRATION
                 </motion.p>
-                <h1 className="mt-5 text-[3rem] font-extrabold leading-[0.94] tracking-[-0.04em] text-[#F3EEE6] sm:text-[3.45rem] md:text-[5.6rem] xl:text-[6.75rem]">
+                <h1 className="mt-5 text-[3.05rem] font-extrabold leading-[0.94] tracking-[-0.04em] text-[#05251D] sm:text-[3.55rem] md:text-[5.4rem] xl:text-[6.35rem]">
                   {heroHeadlineLines.map((line, index) => (
                     <motion.span
                       key={line}
@@ -889,7 +925,7 @@ export default function Home() {
                 </h1>
 
                 <motion.p
-                  className="mt-5 max-w-full text-[1.125rem] font-medium leading-[1.45] text-[#B9B1A7] lg:max-w-[560px] xl:text-[1.375rem]"
+                  className="mt-5 max-w-full text-[1.125rem] font-medium leading-[1.55] text-[#31433D] lg:max-w-[560px] xl:text-[1.25rem]"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.46, ease: motionEaseOut }}
@@ -907,7 +943,7 @@ export default function Home() {
                     Book a Demo
                     <ArrowRight className="h-4 w-4" />
                   </a>
-                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[rgba(243,238,230,0.42)] bg-transparent text-[#F3EEE6] sm:w-auto">
+                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[#071E1A]/28 bg-transparent text-[#071E1A] sm:w-auto">
                     See How It Works
                   </a>
                 </motion.div>
@@ -918,19 +954,18 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.34, ease: motionEaseOut }}
               >
-                <HeroMockup />
+                <HeroJourneyVisual />
               </motion.div>
             </div>
-            <HeroPartyStrip />
-            <ProblemTeaser />
           </SectionContainer>
         </section>
 
+        <RoleOutcomesSection />
+        <HowItWorksSection />
         <ProblemSection />
         <PlatformSection />
         <SignatureMomentSection />
         <ProductShowcase items={showcaseData} />
-        <HowItWorksSection />
         <OutcomesSection />
         <RolesSection />
         <TrustSection />
