@@ -204,8 +204,8 @@ export default function Header() {
         style={{ scaleX: shouldReduceMotion ? 0 : scaleX }}
       />
       <div
-        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between rounded-full border border-[rgba(243,238,230,0.12)] bg-[rgba(255,255,255,0.06)] px-5 text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[20px] transition duration-300 md:h-[72px] md:px-6 ${
-          scrolled ? 'bg-[rgba(7,30,26,0.72)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(0,0,0,0.32)]' : ''
+        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between rounded-full border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] px-5 text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] transition duration-300 md:h-[72px] md:px-6 ${
+          scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
         }`}
         onMouseLeave={() => setActiveMenu(null)}
       >

@@ -943,7 +943,7 @@ export default function Home() {
                     Book a Demo
                     <ArrowRight className="h-4 w-4" />
                   </a>
-                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[#071E1A]/28 bg-transparent text-[#071E1A] sm:w-auto">
+                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[#071E1A]/38 bg-white/42 text-[#071E1A] sm:w-auto">
                     See How It Works
                   </a>
                 </motion.div>
