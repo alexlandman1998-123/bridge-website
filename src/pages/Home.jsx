@@ -618,9 +618,9 @@ function TrustStrip() {
   const rotatingLogos = [...trustLogos, ...trustLogos]
 
   return (
-    <FadeUp className="hidden py-12 text-center lg:block">
+    <FadeUp className="hidden py-7 text-center lg:block">
       <p className="text-xs font-black uppercase tracking-[0.32em] text-[#5B6B64]">Trusted by leading professionals</p>
-      <div className="mx-auto mt-8 w-full max-w-[1440px] overflow-hidden opacity-45 grayscale [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
+      <div className="mx-auto mt-5 w-full max-w-[1440px] overflow-hidden opacity-45 grayscale [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
         <div className="arch-logo-marquee flex w-max items-center gap-16">
           {rotatingLogos.map((logo, index) => (
             <div key={`${logo}-${index}`} className="min-w-[160px] text-center text-xl font-black tracking-[-0.04em] text-[#31433D]">
@@ -635,7 +635,7 @@ function TrustStrip() {
 
 function RoleOutcomesSection() {
   return (
-    <section id="role-outcomes" className="bg-[#FFFCF6] py-[72px] md:py-24 xl:py-[112px]">
+    <section id="role-outcomes" className="bg-[#FFFCF6] pb-[72px] pt-12 md:pb-24 md:pt-16 xl:pb-[112px] xl:pt-20">
       <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
         <FadeUp className="mx-auto max-w-[760px] text-center">
           <h2 className="text-[2.1rem] font-extrabold leading-[1] tracking-[-0.04em] text-[#05120F] md:text-[3.25rem]">
@@ -858,32 +858,85 @@ function PlatformSection() {
 }
 
 function HowItWorksSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section id="how-it-works" className="bg-[#F8F4EC] py-[72px] md:py-24 xl:py-[112px]">
-      <div className="mx-auto w-full max-w-[1280px] px-6 md:px-10 xl:px-16">
+      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
         <FadeUp className="mx-auto max-w-[840px] text-center">
           <h2 className="text-[2.1rem] font-extrabold leading-[1] tracking-[-0.04em] text-[#05120F] md:text-[3.35rem]">
             How Arch9 connects the transaction.
           </h2>
+          <p className="mx-auto mt-5 max-w-[640px] text-base leading-7 text-[#4B5B55] md:text-lg">
+            A connected path from signed offer to registration, with every party moving from the same view.
+          </p>
         </FadeUp>
 
-        <div className="relative mx-auto mt-12 grid max-w-[1100px] gap-8 md:grid-cols-4">
-          <div className="absolute left-[12.5%] right-[12.5%] top-7 hidden h-px bg-[#0A3028]/20 md:block" />
-          {processSteps.map((step, index) => {
-            const Icon = step.icon
-            return (
-              <FadeUp key={step.title} delay={index * 0.06} className="relative text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#0A3028]/20 bg-[#071E1A] text-[#F3EEE6] shadow-[0_12px_34px_rgba(5,8,7,0.12)]">
-                  <span className="text-sm font-extrabold">{index + 1}</span>
-                </div>
-                <div className="mx-auto mt-8 flex h-20 w-20 items-center justify-center rounded-full border border-[#0A3028]/10 bg-[#FFFCF6] text-[#071E1A] shadow-[0_16px_44px_rgba(5,8,7,0.06)]">
-                  <Icon className="h-8 w-8" />
-                </div>
-                <h3 className="mt-5 text-lg font-extrabold text-[#05120F]">{step.title}</h3>
-                <p className="mx-auto mt-3 max-w-[230px] text-sm leading-6 text-[#4B5B55]">{step.copy}</p>
-              </FadeUp>
-            )
-          })}
+        <div className="relative mx-auto mt-12 overflow-hidden rounded-[36px] border border-[#0A3028]/8 bg-[#FFFCF6]/82 p-5 shadow-[0_30px_90px_rgba(5,8,7,0.08)] md:p-8 xl:p-12">
+          <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#24B47E]/35 to-transparent" />
+          <div className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-[#24B47E]/8 blur-3xl" />
+
+          <div className="relative md:hidden">
+            <div className="absolute bottom-8 left-7 top-7 w-px bg-[#0A3028]/12" />
+            <motion.div
+              className="absolute bottom-8 left-7 top-7 w-px origin-top bg-gradient-to-b from-[#24B47E] via-[#0A3028]/50 to-[#0A3028]/14"
+              initial={{ scaleY: shouldReduceMotion ? 1 : 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 1.2, delay: 0.25, ease: motionEaseOut }}
+            />
+
+            <StaggerContainer className="grid gap-4" stagger={0.08}>
+              {processSteps.map((step, index) => {
+                const Icon = step.icon
+                return (
+                  <StaggerItem key={step.title} className="group relative pl-20">
+                    <div className="absolute left-0 top-1 z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#0A3028]/18 bg-[#071E1A] text-[#F3EEE6] shadow-[0_14px_36px_rgba(5,8,7,0.14)]">
+                      <span className="text-sm font-extrabold">{index + 1}</span>
+                    </div>
+                    <div className="rounded-[28px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_48px_rgba(5,8,7,0.06)] transition duration-300 hover:-translate-y-1 hover:border-[#0A3028]/18 hover:shadow-[0_24px_62px_rgba(5,8,7,0.1)]">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#0A3028]/10 bg-[#F8F4EC] text-[#071E1A] transition duration-300 group-hover:bg-[#071E1A] group-hover:text-[#F3EEE6]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="mt-5 text-lg font-extrabold text-[#05120F]">{step.title}</h3>
+                      <p className="mt-3 text-sm leading-6 text-[#4B5B55]">{step.copy}</p>
+                    </div>
+                  </StaggerItem>
+                )
+              })}
+            </StaggerContainer>
+          </div>
+
+          <div className="relative hidden md:block">
+            <div className="absolute left-[12.5%] right-[12.5%] top-7 h-px bg-[#0A3028]/14" />
+            <motion.div
+              className="absolute left-[12.5%] right-[12.5%] top-7 h-px origin-left bg-gradient-to-r from-[#24B47E] via-[#0A3028]/55 to-[#0A3028]/14"
+              initial={{ scaleX: shouldReduceMotion ? 1 : 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 1.25, delay: 0.25, ease: motionEaseOut }}
+            />
+
+            <StaggerContainer className="grid gap-5 md:grid-cols-4 xl:gap-6" stagger={0.08}>
+              {processSteps.map((step, index) => {
+                const Icon = step.icon
+                return (
+                  <StaggerItem key={step.title} className="group relative text-center">
+                    <div className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#0A3028]/18 bg-[#071E1A] text-[#F3EEE6] shadow-[0_14px_36px_rgba(5,8,7,0.14)] transition duration-300 group-hover:scale-105">
+                      <span className="text-sm font-extrabold">{index + 1}</span>
+                    </div>
+                    <div className="mt-8 min-h-[270px] rounded-[30px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.06)] transition duration-300 hover:-translate-y-2 hover:border-[#0A3028]/18 hover:shadow-[0_28px_76px_rgba(5,8,7,0.11)] xl:p-7">
+                      <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-full border border-[#0A3028]/10 bg-[#F8F4EC] text-[#071E1A] shadow-[0_14px_38px_rgba(5,8,7,0.05)] transition duration-300 group-hover:bg-[#071E1A] group-hover:text-[#F3EEE6]">
+                        <Icon className="h-7 w-7" />
+                      </div>
+                      <h3 className="mt-6 text-lg font-extrabold text-[#05120F]">{step.title}</h3>
+                      <p className="mx-auto mt-3 max-w-[245px] text-sm leading-6 text-[#4B5B55]">{step.copy}</p>
+                    </div>
+                  </StaggerItem>
+                )
+              })}
+            </StaggerContainer>
+          </div>
         </div>
 
         <FadeUp className="mt-10 flex justify-center">
@@ -1034,8 +1087,8 @@ export default function Home() {
               'radial-gradient(circle at 72% 28%, rgba(0,69,48,0.12), transparent 34%), linear-gradient(90deg, rgba(255,252,246,0.98) 0%, rgba(255,252,246,0.9) 42%, rgba(248,244,236,0.76) 100%)',
           }}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-6 pb-[64px] pt-[116px] md:px-8 md:pb-24 md:pt-32 xl:pb-[112px] xl:pt-36">
-            <div className="grid min-h-[680px] gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:min-h-[760px] xl:gap-24">
+          <div className="mx-auto w-full max-w-[1440px] px-6 pb-11 pt-[116px] md:px-8 md:pb-16 md:pt-32 xl:pb-20 xl:pt-36">
+            <div className="grid min-h-[620px] gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:min-h-[700px] xl:gap-24">
               <div className="max-w-[680px]">
                 <motion.p
                   className="text-xs font-bold uppercase tracking-[0.18em] text-[#006B4D] md:text-base"
