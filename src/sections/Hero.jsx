@@ -48,7 +48,7 @@ export default function Hero() {
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="#platform"
+                href="/platform/overview"
                 className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-white/24 bg-white/[0.02] px-6 py-3 text-[0.95rem] font-semibold text-[#f2ece3] transition hover:bg-white/[0.06]"
               >
                 View Platform

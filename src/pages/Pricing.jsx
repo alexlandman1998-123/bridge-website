@@ -129,7 +129,7 @@ export default function Pricing() {
               <a href="/contact" className="bridge-button-primary">
                 Book a pricing call
               </a>
-              <a href="/#platform" className="bridge-button-secondary">
+              <a href="/platform/overview" className="bridge-button-secondary">
                 View platform
               </a>
             </div>

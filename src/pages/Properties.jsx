@@ -3,6 +3,7 @@ import { ArrowRight, Bath, BedDouble, Building2, ChevronDown, MapPin, Search, Sl
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { formatPrice, properties, propertyTypes } from '../data/properties'
+import { readPropertyFilters } from '../lib/listingFilters'
 
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
 const bathroomOptions = ['Any', '1+', '2+', '3+']
@@ -11,16 +12,6 @@ const sortOptions = [
   { label: 'Price low to high', value: 'price-asc' },
   { label: 'Price high to low', value: 'price-desc' },
 ]
-
-const initialFilters = {
-  location: '',
-  type: 'Any',
-  minPrice: '',
-  maxPrice: '',
-  bedrooms: 'Any',
-  bathrooms: 'Any',
-  sort: 'newest',
-}
 
 function Field({ label, children }) {
   return (
@@ -100,7 +91,7 @@ function PropertyCard({ property }) {
 }
 
 export default function Properties() {
-  const [filters, setFilters] = useState(initialFilters)
+  const [filters, setFilters] = useState(() => readPropertyFilters())
 
   useEffect(() => {
     document.title = 'Properties | Arch9'
@@ -116,9 +107,11 @@ export default function Properties() {
       .filter((property) => {
         const matchesLocation = `${property.location} ${property.title}`.toLowerCase().includes(filters.location.toLowerCase())
         const matchesType = filters.type === 'Any' || property.type === filters.type
+        const matchesStatus = !filters.status || property.listingType === filters.status
         return (
           matchesLocation &&
           matchesType &&
+          matchesStatus &&
           property.price >= minPrice &&
           property.price <= maxPrice &&
           property.bedrooms >= minimumBedrooms &&

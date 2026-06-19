@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import Contact from './pages/Contact'
-import Home from './pages/Home'
+import PlatformOverview from './pages/Home'
 import Pricing from './pages/Pricing'
 import Properties from './pages/Properties'
 import PropertyDetail from './pages/PropertyDetail'
+import MarketingHome from './pages/MarketingHome'
 
 export default function App() {
   const [pathname, setPathname] = useState(window.location.pathname)
@@ -25,6 +26,10 @@ export default function App() {
     return <Pricing />
   }
 
+  if (pathname === '/platform/overview' || pathname.startsWith('/platform/overview/')) {
+    return <PlatformOverview />
+  }
+
   if (pathname === '/properties') {
     return <Properties />
   }
@@ -34,5 +39,5 @@ export default function App() {
     return <PropertyDetail slug={slug} />
   }
 
-  return <Home />
+  return <MarketingHome />
 }

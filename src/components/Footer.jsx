@@ -1,6 +1,6 @@
 const footerLinks = [
   { label: 'Buy', href: '/properties' },
-  { label: 'Platform', href: '/#platform' },
+  { label: 'Platform', href: '/platform/overview' },
   { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Roles', href: '/#roles' },
   { label: 'Pricing', href: '/pricing' },

@@ -20,12 +20,12 @@ import { motionEaseOut } from './motion/timing'
 const appAuthUrl = 'https://app.arch9.co.za'
 
 const platformItems = [
-  { label: 'Overview', href: '/#platform' },
-  { label: 'How It Works', href: '/#how-it-works' },
-  { label: 'Transaction Timeline', href: '/#connected-timeline' },
-  { label: 'Document Collection', href: '/#document-collection' },
-  { label: 'Client Portal', href: '/#client-portal' },
-  { label: 'Reporting', href: '/#outcomes' },
+  { label: 'Overview', href: '/platform/overview' },
+  { label: 'How It Works', href: '/platform/overview#how-it-works' },
+  { label: 'Transaction Timeline', href: '/platform/overview#connected-timeline' },
+  { label: 'Document Collection', href: '/platform/overview#document-collection' },
+  { label: 'Client Portal', href: '/platform/overview#client-portal' },
+  { label: 'Reporting', href: '/platform/overview#outcomes' },
 ]
 
 const solutionItems = [
@@ -37,10 +37,29 @@ const solutionItems = [
 ]
 
 const companyItems = [
-  { label: 'About Arch9', href: '/#top' },
-  { label: 'Launch Partners', href: '/#trust' },
+  { label: 'About Arch9', href: '/platform/overview' },
+  { label: 'Launch Partners', href: '/platform/overview#trust' },
   { label: 'Contact', href: '/contact' },
   { label: 'Careers', href: '/contact' },
+]
+
+const homeNavItems = [
+  { label: 'Buy', href: '/properties' },
+  { label: 'Sell', href: '/#roles' },
+  { label: 'Agents', href: '/#roles' },
+  { label: 'Attorneys', href: '/#roles' },
+  { label: 'Finance', href: '/#roles' },
+  { label: 'Platform', menu: 'platform' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Company', menu: 'company' },
+]
+
+const standardNavItems = [
+  { label: 'Buy', href: '/properties' },
+  { label: 'Platform', menu: 'platform' },
+  { label: 'Solutions', menu: 'solutions' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Company', menu: 'company' },
 ]
 
 function PlatformDropdown() {
@@ -158,6 +177,7 @@ export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const isHome = window.location.pathname === '/'
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -204,27 +224,31 @@ export default function Header() {
         style={{ scaleX: shouldReduceMotion ? 0 : scaleX }}
       />
       <div
-        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between rounded-full border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] px-5 text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] transition duration-300 md:h-[72px] md:px-6 ${
-          scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
+        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between rounded-full px-5 transition duration-300 md:h-[80px] md:px-8 ${
+          isHome
+            ? `border border-white/10 text-white shadow-none backdrop-blur-0 ${
+                scrolled
+                  ? 'bg-[rgba(6,45,37,0.92)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_58px_rgba(3,18,15,0.28)] backdrop-blur-[16px]'
+                  : 'bg-transparent'
+              }`
+            : `border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] ${
+                scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
+              }`
         }`}
         onMouseLeave={() => setActiveMenu(null)}
       >
-        <a href="/" className="text-[0.95rem] font-extrabold tracking-[0.24em] text-[#F3EEE6]">
+        <a href="/" className={`text-[0.95rem] font-extrabold tracking-[0.24em] ${isHome ? 'text-white' : 'text-[#F3EEE6]'}`}>
           ARCH9
         </a>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
-          {[
-            { label: 'Buy', href: '/properties' },
-            { label: 'Platform', menu: 'platform' },
-            { label: 'Solutions', menu: 'solutions' },
-            { label: 'Pricing', href: '/pricing' },
-            { label: 'Company', menu: 'company' },
-          ].map((item) => (
+          {(isHome ? homeNavItems : standardNavItems).map((item) => (
             <div key={item.label} className="relative" onMouseEnter={() => setActiveMenu(item.menu || null)}>
               <a
                 href={item.href || '#'}
-                className="flex h-11 items-center rounded-full px-4 text-sm font-bold text-[#F3EEE6]/72 transition hover:bg-white/[0.07] hover:text-[#F3EEE6]"
+                className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition ${
+                  isHome ? 'text-white/80 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+                }`}
                 onClick={(event) => {
                   if (item.menu) event.preventDefault()
                 }}
@@ -236,7 +260,12 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <a href={appAuthUrl} className="rounded-full px-4 py-3 text-sm font-bold text-[#F3EEE6]/72 transition hover:bg-white/[0.07] hover:text-[#F3EEE6]">
+          <a
+            href={appAuthUrl}
+            className={`rounded-full px-4 py-3 text-sm font-bold transition ${
+              isHome ? 'text-white/80 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+            }`}
+          >
             Login
           </a>
           <a href="/contact" className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm">
@@ -310,44 +339,73 @@ export default function Header() {
                 visible: { transition: { staggerChildren: 0.07, delayChildren: 0.08 } },
               }}
             >
-              <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <a
-                  href="/properties"
-                  className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
-                  onClick={closeMobile}
+              {isHome ? (
+                <motion.div
+                  className="grid gap-1"
+                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
                 >
-                  Buy
-                </a>
-              </motion.div>
-              <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <MobileMenuSection eyebrow="Platform" items={platformItems} onNavigate={closeMobile} />
-              </motion.div>
-              <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <MobileMenuSection
-                  eyebrow="Solutions"
-                  items={solutionItems.map((item) => ({ label: item.label, href: '/#roles' }))}
-                  onNavigate={closeMobile}
-                />
-              </motion.div>
+                  {[
+                    { label: 'Buy', href: '/properties' },
+                    { label: 'Sell', href: '/#roles' },
+                    { label: 'Agents', href: '/#roles' },
+                    { label: 'Attorneys', href: '/#roles' },
+                    { label: 'Finance', href: '/#roles' },
+                    { label: 'Platform', href: '/platform/overview' },
+                    { label: 'Pricing', href: '/pricing' },
+                    { label: 'Company', href: '/platform/overview#trust' },
+                  ].map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="flex min-h-12 items-center text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6]"
+                      onClick={closeMobile}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </motion.div>
+              ) : (
+                <>
+                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                    <a
+                      href="/properties"
+                      className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
+                      onClick={closeMobile}
+                    >
+                      Buy
+                    </a>
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                    <MobileMenuSection eyebrow="Platform" items={platformItems} onNavigate={closeMobile} />
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                    <MobileMenuSection
+                      eyebrow="Solutions"
+                      items={solutionItems.map((item) => ({ label: item.label, href: '/#roles' }))}
+                      onNavigate={closeMobile}
+                    />
+                  </motion.div>
 
-              <motion.div
-                className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-5"
-                variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
-              >
-                {[
-                  { label: 'Pricing', href: '/pricing' },
-                  { label: 'Company', href: '/#trust' },
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="flex min-h-12 items-center text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6]"
-                    onClick={closeMobile}
+                  <motion.div
+                    className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-5"
+                    variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
                   >
-                    {item.label}
-                  </a>
-                ))}
-              </motion.div>
+                    {[
+                      { label: 'Pricing', href: '/pricing' },
+                      { label: 'Company', href: '/#trust' },
+                    ].map((item) => (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        className="flex min-h-12 items-center text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6]"
+                        onClick={closeMobile}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </motion.div>
+                </>
+              )}
             </motion.nav>
 
             <motion.div
