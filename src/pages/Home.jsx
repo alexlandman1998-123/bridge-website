@@ -260,7 +260,7 @@ const heroUpdates = [
   { title: 'Buyer documents received', time: 'Today', icon: ClipboardList },
 ]
 
-const trustLogos = ['Rawson', 'Chas Everitt', 'Tyson', 'Pam Golding', 'Meridian']
+const trustLogos = ['Rawson', 'Chas Everitt', 'Tyson', 'Pam Golding', 'Meridian', 'Tuckers', 'Seeff', 'Jawitz']
 
 function MiniStatus({ label, value, float = false }) {
   const shouldReduceMotion = useReducedMotion()
@@ -589,7 +589,7 @@ function MobileActivityList() {
 
 function ActivityStrip() {
   return (
-    <FadeUp className="mx-auto mt-10 hidden max-w-[1120px] rounded-full border border-[#0A3028]/8 bg-white/82 px-6 py-4 shadow-[0_18px_54px_rgba(5,8,7,0.08)] backdrop-blur-xl lg:block">
+    <FadeUp className="mx-auto mt-10 hidden w-full max-w-[1440px] rounded-full border border-[#0A3028]/8 bg-white/82 px-6 py-4 shadow-[0_18px_54px_rgba(5,8,7,0.08)] backdrop-blur-xl lg:block">
       <div className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-6">
         {heroUpdates.map((update) => {
           const Icon = update.icon
@@ -615,13 +615,19 @@ function ActivityStrip() {
 }
 
 function TrustStrip() {
+  const rotatingLogos = [...trustLogos, ...trustLogos]
+
   return (
     <FadeUp className="hidden py-12 text-center lg:block">
       <p className="text-xs font-black uppercase tracking-[0.32em] text-[#5B6B64]">Trusted by leading professionals</p>
-      <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-5 items-center gap-10 opacity-45 grayscale">
-        {trustLogos.map((logo) => (
-          <div key={logo} className="text-xl font-black tracking-[-0.04em] text-[#31433D]">{logo}</div>
-        ))}
+      <div className="mx-auto mt-8 w-full max-w-[1440px] overflow-hidden opacity-45 grayscale [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
+        <div className="arch-logo-marquee flex w-max items-center gap-16">
+          {rotatingLogos.map((logo, index) => (
+            <div key={`${logo}-${index}`} className="min-w-[160px] text-center text-xl font-black tracking-[-0.04em] text-[#31433D]">
+              {logo}
+            </div>
+          ))}
+        </div>
       </div>
     </FadeUp>
   )

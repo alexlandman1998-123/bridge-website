@@ -227,12 +227,32 @@ button:focus-visible {
   opacity: 1;
 }
 
+.arch-logo-marquee {
+  animation: arch-logo-marquee 34s linear infinite;
+}
+
+.arch-logo-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes arch-logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bridge-button-primary,
   .bridge-button-secondary,
   .bridge-nav-link,
-  .bridge-nav-link::after {
+  .bridge-nav-link::after,
+  .arch-logo-marquee {
     transition: none;
+    animation: none;
   }
 
   .bridge-button-primary:hover,
