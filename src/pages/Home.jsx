@@ -14,8 +14,10 @@ import {
   FolderCheck,
   Landmark,
   LayoutDashboard,
+  MapPin,
   MessageSquareMore,
   Scale,
+  Search,
   Send,
   Smartphone,
   UserPlus,
@@ -30,6 +32,7 @@ import SectionContainer from '../components/SectionContainer'
 import SectionHeading from '../components/SectionHeading'
 import { FadeIn, FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
 import { motionEaseOut } from '../components/motion/timing'
+import { formatPrice, properties } from '../data/properties'
 import CTASection from '../sections/CTASection'
 
 const problemCards = [
@@ -633,6 +636,62 @@ function TrustStrip() {
   )
 }
 
+function FindPropertySection() {
+  const featuredProperties = properties.slice(0, 3)
+
+  return (
+    <section id="find-property" className="bg-[#FFFCF6] py-12 md:py-16">
+      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
+        <FadeUp className="overflow-hidden rounded-[40px] border border-[#0A3028]/8 bg-white shadow-[0_28px_90px_rgba(5,8,7,0.08)]">
+          <div className="grid gap-0 lg:grid-cols-[0.82fr_1.18fr]">
+            <div className="flex flex-col justify-center p-7 md:p-10 xl:p-12">
+              <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[#071E1A] text-[#F3EEE6] shadow-[0_16px_38px_rgba(5,8,7,0.16)]">
+                <Search className="h-5 w-5" />
+              </div>
+              <p className="mt-7 text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Find Property</p>
+              <h2 className="mt-4 max-w-[620px] text-[2.4rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#05251D] md:text-[3.6rem]">
+                Looking for your next property?
+              </h2>
+              <p className="mt-5 max-w-[560px] text-base font-medium leading-8 text-[#4B5B55] md:text-lg">
+                Search properties available across the Arch9 network.
+              </p>
+              <a href="/properties" className="bridge-button-primary mt-7 w-full sm:w-fit">
+                Search Properties
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+
+            <div className="relative border-t border-[#0A3028]/8 bg-[#F8F4EC] p-5 md:p-8 lg:border-l lg:border-t-0">
+              <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-[#24B47E]/10 blur-3xl" />
+              <div className="relative grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {featuredProperties.map((property) => (
+                  <a
+                    key={property.slug}
+                    href={`/property/${property.slug}`}
+                    className="group rounded-[28px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_54px_rgba(5,8,7,0.06)] transition duration-300 hover:-translate-y-1 hover:border-[#0A3028]/18 hover:shadow-[0_24px_70px_rgba(5,8,7,0.1)]"
+                  >
+                    <div className="h-28 rounded-[22px] bg-[radial-gradient(circle_at_72%_24%,rgba(134,228,194,0.24),transparent_30%),linear-gradient(135deg,#071E1A,#F8F4EC)]" />
+                    <p className="mt-5 text-[11px] font-black uppercase tracking-[0.18em] text-[#006B4D]">{property.type}</p>
+                    <h3 className="mt-2 text-lg font-extrabold tracking-[-0.04em] text-[#05120F]">{property.title}</h3>
+                    <p className="mt-2 flex items-center gap-2 text-xs font-bold text-[#5B6B64]">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {property.location}
+                    </p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-sm font-extrabold text-[#05120F]">{formatPrice(property.price)}</span>
+                      <ArrowRight className="h-4 w-4 text-[#006B4D] transition group-hover:translate-x-1" />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  )
+}
+
 function RoleOutcomesSection() {
   return (
     <section id="role-outcomes" className="bg-[#FFFCF6] pb-[72px] pt-12 md:pb-24 md:pt-16 xl:pb-[112px] xl:pt-20">
@@ -1157,6 +1216,7 @@ export default function Home() {
           </div>
         </section>
 
+        <FindPropertySection />
         <RoleOutcomesSection />
         <HowItWorksSection />
         <ProblemSection />

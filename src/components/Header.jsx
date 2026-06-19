@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { motionEaseOut } from './motion/timing'
 
-const appAuthUrl = 'https://app.bridgenine.co.za'
+const appAuthUrl = 'https://app.arch9.co.za'
 
 const platformItems = [
   { label: 'Overview', href: '/#platform' },
@@ -215,11 +215,11 @@ export default function Header() {
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {[
+            { label: 'Buy', href: '/properties' },
             { label: 'Platform', menu: 'platform' },
             { label: 'Solutions', menu: 'solutions' },
             { label: 'Pricing', href: '/pricing' },
             { label: 'Company', menu: 'company' },
-            { label: 'Contact', href: '/contact' },
           ].map((item) => (
             <div key={item.label} className="relative" onMouseEnter={() => setActiveMenu(item.menu || null)}>
               <a
@@ -311,6 +311,15 @@ export default function Header() {
               }}
             >
               <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <a
+                  href="/properties"
+                  className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
+                  onClick={closeMobile}
+                >
+                  Buy
+                </a>
+              </motion.div>
+              <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <MobileMenuSection eyebrow="Platform" items={platformItems} onNavigate={closeMobile} />
               </motion.div>
               <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
@@ -328,7 +337,6 @@ export default function Header() {
                 {[
                   { label: 'Pricing', href: '/pricing' },
                   { label: 'Company', href: '/#trust' },
-                  { label: 'Contact', href: '/contact' },
                 ].map((item) => (
                   <a
                     key={item.label}
