@@ -636,7 +636,7 @@ function TrustStrip() {
 function RoleOutcomesSection() {
   return (
     <section id="role-outcomes" className="bg-[#FFFCF6] py-[72px] md:py-24 xl:py-[112px]">
-      <div className="mx-auto w-full max-w-[1280px] px-6 md:px-10 xl:px-16">
+      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
         <FadeUp className="mx-auto max-w-[760px] text-center">
           <h2 className="text-[2.1rem] font-extrabold leading-[1] tracking-[-0.04em] text-[#05120F] md:text-[3.25rem]">
             Built for every party in the transaction.
@@ -646,17 +646,25 @@ function RoleOutcomesSection() {
           </p>
         </FadeUp>
 
-        <StaggerContainer className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6" stagger={0.07}>
+        <StaggerContainer className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6" stagger={0.07}>
           {heroPartyCards.map((card) => {
             const Icon = card.icon
             return (
-              <StaggerItem key={card.title} className="rounded-[28px] border border-[#0A3028]/8 bg-[#F8F4EC] p-6 text-center shadow-[0_18px_54px_rgba(5,8,7,0.06)]">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#071E1A] text-[#F3EEE6]">
+              <StaggerItem
+                key={card.title}
+                className="group relative min-h-[300px] overflow-hidden rounded-[30px] border border-[#0A3028]/8 bg-[#F8F4EC] p-6 text-center shadow-[0_18px_54px_rgba(5,8,7,0.06)] transition duration-300 hover:-translate-y-2 hover:border-[#0A3028]/18 hover:bg-white hover:shadow-[0_28px_76px_rgba(5,8,7,0.12)]"
+              >
+                <div className="absolute inset-x-8 top-0 h-px scale-x-0 bg-[#24B47E] transition duration-300 group-hover:scale-x-100" />
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#071E1A] text-[#F3EEE6] shadow-[0_14px_34px_rgba(7,30,26,0.18)] transition duration-300 group-hover:scale-110 group-hover:bg-[#0A3028]">
                   <Icon className="h-6 w-6" />
                 </div>
                 <p className="mt-6 text-lg font-extrabold text-[#05120F]">{card.title}</p>
-                <h3 className="mt-5 text-[1.05rem] font-extrabold leading-6 text-[#05120F]">{card.outcome}</h3>
+                <h3 className="mt-5 text-[1.05rem] font-extrabold leading-6 text-[#05120F] transition duration-300 group-hover:text-[#006B4D]">{card.outcome}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#4B5B55]">{card.copy}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.14em] text-[#006B4D] opacity-0 transition duration-300 group-hover:opacity-100">
+                  View role
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </span>
               </StaggerItem>
             )
           })}
