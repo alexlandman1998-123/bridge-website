@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowRight, Bath, BedDouble, Building2, ChevronDown, MapPin, Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowRight, Bath, BedDouble, CarFront, ChevronDown, MapPin, Search, SlidersHorizontal } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { formatPrice, properties, propertyTypes } from '../data/properties'
+import { formatListingPrice, properties, propertyTypes } from '../data/properties'
 import { readPropertyFilters } from '../lib/listingFilters'
 
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
@@ -49,9 +49,15 @@ function PropertyCard({ property }) {
       href={`/property/${property.slug}`}
       className="group overflow-hidden rounded-[34px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(5,8,7,0.07)] transition duration-300 hover:-translate-y-2 hover:border-[#0A3028]/18 hover:shadow-[0_30px_90px_rgba(5,8,7,0.12)]"
     >
-      <div className="relative flex h-64 items-end overflow-hidden bg-[radial-gradient(circle_at_72%_24%,rgba(134,228,194,0.24),transparent_30%),linear-gradient(135deg,#071E1A,#F8F4EC)] p-5">
-        <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(135deg,rgba(255,255,255,0.22)_0_1px,transparent_1px_24px)]" />
-        <div className="relative rounded-full border border-white/20 bg-[#071E1A]/88 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#F3EEE6]">
+      <div
+        className="relative flex h-64 items-end overflow-hidden p-5"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(5,18,15,0.05) 0%, rgba(5,18,15,0.68) 100%), url(${property.image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="relative rounded-full border border-white/20 bg-white/14 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md">
           {property.status}
         </div>
       </div>
@@ -68,10 +74,10 @@ function PropertyCard({ property }) {
           </div>
           <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-[#006B4D] transition group-hover:translate-x-1" />
         </div>
-        <p className="mt-5 text-2xl font-extrabold text-[#05120F]">{formatPrice(property.price)}</p>
+        <p className="mt-5 text-2xl font-extrabold text-[#05120F]">{formatListingPrice(property)}</p>
         <p className="mt-3 text-sm leading-6 text-[#4B5B55]">{property.summary}</p>
 
-        <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[#0A3028]/8 pt-5 text-sm font-bold text-[#31433D]">
+        <div className="mt-6 grid grid-cols-4 gap-3 border-t border-[#0A3028]/8 pt-5 text-sm font-bold text-[#31433D]">
           <span className="flex items-center gap-2">
             <BedDouble className="h-4 w-4 text-[#006B4D]" />
             {property.bedrooms}
@@ -81,9 +87,10 @@ function PropertyCard({ property }) {
             {property.bathrooms}
           </span>
           <span className="flex items-center gap-2">
-            <Building2 className="h-4 w-4 text-[#006B4D]" />
-            {property.size}
+            <CarFront className="h-4 w-4 text-[#006B4D]" />
+            {property.parking}
           </span>
+          <span className="text-right">{property.size}</span>
         </div>
       </div>
     </a>

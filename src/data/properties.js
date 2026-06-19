@@ -9,10 +9,13 @@ export const properties = [
     location: 'Bryanston, Johannesburg',
     address: 'Unit 14, Junoah Estate, Bryanston',
     listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80',
     price: 3850000,
     type: 'Estate Home',
     bedrooms: 3,
     bathrooms: 2.5,
+    parking: 2,
     size: '218 m²',
     status: 'Registration-ready',
     agency: 'Arch9 Network',
@@ -39,10 +42,13 @@ export const properties = [
     location: 'Sea Point, Cape Town',
     address: '7 Harbour View, Sea Point',
     listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
     price: 6250000,
     type: 'Apartment',
     bedrooms: 2,
     bathrooms: 2,
+    parking: 2,
     size: '142 m²',
     status: 'New mandate',
     agency: 'Arch9 Network',
@@ -69,10 +75,13 @@ export const properties = [
     location: 'Waterfall, Midrand',
     address: '24 Cedar Lane, Waterfall',
     listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
     price: 4950000,
     type: 'Townhouse',
     bedrooms: 4,
     bathrooms: 3,
+    parking: 2,
     size: '264 m²',
     status: 'Viewing-ready',
     agency: 'Arch9 Network',
@@ -93,6 +102,173 @@ export const properties = [
       { icon: Trees, label: 'Outdoor', value: 'Covered patio' },
     ],
   },
+  {
+    slug: '11-morningside-terrace',
+    title: '11 Morningside Terrace',
+    location: 'Morningside, Sandton',
+    address: '11 Morningside Terrace, Sandton',
+    listingType: 'to-rent',
+    image:
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    price: 28500,
+    priceLabel: '/ pm',
+    type: 'Apartment',
+    bedrooms: 2,
+    bathrooms: 2,
+    parking: 1,
+    size: '118 m²',
+    status: 'To rent',
+    agency: 'Arch9 Network',
+    agent: {
+      name: 'Ayesha Khan',
+      role: 'Leasing Advisor',
+      phone: '+27 11 555 0172',
+      email: 'ayesha@arch9.co.za',
+    },
+    summary: 'A refined lock-up-and-go apartment close to Sandton’s business district and lifestyle nodes.',
+    description:
+      '11 Morningside Terrace gives tenants a calm, premium base with a clear rental journey and quick response path through Arch9.',
+    features: ['24-hour security', 'Covered parking', 'Balcony', 'Pool access', 'Pet friendly'],
+    highlights: [
+      { icon: Building2, label: 'Property', value: 'Apartment' },
+      { icon: BedDouble, label: 'Bedrooms', value: '2' },
+      { icon: Bath, label: 'Bathrooms', value: '2' },
+      { icon: MapPin, label: 'Area', value: 'Sandton' },
+    ],
+  },
+  {
+    slug: 'the-ridge-estate',
+    title: 'The Ridge Estate',
+    location: 'Pretoria East',
+    address: 'Pretoria East',
+    listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80',
+    price: 1950000,
+    type: 'Development',
+    bedrooms: 3,
+    bathrooms: 2,
+    parking: 2,
+    size: 'From 182 m²',
+    status: 'New release',
+    agency: 'Arch9 Developments',
+    agent: {
+      name: 'Development Sales Team',
+      role: 'Sales Desk',
+      phone: '+27 12 555 0102',
+      email: 'developments@arch9.co.za',
+    },
+    summary: 'A new estate release with strong transaction flow and an early opportunity for buyers.',
+    description:
+      'The Ridge Estate is a premium new development in Pretoria East designed for buyers looking for an easier entry into a connected property journey.',
+    features: ['New release', 'Estate security', 'Family units', 'Transfer support', 'Developer direct'],
+    highlights: [
+      { icon: Home, label: 'Property', value: 'Development' },
+      { icon: BedDouble, label: 'Beds', value: '3' },
+      { icon: Bath, label: 'Baths', value: '2' },
+      { icon: Trees, label: 'Lifestyle', value: 'Estate living' },
+    ],
+  },
+  {
+    slug: 'lakeview-heights',
+    title: 'Lakeview Heights',
+    location: 'Fourways, Johannesburg',
+    address: 'Fourways, Johannesburg',
+    listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80',
+    price: 2350000,
+    type: 'Development',
+    bedrooms: 2,
+    bathrooms: 2,
+    parking: 1,
+    size: 'From 96 m²',
+    status: 'Phase 2 selling',
+    agency: 'Arch9 Developments',
+    agent: {
+      name: 'Development Sales Team',
+      role: 'Sales Desk',
+      phone: '+27 11 555 0102',
+      email: 'developments@arch9.co.za',
+    },
+    summary: 'A mid-density development near key retail and business nodes with live unit availability.',
+    description:
+      'Lakeview Heights is aimed at buyers who want a modern apartment address with a simple enquiry path and clear next steps.',
+    features: ['Phase 2 available', 'Shared amenities', 'Modern apartments', 'Investor-friendly', 'Developer direct'],
+    highlights: [
+      { icon: Home, label: 'Property', value: 'Development' },
+      { icon: BedDouble, label: 'Beds', value: '2' },
+      { icon: Bath, label: 'Baths', value: '2' },
+      { icon: Trees, label: 'Lifestyle', value: 'Urban living' },
+    ],
+  },
+  {
+    slug: '45-waterfall-ridge',
+    title: '45 Waterfall Ridge',
+    location: 'Waterfall, Midrand',
+    address: '45 Waterfall Ridge, Waterfall',
+    listingType: 'for-sale',
+    image:
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    price: 5750000,
+    type: 'Estate Home',
+    bedrooms: 4,
+    bathrooms: 3.5,
+    parking: 2,
+    size: '286 m²',
+    status: 'New listing',
+    agency: 'Arch9 Network',
+    agent: {
+      name: 'Nandi Mokoena',
+      role: 'Property Advisor',
+      phone: '+27 10 555 0184',
+      email: 'nandi@arch9.co.za',
+    },
+    summary: 'A contemporary family estate home with broad proportions and a polished transaction journey.',
+    description:
+      '45 Waterfall Ridge offers a modern family layout, secure setting and a clean route from enquiry to transfer for serious buyers.',
+    features: ['Estate security', 'Double garage', 'Private garden', 'Solar-ready', 'Prepared seller documents'],
+    highlights: [
+      { icon: Home, label: 'Property', value: 'Estate home' },
+      { icon: BedDouble, label: 'Bedrooms', value: '4' },
+      { icon: Bath, label: 'Bathrooms', value: '3.5' },
+      { icon: Trees, label: 'Lifestyle', value: 'Private garden' },
+    ],
+  },
+  {
+    slug: '32-foreshore-lofts',
+    title: '32 Foreshore Lofts',
+    location: 'Foreshore, Cape Town',
+    address: '32 Foreshore Lofts, Cape Town',
+    listingType: 'to-rent',
+    image:
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    price: 32000,
+    priceLabel: '/ pm',
+    type: 'Apartment',
+    bedrooms: 2,
+    bathrooms: 2,
+    parking: 1,
+    size: '104 m²',
+    status: 'Available now',
+    agency: 'Arch9 Network',
+    agent: {
+      name: 'Ayesha Khan',
+      role: 'Leasing Advisor',
+      phone: '+27 11 555 0172',
+      email: 'ayesha@arch9.co.za',
+    },
+    summary: 'A sharp city apartment with a strong rental proposition and premium finishes.',
+    description:
+      'Foreshore Lofts offers a central Cape Town address, practical parking and a polished rental experience through Arch9.',
+    features: ['City living', 'Secure access', 'Balcony', 'Covered parking', 'Fast enquiry path'],
+    highlights: [
+      { icon: Building2, label: 'Property', value: 'Apartment' },
+      { icon: BedDouble, label: 'Bedrooms', value: '2' },
+      { icon: Bath, label: 'Bathrooms', value: '2' },
+      { icon: MapPin, label: 'Area', value: 'Cape Town' },
+    ],
+  },
 ]
 
 export function formatPrice(price) {
@@ -105,4 +281,9 @@ export function formatPrice(price) {
 
 export function findPropertyBySlug(slug) {
   return properties.find((property) => property.slug === slug)
+}
+
+export function formatListingPrice(property) {
+  const base = formatPrice(property.price)
+  return property.priceLabel ? `${base}${property.priceLabel}` : base
 }

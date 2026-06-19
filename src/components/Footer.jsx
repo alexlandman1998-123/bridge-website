@@ -1,8 +1,8 @@
 const footerLinks = [
   { label: 'Buy', href: '/properties' },
+  { label: 'Developments', href: '/developments' },
   { label: 'Platform', href: '/platform/overview' },
-  { label: 'How It Works', href: '/#how-it-works' },
-  { label: 'Roles', href: '/#roles' },
+  { label: 'Why Arch9', href: '/#why-arch9' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },
 ]

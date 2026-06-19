@@ -3,6 +3,8 @@ import Contact from './pages/Contact'
 import PlatformOverview from './pages/Home'
 import Pricing from './pages/Pricing'
 import Properties from './pages/Properties'
+import Developments from './pages/Developments'
+import DevelopmentDetail from './pages/DevelopmentDetail'
 import PropertyDetail from './pages/PropertyDetail'
 import MarketingHome from './pages/MarketingHome'
 
@@ -32,6 +34,15 @@ export default function App() {
 
   if (pathname === '/properties') {
     return <Properties />
+  }
+
+  if (pathname === '/developments') {
+    return <Developments />
+  }
+
+  if (pathname.startsWith('/developments/')) {
+    const slug = pathname.replace('/developments/', '').replace(/\/$/, '')
+    return <DevelopmentDetail slug={slug} />
   }
 
   if (pathname.startsWith('/property/')) {

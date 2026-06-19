@@ -45,10 +45,11 @@ const companyItems = [
 
 const homeNavItems = [
   { label: 'Buy', href: '/properties' },
-  { label: 'Sell', href: '/#roles' },
-  { label: 'Agents', href: '/#roles' },
-  { label: 'Attorneys', href: '/#roles' },
-  { label: 'Finance', href: '/#roles' },
+  { label: 'Developments', href: '/developments' },
+  { label: 'Sell', href: '/#why-arch9' },
+  { label: 'Agents', href: '/#why-arch9' },
+  { label: 'Attorneys', href: '/#why-arch9' },
+  { label: 'Finance', href: '/#why-arch9' },
   { label: 'Platform', menu: 'platform' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Company', menu: 'company' },
@@ -56,6 +57,7 @@ const homeNavItems = [
 
 const standardNavItems = [
   { label: 'Buy', href: '/properties' },
+  { label: 'Developments', href: '/developments' },
   { label: 'Platform', menu: 'platform' },
   { label: 'Solutions', menu: 'solutions' },
   { label: 'Pricing', href: '/pricing' },
@@ -115,7 +117,7 @@ function SolutionsDropdown() {
           return (
             <a
               key={item.label}
-              href="/#roles"
+              href="/#why-arch9"
               className="group flex items-start gap-4 rounded-[20px] p-4 transition hover:bg-white/[0.08]"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] text-[#86E4C2] transition group-hover:scale-105">
@@ -129,7 +131,7 @@ function SolutionsDropdown() {
           )
         })}
       </div>
-      <a href="/#roles" className="mt-3 flex items-center justify-between rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-[#0D1613] px-4 py-3 text-sm font-extrabold text-[#86E4C2]">
+      <a href="/#why-arch9" className="mt-3 flex items-center justify-between rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-[#0D1613] px-4 py-3 text-sm font-extrabold text-[#86E4C2]">
         View all solutions
         <ArrowRight className="h-4 w-4" />
       </a>
@@ -247,7 +249,9 @@ export default function Header() {
               <a
                 href={item.href || '#'}
                 className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition ${
-                  isHome ? 'text-white/80 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+                  isHome
+                    ? 'px-3 text-[0.8rem] text-white/80 hover:bg-white/[0.08] hover:text-white'
+                    : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
                 }`}
                 onClick={(event) => {
                   if (item.menu) event.preventDefault()
@@ -346,10 +350,11 @@ export default function Header() {
                 >
                   {[
                     { label: 'Buy', href: '/properties' },
-                    { label: 'Sell', href: '/#roles' },
-                    { label: 'Agents', href: '/#roles' },
-                    { label: 'Attorneys', href: '/#roles' },
-                    { label: 'Finance', href: '/#roles' },
+                    { label: 'Developments', href: '/developments' },
+                    { label: 'Sell', href: '/#why-arch9' },
+                    { label: 'Agents', href: '/#why-arch9' },
+                    { label: 'Attorneys', href: '/#why-arch9' },
+                    { label: 'Finance', href: '/#why-arch9' },
                     { label: 'Platform', href: '/platform/overview' },
                     { label: 'Pricing', href: '/pricing' },
                     { label: 'Company', href: '/platform/overview#trust' },
@@ -376,12 +381,21 @@ export default function Header() {
                     </a>
                   </motion.div>
                   <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                    <a
+                      href="/developments"
+                      className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
+                      onClick={closeMobile}
+                    >
+                      Developments
+                    </a>
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                     <MobileMenuSection eyebrow="Platform" items={platformItems} onNavigate={closeMobile} />
                   </motion.div>
                   <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                     <MobileMenuSection
                       eyebrow="Solutions"
-                      items={solutionItems.map((item) => ({ label: item.label, href: '/#roles' }))}
+                      items={solutionItems.map((item) => ({ label: item.label, href: '/#why-arch9' }))}
                       onNavigate={closeMobile}
                     />
                   </motion.div>

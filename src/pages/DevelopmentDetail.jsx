@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight, Bath, BedDouble, Building2, CarFront, CheckCircle2, Mail, MapPin, Phone, UserRound } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CheckCircle2, Mail, MapPin, Phone, UserRound } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { findPropertyBySlug, formatListingPrice } from '../data/properties'
-import { capturePropertyEnquiry } from '../lib/leads'
+import { captureDevelopmentEnquiry } from '../lib/developmentLeads'
+import { findDevelopmentBySlug, formatDevelopmentPrice } from '../data/developments'
 
 const initialEnquiry = {
   firstName: '',
@@ -42,22 +42,22 @@ function Textarea(props) {
 
 function NotFound() {
   useEffect(() => {
-    document.title = 'Property not found | Arch9'
+    document.title = 'Development not found | Arch9'
   }, [])
 
   return (
     <div className="bridge-site-bg min-h-screen text-[#05120F]">
       <Header />
       <main className="mx-auto flex min-h-[70vh] w-full max-w-[900px] flex-col items-center justify-center px-6 pt-[120px] text-center">
-        <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Property unavailable</p>
+        <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Development unavailable</p>
         <h1 className="mt-5 text-[3rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#05251D] md:text-[4.5rem]">
-          This property is not available.
+          This development is not available.
         </h1>
         <p className="mt-5 max-w-[560px] text-lg leading-8 text-[#4B5B55]">
-          The listing may have moved, been removed, or is not yet published on the Arch9 public network.
+          The release may have moved, been removed, or is not yet published on the Arch9 public network.
         </p>
-        <a href="/properties" className="bridge-button-primary mt-8">
-          Back to Properties
+        <a href="/developments" className="bridge-button-primary mt-8">
+          Back to developments
           <ArrowRight className="h-4 w-4" />
         </a>
       </main>
@@ -66,17 +66,17 @@ function NotFound() {
   )
 }
 
-export default function PropertyDetail({ slug }) {
-  const property = findPropertyBySlug(slug)
+export default function DevelopmentDetail({ slug }) {
+  const development = findDevelopmentBySlug(slug)
   const [enquiry, setEnquiry] = useState(initialEnquiry)
   const [lead, setLead] = useState(null)
 
   useEffect(() => {
-    if (!property) return
-    document.title = `${property.title} | Arch9`
-  }, [property])
+    if (!development) return
+    document.title = `${development.title} | Arch9`
+  }, [development])
 
-  if (!property) {
+  if (!development) {
     return <NotFound />
   }
 
@@ -86,12 +86,12 @@ export default function PropertyDetail({ slug }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const capturedLead = capturePropertyEnquiry({
-      property,
+    const capturedLead = captureDevelopmentEnquiry({
+      development,
       enquiry: {
         ...enquiry,
         fullName: `${enquiry.firstName} ${enquiry.lastName}`.trim(),
-        interestedIn: property.title,
+        interestedIn: development.title,
       },
     })
     setLead(capturedLead)
@@ -103,9 +103,9 @@ export default function PropertyDetail({ slug }) {
 
       <main className="bg-[#F8F4EC] pt-[112px]">
         <section className="mx-auto w-full max-w-[1440px] px-6 pb-16 pt-8 md:px-8 lg:pb-24">
-          <a href="/properties" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
+          <a href="/developments" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
             <ArrowLeft className="h-4 w-4" />
-            Back to properties
+            Back to developments
           </a>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
@@ -114,33 +114,36 @@ export default function PropertyDetail({ slug }) {
                 <div
                   className="relative flex min-h-[420px] items-end overflow-hidden p-6 md:min-h-[520px]"
                   style={{
-                    backgroundImage: `linear-gradient(180deg, rgba(5,18,15,0.08) 0%, rgba(5,18,15,0.72) 100%), url(${property.image})`,
+                    backgroundImage: `linear-gradient(180deg, rgba(5,18,15,0.04) 0%, rgba(5,18,15,0.72) 100%), url(${development.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}
                 >
-                  <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(135deg,rgba(255,255,255,0.24)_0_1px,transparent_1px_28px)]" />
-                  <div className="relative max-w-[560px] rounded-[30px] border border-white/24 bg-white/88 p-6 shadow-[0_20px_70px_rgba(5,8,7,0.16)] backdrop-blur-xl">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">{property.status}</p>
+                  <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(135deg,rgba(255,255,255,0.22)_0_1px,transparent_1px_28px)]" />
+                  <div className="relative max-w-[560px] rounded-[30px] border border-white/24 bg-white/90 p-6 shadow-[0_20px_70px_rgba(5,8,7,0.16)] backdrop-blur-xl">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">{development.status}</p>
                     <h1 className="mt-4 text-[2.6rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#05251D] md:text-[4.5rem]">
-                      {property.title}
+                      {development.title}
                     </h1>
                     <p className="mt-4 flex items-center gap-2 text-base font-bold text-[#31433D]">
                       <MapPin className="h-5 w-5 text-[#006B4D]" />
-                      {property.location}
+                      {development.area}
                     </p>
+                    <div className="mt-5 inline-flex rounded-full border border-[#0A3028]/10 bg-[#F8F4EC] px-4 py-2 text-sm font-extrabold text-[#05120F]">
+                      {formatDevelopmentPrice(development)}
+                    </div>
                   </div>
                 </div>
 
                 <div className="grid gap-3 border-t border-[#0A3028]/8 p-4 sm:grid-cols-3">
-                  {[1, 2, 3].map((item) => (
+                  {['Masterplan', 'Availability', 'Location'].map((item) => (
                     <div key={item} className="h-36 rounded-[24px] bg-[linear-gradient(135deg,#F8F4EC,#FFFFFF)]" />
                   ))}
                 </div>
               </div>
 
               <div className="mt-8 grid gap-5 md:grid-cols-4">
-                {property.highlights.map((highlight) => {
+                {development.highlights.map((highlight) => {
                   const Icon = highlight.icon
                   return (
                     <div key={highlight.label} className="rounded-[26px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_16px_44px_rgba(5,8,7,0.05)]">
@@ -153,11 +156,11 @@ export default function PropertyDetail({ slug }) {
               </div>
 
               <div className="mt-8 rounded-[34px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_22px_70px_rgba(5,8,7,0.06)] md:p-8">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Property details</p>
-                <h2 className="mt-4 text-[2.2rem] font-extrabold tracking-[-0.05em] text-[#05251D]">{formatListingPrice(property)}</h2>
-                <p className="mt-5 max-w-[780px] text-base leading-8 text-[#4B5B55]">{property.description}</p>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Development details</p>
+                <h2 className="mt-4 text-[2.2rem] font-extrabold tracking-[-0.05em] text-[#05251D]">{formatDevelopmentPrice(development)}</h2>
+                <p className="mt-5 max-w-[780px] text-base leading-8 text-[#4B5B55]">{development.description}</p>
                 <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {property.features.map((feature) => (
+                  {development.features.map((feature) => (
                     <div key={feature} className="flex items-center gap-3 rounded-[20px] border border-[#0A3028]/8 bg-[#F8F4EC] px-4 py-3 text-sm font-bold text-[#31433D]">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-[#006B4D]" />
                       {feature}
@@ -170,24 +173,24 @@ export default function PropertyDetail({ slug }) {
             <aside className="lg:sticky lg:top-28">
               <div className="rounded-[36px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_28px_90px_rgba(5,8,7,0.1)] md:p-7">
                 <div className="rounded-[28px] border border-[#0A3028]/8 bg-[#F8F4EC] p-5">
-                  <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Agent</p>
+                  <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Development sales</p>
                   <div className="mt-4 flex items-center gap-4">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#071E1A] text-[#F3EEE6]">
                       <UserRound className="h-6 w-6" />
                     </div>
                     <div>
-                      <p className="text-lg font-extrabold text-[#05120F]">{property.agent.name}</p>
-                      <p className="text-sm font-semibold text-[#5B6B64]">{property.agent.role}</p>
+                      <p className="text-lg font-extrabold text-[#05120F]">{development.developer}</p>
+                      <p className="text-sm font-semibold text-[#5B6B64]">Development desk</p>
                     </div>
                   </div>
                   <div className="mt-5 grid gap-2 text-sm font-bold text-[#31433D]">
                     <p className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-[#006B4D]" />
-                      {property.agent.phone}
+                      +27 12 555 0102
                     </p>
                     <p className="flex items-center gap-2">
                       <Mail className="h-4 w-4 text-[#006B4D]" />
-                      {property.agent.email}
+                      developments@arch9.co.za
                     </p>
                   </div>
                 </div>
@@ -197,7 +200,7 @@ export default function PropertyDetail({ slug }) {
                     <CheckCircle2 className="h-8 w-8 text-[#006B4D]" />
                     <h2 className="mt-4 text-2xl font-extrabold tracking-[-0.04em] text-[#05120F]">Enquiry captured.</h2>
                     <p className="mt-3 text-sm leading-6 text-[#4B5B55]">
-                      A buyer lead has been prepared for {property.agent.name}. Follow-up workflow: {lead.workflow.nextAction}.
+                      A development lead has been prepared for the team. Follow-up workflow: {lead.workflow.nextAction}.
                     </p>
                   </div>
                 ) : (
@@ -220,7 +223,7 @@ export default function PropertyDetail({ slug }) {
                       <Textarea
                         value={enquiry.message}
                         onChange={(event) => updateField('message', event.target.value)}
-                        placeholder={`I am interested in ${property.title}.`}
+                        placeholder={`I would like to learn more about ${development.title}.`}
                       />
                     </Field>
                     <button type="submit" className="bridge-button-primary w-full">
@@ -229,25 +232,6 @@ export default function PropertyDetail({ slug }) {
                     </button>
                   </form>
                 )}
-              </div>
-
-              <div className="mt-5 grid grid-cols-4 gap-3 rounded-[28px] border border-[#0A3028]/8 bg-white/82 p-4 text-center shadow-[0_18px_54px_rgba(5,8,7,0.06)]">
-                <div>
-                  <BedDouble className="mx-auto h-5 w-5 text-[#006B4D]" />
-                  <p className="mt-2 text-sm font-extrabold">{property.bedrooms}</p>
-                </div>
-                <div>
-                  <Bath className="mx-auto h-5 w-5 text-[#006B4D]" />
-                  <p className="mt-2 text-sm font-extrabold">{property.bathrooms}</p>
-                </div>
-                <div>
-                  <CarFront className="mx-auto h-5 w-5 text-[#006B4D]" />
-                  <p className="mt-2 text-sm font-extrabold">{property.parking}</p>
-                </div>
-                <div>
-                  <Building2 className="mx-auto h-5 w-5 text-[#006B4D]" />
-                  <p className="mt-2 text-sm font-extrabold">{property.size}</p>
-                </div>
               </div>
             </aside>
           </div>
