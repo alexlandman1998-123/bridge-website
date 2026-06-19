@@ -238,14 +238,6 @@ const socialProofCards = [
   },
 ]
 
-const journeyStages = [
-  ['Offer Signed', 'Complete', 'done'],
-  ['Buyer Onboarded', 'Complete', 'done'],
-  ['Finance Approved', 'In progress', 'active'],
-  ['Transfer Instructed', 'Next', 'next'],
-  ['Registered', 'Waiting', 'waiting'],
-]
-
 const journeyParties = [
   ['Agent', Users],
   ['Buyer', UserRound],
@@ -253,6 +245,22 @@ const journeyParties = [
   ['Attorney', Landmark],
   ['Finance', WalletCards],
 ]
+
+const heroStakeholders = [
+  { role: 'Buyer', position: 'left-1/2 top-2 -translate-x-1/2', icon: UserRound },
+  { role: 'Agent', position: 'left-2 top-[44%] -translate-y-1/2', icon: Users },
+  { role: 'Attorney', position: 'right-2 top-[44%] -translate-y-1/2', icon: Landmark },
+  { role: 'Seller', position: 'bottom-10 left-[16%]', icon: UserRound },
+  { role: 'Finance', position: 'bottom-10 right-[16%]', icon: WalletCards },
+]
+
+const heroUpdates = [
+  { title: 'Finance approved', time: '2 minutes ago', icon: CheckCircle2 },
+  { title: 'Transfer instructions sent', time: '1 hour ago', icon: Send },
+  { title: 'Buyer documents received', time: 'Today', icon: ClipboardList },
+]
+
+const trustLogos = ['Rawson', 'Chas Everitt', 'Tyson', 'Pam Golding', 'Meridian']
 
 function MiniStatus({ label, value, float = false }) {
   const shouldReduceMotion = useReducedMotion()
@@ -431,78 +439,191 @@ function ClientPortalVisual() {
   )
 }
 
-function HeroJourneyVisual() {
-  return (
-    <div className="relative mx-auto w-full max-w-[720px] lg:max-w-none">
-      <div className="absolute -inset-10 rounded-full bg-[radial-gradient(circle,rgba(0,69,48,0.12),transparent_62%)]" />
-      <div className="relative overflow-hidden rounded-[34px] border border-[#0A3028]/10 bg-white/58 p-4 shadow-[0_28px_90px_rgba(5,8,7,0.12)] backdrop-blur-xl sm:p-6">
-        <div className="grid gap-4 sm:grid-cols-[0.85fr_1.15fr] sm:items-center">
-          <div className="flex items-center gap-4 rounded-[26px] border border-[#0A3028]/10 bg-[#F8F4EC]/88 p-4 shadow-[0_18px_48px_rgba(5,8,7,0.08)]">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[20px] bg-[#071E1A] text-[#F3EEE6]">
-              <Building2 className="h-8 w-8" />
-            </div>
-            <div>
-              <h3 className="text-lg font-extrabold tracking-[-0.03em] text-[#05120F]">Unit 14 · Junoah Estate</h3>
-              <p className="mt-1 text-sm font-bold text-[#006B4D]">Registration in progress</p>
-              <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-[#31433D]">
-                <Users className="h-4 w-4" />
-                5 parties connected
-              </p>
-            </div>
-          </div>
+function HeroNetworkGraphic() {
+  const shouldReduceMotion = useReducedMotion()
 
-          <div className="rounded-[26px] border border-[#0A3028]/10 bg-white/72 p-4">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#006B4D]">Property journey</p>
-            <div className="mt-4 h-px bg-[#0A3028]/14" />
-            <div className="mt-4 grid gap-3">
-              {journeyStages.map(([stage, status, state]) => (
-                <div
-                  key={stage}
-                  className={`flex items-center justify-between gap-3 rounded-[18px] border px-4 py-3 ${
-                    state === 'active'
-                      ? 'border-[#0A3028] bg-[#071E1A] text-[#F3EEE6] shadow-[0_18px_42px_rgba(7,30,26,0.22)]'
-                      : 'border-[#0A3028]/10 bg-[#F8F4EC]/78 text-[#05120F]'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs font-black ${
-                        state === 'done'
-                          ? 'border-[#006B4D] bg-[#006B4D] text-white'
-                          : state === 'active'
-                            ? 'border-[#86E4C2] text-[#86E4C2]'
-                            : 'border-[#0A3028]/32 text-[#0A3028]/54'
-                      }`}
-                    >
-                      {state === 'done' ? '✓' : ''}
-                    </span>
-                    <span className="text-sm font-extrabold">{stage}</span>
-                  </div>
-                  <span className={`text-[10px] font-black uppercase tracking-[0.14em] ${state === 'active' ? 'text-[#86E4C2]' : 'text-[#5B6B64]'}`}>
-                    {status}
-                  </span>
-                </div>
-              ))}
-            </div>
+  return (
+    <div className="relative mx-auto hidden h-[620px] w-full max-w-[720px] lg:block">
+      <motion.div
+        className="absolute inset-10 rounded-full border border-[#24B47E]/20"
+        animate={shouldReduceMotion ? undefined : { rotate: 360 }}
+        transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div
+        className="absolute inset-20 rounded-full border border-dashed border-[#24B47E]/18"
+        animate={shouldReduceMotion ? undefined : { rotate: -360 }}
+        transition={{ duration: 58, repeat: Infinity, ease: 'linear' }}
+      />
+      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(36,180,126,0.12),transparent_58%)]" />
+
+      <svg className="absolute inset-0 h-full w-full opacity-60" viewBox="0 0 720 620" aria-hidden="true">
+        {[
+          ['M360 310 L360 88'],
+          ['M360 310 L128 282'],
+          ['M360 310 L592 282'],
+          ['M360 310 L220 506'],
+          ['M360 310 L500 506'],
+        ].map(([path], index) => (
+          <motion.path
+            key={path}
+            d={path}
+            fill="none"
+            stroke="#24B47E"
+            strokeDasharray="5 8"
+            strokeOpacity="0.28"
+            strokeWidth="1.3"
+            initial={{ pathLength: shouldReduceMotion ? 1 : 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.1, delay: index * 0.08, ease: motionEaseOut }}
+          />
+        ))}
+      </svg>
+
+      <motion.div
+        className="absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-[34px] border border-[#0A3028]/10 bg-white/86 p-5 text-center shadow-[0_32px_100px_rgba(5,8,7,0.14)] backdrop-blur-xl"
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: motionEaseOut }}
+      >
+        <div className="mx-auto flex h-36 w-full items-center justify-center overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#071E1A,#164D40)] text-[#F3EEE6]">
+          <Building2 className="h-14 w-14" />
+        </div>
+        <h3 className="mt-5 text-xl font-extrabold tracking-[-0.03em] text-[#05120F]">Unit 14 · Junoah Estate</h3>
+        <p className="mt-2 text-sm font-bold text-[#006B4D]">Registration in progress</p>
+        <div className="relative mx-auto mt-5 flex h-24 w-24 items-center justify-center rounded-full border-[7px] border-[#24B47E]/28">
+          <motion.div
+            className="absolute inset-[-7px] rounded-full border-[7px] border-transparent border-t-[#24B47E] border-r-[#24B47E]"
+            initial={{ rotate: shouldReduceMotion ? 240 : 0 }}
+            animate={{ rotate: 240 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1.1, ease: motionEaseOut }}
+          />
+          <div className="relative">
+            <p className="text-2xl font-extrabold text-[#05120F]">67%</p>
+            <p className="text-[9px] font-black uppercase tracking-[0.12em] text-[#5B6B64]">Complete</p>
           </div>
         </div>
+      </motion.div>
 
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
-          {journeyParties.map(([party, Icon]) => (
-            <div key={party} className="relative rounded-[18px] border border-[#0A3028]/10 bg-white/76 px-3 py-3 shadow-[0_14px_34px_rgba(5,8,7,0.08)]">
-              <div className="flex items-center gap-2">
-                <Icon className="h-4 w-4 text-[#071E1A]" />
-                <div>
-                  <p className="text-xs font-extrabold text-[#05120F]">{party}</p>
-                  <p className="text-[11px] font-medium text-[#5B6B64]">Connected</p>
-                </div>
+      {heroStakeholders.map((node, index) => {
+        const Icon = node.icon
+        return (
+          <motion.div
+            key={node.role}
+            className={`absolute z-20 ${node.position} rounded-full border border-[#0A3028]/10 bg-white/86 px-4 py-3 shadow-[0_18px_54px_rgba(5,8,7,0.12)] backdrop-blur-xl`}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 + index * 0.08, ease: motionEaseOut }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F8F4EC] text-[#071E1A]">
+                <Icon className="h-5 w-5" />
               </div>
-              <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-[#24B47E]" />
+              <div>
+                <p className="text-sm font-extrabold text-[#05120F]">{node.role}</p>
+                <p className="text-xs font-semibold text-[#006B4D]">Connected</p>
+              </div>
+              <span className="h-3 w-3 rounded-full bg-[#24B47E]" />
             </div>
-          ))}
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
+function MobileTransactionProof() {
+  return (
+    <div className="mt-8 rounded-[28px] border border-[#0A3028]/10 bg-white/88 p-4 shadow-[0_24px_70px_rgba(5,8,7,0.1)] lg:hidden">
+      <div className="flex gap-4">
+        <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-[20px] bg-[linear-gradient(135deg,#071E1A,#164D40)] text-[#F3EEE6]">
+          <Building2 className="h-10 w-10" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg font-extrabold tracking-[-0.03em] text-[#05120F]">Unit 14 · Junoah Estate</h3>
+          <p className="mt-1 text-sm font-bold text-[#006B4D]">Registration in progress</p>
+          <div className="mt-3 h-1.5 rounded-full bg-[#0A3028]/12">
+            <div className="h-1.5 w-[67%] rounded-full bg-[#24B47E]" />
+          </div>
+          <p className="mt-2 text-xs font-semibold text-[#4B5B55]">67% Complete</p>
+          <p className="mt-2 text-sm font-semibold text-[#31433D]">5 parties connected</p>
         </div>
       </div>
+      <div className="mt-4 flex -space-x-2">
+        {journeyParties.map(([party, Icon]) => (
+          <div key={party} className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#071E1A] text-[#F3EEE6]" title={party}>
+            <Icon className="h-3.5 w-3.5" />
+          </div>
+        ))}
+      </div>
     </div>
+  )
+}
+
+function MobileActivityList() {
+  return (
+    <div className="mt-4 rounded-[28px] border border-[#0A3028]/10 bg-white/84 p-4 shadow-[0_18px_58px_rgba(5,8,7,0.08)] lg:hidden">
+      <div className="grid gap-1">
+        {heroUpdates.map((update) => {
+          const Icon = update.icon
+          return (
+            <div key={update.title} className="flex min-h-[58px] items-center gap-3 border-b border-[#0A3028]/8 last:border-b-0">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[13px] bg-[#071E1A] text-[#F3EEE6]">
+                <Icon className="h-4 w-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-extrabold text-[#05120F]">{update.title}</p>
+                <p className="text-xs text-[#5B6B64]">{update.time}</p>
+              </div>
+              <span className="h-2.5 w-2.5 rounded-full bg-[#24B47E]" />
+            </div>
+          )
+        })}
+      </div>
+      <a href="#how-it-works" className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
+        View all updates
+        <ArrowRight className="h-4 w-4" />
+      </a>
+    </div>
+  )
+}
+
+function ActivityStrip() {
+  return (
+    <FadeUp className="mx-auto mt-10 hidden max-w-[1120px] rounded-full border border-[#0A3028]/8 bg-white/82 px-6 py-4 shadow-[0_18px_54px_rgba(5,8,7,0.08)] backdrop-blur-xl lg:block">
+      <div className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-6">
+        {heroUpdates.map((update) => {
+          const Icon = update.icon
+          return (
+            <div key={update.title} className="flex items-center gap-4 border-r border-[#0A3028]/12 pr-6 last:border-r-0">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[15px] bg-[#071E1A] text-[#F3EEE6]">
+                <Icon className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-sm font-extrabold text-[#05120F]">{update.title}</p>
+                <p className="text-sm text-[#5B6B64]">{update.time}</p>
+              </div>
+            </div>
+          )
+        })}
+        <a href="#how-it-works" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
+          View all updates
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </FadeUp>
+  )
+}
+
+function TrustStrip() {
+  return (
+    <FadeUp className="hidden py-12 text-center lg:block">
+      <p className="text-xs font-black uppercase tracking-[0.32em] text-[#5B6B64]">Trusted by leading professionals</p>
+      <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-5 items-center gap-10 opacity-45 grayscale">
+        {trustLogos.map((logo) => (
+          <div key={logo} className="text-xl font-black tracking-[-0.04em] text-[#31433D]">{logo}</div>
+        ))}
+      </div>
+    </FadeUp>
   )
 }
 
@@ -899,8 +1020,8 @@ export default function Home() {
               'radial-gradient(circle at 72% 28%, rgba(0,69,48,0.12), transparent 34%), linear-gradient(90deg, rgba(255,252,246,0.98) 0%, rgba(255,252,246,0.9) 42%, rgba(248,244,236,0.76) 100%)',
           }}
         >
-          <SectionContainer className="pb-[64px] pt-[116px] md:pb-24 md:pt-32 xl:pb-[112px] xl:pt-36">
-            <div className="grid gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:gap-24">
+          <div className="mx-auto w-full max-w-[1440px] px-6 pb-[64px] pt-[116px] md:px-8 md:pb-24 md:pt-32 xl:pb-[112px] xl:pt-36">
+            <div className="grid min-h-[680px] gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16 xl:min-h-[760px] xl:gap-24">
               <div className="max-w-[680px]">
                 <motion.p
                   className="text-xs font-bold uppercase tracking-[0.18em] text-[#006B4D] md:text-base"
@@ -908,7 +1029,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: motionEaseOut }}
                 >
-                  FROM OFFER TO REGISTRATION
+                  FROM MANDATE TO REGISTRATION
                 </motion.p>
                 <h1 className="mt-5 text-[3.05rem] font-extrabold leading-[0.94] tracking-[-0.04em] text-[#05251D] sm:text-[3.55rem] md:text-[5.4rem] xl:text-[6.35rem]">
                   {heroHeadlineLines.map((line, index) => (
@@ -943,21 +1064,30 @@ export default function Home() {
                     Book a Demo
                     <ArrowRight className="h-4 w-4" />
                   </a>
-                  <a href="#how-it-works" className="bridge-button-secondary min-h-14 w-full border-[#071E1A]/38 bg-white/42 text-[#071E1A] sm:w-auto">
+                  <a
+                    href="#how-it-works"
+                    className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full border border-[#071E1A]/38 bg-white/72 px-6 py-3 text-base font-extrabold text-[#071E1A] shadow-[0_12px_34px_rgba(5,8,7,0.06)] transition hover:scale-[1.02] hover:bg-white sm:w-auto"
+                  >
                     See How It Works
+                    <ArrowRight className="h-4 w-4" />
                   </a>
                 </motion.div>
+                <MobileTransactionProof />
+                <MobileActivityList />
               </div>
 
               <motion.div
+                className="hidden lg:block"
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.34, ease: motionEaseOut }}
               >
-                <HeroJourneyVisual />
+                <HeroNetworkGraphic />
               </motion.div>
             </div>
-          </SectionContainer>
+            <ActivityStrip />
+            <TrustStrip />
+          </div>
         </section>
 
         <RoleOutcomesSection />

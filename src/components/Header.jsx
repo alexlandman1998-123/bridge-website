@@ -45,7 +45,7 @@ const companyItems = [
 
 function PlatformDropdown() {
   return (
-    <div className="grid w-[560px] grid-cols-[0.9fr_1.1fr] gap-4 rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.9)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
+    <div className="grid w-[560px] grid-cols-[0.9fr_1.1fr] gap-4 rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-xl">
       <div className="grid gap-1">
         {platformItems.map((item) => (
           <a
@@ -89,7 +89,7 @@ function PlatformDropdown() {
 
 function SolutionsDropdown() {
   return (
-    <div className="w-[560px] rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.9)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
+    <div className="w-[560px] rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-xl">
       <div className="grid gap-2">
         {solutionItems.map((item) => {
           const Icon = item.icon
@@ -120,7 +120,7 @@ function SolutionsDropdown() {
 
 function CompanyDropdown() {
   return (
-    <div className="w-[280px] rounded-[28px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.9)] p-3 text-[#F3EEE6] shadow-[0_32px_90px_rgba(0,0,0,0.4)] backdrop-blur-2xl">
+    <div className="w-[280px] rounded-[28px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-3 text-[#F3EEE6] shadow-[0_32px_90px_rgba(0,0,0,0.4)] backdrop-blur-xl">
       {companyItems.map((item) => (
         <a
           key={item.label}
@@ -204,7 +204,7 @@ export default function Header() {
         style={{ scaleX: shouldReduceMotion ? 0 : scaleX }}
       />
       <div
-        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between rounded-full border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] px-5 text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] transition duration-300 md:h-[72px] md:px-6 ${
+        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between rounded-full border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] px-5 text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] transition duration-300 md:h-[72px] md:px-6 ${
           scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
         }`}
         onMouseLeave={() => setActiveMenu(null)}
