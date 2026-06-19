@@ -133,14 +133,14 @@ function HeroSearchModule() {
   }
 
   return (
-    <FadeUp className="relative z-10 mx-auto -mb-16 w-[calc(100%-32px)] max-w-[1200px] rounded-[22px] border border-[rgba(6,45,37,0.1)] bg-white p-4 shadow-[0_28px_90px_rgba(3,18,15,0.22)] md:-mb-24 md:w-full md:p-5">
-      <div className="flex flex-wrap gap-2">
+    <FadeUp className="relative z-10 mx-auto w-full max-w-[1320px]">
+      <div className="ml-3 flex w-fit overflow-hidden rounded-t-[18px] border border-b-0 border-white/18 bg-white shadow-[0_18px_50px_rgba(3,18,15,0.18)] md:ml-4">
         {saleTypeOptions.map((item) => (
           <button
             key={item.value}
             type="button"
             onClick={() => setStatus(item.value)}
-            className={`min-h-11 rounded-full px-5 text-sm font-extrabold transition ${
+            className={`min-h-13 px-6 text-sm font-extrabold transition md:px-8 ${
               status === item.value
                 ? 'bg-[#062D25] text-white shadow-[0_12px_24px_rgba(3,18,15,0.18)]'
                 : 'bg-[#F7F3EA] text-[#062D25] hover:bg-[#EFE9DD]'
@@ -151,83 +151,85 @@ function HeroSearchModule() {
         ))}
       </div>
 
-      <form
-        onSubmit={submitSearch}
-        className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-[1.4fr_1fr_0.8fr_0.8fr_0.8fr_0.8fr_auto]"
-      >
-        <SearchInput
-          label="Location"
-          value={filters.location}
-          onChange={(value) => updateField('location', value)}
-          placeholder="Enter suburb or area"
-          icon={MapPin}
-        />
-        <SearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
-          {propertyTypeOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </SearchSelect>
-        <SearchInput
-          label="Min Price"
-          value={filters.minPrice}
-          onChange={(value) => updateField('minPrice', value)}
-          placeholder="No Min"
-        />
-        <SearchInput
-          label="Max Price"
-          value={filters.maxPrice}
-          onChange={(value) => updateField('maxPrice', value)}
-          placeholder="No Max"
-        />
-        <SearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
-          {bedroomOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </SearchSelect>
-        <SearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
-          {bathroomOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </SearchSelect>
-        <button
-          type="submit"
-          className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[16px] bg-[#062D25] px-6 text-sm font-extrabold text-white shadow-[0_16px_32px_rgba(3,18,15,0.18)] transition hover:scale-[1.02]"
+      <div className="rounded-[24px] border border-white/28 bg-white p-4 shadow-[0_30px_100px_rgba(3,18,15,0.28)] md:p-5">
+        <form
+          onSubmit={submitSearch}
+          className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1.55fr_1.08fr_0.82fr_0.82fr_0.78fr_0.78fr_auto]"
         >
-          <Search className="h-4 w-4" />
-          Search
-        </button>
-      </form>
-
-      <div className="mt-4 flex items-center gap-3 overflow-x-auto pb-1">
-        <span className="shrink-0 text-sm font-bold text-[#7A7265]">Popular searches:</span>
-        {popularSearches.map((item) => (
+          <SearchInput
+            label="Location"
+            value={filters.location}
+            onChange={(value) => updateField('location', value)}
+            placeholder="Enter suburb or area"
+            icon={MapPin}
+          />
+          <SearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
+            {propertyTypeOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </SearchSelect>
+          <SearchInput
+            label="Min Price"
+            value={filters.minPrice}
+            onChange={(value) => updateField('minPrice', value)}
+            placeholder="No Min"
+          />
+          <SearchInput
+            label="Max Price"
+            value={filters.maxPrice}
+            onChange={(value) => updateField('maxPrice', value)}
+            placeholder="No Max"
+          />
+          <SearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
+            {bedroomOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </SearchSelect>
+          <SearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
+            {bathroomOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </SearchSelect>
           <button
-            key={item}
-            type="button"
-            onClick={() => runPopularSearch(item)}
-            className="shrink-0 rounded-full border border-white/12 bg-[rgba(6,45,37,0.86)] px-4 py-2 text-sm font-bold text-white backdrop-blur-md transition hover:border-[rgba(255,255,255,0.22)] hover:bg-[rgba(6,45,37,0.95)]"
+            type="submit"
+            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[16px] bg-[#062D25] px-6 text-sm font-extrabold text-white shadow-[0_16px_32px_rgba(3,18,15,0.18)] transition hover:scale-[1.02] xl:min-h-[76px] xl:self-end"
           >
-            {item}
+            <Search className="h-4 w-4" />
+            Search
           </button>
-        ))}
+        </form>
+
+        <div className="mt-4 flex items-center gap-3 overflow-x-auto pb-1">
+          <span className="shrink-0 text-sm font-bold text-[#7A7265]">Popular searches:</span>
+          {popularSearches.map((item) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => runPopularSearch(item)}
+              className="shrink-0 rounded-full border border-[rgba(6,45,37,0.1)] bg-[#163D34] px-4 py-2 text-sm font-bold text-white shadow-[0_10px_28px_rgba(3,18,15,0.12)] transition hover:bg-[#062D25]"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
     </FadeUp>
   )
 }
 
 function DevelopmentRailSection() {
-  const railDevelopments = developments.slice(0, 3)
+  const railDevelopments = developments.slice(0, 2)
 
   return (
-    <section id="developments" className="bg-[#F7F3EA] py-16 md:py-20">
+    <section id="developments" className="bg-[#F7F3EA] pb-16 pt-28 md:pb-20 md:pt-32">
       <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
           <FadeUp className="max-w-[520px]">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">New developments</p>
             <h2 className="mt-4 text-[2.25rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.6rem]">
@@ -242,12 +244,12 @@ function DevelopmentRailSection() {
             </a>
           </FadeUp>
 
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:overflow-visible">
+          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 lg:overflow-visible">
             {railDevelopments.map((development) => (
               <a
                 key={development.slug}
                 href={`/developments/${development.slug}`}
-                className="group relative min-w-[78%] snap-start overflow-hidden rounded-[28px] border border-[rgba(6,45,37,0.08)] bg-[#071E1A] shadow-[0_18px_54px_rgba(3,18,15,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(3,18,15,0.16)] sm:min-w-[56%] lg:min-w-0 lg:flex-1"
+                className="group relative min-w-[78%] snap-start overflow-hidden rounded-[30px] border border-[rgba(6,45,37,0.08)] bg-[#071E1A] shadow-[0_18px_54px_rgba(3,18,15,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(3,18,15,0.16)] sm:min-w-[56%] lg:min-w-0 lg:flex-1"
               >
                 <div
                   className="relative flex h-[340px] items-end p-5"
@@ -502,17 +504,17 @@ function MarketingHome() {
 
       <main>
         <section
-          className="relative overflow-hidden text-white"
+          className="relative overflow-visible text-white"
           style={{
-            minHeight: '75vh',
+            minHeight: '680px',
             backgroundImage: `linear-gradient(90deg, rgba(3, 22, 18, 0.82) 0%, rgba(3, 22, 18, 0.7) 36%, rgba(3, 22, 18, 0.28) 68%, rgba(3, 22, 18, 0.12) 100%), url(${heroBackground})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center right',
           }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(134,228,194,0.12),transparent_26%),linear-gradient(180deg,rgba(3,22,18,0.08)_0%,rgba(3,22,18,0.18)_100%)]" />
-          <div className="relative mx-auto flex min-h-[75vh] w-full max-w-[1440px] flex-col justify-between px-6 pb-8 pt-[96px] md:min-h-[100vh] md:px-8 md:pb-12 md:pt-[132px]">
-            <div className="max-w-[780px] pb-8 md:pb-14">
+          <div className="relative mx-auto flex min-h-[680px] w-full max-w-[1440px] flex-col justify-between px-6 pb-0 pt-[96px] md:min-h-[760px] md:px-8 md:pt-[132px]">
+            <div className="max-w-[780px] pb-8 md:pb-10">
               <FadeUp>
                 <p className="text-xs font-black uppercase tracking-[0.26em] text-[#86E4C2]">One property journey</p>
                 <h1 className="mt-5 text-[3rem] font-extrabold leading-[1] tracking-[-0.05em] text-white sm:text-[3.8rem] md:text-[5rem] xl:text-[5.7rem]">
@@ -525,7 +527,7 @@ function MarketingHome() {
               </FadeUp>
             </div>
 
-            <div className="pb-10 md:pb-2">
+            <div className="translate-y-16 md:translate-y-20">
               <HeroSearchModule />
             </div>
           </div>
