@@ -1,24 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ArrowRight,
-  Bath,
-  BedDouble,
+  BriefcaseBusiness,
   Building2,
+  CheckCircle2,
   ChevronDown,
-  Heart,
+  Home,
+  Landmark,
   MapPin,
   Search,
-  ShieldCheck,
-  Sparkles,
+  Scale,
   Users,
-  CarFront,
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
+import { FadeUp } from '../components/motion/Reveal'
 import { buildPropertyQuery } from '../lib/listingFilters'
 import { developments, formatDevelopmentPrice } from '../data/developments'
-import { formatListingPrice, properties } from '../data/properties'
 
 const heroBackground =
   'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2400&q=80'
@@ -32,34 +30,214 @@ const propertyTypeOptions = ['Any', 'Apartment', 'Estate Home', 'Townhouse', 'De
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
 const bathroomOptions = ['Any', '1+', '2+', '3+']
 
-const featurePillars = [
-  {
-    icon: Search,
-    title: 'Search Seamlessly',
-    copy: 'Find property with powerful search, clean filters and a premium browsing experience.',
-  },
+const solutionCards = [
   {
     icon: Users,
-    title: 'Stay Connected',
-    copy: 'Track enquiries and keep buyers, sellers and professionals aligned from the first view.',
+    title: 'Agents',
+    copy: ['Generate more leads.', 'Track transactions.', 'Get paid faster.'],
+    href: '/solutions/agents',
+  },
+  {
+    icon: BriefcaseBusiness,
+    title: 'Attorneys',
+    copy: ['Cleaner instructions.', 'Better visibility.', 'Faster registrations.'],
+    href: '/solutions/attorneys',
+  },
+  {
+    icon: Landmark,
+    title: 'Bond Originators',
+    copy: ['Better applications.', 'More approvals.', 'Less chasing.'],
+    href: '/solutions/bond-originators',
   },
   {
     icon: Building2,
-    title: 'One Platform',
-    copy: 'Buyers, sellers, agents, attorneys and finance teams operate from one shared system.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Secure & Compliant',
-    copy: 'Protected handovers, cleaner files and visibility at every step of the journey.',
-  },
-  {
-    icon: Sparkles,
-    title: 'From Offer to Registration',
-    copy: 'Arch9 continues long after the search, guiding the transaction to the finish line.',
+    title: 'Developers',
+    copy: ['More enquiries.', 'Better stock visibility.', 'Faster sell-through.'],
+    href: '/solutions/developers',
   },
 ]
 
+const transactionRoles = [
+  { label: 'Buyer', icon: Home },
+  { label: 'Seller', icon: Users },
+  { label: 'Agent', icon: Users },
+  { label: 'Attorney', icon: BriefcaseBusiness },
+  { label: 'Bond Originator', icon: Landmark },
+  { label: 'Developer', icon: Building2 },
+]
+
+const marketplaceMetrics = [
+  { value: '120,000+', title: 'Properties Listed', copy: 'Across South Africa', icon: Home },
+  { value: '15,000+', title: 'Transactions Active', copy: 'Every month', icon: CheckCircle2 },
+  { value: '5,000+', title: 'Professionals Using Arch9', copy: 'And growing', icon: Users },
+  { value: 'R8.4B+', title: 'Transaction Value', copy: 'Processed on Arch9', icon: Scale },
+]
+
+const solutionIconTone = [
+  'bg-[#D9E8C4] text-[#31582F]',
+  'bg-[#E5C39A] text-[#7C4D22]',
+  'bg-[#D9E8C4] text-[#31582F]',
+  'bg-[#E5C39A] text-[#7C4D22]',
+]
+
+const featuredDevelopmentCards = developments.slice(0, 3)
+
+function MetricIcon({ icon: Icon }) {
+  return (
+    <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-white/8 text-[#A9C98B]">
+      <Icon className="h-7 w-7" />
+    </div>
+  )
+}
+
+function SolutionCard({ card, index }) {
+  const Icon = card.icon
+  return (
+    <a
+      href={card.href}
+      className="group rounded-[22px] border border-[#0A3028]/8 bg-white p-7 shadow-[0_20px_60px_rgba(3,18,15,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(3,18,15,0.1)]"
+    >
+      <div className={`flex h-16 w-16 items-center justify-center rounded-full ${solutionIconTone[index]}`}>
+        <Icon className="h-8 w-8" />
+      </div>
+      <h3 className="mt-7 text-2xl font-extrabold tracking-[-0.045em] text-[#062D25]">{card.title}</h3>
+      <div className="mt-5 grid gap-1 text-base font-medium leading-7 text-[#4B5B55]">
+        {card.copy.map((line) => (
+          <p key={line}>{line}</p>
+        ))}
+      </div>
+      <span className="mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#0E6A55]">
+        Learn More
+        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+      </span>
+    </a>
+  )
+}
+
+function TransactionConnectionVisual() {
+  return (
+    <div className="relative w-full overflow-hidden rounded-[32px] border border-[#0A3028]/8 bg-white/62 p-5 shadow-[0_24px_80px_rgba(3,18,15,0.06)] md:p-8">
+      <div className="grid gap-4 md:grid-cols-6">
+        {transactionRoles.map((role) => {
+          const Icon = role.icon
+          return (
+            <div key={role.label} className="relative flex flex-col items-center text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#0A3028]/8 bg-white text-[#064537] shadow-[0_14px_34px_rgba(3,18,15,0.08)]">
+                <Icon className="h-7 w-7" />
+              </div>
+              <p className="mt-3 text-xs font-extrabold text-[#062D25]">{role.label}</p>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="mx-auto mt-8 max-w-[760px]">
+        <div className="mx-auto h-8 w-px bg-[#0A3028]/14" />
+        <div className="mx-auto flex min-h-[58px] max-w-[420px] items-center justify-center gap-3 rounded-full bg-[linear-gradient(135deg,#05352D,#08221D)] px-8 text-sm font-extrabold text-white shadow-[0_22px_64px_rgba(3,18,15,0.18)]">
+          <CheckCircle2 className="h-5 w-5 text-[#A9C98B]" />
+          Shared Transaction
+        </div>
+        <div className="mx-auto h-8 w-px bg-[#0A3028]/14" />
+        <div className="mx-auto flex min-h-[54px] max-w-[250px] items-center justify-center gap-3 rounded-full border border-[#0A3028]/8 bg-white px-8 text-sm font-extrabold text-[#062D25] shadow-[0_16px_42px_rgba(3,18,15,0.06)]">
+          <CheckCircle2 className="h-5 w-5 text-[#4D7D35]" />
+          Registration
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SolutionsSection() {
+  return (
+    <section className="bg-[#F2EDE3] px-6 py-16 md:px-8 md:py-20">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <div className="mx-auto max-w-[880px] text-center">
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-[#0E6A55]">Built for every role in property</p>
+          <h2 className="mt-4 text-[2.3rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.4rem]">
+            Solutions designed for how you work.
+          </h2>
+          <p className="mx-auto mt-4 max-w-[680px] text-base font-medium leading-8 text-[#61584D] md:text-lg">
+            Purpose-built workspaces for every stakeholder in the property journey.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {solutionCards.map((card, index) => (
+            <SolutionCard key={card.title} card={card} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SharedTransactionSection() {
+  return (
+    <section className="bg-[#F7F3EA] px-6 py-16 md:px-8 md:py-20">
+      <div className="mx-auto grid w-full max-w-[1280px] gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-[#0E6A55]">One transaction. Every stakeholder.</p>
+          <h2 className="mt-4 text-[2.3rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.4rem]">
+            One transaction.
+            <span className="block">Every stakeholder.</span>
+          </h2>
+          <p className="mt-5 max-w-[520px] text-base font-medium leading-8 text-[#4B5B55] md:text-lg">
+            Arch9 connects buyers, sellers, agents, attorneys, bond originators and developers around one shared transaction from enquiry to registration.
+          </p>
+        </div>
+
+        <TransactionConnectionVisual />
+      </div>
+    </section>
+  )
+}
+
+function MarketplaceMetricsSection() {
+  return (
+    <section className="bg-[#F7F3EA] px-6 pb-16 md:px-8 md:pb-20">
+      <div className="mx-auto grid w-full max-w-[1280px] gap-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-7 text-white shadow-[0_24px_80px_rgba(3,18,15,0.16)] md:grid-cols-2 md:p-9 xl:grid-cols-4">
+        {marketplaceMetrics.map((metric, index) => {
+          const Icon = metric.icon
+          return (
+            <div key={metric.title} className={`flex gap-5 ${index ? 'xl:border-l xl:border-white/14 xl:pl-8' : ''}`}>
+              <MetricIcon icon={Icon} />
+              <div>
+                <p className="text-[2.4rem] font-extrabold leading-none tracking-[-0.05em]">{metric.value}</p>
+                <p className="mt-4 text-base font-extrabold">{metric.title}</p>
+                <p className="mt-1 text-sm font-medium text-white/74">{metric.copy}</p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+function FinalCtaSection() {
+  return (
+    <section className="bg-[#F7F3EA] px-6 pb-16 md:px-8 md:pb-20">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-8 rounded-[24px] border border-[#0A3028]/8 bg-white p-8 shadow-[0_24px_80px_rgba(3,18,15,0.07)] md:flex-row md:items-center md:justify-between md:p-10">
+        <div>
+          <h2 className="max-w-[580px] text-[2.1rem] font-extrabold leading-[1] tracking-[-0.05em] text-[#062D25] md:text-[3rem]">
+            Ready to modernise your property business?
+          </h2>
+          <p className="mt-4 max-w-[620px] text-base font-medium leading-8 text-[#4B5B55]">
+            Join property professionals using Arch9 to connect, collaborate and close more deals.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" className="bridge-button-primary min-h-[52px] justify-center px-8">
+            Book A Demo
+          </a>
+          <a href="/solutions/platform" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-[#0A3028]/22 bg-white px-8 text-sm font-extrabold text-[#062D25] transition hover:bg-[#F7F3EA]">
+            Explore Solutions
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
 function SearchSelect({ label, value, onChange, children }) {
   return (
     <label className="block">
@@ -209,8 +387,6 @@ function HeroSearchModule() {
 }
 
 function DevelopmentRailSection() {
-  const railDevelopments = developments.slice(0, 2)
-
   return (
     <section id="developments" className="bg-[#F7F3EA] pb-16 pt-28 md:pb-20 md:pt-32">
       <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
@@ -230,7 +406,7 @@ function DevelopmentRailSection() {
           </FadeUp>
 
           <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 lg:overflow-visible">
-            {railDevelopments.map((development) => (
+            {featuredDevelopmentCards.map((development) => (
               <a
                 key={development.slug}
                 href={`/developments/${development.slug}`}
@@ -263,202 +439,6 @@ function DevelopmentRailSection() {
                 </div>
               </a>
             ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function PropertyCard({ property }) {
-  const price = formatListingPrice(property)
-
-  return (
-    <a
-      href={`/property/${property.slug}`}
-      className="group overflow-hidden rounded-[30px] border border-[rgba(6,45,37,0.08)] bg-white shadow-[0_22px_70px_rgba(3,18,15,0.07)] transition duration-300 hover:-translate-y-2 hover:border-[rgba(6,45,37,0.16)] hover:shadow-[0_30px_90px_rgba(3,18,15,0.12)]"
-    >
-      <div
-        className="relative flex h-56 items-end overflow-hidden p-4"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(5,18,15,0.05) 0%, rgba(5,18,15,0.68) 100%), url(${property.image})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
-          {property.listingType === 'to-rent' ? 'To rent' : 'For sale'}
-        </div>
-        <button
-          type="button"
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-black/20 text-white backdrop-blur-md"
-          aria-label={`Save ${property.title}`}
-        >
-          <Heart className="h-4 w-4" />
-        </button>
-      </div>
-
-      <div className="p-5">
-        <p className="text-sm font-black uppercase tracking-[0.18em] text-[#006B4D]">{property.type}</p>
-        <h3 className="mt-3 text-[1.35rem] font-extrabold tracking-[-0.04em] text-[#05120F]">{property.title}</h3>
-        <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#4B5B55]">
-          <MapPin className="h-4 w-4" />
-          {property.location}
-        </p>
-        <p className="mt-4 text-2xl font-extrabold text-[#05120F]">{price}</p>
-        <div className="mt-5 grid grid-cols-4 gap-3 border-t border-[rgba(6,45,37,0.08)] pt-4 text-sm font-bold text-[#31433D]">
-          <span className="flex items-center gap-1.5">
-            <BedDouble className="h-4 w-4 text-[#006B4D]" />
-            {property.bedrooms}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Bath className="h-4 w-4 text-[#006B4D]" />
-            {property.bathrooms}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CarFront className="h-4 w-4 text-[#006B4D]" />
-            {property.parking}
-          </span>
-          <span className="text-right">{property.size}</span>
-        </div>
-      </div>
-    </a>
-  )
-}
-
-function FeaturedPropertiesSection() {
-  const featuredProperties = useMemo(
-    () => properties.filter((property) => property.listingType !== 'development'),
-    []
-  )
-
-  return (
-    <section id="featured-properties" className="bg-[#F7F3EA] py-16 md:py-20">
-      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
-        <div className="mb-8 flex items-end justify-between gap-6">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">Featured properties</p>
-            <h2 className="mt-4 text-[2rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.2rem]">
-              Handpicked properties for you.
-            </h2>
-          </div>
-          <a href="/properties" className="hidden text-sm font-extrabold text-[#0E6A55] md:inline-flex">
-            View all properties
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
-        </div>
-
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-2 xl:grid-cols-4 md:overflow-visible">
-          {featuredProperties.map((property) => (
-            <div key={property.slug} className="min-w-[84%] snap-start md:min-w-0">
-              <PropertyCard property={property} />
-            </div>
-          ))}
-        </div>
-
-        <a href="/properties" className="mt-7 inline-flex text-sm font-extrabold text-[#0E6A55] md:hidden">
-          View all properties
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </a>
-      </div>
-    </section>
-  )
-}
-
-function WhyArch9Section() {
-  return (
-    <section id="why-arch9" className="bg-[#F2EDE3] py-16 md:py-20">
-      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
-        <FadeUp className="mx-auto max-w-[820px] text-center">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">Why Arch9</p>
-          <h2 className="mt-4 text-[2.3rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.6rem]">
-            More than a property portal.
-          </h2>
-          <p className="mt-4 text-base leading-8 text-[#61584D] md:text-lg">
-            We connect people, data and processes so every transaction moves forward faster.
-          </p>
-        </FadeUp>
-
-        <StaggerContainer className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5" stagger={0.08}>
-          {featurePillars.map((pillar) => {
-            const Icon = pillar.icon
-            return (
-              <StaggerItem
-                key={pillar.title}
-                className="group rounded-[28px] border border-[rgba(6,45,37,0.08)] bg-white p-6 shadow-[0_18px_54px_rgba(3,18,15,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(3,18,15,0.09)]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#062D25] text-white transition duration-300 group-hover:scale-105">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-6 text-[1.2rem] font-extrabold tracking-[-0.04em] text-[#062D25]">{pillar.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#61584D]">{pillar.copy}</p>
-              </StaggerItem>
-            )
-          })}
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function PlatformPreviewSection() {
-  const previewProperty = properties[0]
-
-  return (
-    <section id="platform-preview" className="bg-[#F7F3EA] pb-20 pt-4 md:pb-24">
-      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
-        <div className="grid gap-6 overflow-hidden rounded-[36px] border border-[rgba(6,45,37,0.08)] bg-white shadow-[0_24px_84px_rgba(3,18,15,0.08)] lg:grid-cols-[1fr_0.95fr]">
-          <div className="p-7 md:p-10 xl:p-12">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">Platform</p>
-            <h2 className="mt-4 max-w-[620px] text-[2.2rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.5rem]">
-              The operating system for property transactions.
-            </h2>
-            <p className="mt-5 max-w-[560px] text-base leading-8 text-[#61584D] md:text-lg">
-              Arch9 connects every stakeholder from mandate to registration.
-            </p>
-            <a href="/platform" className="bridge-button-primary mt-7 w-full sm:w-fit">
-              Explore Platform
-              <ArrowRight className="h-4 w-4" />
-            </a>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {['One transaction timeline', 'Buyer and seller portals', 'Document requests in motion', 'Transfer and registration view'].map((item) => (
-                <div key={item} className="rounded-[22px] border border-[rgba(6,45,37,0.08)] bg-[#F7F3EA] px-4 py-3 text-sm font-bold text-[#062D25]">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="border-t border-[rgba(6,45,37,0.08)] bg-[#062D25] p-6 text-white lg:border-l lg:border-t-0 md:p-8">
-            <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
-              <div className="flex items-center justify-between">
-                <span className="rounded-full border border-white/12 bg-white/8 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-white/88">
-                  Transaction
-                </span>
-                <span className="text-xs font-bold text-[#86E4C2]">67% complete</span>
-              </div>
-              <div className="mt-5 rounded-[24px] bg-[#F7F3EA] p-5 text-[#062D25]">
-                <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#0E6A55]">{previewProperty.type}</p>
-                <h3 className="mt-3 text-[1.8rem] font-extrabold leading-[0.98] tracking-[-0.04em]">{previewProperty.title}</h3>
-                <p className="mt-2 text-sm font-semibold text-[#61584D]">{previewProperty.location}</p>
-                <div className="mt-4 h-2 rounded-full bg-[#D9D2C5]">
-                  <div className="h-2 w-[67%] rounded-full bg-[#0E6A55]" />
-                </div>
-                <div className="mt-4 flex items-center justify-between text-sm font-bold">
-                  <span>{formatListingPrice(previewProperty)}</span>
-                  <span>5 parties connected</span>
-                </div>
-              </div>
-
-              <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                {['Agent connected', 'Buyer connected', 'Seller connected', 'Attorney connected'].map((item) => (
-                  <div key={item} className="rounded-[18px] border border-white/10 bg-white/8 px-4 py-3 text-sm font-bold text-white/88">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -520,11 +500,13 @@ function MarketingHome() {
 
         <DevelopmentRailSection />
 
-        <FeaturedPropertiesSection />
+        <SolutionsSection />
 
-        <WhyArch9Section />
+        <SharedTransactionSection />
 
-        <PlatformPreviewSection />
+        <MarketplaceMetricsSection />
+
+        <FinalCtaSection />
       </main>
 
       <Footer />

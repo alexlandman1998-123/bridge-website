@@ -18,7 +18,7 @@ import Footer from '../components/Footer'
 import { developments, formatDevelopmentPrice } from '../data/developments'
 
 const heroImage =
-  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1800&q=85'
+  'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1800&q=86'
 
 const locationCards = [
   {
@@ -360,14 +360,16 @@ export default function Developments() {
       <Header />
 
       <main>
-        <section className="relative overflow-hidden bg-[#F8F4EC] px-6 pb-10 pt-[112px] md:px-8 lg:pb-14">
-          <div className="absolute inset-y-0 right-0 hidden w-[46%] bg-cover bg-center lg:block" style={{ backgroundImage: `url(${heroImage})` }} />
-          <div className="absolute inset-y-0 right-0 hidden w-[56%] bg-[linear-gradient(90deg,#F8F4EC_0%,rgba(248,244,236,0.78)_28%,rgba(248,244,236,0.12)_100%)] lg:block" />
+        <section className="relative overflow-hidden bg-[#F8F4EC] px-6 pb-10 pt-[112px] md:px-8 lg:min-h-[640px] lg:pb-14">
+          <div className="absolute inset-y-0 right-0 hidden w-[52%] bg-cover bg-center lg:block" style={{ backgroundImage: `url(${heroImage})` }} />
+          <div className="absolute inset-y-0 right-[36%] hidden w-[25%] bg-[linear-gradient(90deg,#F8F4EC_0%,rgba(248,244,236,0.94)_42%,rgba(248,244,236,0)_100%)] lg:block" />
+          <div className="absolute inset-y-0 right-0 hidden w-[52%] bg-[linear-gradient(90deg,rgba(248,244,236,0.34)_0%,rgba(248,244,236,0.06)_34%,rgba(248,244,236,0)_100%)] lg:block" />
+          <div className="absolute inset-x-0 bottom-0 hidden h-32 bg-[linear-gradient(180deg,rgba(248,244,236,0)_0%,#F8F4EC_100%)] lg:block" />
 
           <div className="relative mx-auto w-full max-w-[1440px]">
-            <div className="max-w-[680px] py-7 md:py-10">
+            <div className="max-w-[690px] py-8 md:py-12 lg:py-14">
               <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Developments</p>
-              <h1 className="mt-4 max-w-[760px] text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#063B31] md:text-[4.4rem]">
+              <h1 className="mt-4 max-w-[760px] text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] text-[#063B31] md:text-[4.4rem]">
                 Discover South Africa&apos;s newest developments.
               </h1>
               <p className="mt-5 max-w-[560px] text-base font-medium leading-8 text-[#31433D] md:text-lg">
@@ -377,7 +379,7 @@ export default function Developments() {
 
             <form
               onSubmit={handleSearch}
-              className="rounded-[18px] border border-black/[0.06] bg-white p-5 shadow-[0_18px_58px_rgba(5,8,7,0.08)] md:p-6 lg:grid lg:grid-cols-[1.45fr_0.74fr_0.74fr_0.74fr_auto] lg:items-end lg:gap-5"
+              className="grid gap-4 rounded-[22px] border border-black/[0.06] bg-white p-5 shadow-[0_24px_70px_rgba(5,8,7,0.1)] md:p-6 lg:grid-cols-[1.45fr_0.74fr_0.74fr_0.74fr_auto] lg:items-end lg:gap-5"
             >
               <SearchInput label="Location" value={filters.location} onChange={(value) => updateFilter('location', value)} />
               <SelectField label="Price Range" value={filters.price} onChange={(value) => updateFilter('price', value)}>
@@ -404,7 +406,7 @@ export default function Developments() {
               </button>
             </form>
 
-            <div className="mt-7 grid max-w-[640px] gap-4 sm:grid-cols-3">
+            <div className="mt-7 grid max-w-[680px] gap-4 sm:grid-cols-3">
               {[
                 { icon: Building2, value: '147', label: 'Developments' },
                 { icon: Home, value: '4,300+', label: 'Available Units' },
@@ -412,8 +414,8 @@ export default function Developments() {
               ].map((stat) => {
                 const Icon = stat.icon
                 return (
-                  <div key={stat.label} className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/82 text-[#064537] shadow-[0_12px_32px_rgba(5,8,7,0.06)]">
+                  <div key={stat.label} className="flex items-center gap-4 rounded-[18px] border border-black/[0.04] bg-white/48 p-3 backdrop-blur-sm">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/88 text-[#064537] shadow-[0_12px_32px_rgba(5,8,7,0.06)]">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
