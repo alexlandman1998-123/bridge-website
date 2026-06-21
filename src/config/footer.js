@@ -34,11 +34,11 @@ export const footerLinkGroups = [
   {
     title: 'Solutions',
     links: [
-      { label: 'For Agents', href: '/agents' },
-      { label: 'For Attorneys', href: '/attorneys' },
-      { label: 'For Bond Originators', href: '/bond-originators' },
-      { label: 'For Developers', href: '/developers' },
-      { label: 'Platform Overview', href: '/platform' },
+      { label: 'For Agents', href: '/solutions/agents' },
+      { label: 'For Attorneys', href: '/solutions/attorneys' },
+      { label: 'For Bond Originators', href: '/solutions/bond-originators' },
+      { label: 'For Developers', href: '/solutions/developers' },
+      { label: 'Platform Overview', href: '/solutions/platform' },
     ],
   },
   {

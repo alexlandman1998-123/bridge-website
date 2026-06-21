@@ -9,6 +9,12 @@ import PropertyDetail from './pages/PropertyDetail'
 import MarketingHome from './pages/MarketingHome'
 import LandingPage from './pages/LandingPage'
 import PropertyIntelligence from './pages/PropertyIntelligence'
+import Sell from './pages/Sell'
+import SolutionPage from './pages/SolutionPage'
+import AgentsSolution from './pages/AgentsSolution'
+import AttorneysSolution from './pages/AttorneysSolution'
+import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
+import PlatformSolution from './pages/PlatformSolution'
 import { landingPages } from './config/landingPages'
 import { findDevelopmentBySlug } from './data/developments'
 import { findAreaBySlug } from './data/propertyIntelligence'
@@ -41,6 +47,27 @@ export default function App() {
 
   if (pathname === '/pricing') {
     return <Pricing />
+  }
+
+  if (pathname === '/sell') {
+    return <Sell />
+  }
+
+  if (pathname.startsWith('/solutions/')) {
+    const solutionKey = pathname.replace('/solutions/', '').replace(/\/$/, '')
+    if (solutionKey === 'agents') {
+      return <AgentsSolution />
+    }
+    if (solutionKey === 'attorneys') {
+      return <AttorneysSolution />
+    }
+    if (solutionKey === 'bond-originators') {
+      return <BondOriginatorsSolution />
+    }
+    if (solutionKey === 'platform') {
+      return <PlatformSolution />
+    }
+    return <SolutionPage pageKey={solutionKey} />
   }
 
   if (pathname === '/platform') {

@@ -18,13 +18,14 @@ function trackNavigationEvent(eventName) {
 
 function SolutionsDropdown({ onNavigate }) {
   return (
-    <div className="w-[430px] rounded-[28px] border border-[#0A3028]/10 bg-white/92 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
+    <div className="w-[430px] rounded-[24px] border border-[#0A3028]/10 bg-white/94 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
       <div className="grid gap-1">
         {solutionNavItems.map((item) => (
           <a
             key={item.href}
             href={item.href}
-            className="group grid gap-1 rounded-[20px] px-4 py-3 transition hover:bg-[#F4F0E8] focus-visible:bg-[#F4F0E8]"
+            role="menuitem"
+            className="group grid gap-1 rounded-[14px] px-4 py-3 transition hover:bg-[rgba(0,70,50,0.06)] focus-visible:bg-[rgba(0,70,50,0.06)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
             onClick={onNavigate}
           >
             <span className="flex items-center justify-between gap-4 text-sm font-extrabold text-[#071E1A]">
@@ -59,6 +60,7 @@ function MobileNavLink({ href, children, onClick, featured = false }) {
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(true)
   const [scrolled, setScrolled] = useState(false)
   const [pathname, setPathname] = useState(window.location.pathname)
   const headerRef = useRef(null)
@@ -127,6 +129,7 @@ export default function Header() {
 
   function closeMobile() {
     setMobileOpen(false)
+    setMobileSolutionsOpen(true)
   }
 
   function openSolutions() {
@@ -143,6 +146,10 @@ export default function Header() {
       })
     }
   }
+
+  const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
+  const mobileNavBeforeSolutions = (solutionsIndex >= 0 ? primaryNavItems.slice(0, solutionsIndex) : primaryNavItems).filter((item) => !item.menu)
+  const mobileNavAfterSolutions = (solutionsIndex >= 0 ? primaryNavItems.slice(solutionsIndex + 1) : []).filter((item) => !item.menu)
 
   return (
     <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
@@ -173,7 +180,7 @@ export default function Header() {
           {primaryNavItems.map((item) => {
             const active =
               item.menu === 'solutions'
-                ? solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
+                ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
                 : isActivePath(pathname, item)
             if (item.menu === 'solutions') {
               return (
@@ -306,7 +313,7 @@ export default function Header() {
               }}
             >
               <motion.div className="grid gap-1" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                {primaryNavItems.slice(0, 2).map((item) => (
+                {mobileNavBeforeSolutions.map((item) => (
                   <MobileNavLink
                     key={item.href}
                     href={item.href}
@@ -323,22 +330,43 @@ export default function Header() {
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <button
                   type="button"
-                  className="flex min-h-12 items-center px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2]"
-                  onClick={() => trackNavigationEvent('nav_solutions_clicked')}
+                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
+                  aria-expanded={mobileSolutionsOpen}
+                  onClick={() => {
+                    setMobileSolutionsOpen((open) => !open)
+                    trackNavigationEvent('nav_solutions_clicked')
+                  }}
                 >
-                  Solutions
+                  <span>Solutions</span>
+                  <ChevronDown className={`h-5 w-5 transition ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
                 </button>
-                <div className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2">
-                  {solutionNavItems.map((item) => (
-                    <MobileNavLink key={item.href} href={item.href} onClick={closeMobile}>
-                      {item.label}
-                    </MobileNavLink>
-                  ))}
-                </div>
+                <AnimatePresence initial={false}>
+                  {mobileSolutionsOpen ? (
+                    <motion.div
+                      className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
+                    >
+                      {solutionNavItems.map((item) => (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          className="grid min-h-14 gap-1 rounded-[16px] px-3 py-3 text-[#F3EEE6] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
+                          onClick={closeMobile}
+                        >
+                          <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.label}</span>
+                          <span className="text-xs font-semibold leading-5 text-[#B9B1A7]">{item.description}</span>
+                        </a>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
               </motion.section>
 
               <motion.div className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-4" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                {primaryNavItems.slice(3).map((item) => (
+                {mobileNavAfterSolutions.map((item) => (
                   <MobileNavLink
                     key={item.href}
                     href={item.href}
