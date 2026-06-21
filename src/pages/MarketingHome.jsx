@@ -496,8 +496,8 @@ function MarketingHome() {
           }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(134,228,194,0.12),transparent_26%),linear-gradient(180deg,rgba(3,22,18,0.08)_0%,rgba(3,22,18,0.18)_100%)]" />
-          <div className="relative mx-auto flex min-h-[680px] w-full max-w-[1440px] flex-col justify-between px-6 pb-0 pt-[96px] md:min-h-[760px] md:px-8 md:pt-[132px]">
-            <div className="max-w-[780px] pb-8 md:pb-10">
+          <div className="relative mx-auto flex min-h-[680px] w-full max-w-[1440px] flex-col justify-between px-6 pb-0 pt-[96px] md:min-h-[760px] md:px-8 md:pt-[126px]">
+            <div className="max-w-[780px] pb-5 md:pb-6">
               <FadeUp>
                 <p className="text-xs font-black uppercase tracking-[0.26em] text-[#86E4C2]">One property journey</p>
                 <h1 className="mt-5 text-[3rem] font-extrabold leading-[1] tracking-[-0.05em] text-white sm:text-[3.8rem] md:text-[5rem] xl:text-[5.7rem]">

@@ -233,7 +233,7 @@ export default function Sell() {
           <div className="mx-auto grid w-full max-w-[1440px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <div className="py-4 md:py-8">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">For agents</p>
-              <h1 className="mt-5 max-w-[660px] font-serif text-[3.4rem] font-bold leading-[0.95] tracking-[-0.045em] text-[#071E1A] md:text-[5rem]">
+              <h1 className="mt-5 max-w-[660px] text-[3.2rem] font-extrabold leading-[0.94] tracking-[-0.055em] text-[#071E1A] md:text-[5rem]">
                 Turn listings into registrations.
               </h1>
               <p className="mt-6 max-w-[620px] text-base font-medium leading-8 text-[#31433D] md:text-lg">
@@ -327,8 +327,8 @@ export default function Sell() {
             <div>
               <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">Trusted by top performing agents.</h2>
               <div className="mt-6 rounded-[22px] bg-white/58 p-7">
-                <p className="font-serif text-[4rem] leading-none text-[#0A3028]/18">“</p>
-                <blockquote className="-mt-5 max-w-[520px] font-serif text-[1.7rem] font-medium leading-[1.22] tracking-[-0.03em] text-[#071E1A]">
+                <p className="text-[4rem] font-extrabold leading-none text-[#0A3028]/18">“</p>
+                <blockquote className="-mt-5 max-w-[520px] text-[1.7rem] font-semibold leading-[1.22] tracking-[-0.04em] text-[#071E1A]">
                   Arch9 has completely changed the way I run my business. My transactions move faster, my clients are happier and I get paid sooner.
                 </blockquote>
                 <div className="mt-8 flex items-center gap-4">
@@ -359,7 +359,7 @@ export default function Sell() {
                 <Rocket className="h-9 w-9" />
               </div>
               <div>
-                <h2 className="font-serif text-[2rem] font-bold tracking-[-0.04em] md:text-[2.4rem]">Ready to grow your business?</h2>
+                <h2 className="text-[2rem] font-extrabold tracking-[-0.04em] md:text-[2.4rem]">Ready to grow your business?</h2>
                 <p className="mt-2 max-w-[620px] text-sm font-medium leading-6 text-white/82 md:text-base">
                   Join agents who are generating more enquiries and closing more deals with Arch9.
                 </p>

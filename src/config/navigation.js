@@ -2,7 +2,6 @@ export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/contact'
 
 export const primaryNavItems = [
-  { label: 'Buy', href: '/buy', match: ['/', '/buy'], analyticsEvent: 'nav_buy_clicked' },
   { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
   { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
   { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
