@@ -68,11 +68,13 @@ function SearchSelect({ label, value, onChange, children }) {
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-14 w-full appearance-none rounded-[14px] border border-black/[0.08] bg-white px-4 pr-10 text-sm font-semibold text-[#062D25] outline-none transition duration-200 focus:border-[#006B4D] focus:shadow-[0_0_0_4px_rgba(0,100,70,0.08)]"
+          className="h-14 w-full appearance-none rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 pr-10 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)]"
         >
           {children}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#05120F]/45" />
+        <span className="pointer-events-none absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#05120F]/48 shadow-[0_4px_14px_rgba(5,8,7,0.05)]">
+          <ChevronDown className="h-4 w-4" />
+        </span>
       </div>
     </label>
   )
@@ -88,7 +90,7 @@ function SearchInput({ label, value, onChange, placeholder, icon: Icon }) {
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className={`h-14 w-full rounded-[14px] border border-black/[0.08] bg-white px-4 text-sm font-semibold text-[#062D25] outline-none transition duration-200 placeholder:text-[#05120F]/42 focus:border-[#006B4D] focus:shadow-[0_0_0_4px_rgba(0,100,70,0.08)] ${
+          className={`h-14 w-full rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 placeholder:text-[#05120F]/42 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)] ${
             Icon ? 'pl-11' : ''
           }`}
         />
@@ -163,7 +165,7 @@ function HeroSearchModule() {
             </SearchSelect>
           </div>
 
-          <div className="mt-6 grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_220px]">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_220px]">
             <SearchInput
               label="Min Price"
               value={filters.minPrice}
@@ -192,7 +194,7 @@ function HeroSearchModule() {
             </SearchSelect>
             <button
               type="submit"
-              className="inline-flex h-14 w-full items-center justify-center gap-2 self-end rounded-[16px] bg-[#006B4D] px-6 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(0,107,77,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#005A40] focus:outline-none focus:ring-4 focus:ring-[#006B4D]/15"
+              className="col-span-2 inline-flex h-14 w-full items-center justify-center gap-2 self-end rounded-[16px] bg-[#064537] px-6 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(6,69,55,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#05352D] focus:outline-none focus:ring-4 focus:ring-[#064537]/15 lg:col-span-1"
             >
               <Search className="h-4 w-4" />
               Search Properties
