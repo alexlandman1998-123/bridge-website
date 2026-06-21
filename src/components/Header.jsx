@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronDown, Mail, Menu, Sparkles, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
-import { getToolHref, getToolsByCategory, toolCategories } from '../config/tools'
+import { toolsMenu } from '../config/tools'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -43,36 +43,45 @@ function SolutionsDropdown({ onNavigate }) {
 
 function ToolsDropdown({ onNavigate }) {
   return (
-    <div className="w-[min(1000px,calc(100vw-64px))] rounded-[24px] border border-[#0A3028]/10 bg-white/96 p-4 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
-      <div className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_1.18fr]">
-        {toolCategories.map((category) => {
+    <div className="relative w-[min(1160px,calc(100vw-64px))] rounded-[24px] border border-[rgba(15,23,42,0.08)] bg-white/98 p-7 text-[#111827] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl xl:p-8">
+      <span className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[rgba(15,23,42,0.08)] bg-white/98" />
+      <div className="grid gap-0 lg:grid-cols-[repeat(4,minmax(150px,1fr))_220px]">
+        {toolsMenu.map((category) => {
           const Icon = category.icon
-          const categoryTools = getToolsByCategory(category.key)
           return (
-            <div key={category.key} className="rounded-[18px] p-2">
-              <div className="flex min-h-10 items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] bg-[#EAF4EF] text-[#0D4F45]">
-                  <Icon className="h-4 w-4" />
+            <div key={category.key} className="min-w-0 border-r border-[rgba(15,23,42,0.08)] px-4 first:pl-0 last:border-r-0">
+              <div className="flex min-h-[78px] items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[13px] bg-[#E8F5EE] text-[#064E3B]">
+                  <Icon className="h-[18px] w-[18px]" />
                 </span>
-                <div>
-                  <p className="text-sm font-extrabold text-[#071E1A]">{category.title}</p>
-                  <p className="mt-1 text-[11px] font-semibold leading-4 text-[#667085]">{category.description}</p>
+                <div className="min-w-0">
+                  <p className="text-[15px] font-extrabold leading-tight text-[#111827]">{category.menuTitle}</p>
+                  <p className="mt-2 max-w-[170px] text-xs font-semibold leading-5 text-[#667085]">{category.description}</p>
                 </div>
               </div>
               <div className="mt-4 grid gap-1">
-                {categoryTools.map((tool) => (
+                {category.links.map((tool) => (
                   <a
-                    key={tool.slug}
-                    href={getToolHref(tool)}
+                    key={tool.href}
+                    href={tool.href}
                     role="menuitem"
-                    className="group flex min-h-9 items-center justify-between gap-3 rounded-[12px] px-3 text-xs font-extrabold text-[#344054] transition hover:bg-[rgba(0,70,50,0.06)] hover:text-[#0D4F45] focus-visible:bg-[rgba(0,70,50,0.06)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
+                    className="group flex min-h-9 items-center justify-between gap-2 rounded-[12px] px-3 text-[13px] font-semibold leading-4 text-[#344054] transition hover:bg-[#E8F5EE] hover:text-[#064E3B] focus-visible:bg-[#E8F5EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
                     onClick={onNavigate}
                   >
-                    {tool.title}
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
+                    <span>{tool.label}</span>
+                    <ChevronDown className="h-3.5 w-3.5 shrink-0 -rotate-90 text-[#064E3B]/52 transition group-hover:translate-x-1 group-hover:text-[#064E3B]" />
                   </a>
                 ))}
               </div>
+              <a
+                href={category.href}
+                role="menuitem"
+                className="mt-4 inline-flex min-h-9 items-center gap-2 rounded-full px-3 text-[13px] font-extrabold text-[#064E3B] transition hover:bg-[#E8F5EE]"
+                onClick={onNavigate}
+              >
+                {category.footerLabel}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
             </div>
           )
         })}
@@ -80,17 +89,18 @@ function ToolsDropdown({ onNavigate }) {
         <a
           href="/tools"
           role="menuitem"
-          className="group overflow-hidden rounded-[20px] bg-[linear-gradient(135deg,#071E1A,#0D4F45)] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
+          className="group relative ml-5 overflow-hidden rounded-[20px] bg-[#064E3B] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
           onClick={onNavigate}
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-[16px] border border-white/14 bg-white/10 text-[#86E4C2] backdrop-blur">
+          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#86E4C2]/12 blur-2xl" />
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-[16px] border border-white/14 bg-white/10 text-[#86E4C2] backdrop-blur">
             <Sparkles className="h-5 w-5" />
           </div>
-          <p className="mt-8 text-xl font-extrabold tracking-[-0.04em]">Property Intelligence</p>
-          <p className="mt-3 text-sm font-medium leading-6 text-white/72">
+          <p className="relative mt-8 text-xl font-extrabold tracking-[-0.04em]">Property Intelligence</p>
+          <p className="relative mt-3 text-sm font-medium leading-6 text-white/72">
             Free tools and calculators designed to help buyers, sellers and professionals make better decisions.
           </p>
-          <span className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#86E4C2]">
+          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#86E4C2]">
             Explore 20+ Property Tools
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </span>
@@ -128,6 +138,7 @@ export default function Header() {
   const headerRef = useRef(null)
   const navShellRef = useRef(null)
   const solutionsButtonRef = useRef(null)
+  const closeMenuTimerRef = useRef(null)
   const isHome = pathname === '/'
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
@@ -136,6 +147,20 @@ export default function Header() {
     damping: 28,
     restDelta: 0.001,
   })
+
+  function cancelCloseMenu() {
+    if (!closeMenuTimerRef.current) return
+    window.clearTimeout(closeMenuTimerRef.current)
+    closeMenuTimerRef.current = null
+  }
+
+  function scheduleCloseMenu() {
+    cancelCloseMenu()
+    closeMenuTimerRef.current = window.setTimeout(() => {
+      setActiveMenu(null)
+      closeMenuTimerRef.current = null
+    }, 180)
+  }
 
   useEffect(() => {
     function handleScroll() {
@@ -159,12 +184,14 @@ export default function Header() {
   useEffect(() => {
     function handlePointerDown(event) {
       if (!navShellRef.current?.contains(event.target)) {
+        cancelCloseMenu()
         setActiveMenu(null)
       }
     }
 
     function handleKeydown(event) {
       if (event.key === 'Escape') {
+        cancelCloseMenu()
         setActiveMenu(null)
         setMobileOpen(false)
         solutionsButtonRef.current?.focus()
@@ -189,6 +216,14 @@ export default function Header() {
     }
   }, [mobileOpen])
 
+  useEffect(() => {
+    return () => {
+      if (closeMenuTimerRef.current) {
+        window.clearTimeout(closeMenuTimerRef.current)
+      }
+    }
+  }, [])
+
   function closeMobile() {
     setMobileOpen(false)
     setMobileSolutionsOpen(true)
@@ -197,6 +232,7 @@ export default function Header() {
   }
 
   function openMenu(menu) {
+    cancelCloseMenu()
     setActiveMenu(menu)
     trackNavigationEvent(menu === 'tools' ? 'nav_tools_clicked' : 'nav_solutions_clicked')
   }
@@ -204,6 +240,7 @@ export default function Header() {
   function handleMenuKeyDown(event, menu) {
     if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
+      cancelCloseMenu()
       setActiveMenu(menu)
       window.requestAnimationFrame(() => {
         navShellRef.current?.querySelector(`[data-${menu}-dropdown] a`)?.focus()
@@ -236,7 +273,8 @@ export default function Header() {
                 scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
               }`
         }`}
-        onMouseLeave={() => setActiveMenu(null)}
+        onMouseEnter={cancelCloseMenu}
+        onMouseLeave={scheduleCloseMenu}
       >
         <a href="/" className={`text-[0.95rem] font-extrabold tracking-[0.24em] ${isHome ? 'text-white' : 'text-[#F3EEE6]'}`}>
           ARCH9
@@ -255,12 +293,15 @@ export default function Header() {
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => setActiveMenu(item.menu)}
+                  onMouseEnter={() => {
+                    cancelCloseMenu()
+                    setActiveMenu(item.menu)
+                  }}
                 >
                   <button
                     ref={item.menu === 'solutions' ? solutionsButtonRef : undefined}
                     type="button"
-                    className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-bold transition xl:px-4 ${
+                    className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-[17px] font-normal transition xl:px-4 ${
                       isHome
                         ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                         : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
@@ -282,7 +323,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`flex h-11 items-center rounded-full px-3 text-[13px] font-bold transition xl:px-4 ${
+                className={`flex h-11 items-center rounded-full px-3 text-[17px] font-normal transition xl:px-4 ${
                   isHome
                     ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                     : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
@@ -298,7 +339,7 @@ export default function Header() {
         <div className="hidden items-center gap-2 justify-self-end lg:flex">
           <a
             href={appAuthUrl}
-            className={`rounded-full px-4 py-3 text-sm font-bold transition ${
+            className={`rounded-full px-4 py-3 text-[17px] font-normal transition ${
               isHome ? 'text-white/72 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/68 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
             }`}
             onClick={() => trackNavigationEvent('nav_login_clicked')}
@@ -335,11 +376,23 @@ export default function Header() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
+              onMouseEnter={cancelCloseMenu}
+              onMouseLeave={scheduleCloseMenu}
             >
               {activeMenu === 'tools' ? (
-                <ToolsDropdown onNavigate={() => setActiveMenu(null)} />
+                <ToolsDropdown
+                  onNavigate={() => {
+                    cancelCloseMenu()
+                    setActiveMenu(null)
+                  }}
+                />
               ) : (
-                <SolutionsDropdown onNavigate={() => setActiveMenu(null)} />
+                <SolutionsDropdown
+                  onNavigate={() => {
+                    cancelCloseMenu()
+                    setActiveMenu(null)
+                  }}
+                />
               )}
             </motion.div>
           ) : null}
@@ -422,12 +475,7 @@ export default function Header() {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
                     >
-                      <a href="/tools" className="flex min-h-12 items-center justify-between rounded-[16px] px-3 text-sm font-extrabold text-[#F3EEE6] hover:bg-white/[0.07]" onClick={closeMobile}>
-                        All Property Tools
-                        <ArrowRight className="h-4 w-4 text-[#86E4C2]" />
-                      </a>
-                      {toolCategories.map((category) => {
-                        const categoryTools = getToolsByCategory(category.key)
+                      {toolsMenu.map((category) => {
                         const open = mobileToolCategoryOpen === category.key
                         return (
                           <div key={category.key}>
@@ -449,22 +497,38 @@ export default function Header() {
                                   exit={{ opacity: 0, height: 0 }}
                                   transition={{ duration: shouldReduceMotion ? 0.01 : 0.18, ease: motionEaseOut }}
                                 >
-                                  {categoryTools.map((tool) => (
+                                  {category.links.map((tool) => (
                                     <a
-                                      key={tool.slug}
-                                      href={getToolHref(tool)}
+                                      key={tool.href}
+                                      href={tool.href}
                                       className="flex min-h-10 items-center rounded-[14px] px-3 text-xs font-semibold leading-5 text-[#B9B1A7] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
                                       onClick={closeMobile}
                                     >
-                                      {tool.title}
+                                      {tool.label}
                                     </a>
                                   ))}
+                                  <a
+                                    href={category.href}
+                                    className="mt-1 flex min-h-10 items-center justify-between rounded-[14px] px-3 text-xs font-extrabold text-[#86E4C2] transition hover:bg-white/[0.07]"
+                                    onClick={closeMobile}
+                                  >
+                                    {category.footerLabel}
+                                    <ArrowRight className="h-3.5 w-3.5" />
+                                  </a>
                                 </motion.div>
                               ) : null}
                             </AnimatePresence>
                           </div>
                         )
                       })}
+                      <a
+                        href="/tools"
+                        className="mt-2 flex min-h-12 items-center justify-between rounded-[18px] bg-[#F3EEE6] px-4 text-sm font-extrabold text-[#071E1A] shadow-[0_18px_42px_rgba(0,0,0,0.18)]"
+                        onClick={closeMobile}
+                      >
+                        Explore All Property Tools
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
                     </motion.div>
                   ) : null}
                 </AnimatePresence>

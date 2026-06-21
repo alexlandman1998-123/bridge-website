@@ -16,6 +16,7 @@ import AttorneysSolution from './pages/AttorneysSolution'
 import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
 import PlatformSolution from './pages/PlatformSolution'
 import Tools from './pages/Tools'
+import ToolCategory from './pages/ToolCategory'
 import ToolDetail from './pages/ToolDetail'
 import { landingPages } from './config/landingPages'
 import { getToolByRoute } from './config/tools'
@@ -62,6 +63,9 @@ export default function App() {
 
   if (pathname.startsWith('/tools/')) {
     const [, , category, slug] = pathname.replace(/\/$/, '').split('/')
+    if (!slug) {
+      return <ToolCategory categoryKey={category} />
+    }
     return <ToolDetail tool={getToolByRoute(category, slug)} />
   }
 

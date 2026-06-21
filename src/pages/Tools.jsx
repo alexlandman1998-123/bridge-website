@@ -39,7 +39,7 @@ function CategoryCard({ category }) {
   const categoryTools = getToolsByCategory(category.key)
   return (
     <a
-      href={`#${category.key}`}
+      href={category.href}
       className="rounded-[20px] border border-black/[0.06] bg-white p-6 shadow-[0_18px_54px_rgba(16,24,40,0.045)] transition duration-300 hover:-translate-y-1 hover:border-[#0D4F45]/28"
     >
       <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#EAF4EF] text-[#0D4F45]">

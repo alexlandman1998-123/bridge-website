@@ -22,26 +22,38 @@ export const toolCategories = [
   {
     key: 'buyers',
     title: 'Buyers',
+    menuTitle: 'For Buyers',
     description: 'Understand affordability, costs and the buying journey.',
     icon: Home,
+    href: '/tools/buyers',
+    footerLabel: 'View all buyer tools',
   },
   {
     key: 'sellers',
     title: 'Sellers',
+    menuTitle: 'For Sellers',
     description: 'Understand property value and sale proceeds.',
     icon: WalletCards,
+    href: '/tools/sellers',
+    footerLabel: 'View all seller tools',
   },
   {
     key: 'investors',
     title: 'Investors',
+    menuTitle: 'For Investors',
     description: 'Analyse property performance and returns.',
     icon: LineChart,
+    href: '/tools/investors',
+    footerLabel: 'View all investor tools',
   },
   {
     key: 'professionals',
     title: 'Professionals',
+    menuTitle: 'For Professionals',
     description: 'Tools for agents, brokers and developers.',
     icon: BriefcaseBusiness,
+    href: '/tools/professionals',
+    footerLabel: 'View all professional tools',
   },
 ]
 
@@ -150,6 +162,13 @@ export const tools = [
     icon: Home,
   },
   {
+    category: 'investors',
+    title: 'Bond vs Rental Income',
+    slug: 'bond-vs-rental-income',
+    description: 'Compare monthly bond costs against rental income and likely shortfall.',
+    icon: Landmark,
+  },
+  {
     category: 'professionals',
     title: 'Agent Commission Calculator',
     slug: 'agent-commission-calculator',
@@ -167,6 +186,7 @@ export const tools = [
   {
     category: 'professionals',
     title: 'Development Feasibility Calculator',
+    menuLabel: 'Development Feasibility',
     slug: 'development-feasibility-calculator',
     description: 'Model stock, pricing, costs and feasibility for new development launches.',
     icon: Building2,
@@ -177,6 +197,13 @@ export const tools = [
     slug: 'profit-margin-calculator',
     description: 'Estimate development or agency margins across revenue and cost scenarios.',
     icon: CheckCircle2,
+  },
+  {
+    category: 'professionals',
+    title: 'Marketing Budget Calculator',
+    slug: 'marketing-budget-calculator',
+    description: 'Plan launch, listing and campaign spend against expected transaction value.',
+    icon: BarChart3,
   },
 ]
 
@@ -195,3 +222,11 @@ export function getToolByRoute(categoryKey, slug) {
 export function getToolHref(tool) {
   return `/tools/${tool.category}/${tool.slug}`
 }
+
+export const toolsMenu = toolCategories.map((category) => ({
+  ...category,
+  links: getToolsByCategory(category.key).map((tool) => ({
+    label: tool.menuLabel || tool.title,
+    href: getToolHref(tool),
+  })),
+}))
