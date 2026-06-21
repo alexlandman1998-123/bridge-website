@@ -37,41 +37,58 @@ const ecosystemRoles = [
 ]
 
 const platformStats = [
-  { value: '18,600+', label: 'Properties Listed' },
-  { value: '2,450+', label: 'Transactions Active' },
-  { value: '9,800+', label: 'Registrations Tracked' },
-  { value: '6', label: 'Roleplayers Connected' },
+  { value: '120,000+', label: 'Properties' },
+  { value: '15,000+', label: 'Transactions' },
+  { value: '5,000+', label: 'Professionals' },
+  { value: 'R8.4B+', label: 'Transaction Value' },
 ]
 
-const brokenSystems = [
-  'Property Portal',
-  'CRM',
-  'WhatsApp',
-  'Email',
-  'Bond Originator',
-  'Attorney',
-  'Registration',
+const disconnectedScenarios = [
+  ['Agent', 'WhatsApp', 'Buyer'],
+  ['Attorney', 'Email', 'Bond Originator'],
+  ['Seller', 'Phone Call', 'Agent'],
 ]
 
-const brokenResults = ['Delays', 'Missing information', 'Repeated communication', 'Frustrated buyers', 'Frustrated agents']
+const stakeholderProblems = [
+  {
+    role: 'Buyers',
+    problem: "Don't know what happens next.",
+  },
+  {
+    role: 'Agents',
+    problem: 'Spend hours chasing updates.',
+  },
+  {
+    role: 'Attorneys',
+    problem: 'Receive incomplete instructions.',
+  },
+  {
+    role: 'Bond Originators',
+    problem: 'Constantly request documents.',
+  },
+  {
+    role: 'Developers',
+    problem: 'Lack visibility.',
+  },
+]
 
-const sharedTruthBenefits = ['Real-time visibility', 'Shared updates', 'Shared documents', 'Shared milestones', 'Better accountability']
+const sharedTruthBenefits = ['Shared updates', 'Shared documents', 'Shared milestones', 'Shared accountability', 'Shared visibility']
 
 const roleWorkspaces = [
   {
     icon: BriefcaseBusiness,
     title: 'Agents',
-    items: ['Generate leads', 'Manage buyers', 'Track transactions'],
+    items: ['Generate leads', 'Track deals', 'Manage clients'],
   },
   {
     icon: Scale,
     title: 'Attorneys',
-    items: ['Manage transfers', 'Reduce admin', 'Track registrations'],
+    items: ['Manage matters', 'Reduce admin', 'Improve visibility'],
   },
   {
     icon: Landmark,
     title: 'Bond Originators',
-    items: ['Manage applications', 'Track approvals', 'Monitor consultants'],
+    items: ['Track applications', 'Manage consultants', 'Monitor approvals'],
   },
   {
     icon: Building2,
@@ -80,18 +97,26 @@ const roleWorkspaces = [
   },
   {
     icon: Users,
-    title: 'Buyers & Sellers',
-    items: ['Track progress', 'Upload documents', 'Stay informed'],
+    title: 'Buyers',
+    items: ['Track progress', 'Upload documents', 'Receive updates'],
+  },
+  {
+    icon: Home,
+    title: 'Sellers',
+    items: ['Follow transactions', 'Manage paperwork', 'Stay informed'],
   },
 ]
 
 const journeyStages = [
-  'Property Discovery',
-  'Lead Capture',
-  'Buyer Qualification',
+  'Property Search',
+  'Buyer Enquiry',
+  'Qualification',
+  'Offer Submitted',
   'Offer Accepted',
   'Bond Application',
+  'Bond Approval',
   'Transfer Process',
+  'Lodgement',
   'Registration',
   'Commission Paid',
 ]
@@ -99,7 +124,7 @@ const journeyStages = [
 const platformCapabilities = [
   {
     icon: Home,
-    title: 'Property Listings',
+    title: 'Listings',
     copy: 'Residential, commercial and developments in one connected listing layer.',
   },
   {
@@ -129,53 +154,66 @@ const platformCapabilities = [
   },
   {
     icon: Scale,
-    title: 'Attorney Workspace',
+    title: 'Conveyancing',
     copy: 'Matter management, milestone updates and registration tracking.',
   },
   {
     icon: Building2,
-    title: 'Developer Workspace',
+    title: 'Development Management',
     copy: 'Stock management, buyer demand, sales progress and development reporting.',
   },
   {
     icon: BarChart3,
-    title: 'Reporting',
-    copy: 'Agency analytics, transaction analytics and performance dashboards.',
+    title: 'Reporting & Analytics',
+    copy: 'Agency performance, transaction intelligence and revenue forecasting.',
   },
 ]
 
-const agencyBenefits = [
+const softwareComparison = [
   {
-    title: 'More Leads',
-    copy: 'Capture and manage enquiries.',
+    title: 'Property Portals',
+    copy: 'Help you find a buyer.',
   },
   {
-    title: 'Better Follow-Up',
-    copy: 'Keep buyers engaged.',
+    title: 'CRMs',
+    copy: 'Help you manage a lead.',
   },
   {
-    title: 'Better Communication',
-    copy: 'Reduce status calls and emails.',
+    title: 'Conveyancing Systems',
+    copy: 'Help attorneys manage matters.',
   },
   {
-    title: 'Faster Registrations',
-    copy: 'Keep every roleplayer aligned.',
+    title: 'Bond Systems',
+    copy: 'Help originators manage applications.',
   },
   {
-    title: 'Better Accountability',
-    copy: 'Know what needs attention.',
-  },
-  {
-    title: 'More Revenue',
-    copy: 'Close more deals.',
+    title: 'Arch9',
+    copy: 'Connects all of them together.',
   },
 ]
 
-const intelligencePanels = ['Listings', 'Leads', 'Transactions', 'Registrations', 'Commission Forecasts', 'Agency Performance']
+const visibilityDashboards = [
+  {
+    title: 'Agency Dashboard',
+    items: ['Listings', 'Leads', 'Transactions', 'Commission forecast'],
+  },
+  {
+    title: 'Attorney Dashboard',
+    items: ['Matters', 'Registrations', 'Capacity'],
+  },
+  {
+    title: 'Bond Dashboard',
+    items: ['Applications', 'Approvals', 'Consultant performance'],
+  },
+  {
+    title: 'Developer Dashboard',
+    items: ['Stock', 'Sales', 'Registrations'],
+  },
+]
 
 const pricingPlans = [
   {
-    name: 'Starter',
+    name: 'Agents',
     price: 'R299',
     suffix: 'User / Month',
     ideal: 'For individual agents.',
@@ -189,11 +227,32 @@ const pricingPlans = [
     features: ['Everything in Starter', 'Team CRM', 'Transaction tracking', 'Reporting dashboards', 'Buyer and seller portals'],
   },
   {
+    name: 'Attorneys',
+    price: 'Custom Pricing',
+    suffix: '',
+    ideal: 'For conveyancing and transfer teams.',
+    features: ['Matter management', 'Registration tracking', 'Document workflows', 'Stakeholder updates'],
+  },
+  {
+    name: 'Bond Originators',
+    price: 'Custom Pricing',
+    suffix: '',
+    ideal: 'For finance application teams.',
+    features: ['Application tracking', 'Consultant management', 'Approval monitoring', 'Agent collaboration'],
+  },
+  {
+    name: 'Developers',
+    price: 'Custom Pricing',
+    suffix: '',
+    ideal: 'For development sales teams.',
+    features: ['Stock management', 'Sales tracking', 'Development reporting', 'Buyer visibility'],
+  },
+  {
     name: 'Enterprise',
     price: 'Custom Pricing',
     suffix: '',
     ideal: 'For larger organisations.',
-    features: ['Everything in Professional', 'Multi-branch visibility', 'Role-based workspaces', 'Advanced reporting', 'Dedicated support'],
+    features: ['Multi-branch visibility', 'Role-based workspaces', 'Advanced reporting', 'Dedicated support'],
   },
 ]
 
@@ -214,6 +273,11 @@ const testimonials = [
     quote: 'Finance, transfer and sales progress are easier to manage when everyone can see the same journey.',
     name: 'Director',
     role: 'Bond Origination Business',
+  },
+  {
+    quote: 'The platform gives our development team visibility from launch stock to final registration.',
+    name: 'Developer',
+    role: 'Residential Development Group',
   },
 ]
 
@@ -247,7 +311,7 @@ function TransactionMapVisual() {
         <div className="mx-auto h-9 w-px bg-white/18" />
 
         <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-[#86E4C2]/28 bg-[#86E4C2]/14 text-center text-xs font-black uppercase tracking-[0.16em] text-[#86E4C2] shadow-[0_0_60px_rgba(134,228,194,0.16)]">
-          Transaction
+          Arch9 Transaction
         </div>
 
         <div className="mx-auto h-9 w-px bg-white/18" />
@@ -286,8 +350,8 @@ function SharedTruthVisual() {
       </div>
       <div className="mt-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-6 text-center text-white">
         <Handshake className="mx-auto h-8 w-8 text-[#86E4C2]" />
-        <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-[#86E4C2]">Connected Through Arch9</p>
-        <p className="mt-3 text-2xl font-extrabold tracking-[-0.04em]">One transaction record, shared by every role.</p>
+        <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-[#86E4C2]">Shared Transaction</p>
+        <p className="mt-3 text-2xl font-extrabold tracking-[-0.04em]">One property. One buyer. One seller. One shared timeline.</p>
       </div>
     </div>
   )
@@ -304,17 +368,19 @@ function IntelligenceVisual() {
         <LineChart className="h-8 w-8 text-[#86E4C2]" />
       </div>
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        {intelligencePanels.map((panel, index) => (
-          <div key={panel} className="rounded-[22px] border border-white/10 bg-white/[0.08] p-4">
+        {visibilityDashboards.map((dashboard, index) => (
+          <div key={dashboard.title} className="rounded-[22px] border border-white/10 bg-white/[0.08] p-4">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-sm font-extrabold text-white">{panel}</p>
+              <p className="text-sm font-extrabold text-white">{dashboard.title}</p>
               <span className="text-xs font-black text-[#86E4C2]">{index + 1}</span>
             </div>
-            <div className="mt-4 grid gap-2">
-              <span className="h-2 w-full rounded-full bg-white/10">
-                <span className="block h-2 rounded-full bg-[#86E4C2]/70" style={{ width: `${54 + index * 7}%` }} />
-              </span>
-              <span className="h-2 w-3/4 rounded-full bg-white/10" />
+            <div className="mt-4 grid gap-2 text-xs font-semibold text-white/70">
+              {dashboard.items.map((item) => (
+                <div key={item} className="flex items-center justify-between gap-3 rounded-[12px] bg-white/[0.06] px-3 py-2">
+                  <span>{item}</span>
+                  <span className="h-2 w-10 rounded-full bg-[#86E4C2]/60" />
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -360,30 +426,35 @@ export default function PlatformSolution() {
         <section className="px-6 py-14 md:px-8 md:py-16">
           <div className="mx-auto grid w-full max-w-[1280px] gap-7 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Why property transactions are broken</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Property transactions are broken</p>
               <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                Too many systems. Too many emails. Too many delays.
+                Everyone is working. Nobody is connected.
               </h2>
               <p className="mt-5 text-base font-medium leading-8 text-[#5B6B64]">
-                Most property technology solves one piece of the process. Portals solve search. CRMs solve leads. Originators solve finance. Attorneys solve transfer.
+                Today the property industry operates through disconnected systems. Every stakeholder sees a different version of reality.
               </p>
-              <p className="mt-4 text-base font-extrabold leading-8 text-[#071E1A]">Arch9 solves the entire property transaction.</p>
+              <p className="mt-4 text-base font-extrabold leading-8 text-[#071E1A]">No shared visibility. No shared accountability. No shared timeline.</p>
             </div>
-            <div className="rounded-[30px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] md:p-8">
-              <div className="grid gap-3">
-                {brokenSystems.map((system, index) => (
-                  <div key={system} className="relative flex items-center gap-3 rounded-[18px] bg-[#F8F4EC] px-4 py-3">
-                    {index < brokenSystems.length - 1 ? <span className="absolute bottom-[-14px] left-[31px] h-5 w-px bg-[#0A3028]/14" /> : null}
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-sm font-extrabold text-[#064537]">{index + 1}</span>
-                    <span className="text-sm font-extrabold text-[#071E1A]">{system}</span>
-                  </div>
-                ))}
+            <div className="grid gap-4">
+              <div className="rounded-[30px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] md:p-8">
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {disconnectedScenarios.map((scenario) => (
+                    <div key={scenario.join('-')} className="rounded-[20px] bg-[#F8F4EC] p-4 text-center">
+                      {scenario.map((item, index) => (
+                        <div key={`${item}-${index}`}>
+                          <p className={`text-sm font-extrabold ${index === 1 ? 'text-[#006B4D]' : 'text-[#071E1A]'}`}>{item}</p>
+                          {index < scenario.length - 1 ? <div className="mx-auto my-3 h-5 w-px bg-[#0A3028]/16" /> : null}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="mt-6 grid gap-2 sm:grid-cols-2">
-                {brokenResults.map((result) => (
-                  <div key={result} className="flex items-center gap-2 rounded-[16px] border border-[#0A3028]/8 px-3 py-2 text-sm font-bold text-[#31433D]">
-                    <CircleAlert className="h-4 w-4 text-[#006B4D]" />
-                    {result}
+              <div className="grid gap-2 sm:grid-cols-2">
+                {stakeholderProblems.map((item) => (
+                  <div key={item.role} className="rounded-[18px] border border-[#0A3028]/8 bg-white px-4 py-3 shadow-[0_12px_34px_rgba(5,8,7,0.04)]">
+                    <p className="text-sm font-extrabold text-[#071E1A]">{item.role}</p>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-[#5B6B64]">{item.problem}</p>
                   </div>
                 ))}
               </div>
@@ -399,6 +470,9 @@ export default function PlatformSolution() {
               <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
                 Everyone working from the same transaction.
               </h2>
+              <p className="mt-5 text-base font-medium leading-8 text-[#5B6B64]">
+                Arch9 creates a shared transaction layer that connects every roleplayer involved in the property journey.
+              </p>
               <div className="mt-7 grid gap-3">
                 {sharedTruthBenefits.map((benefit) => (
                   <div key={benefit} className="flex items-center gap-3 rounded-[18px] border border-[#0A3028]/8 bg-white px-4 py-3 shadow-[0_12px_34px_rgba(5,8,7,0.04)]">
@@ -415,9 +489,9 @@ export default function PlatformSolution() {
           <div className="mx-auto w-full max-w-[1280px]">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Built for every role</p>
             <h2 className="mt-4 max-w-[840px] text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-              Purpose-built workspaces for every stakeholder.
+              Purpose-built workspaces for every role.
             </h2>
-            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {roleWorkspaces.map((workspace) => {
                 const Icon = workspace.icon
                 return (
@@ -444,14 +518,14 @@ export default function PlatformSolution() {
         <section className="px-6 pb-14 md:px-8 md:pb-16">
           <div className="mx-auto w-full max-w-[1280px]">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">One journey from enquiry to registration</p>
-            <h2 className="mt-4 text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Every stage connected.</h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-4">
+            <h2 className="mt-4 text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">One journey from enquiry to registration.</h2>
+            <div className="mt-8 grid gap-4 md:grid-cols-4 xl:grid-cols-6">
               {journeyStages.map((stage, index) => (
-                <div key={stage} className="relative rounded-[22px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
+                <button key={stage} type="button" className="relative rounded-[22px] border border-[#0A3028]/8 bg-white p-5 text-left shadow-[0_18px_54px_rgba(5,8,7,0.05)] transition hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(5,8,7,0.08)]">
                   {index < journeyStages.length - 1 ? <span className="absolute right-[-18px] top-1/2 hidden h-px w-9 bg-[#0A3028]/14 md:block" /> : null}
                   <p className="text-xs font-black uppercase tracking-[0.18em] text-[#006B4D]">Stage {index + 1}</p>
                   <h3 className="mt-5 text-xl font-extrabold text-[#071E1A]">{stage}</h3>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -483,17 +557,17 @@ export default function PlatformSolution() {
         <section className="px-6 pb-14 md:px-8 md:pb-16">
           <div className="mx-auto grid w-full max-w-[1280px] gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Why agencies choose Arch9</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Why Arch9 is different</p>
               <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                More visibility. Less admin. Faster transactions.
+                Most software manages a task. Arch9 manages the journey.
               </h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
-              {agencyBenefits.map((benefit) => (
-                <div key={benefit.title} className="rounded-[20px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
-                  <TrendingUp className="h-5 w-5 text-[#006B4D]" />
-                  <h3 className="mt-4 text-lg font-extrabold text-[#071E1A]">{benefit.title}</h3>
-                  <p className="mt-2 text-sm font-medium leading-6 text-[#5B6B64]">{benefit.copy}</p>
+              {softwareComparison.map((item) => (
+                <div key={item.title} className={`rounded-[20px] border p-5 shadow-[0_18px_54px_rgba(5,8,7,0.05)] ${item.title === 'Arch9' ? 'border-[#006B4D]/18 bg-[#064537] text-white sm:col-span-2' : 'border-[#0A3028]/8 bg-white'}`}>
+                  <TrendingUp className={`h-5 w-5 ${item.title === 'Arch9' ? 'text-[#86E4C2]' : 'text-[#006B4D]'}`} />
+                  <h3 className={`mt-4 text-lg font-extrabold ${item.title === 'Arch9' ? 'text-white' : 'text-[#071E1A]'}`}>{item.title}</h3>
+                  <p className={`mt-2 text-sm font-medium leading-6 ${item.title === 'Arch9' ? 'text-white/76' : 'text-[#5B6B64]'}`}>{item.copy}</p>
                 </div>
               ))}
             </div>
@@ -503,12 +577,12 @@ export default function PlatformSolution() {
         <section className="px-6 pb-14 md:px-8 md:pb-16">
           <div className="mx-auto grid w-full max-w-[1280px] gap-7 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Marketplace intelligence</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Visibility across your entire business</p>
               <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                Real-time visibility across your business.
+                Know exactly what is happening.
               </h2>
               <p className="mt-5 text-base font-medium leading-8 text-[#5B6B64]">
-                Understand listings, leads, transactions, registrations, commission forecasts and agency performance from one operating layer.
+                See agency performance, attorney capacity, bond applications and development sales from one connected operating layer.
               </p>
             </div>
             <IntelligenceVisual />
@@ -519,9 +593,9 @@ export default function PlatformSolution() {
           <div className="mx-auto w-full max-w-[1280px]">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Pricing</p>
             <h2 className="mt-4 max-w-[780px] text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-              Simple pricing for a connected property business.
+              Flexible pricing for every role.
             </h2>
-            <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {pricingPlans.map((plan) => (
                 <div key={plan.name} className="rounded-[26px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
                   <h3 className="text-2xl font-extrabold text-[#071E1A]">{plan.name}</h3>
@@ -554,8 +628,8 @@ export default function PlatformSolution() {
 
         <section className="px-6 pb-14 md:px-8 md:pb-16">
           <div className="mx-auto w-full max-w-[1280px]">
-            <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Trusted across the ecosystem.</h2>
-            <div className="mt-7 grid gap-5 lg:grid-cols-3">
+            <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Customer stories from across the ecosystem.</h2>
+            <div className="mt-7 grid gap-5 lg:grid-cols-4">
               {testimonials.map((testimonial) => (
                 <blockquote key={testimonial.role} className="rounded-[26px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
                   <MessageSquareText className="h-7 w-7 text-[#006B4D]" />
@@ -571,11 +645,12 @@ export default function PlatformSolution() {
         </section>
 
         <section className="px-6 pb-16 md:px-8 md:pb-20">
-          <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-7 text-white shadow-[0_24px_80px_rgba(5,8,7,0.16)] md:flex-row md:items-center md:justify-between md:p-9">
+          <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-7 text-white shadow-[0_24px_80px_rgba(5,8,7,0.16)] md:p-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em]">Ready to connect your entire property business?</h2>
-              <p className="mt-2 max-w-[720px] text-sm font-medium leading-6 text-white/82 md:text-base">
-                Join agencies, attorneys, originators and developers using Arch9 to modernise the property transaction.
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#86E4C2]">Final vision</p>
+              <h2 className="mt-4 text-[2.2rem] font-extrabold tracking-[-0.04em]">Property transactions should feel connected.</h2>
+              <p className="mt-3 max-w-[780px] text-sm font-medium leading-7 text-white/82 md:text-base">
+                The future of property isn't another portal, another CRM or another workflow tool. It's one connected experience from first enquiry to final registration.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
