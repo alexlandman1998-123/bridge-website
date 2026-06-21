@@ -11,7 +11,7 @@ export default function Footer() {
       <ul className="flex flex-wrap items-center gap-5">
         {footerSocialLinks.map((link) => (
           <li key={link.label}>
-            <a href={link.href} className="flex min-h-11 items-center transition duration-200 ease-out hover:text-[#0D4F45]">
+            <a href={link.href} className="flex min-h-11 items-center transition duration-200 ease-out hover:text-[#86E4C2]">
               {link.label}
             </a>
           </li>
@@ -21,7 +21,7 @@ export default function Footer() {
   )
 
   return (
-    <footer className="bg-[#111827] text-[#F8F6F2]">
+    <footer className="bg-[#071E1A] text-[#F8F6F2]">
       <section className="bg-[#F7F4EE] px-6 py-12 md:px-8 md:py-16">
         <div className="mx-auto max-w-[1400px]">
           <motion.div
@@ -44,7 +44,7 @@ export default function Footer() {
       <section className="px-6 py-16 md:px-8 md:py-20 lg:py-24">
         <div className="mx-auto grid w-full max-w-[1400px] gap-12 md:grid-cols-2 lg:grid-cols-[1.65fr_0.78fr_1fr_0.8fr_0.92fr] lg:gap-20">
           <div className="md:col-span-2 lg:col-span-1">
-            <a href="/" className="inline-flex min-h-11 items-center text-[1rem] font-extrabold tracking-[0.24em] text-[#F8F6F2] transition duration-200 ease-out hover:text-[#0D4F45]">
+            <a href="/" className="inline-flex min-h-11 items-center text-[1rem] font-extrabold tracking-[0.24em] text-[#F8F6F2] transition duration-200 ease-out hover:text-[#86E4C2]">
               ARCH9
             </a>
             <p className="mt-8 text-[1.55rem] font-semibold leading-tight tracking-[-0.04em] text-[#F8F6F2]">
@@ -55,10 +55,10 @@ export default function Footer() {
               Arch9 connects buyers, sellers, agents, attorneys, bond originators and developers through one shared
               transaction workspace.
             </p>
-            <a href="mailto:hello@arch9.co.za" className="mt-7 inline-flex min-h-11 items-center text-sm font-extrabold text-white/75 transition duration-200 ease-out hover:text-[#0D4F45]">
+            <a href="mailto:hello@arch9.co.za" className="mt-7 inline-flex min-h-11 items-center text-sm font-extrabold text-white/75 transition duration-200 ease-out hover:text-[#86E4C2]">
               hello@arch9.co.za
             </a>
-            <a href="/book-demo" className="mt-3 flex min-h-11 w-fit items-center gap-2 text-sm font-extrabold text-[#F8F6F2] transition duration-200 ease-out hover:text-[#0D4F45]">
+            <a href="/book-demo" className="mt-3 flex min-h-11 w-fit items-center gap-2 text-sm font-extrabold text-[#F8F6F2] transition duration-200 ease-out hover:text-[#86E4C2]">
               Book A Demo
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -73,7 +73,7 @@ export default function Footer() {
                   <li key={`${group.title}-${link.href}-${link.label}`}>
                     <a
                       href={link.href}
-                      className="flex min-h-10 items-center text-sm font-semibold leading-6 text-white/65 transition duration-200 ease-out hover:text-[#0D4F45]"
+                      className="flex min-h-10 items-center text-sm font-semibold leading-6 text-white/65 transition duration-200 ease-out hover:text-[#86E4C2]"
                     >
                       {link.label}
                     </a>
@@ -95,7 +95,7 @@ export default function Footer() {
             <ul className="flex flex-wrap items-center justify-center gap-5">
               {footerLegalLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="flex min-h-11 items-center transition duration-200 ease-out hover:text-[#0D4F45]">
+                  <a href={link.href} className="flex min-h-11 items-center transition duration-200 ease-out hover:text-[#86E4C2]">
                     {link.label}
                   </a>
                 </li>
