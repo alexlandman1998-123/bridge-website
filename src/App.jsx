@@ -15,7 +15,10 @@ import AgentsSolution from './pages/AgentsSolution'
 import AttorneysSolution from './pages/AttorneysSolution'
 import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
 import PlatformSolution from './pages/PlatformSolution'
+import Tools from './pages/Tools'
+import ToolDetail from './pages/ToolDetail'
 import { landingPages } from './config/landingPages'
+import { getToolByRoute } from './config/tools'
 import { findDevelopmentBySlug } from './data/developments'
 import { findAreaBySlug } from './data/propertyIntelligence'
 
@@ -51,6 +54,15 @@ export default function App() {
 
   if (pathname === '/sell') {
     return <Sell />
+  }
+
+  if (pathname === '/tools') {
+    return <Tools />
+  }
+
+  if (pathname.startsWith('/tools/')) {
+    const [, , category, slug] = pathname.replace(/\/$/, '').split('/')
+    return <ToolDetail tool={getToolByRoute(category, slug)} />
   }
 
   if (pathname.startsWith('/solutions/')) {

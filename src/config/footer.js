@@ -1,22 +1,3 @@
-export const footerMetrics = [
-  {
-    value: '120,000+',
-    label: 'Properties Listed',
-  },
-  {
-    value: '15,000+',
-    label: 'Transactions Active',
-  },
-  {
-    value: '5,000+',
-    label: 'Professionals Using Arch9',
-  },
-  {
-    value: 'R8.4B+',
-    label: 'Transaction Value',
-  },
-]
-
 export const footerLinkGroups = [
   {
     title: 'Properties',

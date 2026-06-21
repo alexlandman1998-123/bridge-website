@@ -4,6 +4,7 @@ export const demoHref = '/contact'
 export const primaryNavItems = [
   { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
   { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
+  { label: 'Tools', menu: 'tools', match: ['/tools'], analyticsEvent: 'nav_tools_clicked' },
   { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
   { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
 ]

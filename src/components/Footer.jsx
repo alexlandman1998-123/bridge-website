@@ -1,11 +1,7 @@
-import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { footerLegalLinks, footerLinkGroups, footerMetrics, footerSocialLinks } from '../config/footer'
-import { motionEaseOut } from './motion/timing'
+import { footerLegalLinks, footerLinkGroups, footerSocialLinks } from '../config/footer'
 
 export default function Footer() {
-  const shouldReduceMotion = useReducedMotion()
-
   const socialNav = (
     <nav aria-label="Social links">
       <ul className="flex flex-wrap items-center gap-5">
@@ -22,25 +18,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#071E1A] text-[#F8F6F2]">
-      <section className="bg-[#F7F4EE] px-6 py-12 md:px-8 md:py-16">
-        <div className="mx-auto max-w-[1400px]">
-          <motion.div
-            className="grid overflow-hidden rounded-[26px] border border-black/[0.06] bg-white text-left shadow-[0_22px_70px_rgba(16,24,40,0.07)] sm:grid-cols-2 lg:grid-cols-4"
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.28 }}
-            transition={{ duration: shouldReduceMotion ? 0.01 : 0.45, ease: motionEaseOut }}
-          >
-            {footerMetrics.map((metric) => (
-              <div key={metric.label} className="min-h-[148px] border-black/[0.06] p-6 sm:border-r sm:[&:nth-child(2n)]:border-r-0 lg:border-r lg:p-8 lg:[&:nth-child(2n)]:border-r lg:[&:last-child]:border-r-0">
-                <p className="text-[2.35rem] font-extrabold leading-none tracking-[-0.055em] text-[#101828] md:text-[2.75rem]">{metric.value}</p>
-                <p className="mt-5 text-sm font-semibold text-[#475467]">{metric.label}</p>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       <section className="px-6 py-16 md:px-8 md:py-20 lg:py-24">
         <div className="mx-auto grid w-full max-w-[1400px] gap-12 md:grid-cols-2 lg:grid-cols-[1.65fr_0.78fr_1fr_0.8fr_0.92fr] lg:gap-20">
           <div className="md:col-span-2 lg:col-span-1">

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import { ArrowRight, ChevronDown, Mail, Menu, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, Mail, Menu, Sparkles, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
+import { getToolHref, getToolsByCategory, toolCategories } from '../config/tools'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -40,6 +41,65 @@ function SolutionsDropdown({ onNavigate }) {
   )
 }
 
+function ToolsDropdown({ onNavigate }) {
+  return (
+    <div className="w-[min(1000px,calc(100vw-64px))] rounded-[24px] border border-[#0A3028]/10 bg-white/96 p-4 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
+      <div className="grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_1.18fr]">
+        {toolCategories.map((category) => {
+          const Icon = category.icon
+          const categoryTools = getToolsByCategory(category.key)
+          return (
+            <div key={category.key} className="rounded-[18px] p-2">
+              <div className="flex min-h-10 items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] bg-[#EAF4EF] text-[#0D4F45]">
+                  <Icon className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-sm font-extrabold text-[#071E1A]">{category.title}</p>
+                  <p className="mt-1 text-[11px] font-semibold leading-4 text-[#667085]">{category.description}</p>
+                </div>
+              </div>
+              <div className="mt-4 grid gap-1">
+                {categoryTools.map((tool) => (
+                  <a
+                    key={tool.slug}
+                    href={getToolHref(tool)}
+                    role="menuitem"
+                    className="group flex min-h-9 items-center justify-between gap-3 rounded-[12px] px-3 text-xs font-extrabold text-[#344054] transition hover:bg-[rgba(0,70,50,0.06)] hover:text-[#0D4F45] focus-visible:bg-[rgba(0,70,50,0.06)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
+                    onClick={onNavigate}
+                  >
+                    {tool.title}
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+
+        <a
+          href="/tools"
+          role="menuitem"
+          className="group overflow-hidden rounded-[20px] bg-[linear-gradient(135deg,#071E1A,#0D4F45)] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
+          onClick={onNavigate}
+        >
+          <div className="flex h-12 w-12 items-center justify-center rounded-[16px] border border-white/14 bg-white/10 text-[#86E4C2] backdrop-blur">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <p className="mt-8 text-xl font-extrabold tracking-[-0.04em]">Property Intelligence</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-white/72">
+            Free tools and calculators designed to help buyers, sellers and professionals make better decisions.
+          </p>
+          <span className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#86E4C2]">
+            Explore 20+ Property Tools
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+          </span>
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function MobileNavLink({ href, children, onClick, featured = false }) {
   return (
     <a
@@ -61,6 +121,8 @@ export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(true)
+  const [mobileToolsOpen, setMobileToolsOpen] = useState(true)
+  const [mobileToolCategoryOpen, setMobileToolCategoryOpen] = useState('buyers')
   const [scrolled, setScrolled] = useState(false)
   const [pathname, setPathname] = useState(window.location.pathname)
   const headerRef = useRef(null)
@@ -130,26 +192,30 @@ export default function Header() {
   function closeMobile() {
     setMobileOpen(false)
     setMobileSolutionsOpen(true)
+    setMobileToolsOpen(true)
+    setMobileToolCategoryOpen('buyers')
   }
 
-  function openSolutions() {
-    setActiveMenu('solutions')
-    trackNavigationEvent('nav_solutions_clicked')
+  function openMenu(menu) {
+    setActiveMenu(menu)
+    trackNavigationEvent(menu === 'tools' ? 'nav_tools_clicked' : 'nav_solutions_clicked')
   }
 
-  function handleSolutionsKeyDown(event) {
+  function handleMenuKeyDown(event, menu) {
     if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      setActiveMenu('solutions')
+      setActiveMenu(menu)
       window.requestAnimationFrame(() => {
-        navShellRef.current?.querySelector('[data-solutions-dropdown] a')?.focus()
+        navShellRef.current?.querySelector(`[data-${menu}-dropdown] a`)?.focus()
       })
     }
   }
 
   const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
-  const mobileNavBeforeSolutions = (solutionsIndex >= 0 ? primaryNavItems.slice(0, solutionsIndex) : primaryNavItems).filter((item) => !item.menu)
-  const mobileNavAfterSolutions = (solutionsIndex >= 0 ? primaryNavItems.slice(solutionsIndex + 1) : []).filter((item) => !item.menu)
+  const toolsIndex = primaryNavItems.findIndex((item) => item.menu === 'tools')
+  const firstMenuIndex = Math.min(...[solutionsIndex, toolsIndex].filter((index) => index >= 0))
+  const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
+  const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
 
   return (
     <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
@@ -181,29 +247,31 @@ export default function Header() {
             const active =
               item.menu === 'solutions'
                 ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
+                : item.menu === 'tools'
+                  ? pathname === '/tools' || pathname.startsWith('/tools/')
                 : isActivePath(pathname, item)
-            if (item.menu === 'solutions') {
+            if (item.menu) {
               return (
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => setActiveMenu('solutions')}
+                  onMouseEnter={() => setActiveMenu(item.menu)}
                 >
                   <button
-                    ref={solutionsButtonRef}
+                    ref={item.menu === 'solutions' ? solutionsButtonRef : undefined}
                     type="button"
-                    className={`flex h-11 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition xl:px-5 ${
+                    className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-bold transition xl:px-4 ${
                       isHome
                         ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                         : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
-                    } ${active || activeMenu === 'solutions' ? 'bg-white/[0.08] text-white' : ''}`}
+                    } ${active || activeMenu === item.menu ? 'bg-white/[0.08] text-white' : ''}`}
                     aria-haspopup="menu"
-                    aria-expanded={activeMenu === 'solutions'}
-                    onClick={openSolutions}
-                    onKeyDown={handleSolutionsKeyDown}
+                    aria-expanded={activeMenu === item.menu}
+                    onClick={() => openMenu(item.menu)}
+                    onKeyDown={(event) => handleMenuKeyDown(event, item.menu)}
                   >
                     {item.label}
-                    <ChevronDown className={`h-4 w-4 transition ${activeMenu === 'solutions' ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-4 w-4 transition ${activeMenu === item.menu ? 'rotate-180' : ''}`} />
                   </button>
                 </div>
               )
@@ -214,7 +282,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition xl:px-5 ${
+                className={`flex h-11 items-center rounded-full px-3 text-[13px] font-bold transition xl:px-4 ${
                   isHome
                     ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                     : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
@@ -257,9 +325,10 @@ export default function Header() {
         </button>
 
         <AnimatePresence>
-          {activeMenu === 'solutions' ? (
+          {activeMenu ? (
             <motion.div
-              data-solutions-dropdown
+              data-solutions-dropdown={activeMenu === 'solutions' ? true : undefined}
+              data-tools-dropdown={activeMenu === 'tools' ? true : undefined}
               className="absolute left-1/2 top-[calc(100%+14px)] hidden -translate-x-1/2 lg:block"
               role="menu"
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
@@ -267,7 +336,11 @@ export default function Header() {
               exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
               transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
             >
-              <SolutionsDropdown onNavigate={() => setActiveMenu(null)} />
+              {activeMenu === 'tools' ? (
+                <ToolsDropdown onNavigate={() => setActiveMenu(null)} />
+              ) : (
+                <SolutionsDropdown onNavigate={() => setActiveMenu(null)} />
+              )}
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -313,7 +386,7 @@ export default function Header() {
               }}
             >
               <motion.div className="grid gap-1" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                {mobileNavBeforeSolutions.map((item) => (
+                {mobileNavBeforeMenus.map((item) => (
                   <MobileNavLink
                     key={item.href}
                     href={item.href}
@@ -326,6 +399,76 @@ export default function Header() {
                   </MobileNavLink>
                 ))}
               </motion.div>
+
+              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <button
+                  type="button"
+                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
+                  aria-expanded={mobileToolsOpen}
+                  onClick={() => {
+                    setMobileToolsOpen((open) => !open)
+                    trackNavigationEvent('nav_tools_clicked')
+                  }}
+                >
+                  <span>Tools</span>
+                  <ChevronDown className={`h-5 w-5 transition ${mobileToolsOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {mobileToolsOpen ? (
+                    <motion.div
+                      className="mt-3 grid gap-2 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
+                    >
+                      <a href="/tools" className="flex min-h-12 items-center justify-between rounded-[16px] px-3 text-sm font-extrabold text-[#F3EEE6] hover:bg-white/[0.07]" onClick={closeMobile}>
+                        All Property Tools
+                        <ArrowRight className="h-4 w-4 text-[#86E4C2]" />
+                      </a>
+                      {toolCategories.map((category) => {
+                        const categoryTools = getToolsByCategory(category.key)
+                        const open = mobileToolCategoryOpen === category.key
+                        return (
+                          <div key={category.key}>
+                            <button
+                              type="button"
+                              className="flex min-h-12 w-full items-center justify-between rounded-[16px] px-3 text-left text-sm font-extrabold text-[#F3EEE6] transition hover:bg-white/[0.07]"
+                              aria-expanded={open}
+                              onClick={() => setMobileToolCategoryOpen(open ? null : category.key)}
+                            >
+                              {category.title}
+                              <ChevronDown className={`h-4 w-4 text-[#86E4C2] transition ${open ? 'rotate-180' : ''}`} />
+                            </button>
+                            <AnimatePresence initial={false}>
+                              {open ? (
+                                <motion.div
+                                  className="grid gap-1 px-2 pb-2"
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.18, ease: motionEaseOut }}
+                                >
+                                  {categoryTools.map((tool) => (
+                                    <a
+                                      key={tool.slug}
+                                      href={getToolHref(tool)}
+                                      className="flex min-h-10 items-center rounded-[14px] px-3 text-xs font-semibold leading-5 text-[#B9B1A7] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
+                                      onClick={closeMobile}
+                                    >
+                                      {tool.title}
+                                    </a>
+                                  ))}
+                                </motion.div>
+                              ) : null}
+                            </AnimatePresence>
+                          </div>
+                        )
+                      })}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </motion.section>
 
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <button
@@ -366,7 +509,7 @@ export default function Header() {
               </motion.section>
 
               <motion.div className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-4" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                {mobileNavAfterSolutions.map((item) => (
+                {mobileNavAfterMenus.map((item) => (
                   <MobileNavLink
                     key={item.href}
                     href={item.href}
