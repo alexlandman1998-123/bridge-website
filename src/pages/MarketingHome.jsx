@@ -122,7 +122,7 @@ function HeroSearchModule() {
   function submitSearch(event) {
     event.preventDefault()
     const query = buildPropertyQuery({ status, ...filters })
-    setRedirectUrl(query ? `/buy?${query}` : '/buy')
+    setRedirectUrl(query ? `/properties?${query}` : '/properties')
   }
 
   return (
@@ -340,7 +340,7 @@ function FeaturedPropertiesSection() {
               Handpicked properties for you.
             </h2>
           </div>
-          <a href="/buy" className="hidden text-sm font-extrabold text-[#0E6A55] md:inline-flex">
+          <a href="/properties" className="hidden text-sm font-extrabold text-[#0E6A55] md:inline-flex">
             View all properties
             <ArrowRight className="ml-2 h-4 w-4" />
           </a>
@@ -354,7 +354,7 @@ function FeaturedPropertiesSection() {
           ))}
         </div>
 
-        <a href="/buy" className="mt-7 inline-flex text-sm font-extrabold text-[#0E6A55] md:hidden">
+        <a href="/properties" className="mt-7 inline-flex text-sm font-extrabold text-[#0E6A55] md:hidden">
           View all properties
           <ArrowRight className="ml-2 h-4 w-4" />
         </a>

@@ -439,7 +439,7 @@ function NotFound() {
         <p className="mt-5 max-w-[560px] text-lg leading-8 text-[#4B5B55]">
           The listing may have moved, been removed, or is not yet published on the Arch9 public network.
         </p>
-        <a href="/buy" className="bridge-button-primary mt-8">
+        <a href="/properties" className="bridge-button-primary mt-8">
           Back to Properties
           <ArrowRight className="h-4 w-4" />
         </a>
@@ -510,7 +510,7 @@ export default function PropertyDetail({ slug }) {
 
       <main className="bg-[#F8F4EC] pt-[112px]">
         <section className="mx-auto w-full max-w-[1440px] px-6 pb-16 pt-8 md:px-8 lg:pb-24">
-          <a href="/buy" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
+          <a href="/properties" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
             <ArrowLeft className="h-4 w-4" />
             Back to properties
           </a>

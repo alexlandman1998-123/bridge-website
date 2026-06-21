@@ -566,7 +566,7 @@ function CalculatorPage({ calculator }) {
             <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.05em]">Ready to move from estimate to application?</h2>
             <div className="mt-6 grid gap-3">
               <a href="/contact" className="bridge-button-primary bridge-button-light">Apply for finance</a>
-              <a href="/buy" className="bridge-button-secondary">Browse properties</a>
+              <a href="/" className="bridge-button-secondary">Browse properties</a>
               <a href="/buyer-guides" className="bridge-button-secondary">Read buyer guide</a>
             </div>
           </div>

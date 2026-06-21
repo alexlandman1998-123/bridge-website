@@ -9,6 +9,13 @@ function isActivePath(pathname, item) {
   return item.match?.some((path) => pathname === path || pathname.startsWith(`${path}/`))
 }
 
+function trackNavigationEvent(eventName) {
+  if (!eventName) return
+
+  window.dataLayer?.push({ event: eventName })
+  window.dispatchEvent(new CustomEvent(eventName))
+}
+
 function SolutionsDropdown({ onNavigate }) {
   return (
     <div className="w-[430px] rounded-[28px] border border-[#0A3028]/10 bg-white/92 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
@@ -124,6 +131,7 @@ export default function Header() {
 
   function openSolutions() {
     setActiveMenu('solutions')
+    trackNavigationEvent('nav_solutions_clicked')
   }
 
   function handleSolutionsKeyDown(event) {
@@ -161,7 +169,7 @@ export default function Header() {
           ARCH9
         </a>
 
-        <nav className="hidden min-w-0 justify-self-center lg:flex lg:items-center lg:gap-1" aria-label="Primary navigation">
+        <nav className="hidden min-w-0 justify-self-center lg:flex lg:items-center lg:gap-2 xl:gap-3" aria-label="Primary navigation">
           {primaryNavItems.map((item) => {
             const active =
               item.menu === 'solutions'
@@ -177,7 +185,7 @@ export default function Header() {
                   <button
                     ref={solutionsButtonRef}
                     type="button"
-                    className={`flex h-11 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition ${
+                    className={`flex h-11 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition xl:px-5 ${
                       isHome
                         ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                         : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
@@ -199,11 +207,12 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
-                className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition ${
+                className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition xl:px-5 ${
                   isHome
                     ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
                     : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
                 } ${active ? 'bg-white/[0.1] text-white' : ''}`}
+                onClick={() => trackNavigationEvent(item.analyticsEvent)}
               >
                 {item.label}
               </a>
@@ -217,10 +226,15 @@ export default function Header() {
             className={`rounded-full px-4 py-3 text-sm font-bold transition ${
               isHome ? 'text-white/72 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/68 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
             }`}
+            onClick={() => trackNavigationEvent('nav_login_clicked')}
           >
             Login
           </a>
-          <a href={demoHref} className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm">
+          <a
+            href={demoHref}
+            className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm"
+            onClick={() => trackNavigationEvent('nav_book_demo_clicked')}
+          >
             Book a Demo
           </a>
         </div>
@@ -292,14 +306,28 @@ export default function Header() {
               }}
             >
               <motion.div className="grid gap-1" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <MobileNavLink href="/buy" onClick={closeMobile}>Buy</MobileNavLink>
-                <MobileNavLink href="/developments" onClick={closeMobile}>Developments</MobileNavLink>
-                <MobileNavLink href="/sell" onClick={closeMobile}>Sell</MobileNavLink>
-                <MobileNavLink href="/property-intelligence" onClick={closeMobile}>Property Intelligence</MobileNavLink>
+                {primaryNavItems.slice(0, 2).map((item) => (
+                  <MobileNavLink
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => {
+                      trackNavigationEvent(item.analyticsEvent)
+                      closeMobile()
+                    }}
+                  >
+                    {item.label}
+                  </MobileNavLink>
+                ))}
               </motion.div>
 
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <p className="flex min-h-12 items-center px-1 text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2]">Solutions</p>
+                <button
+                  type="button"
+                  className="flex min-h-12 items-center px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2]"
+                  onClick={() => trackNavigationEvent('nav_solutions_clicked')}
+                >
+                  Solutions
+                </button>
                 <div className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2">
                   {solutionNavItems.map((item) => (
                     <MobileNavLink key={item.href} href={item.href} onClick={closeMobile}>
@@ -310,10 +338,36 @@ export default function Header() {
               </motion.section>
 
               <motion.div className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-4" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <MobileNavLink href="/pricing" onClick={closeMobile}>Pricing</MobileNavLink>
-                <MobileNavLink href={appAuthUrl} onClick={closeMobile}>Login</MobileNavLink>
+                {primaryNavItems.slice(3).map((item) => (
+                  <MobileNavLink
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => {
+                      trackNavigationEvent(item.analyticsEvent)
+                      closeMobile()
+                    }}
+                  >
+                    {item.label}
+                  </MobileNavLink>
+                ))}
+                <MobileNavLink
+                  href={appAuthUrl}
+                  onClick={() => {
+                    trackNavigationEvent('nav_login_clicked')
+                    closeMobile()
+                  }}
+                >
+                  Login
+                </MobileNavLink>
                 <div className="mt-3">
-                  <MobileNavLink href={demoHref} onClick={closeMobile} featured>
+                  <MobileNavLink
+                    href={demoHref}
+                    onClick={() => {
+                      trackNavigationEvent('nav_book_demo_clicked')
+                      closeMobile()
+                    }}
+                    featured
+                  >
                     Book a Demo
                   </MobileNavLink>
                 </div>

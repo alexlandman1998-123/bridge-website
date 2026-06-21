@@ -130,7 +130,7 @@ export const landingPages = {
     cta: 'Apply For Finance',
     href: '/contact',
     secondaryLabel: 'Browse properties',
-    secondaryHref: '/buy',
+    secondaryHref: '/',
     metaTitle: 'Finance Hub | Arch9',
   },
   'buyer-dashboard': {
@@ -140,7 +140,7 @@ export const landingPages = {
     cta: 'Book a demo',
     href: '/contact',
     secondaryLabel: 'Browse properties',
-    secondaryHref: '/buy',
+    secondaryHref: '/',
     metaTitle: 'Buyer Dashboard | Arch9',
   },
   'registration-tracking': {
@@ -150,7 +150,7 @@ export const landingPages = {
     cta: 'Explore the platform',
     href: '/platform',
     secondaryLabel: 'Browse properties',
-    secondaryHref: '/buy',
+    secondaryHref: '/',
     metaTitle: 'Registration Tracking | Arch9',
   },
   alerts: {
@@ -158,7 +158,7 @@ export const landingPages = {
     title: 'Never miss the right property',
     subtitle: 'Create alerts for price bands, bedroom counts, locations, developments, saved areas, and status changes across the Arch9 network.',
     cta: 'Start browsing',
-    href: '/buy',
+    href: '/',
     secondaryLabel: 'View platform',
     secondaryHref: '/platform',
     metaTitle: 'Property Alerts | Arch9',

@@ -25,7 +25,7 @@ export const footerLinkGroups = [
   {
     title: 'Properties',
     links: [
-      { label: 'Buy Property', href: '/buy' },
+      { label: 'Browse Properties', href: '/' },
       { label: 'Developments', href: '/developments' },
       { label: 'Sell Property', href: '/sell' },
       { label: 'Commercial Property', href: '/commercial' },

@@ -2,12 +2,11 @@ export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/contact'
 
 export const primaryNavItems = [
-  { label: 'Buy', href: '/buy', match: ['/buy', '/properties', '/property'] },
-  { label: 'Developments', href: '/developments', match: ['/developments'] },
-  { label: 'Sell', href: '/sell', match: ['/sell'] },
-  { label: 'Solutions', menu: 'solutions' },
-  { label: 'Property Intelligence', href: '/property-intelligence', match: ['/property-intelligence', '/areas', '/market-reports', '/buyer-guides', '/seller-guides', '/calculators', '/bond-calculator', '/transfer-cost-calculator', '/affordability-calculator', '/property-pulse'] },
-  { label: 'Pricing', href: '/pricing', match: ['/pricing'] },
+  { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
+  { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
+  { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
+  { label: 'Insights', href: '/property-intelligence', match: ['/property-intelligence', '/areas', '/market-reports', '/buyer-guides', '/seller-guides', '/calculators', '/bond-calculator', '/transfer-cost-calculator', '/affordability-calculator', '/property-pulse'], analyticsEvent: 'nav_insights_clicked' },
+  { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
 ]
 
 export const solutionNavItems = [

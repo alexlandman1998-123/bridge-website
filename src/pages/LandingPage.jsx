@@ -33,7 +33,7 @@ function setMetaDescription(content) {
 export default function LandingPage({ pageKey }) {
   const page = landingPages[pageKey] || landingPages.platform
   const Icon = pageIcons[pageKey] || FileStack
-  const secondaryHref = page.secondaryHref || '/buy'
+  const secondaryHref = page.secondaryHref || '/'
   const secondaryLabel = page.secondaryLabel || 'View listings'
 
   useEffect(() => {
