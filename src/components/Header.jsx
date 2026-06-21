@@ -17,6 +17,8 @@ function trackNavigationEvent(eventName) {
   window.dispatchEvent(new CustomEvent(eventName))
 }
 
+const primaryToolsMenu = toolsMenu.filter((category) => category.key !== 'professionals')
+
 function SolutionsDropdown({ onNavigate }) {
   return (
     <div className="w-[430px] rounded-[24px] border border-[#0A3028]/10 bg-white/94 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
@@ -43,13 +45,13 @@ function SolutionsDropdown({ onNavigate }) {
 
 function ToolsDropdown({ onNavigate }) {
   return (
-    <div className="relative w-[min(1160px,calc(100vw-64px))] rounded-[24px] border border-[rgba(15,23,42,0.08)] bg-white/98 p-7 text-[#111827] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl xl:p-8">
+    <div className="relative w-[min(1040px,calc(100vw-64px))] rounded-[24px] border border-[rgba(15,23,42,0.08)] bg-white/98 p-7 text-[#111827] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl xl:p-8">
       <span className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[rgba(15,23,42,0.08)] bg-white/98" />
-      <div className="grid gap-0 lg:grid-cols-[repeat(4,minmax(150px,1fr))_220px]">
-        {toolsMenu.map((category) => {
+      <div className="grid gap-0 lg:grid-cols-[repeat(3,minmax(185px,1fr))_250px]">
+        {primaryToolsMenu.map((category) => {
           const Icon = category.icon
           return (
-            <div key={category.key} className="min-w-0 border-r border-[rgba(15,23,42,0.08)] px-4 first:pl-0 last:border-r-0">
+            <div key={category.key} className="min-w-0 border-r border-[rgba(15,23,42,0.08)] px-5 first:pl-0 last:border-r-0">
               <div className="flex min-h-[78px] items-start gap-3">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[13px] bg-[#E8F5EE] text-[#064E3B]">
                   <Icon className="h-[18px] w-[18px]" />
@@ -89,20 +91,20 @@ function ToolsDropdown({ onNavigate }) {
         <a
           href="/tools"
           role="menuitem"
-          className="group relative ml-5 overflow-hidden rounded-[20px] bg-[#064E3B] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
+          className="group relative ml-6 overflow-hidden rounded-[20px] bg-[#064E3B] p-6 text-[#F8F6F2] shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
           onClick={onNavigate}
         >
           <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#86E4C2]/12 blur-2xl" />
           <div className="relative flex h-12 w-12 items-center justify-center rounded-[16px] border border-white/14 bg-white/10 text-[#86E4C2] backdrop-blur">
             <Sparkles className="h-5 w-5" />
           </div>
-          <p className="relative mt-8 text-xl font-extrabold tracking-[-0.04em]">Property Intelligence</p>
-          <p className="relative mt-3 text-sm font-medium leading-6 text-white/72">
+          <p className="relative mt-8 text-xl font-extrabold tracking-[-0.04em] text-[#F8F6F2]">Property Intelligence</p>
+          <p className="relative mt-3 text-sm font-medium leading-6 text-[#F8F6F2]/72">
             Free tools and calculators designed to help buyers, sellers and professionals make better decisions.
           </p>
-          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#86E4C2]">
+          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#F8F6F2]">
             Explore 20+ Property Tools
-            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 text-[#86E4C2] transition group-hover:translate-x-1" />
           </span>
         </a>
       </div>
@@ -475,7 +477,7 @@ export default function Header() {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
                     >
-                      {toolsMenu.map((category) => {
+                      {primaryToolsMenu.map((category) => {
                         const open = mobileToolCategoryOpen === category.key
                         return (
                           <div key={category.key}>
