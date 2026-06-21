@@ -41,7 +41,7 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  if (pathname === '/contact') {
+  if (pathname === '/contact' || pathname === '/book-demo') {
     return <Contact />
   }
 

@@ -1,23 +1,17 @@
 import { useEffect } from 'react'
 import {
   ArrowRight,
-  BarChart3,
-  Bell,
   BriefcaseBusiness,
-  CalendarDays,
   Check,
   CheckCircle2,
   ClipboardList,
-  FileCheck2,
+  Eye,
   Home,
   Landmark,
-  LineChart,
-  MessageSquareText,
-  PieChart,
+  Rocket,
   Search,
   ShieldCheck,
-  TrendingUp,
-  UserRoundCheck,
+  UserRound,
   Users,
   WalletCards,
   Zap,
@@ -25,199 +19,104 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const heroWorkflow = [
-  { label: 'Listing', detail: 'Live on Arch9', icon: Home },
-  { label: 'Buyer Enquiry', detail: 'Qualified and assigned', icon: Search },
-  { label: 'Offer', detail: 'Negotiation tracked', icon: ClipboardList },
-  { label: 'Bond', detail: 'Application connected', icon: Landmark },
-  { label: 'Transfer', detail: 'Attorney matter linked', icon: BriefcaseBusiness },
-  { label: 'Registration', detail: 'Milestones visible', icon: ShieldCheck },
-  { label: 'Commission Paid', detail: 'Forecast updated', icon: WalletCards },
+const heroImage =
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=84'
+
+const pipelineSteps = [
+  { label: 'Property Listed', detail: 'New listing', icon: Home, done: true },
+  { label: 'Buyer Enquiry', detail: 'New lead received', icon: Users, done: true },
+  { label: 'Listing Agreement', detail: 'Agreement signed', icon: ClipboardList, done: true },
+  { label: 'Offer Received', detail: 'Offer from buyer', icon: CheckCircle2, done: true },
+  { label: 'Transfer', detail: 'Attorney instructed', icon: BriefcaseBusiness, active: true },
+  { label: 'Registration', detail: 'Documents preparing', icon: ShieldCheck },
+  { label: 'Registration Complete', detail: 'Transfer successful', icon: Check },
 ]
 
 const trustIndicators = [
-  { icon: Users, title: 'More Leads', copy: 'Quality enquiries that convert.' },
-  { icon: Zap, title: 'Faster Deals', copy: 'Keep transactions moving.' },
-  { icon: TrendingUp, title: 'More Commission', copy: 'Get paid sooner.' },
+  { icon: Users, title: 'More leads', copy: 'Attract and convert serious buyers.' },
+  { icon: Zap, title: 'Faster deals', copy: 'Smart buyer matching and automation.' },
+  { icon: Home, title: 'More commission', copy: 'Close more deals and increase earnings.' },
 ]
 
 const agentFeatures = [
   {
-    icon: Search,
-    title: 'Generate More Leads',
-    copy: 'Capture enquiries from your website, property portals, social media, referrals and manual prospecting.',
+    icon: UserRound,
+    title: 'Generate more leads',
+    copy: 'List on Arch9 and get in front of serious buyers actively looking to purchase.',
   },
   {
     icon: Home,
-    title: 'Smart Buyer Matching',
-    copy: 'Automatically match buyers to listings, developments, price ranges and areas.',
+    title: 'Match buyers to properties',
+    copy: 'Connect buyers to the right properties, automatically.',
   },
   {
     icon: ClipboardList,
-    title: 'Offer Management',
-    copy: 'Manage offers, counter offers, negotiations and acceptances from one workspace.',
+    title: 'Track transactions',
+    copy: 'See every step in one place, from instruction to transfer with full status and visibility.',
   },
   {
-    icon: LineChart,
-    title: 'Transaction Pipeline',
-    copy: 'Track bond, transfer, cancellation and registration progress in real time.',
-  },
-  {
-    icon: UserRoundCheck,
-    title: 'Buyer Portal',
-    copy: 'Let buyers upload documents, track progress and receive the updates they need.',
-  },
-  {
-    icon: Users,
-    title: 'Seller Portal',
-    copy: 'Give sellers visibility throughout the transaction without another status call.',
-  },
-  {
-    icon: Bell,
-    title: 'Automated Follow-Ups',
-    copy: 'Keep buyers engaged, reduce manual admin and make follow-up discipline visible.',
-  },
-  {
-    icon: FileCheck2,
-    title: 'Document Management',
-    copy: 'Store, request and share transaction documents securely across the deal.',
+    icon: WalletCards,
+    title: 'Get paid faster',
+    copy: 'Reduce delays, save on commission advances and reach your financial goals.',
   },
 ]
-
-const agencyRoles = [
-  { role: 'Principal', copy: 'Agency oversight, revenue visibility and pipeline control.' },
-  { role: 'Branch Manager', copy: 'Branch performance, accountability and bottleneck tracking.' },
-  { role: 'Agent', copy: 'Daily sales execution from lead to registration.' },
-  { role: 'Assistant', copy: 'Administration support, documents and follow-up coordination.' },
-]
-
-const connectedRoles = ['Buyer', 'Seller', 'Agent', 'Attorney', 'Bond Originator', 'Developer']
 
 const marketplaceStats = [
-  { icon: BarChart3, value: '2,450+', label: 'Active Agents' },
-  { icon: Home, value: '18,600+', label: 'Properties Listed' },
-  { icon: PieChart, value: '320K+', label: 'Monthly Views' },
-  { icon: CheckCircle2, value: 'R2.1B+', label: 'Value Transacted' },
+  { icon: Users, value: '2,450+', label: 'Active agents' },
+  { icon: Home, value: '18,600+', label: 'Properties listed' },
+  { icon: Eye, value: '320K+', label: 'Monthly views' },
+  { icon: WalletCards, value: 'R2.1B+', label: 'Value transacted' },
 ]
 
-const howItWorks = [
+const successStories = [
   {
-    step: '01',
-    title: 'Capture Leads',
-    copy: 'Bring portal, website, referral and prospecting leads into one pipeline.',
+    status: 'Sold',
+    title: '4 Bedroom House',
+    area: 'Claremont, Cape Town',
+    metric: '12',
+    detail: 'Days to offer',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=82',
   },
   {
-    step: '02',
-    title: 'Qualify Buyers',
-    copy: 'Track requirements, affordability, documents and buyer intent.',
+    status: 'Transferred',
+    title: '2 Bedroom Apartment',
+    area: 'Umhlanga, Durban',
+    metric: '2',
+    detail: 'Months to transfer',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=82',
   },
   {
-    step: '03',
-    title: 'Manage Transactions',
-    copy: 'Coordinate offers, bond progress, transfer matters, documents and roleplayers.',
-  },
-  {
-    step: '04',
-    title: 'Reach Registration',
-    copy: 'Keep everyone aligned until registration and commission payment.',
-  },
-]
-
-const principalBenefits = [
-  {
-    title: 'Track Agent Performance',
-    copy: 'Monitor listings, leads, activity and transactions per agent.',
-  },
-  {
-    title: 'See Pipeline Health',
-    copy: 'Understand where deals are stuck before they become a problem.',
-  },
-  {
-    title: 'Improve Accountability',
-    copy: "Know who is following up and who isn't.",
-  },
-  {
-    title: 'Forecast Revenue',
-    copy: 'See future commission before registration happens.',
+    status: 'Registered',
+    title: '3 Bedroom Apartment',
+    area: 'Sandton, JHB',
+    metric: '1',
+    detail: 'Month to registration',
+    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=900&q=82',
   },
 ]
 
-const dashboardPanels = [
-  {
-    title: 'Top Performers',
-    rows: ['Listings Added', 'Leads Generated', 'Transactions Closed'],
-  },
-  {
-    title: 'Lead Performance',
-    rows: ['New Leads This Week', 'Conversion Rates', 'Lead Sources'],
-  },
-  {
-    title: 'Pipeline Health',
-    rows: ['Offers', 'Bond Applications', 'Transfers', 'Registrations'],
-  },
-  {
-    title: 'Bottleneck Detection',
-    rows: ['Stalled Transactions', 'Missing Documents', 'Outstanding Tasks'],
-  },
-]
+const agencyLogos = ['RE/MAX', 'Harcourts', 'Pam Golding', 'Century 21', 'Just Property', 'Leapfrog', 'KW Agents']
 
-const pricingPlans = [
+const ecosystemCards = [
   {
-    name: 'Starter',
-    price: 'R299',
-    suffix: '/ User / Month',
-    ideal: 'Individual Agents',
-    features: ['CRM', 'Listings', 'Leads', 'Calendar', 'Buyer Matching', 'Buyer Portal', 'Seller Portal', 'Mobile Access'],
+    icon: Users,
+    title: 'Buyers & Sellers',
+    copy: 'Track progress from enquiry to registration.',
   },
   {
-    name: 'Professional',
-    price: 'R499',
-    suffix: '/ User / Month',
-    ideal: 'Growing teams',
-    badge: 'Most Popular',
-    features: [
-      'Everything in Starter',
-      'Transactions',
-      'Offer Management',
-      'Document Generation',
-      'Automated Follow-Ups',
-      'Transaction Tracking',
-      'Roleplayer Collaboration',
-      'Agency Dashboards',
-    ],
+    icon: BriefcaseBusiness,
+    title: 'Agents & Agencies',
+    copy: 'Manage leads, listings and transactions.',
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    suffix: 'Pricing',
-    ideal: 'Multi-Branch Agencies',
-    features: [
-      'Principal Dashboard',
-      'Branch Management',
-      'Custom Branding',
-      'Advanced Analytics',
-      'Workflow Automation',
-      'Dedicated Support',
-      'API Access',
-      'Custom Integrations',
-    ],
-  },
-]
-
-const addOns = ['Credit Checks', 'FICA Verification', 'Property Reports', 'Bond Application Services']
-
-const testimonials = [
-  {
-    quote:
-      'For the first time, I can see what every agent is doing, what every transaction is doing and what the agency is going to earn.',
-    name: 'Nadine van der Merwe',
-    role: 'Principal, Cape Town agency',
+    icon: Landmark,
+    title: 'Attorneys & Finance',
+    copy: 'Manage matters and applications.',
   },
   {
-    quote:
-      'Arch9 gave our agents a single place for leads, offers, documents and transfer updates. Deals move faster because everyone knows what is next.',
-    name: 'Michael Naidoo',
-    role: 'Branch Manager, Johannesburg',
+    icon: ShieldCheck,
+    title: 'Shared Workspace',
+    copy: 'One transaction. One source of truth.',
   },
 ]
 
@@ -233,125 +132,247 @@ function setMetaDescription(content) {
 
 function HeroVisual() {
   return (
-    <div className="relative rounded-[34px] border border-[#0A3028]/10 bg-[#071E1A] p-5 text-white shadow-[0_34px_110px_rgba(5,8,7,0.18)] md:p-7">
-      <div className="absolute inset-0 rounded-[34px] bg-[radial-gradient(circle_at_78%_18%,rgba(134,228,194,0.17),transparent_32%),linear-gradient(135deg,#071E1A,#0A3028)]" />
-      <div className="relative grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-[28px] border border-white/10 bg-white/[0.08] p-5 backdrop-blur-xl">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#86E4C2]">Agency operating system</p>
-          <h2 className="mt-3 text-2xl font-extrabold tracking-[-0.04em]">Listing to commission, connected.</h2>
-          <div className="mt-7 grid gap-3">
-            {heroWorkflow.map((step, index) => {
+    <div className="relative min-h-[480px] overflow-hidden rounded-[34px] bg-[#101828] shadow-[0_34px_100px_rgba(16,24,40,0.16)]">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `linear-gradient(90deg,rgba(16,24,40,0.14),rgba(16,24,40,0.02)),url(${heroImage})`,
+        }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.3),transparent_28%),linear-gradient(180deg,rgba(16,24,40,0)_42%,rgba(16,24,40,0.16)_100%)]" />
+
+      <div className="relative flex min-h-[480px] items-center justify-center p-5 md:p-8">
+        <div className="w-full max-w-[340px] rounded-[28px] border border-black/[0.06] bg-white/94 p-5 text-[#101828] shadow-[0_28px_80px_rgba(16,24,40,0.18)] backdrop-blur-xl">
+          <p className="text-sm font-extrabold tracking-[-0.02em]">Your transaction pipeline</p>
+          <div className="mt-5 grid gap-3">
+            {pipelineSteps.map((step) => {
               const Icon = step.icon
               return (
-                <div key={step.label} className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-white/[0.07] px-4 py-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#86E4C2]/16 text-[#86E4C2]">
-                    {index < 4 ? <CheckCircle2 className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
+                <div key={step.label} className={`flex items-center gap-3 rounded-[16px] px-3 py-2.5 ${step.active ? 'bg-[#F1F5F2]' : ''}`}>
+                  <span
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                      step.done ? 'bg-[#0D4F45] text-white' : step.active ? 'bg-[#E7E0D3] text-[#6B6359]' : 'bg-[#F2EEE7] text-[#7C827E]'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-extrabold text-white">{step.label}</span>
-                    <span className="block text-xs font-semibold text-white/62">{step.detail}</span>
+                    <span className="block text-xs font-extrabold text-[#101828]">{step.label}</span>
+                    <span className="block text-[11px] font-semibold text-[#667085]">{step.detail}</span>
                   </span>
+                  {step.done ? (
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#0D4F45]/24 text-[#0D4F45]">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                  ) : null}
                 </div>
               )
             })}
           </div>
         </div>
-        <div className="grid gap-4">
-          {[
-            { value: '14', label: 'Active Buyers' },
-            { value: '3', label: 'Offers Received' },
-            { value: '8', label: 'Transactions In Progress' },
-            { value: 'R420k', label: 'Commission Forecast' },
-          ].map((metric) => (
-            <div key={metric.label} className="rounded-[24px] border border-white/10 bg-white/[0.09] p-5 backdrop-blur-xl">
-              <p className="text-3xl font-extrabold">{metric.value}</p>
-              <p className="mt-1 text-sm font-semibold text-white/72">{metric.label}</p>
-            </div>
-          ))}
+
+        <div className="absolute right-4 top-[26%] hidden w-[150px] rounded-[20px] border border-black/[0.06] bg-white/94 p-5 text-[#101828] shadow-[0_22px_66px_rgba(16,24,40,0.16)] backdrop-blur-xl sm:block">
+          <p className="text-3xl font-extrabold tracking-[-0.05em]">14</p>
+          <p className="mt-1 text-xs font-bold text-[#344054]">Active buyers</p>
+          <p className="mt-1 text-[11px] font-semibold text-[#667085]">Interested in your listings</p>
+        </div>
+        <div className="absolute right-10 top-[47%] hidden w-[132px] rounded-[20px] border border-black/[0.06] bg-white/94 p-5 text-[#101828] shadow-[0_22px_66px_rgba(16,24,40,0.16)] backdrop-blur-xl md:block">
+          <p className="text-3xl font-extrabold tracking-[-0.05em]">3</p>
+          <p className="mt-1 text-xs font-bold text-[#344054]">Offers</p>
+          <p className="mt-1 text-[11px] font-semibold text-[#667085]">Under review</p>
+        </div>
+        <div className="absolute bottom-[15%] right-[13%] hidden w-[155px] rounded-[20px] border border-black/[0.06] bg-white/94 p-5 text-[#101828] shadow-[0_22px_66px_rgba(16,24,40,0.16)] backdrop-blur-xl md:block">
+          <p className="text-3xl font-extrabold tracking-[-0.05em]">R2.1m</p>
+          <p className="mt-1 text-xs font-bold text-[#344054]">Value transacted</p>
+          <p className="mt-1 text-[11px] font-semibold text-[#667085]">This month</p>
         </div>
       </div>
     </div>
   )
 }
 
-function PrincipalDashboardVisual() {
+function FeatureCard({ feature }) {
+  const Icon = feature.icon
   return (
-    <div className="rounded-[30px] border border-[#0A3028]/8 bg-[#071E1A] p-5 text-white shadow-[0_28px_90px_rgba(5,8,7,0.14)] md:p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#86E4C2]">Principal Dashboard</p>
-          <h3 className="mt-2 text-2xl font-extrabold tracking-[-0.04em]">Agency visibility</h3>
-        </div>
-        <PieChart className="h-8 w-8 text-[#86E4C2]" />
+    <article className="group rounded-[18px] border border-black/[0.06] bg-white p-7 shadow-[0_18px_52px_rgba(16,24,40,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_72px_rgba(16,24,40,0.08)]">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F2EEE7] text-[#101828] transition group-hover:bg-[#E7F0EA] group-hover:text-[#0D4F45]">
+        <Icon className="h-6 w-6" />
       </div>
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        {dashboardPanels.map((panel) => (
-          <div key={panel.title} className="rounded-[22px] border border-white/10 bg-white/[0.08] p-4">
-            <p className="text-sm font-extrabold text-white">{panel.title}</p>
-            <div className="mt-4 grid gap-2">
-              {panel.rows.map((row) => (
-                <div key={row} className="flex items-center justify-between gap-3 rounded-[14px] bg-white/[0.06] px-3 py-2">
-                  <span className="text-xs font-semibold text-white/76">{row}</span>
-                  <span className="h-2 w-12 rounded-full bg-[#86E4C2]/60" />
-                </div>
-              ))}
+      <h3 className="mt-8 text-xl font-extrabold leading-tight tracking-[-0.035em] text-[#101828]">{feature.title}</h3>
+      <p className="mt-4 text-sm font-medium leading-7 text-[#475467]">{feature.copy}</p>
+    </article>
+  )
+}
+
+function MetricsPanel() {
+  return (
+    <div className="overflow-x-auto pb-2">
+      <div className="grid min-w-[760px] grid-cols-4 rounded-[18px] border border-black/[0.06] bg-white px-7 py-8 shadow-[0_18px_54px_rgba(16,24,40,0.04)]">
+        {marketplaceStats.map((stat, index) => {
+          const Icon = stat.icon
+          return (
+            <div key={stat.label} className={`flex items-center gap-5 ${index ? 'border-l border-black/[0.08] pl-8' : ''}`}>
+              <Icon className="h-7 w-7 text-[#0D4F45]" />
+              <div>
+                <p className="text-3xl font-extrabold tracking-[-0.045em] text-[#0D4F45]">{stat.value}</p>
+                <p className="mt-1 text-sm font-semibold text-[#344054]">{stat.label}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
-      <div className="mt-3 grid gap-3 sm:grid-cols-3">
-        {['Expected Commission This Month', 'Expected Commission Next 30 Days', 'Calendar Visibility'].map((item, index) => (
-          <div key={item} className="rounded-[18px] border border-white/10 bg-white/[0.08] p-4">
-            <p className="text-2xl font-extrabold">{index === 0 ? 'R680k' : index === 1 ? 'R1.2m' : '42'}</p>
-            <p className="mt-1 text-xs font-semibold text-white/68">{item}</p>
+    </div>
+  )
+}
+
+function SuccessCard({ story }) {
+  return (
+    <article className="min-w-[240px] overflow-hidden rounded-[16px] border border-black/[0.06] bg-white shadow-[0_18px_52px_rgba(16,24,40,0.05)] lg:min-w-0">
+      <div
+        className="relative h-36 bg-cover bg-center"
+        style={{
+          backgroundImage: `linear-gradient(180deg,rgba(16,24,40,0.02),rgba(16,24,40,0.08)),url(${story.image})`,
+        }}
+      >
+        <span className="absolute left-3 top-3 rounded-full bg-[#0D4F45] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">
+          {story.status}
+        </span>
+      </div>
+      <div className="p-5">
+        <h3 className="text-sm font-extrabold text-[#101828]">{story.title}</h3>
+        <p className="mt-1 text-xs font-semibold text-[#667085]">{story.area}</p>
+        <div className="mt-7 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-3xl font-extrabold tracking-[-0.05em] text-[#101828]">{story.metric}</p>
+            <p className="text-xs font-semibold text-[#475467]">{story.detail}</p>
+          </div>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#0D4F45]/30 text-[#0D4F45]">
+            <Check className="h-4 w-4" />
+          </span>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function TestimonialCard() {
+  return (
+    <blockquote className="rounded-[20px] border border-black/[0.06] bg-white p-8 shadow-[0_18px_52px_rgba(16,24,40,0.05)] md:p-10">
+      <p className="text-6xl font-serif leading-none text-[#0D4F45]/42">“</p>
+      <p className="mt-1 text-2xl font-semibold leading-9 tracking-[-0.035em] text-[#101828]">
+        Arch9 has completely changed the way I run my business. My transactions move faster, my clients are happier and I get paid sooner.
+      </p>
+      <footer className="mt-8 flex items-center gap-4">
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=82"
+          alt="Thandeka van der Merwe"
+          className="h-14 w-14 rounded-full object-cover"
+        />
+        <div>
+          <p className="text-sm font-extrabold text-[#101828]">Thandeka van der Merwe</p>
+          <p className="mt-1 text-xs font-semibold text-[#667085]">Top Agent</p>
+        </div>
+      </footer>
+      <div className="mt-7 flex gap-2">
+        <span className="h-2 w-2 rounded-full bg-[#0D4F45]" />
+        <span className="h-2 w-2 rounded-full bg-[#D0D5DD]" />
+        <span className="h-2 w-2 rounded-full bg-[#D0D5DD]" />
+      </div>
+    </blockquote>
+  )
+}
+
+function AgencyTrustBar() {
+  return (
+    <div className="mx-auto w-full max-w-[1280px] px-6 pb-14 md:px-8 md:pb-20">
+      <p className="text-xs font-semibold text-[#667085]">Proudly supporting agents across South Africa.</p>
+      <div className="mt-7 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-7">
+        {agencyLogos.map((logo) => (
+          <div key={logo} className="text-lg font-extrabold tracking-[-0.04em] text-[#101828]/38 transition hover:text-[#101828]">
+            {logo}
           </div>
         ))}
       </div>
     </div>
+  )
+}
+
+function EcosystemSection() {
+  return (
+    <section className="px-6 pb-16 md:px-8 md:pb-20">
+      <div className="mx-auto grid w-full max-w-[1280px] gap-8 rounded-[22px] border border-black/[0.06] bg-white p-7 shadow-[0_18px_54px_rgba(16,24,40,0.04)] md:p-8 lg:grid-cols-[1fr_2fr]">
+        <div>
+          <h2 className="max-w-[360px] text-3xl font-extrabold leading-tight tracking-[-0.045em] text-[#101828]">
+            Built for every stakeholder in the transaction.
+          </h2>
+          <p className="mt-4 max-w-[420px] text-sm font-medium leading-7 text-[#667085]">
+            Arch9 connects the people around each deal without turning the agents page into another platform overview.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {ecosystemCards.map((card) => {
+            const Icon = card.icon
+            return (
+              <article key={card.title} className="border-t border-black/[0.08] pt-5 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                <Icon className="h-6 w-6 text-[#0D4F45]" />
+                <h3 className="mt-5 text-sm font-extrabold text-[#101828]">{card.title}</h3>
+                <p className="mt-3 text-xs font-medium leading-6 text-[#667085]">{card.copy}</p>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
   )
 }
 
 export default function AgentsSolution() {
   useEffect(() => {
-    document.title = 'Estate Agency Operating System | Arch9'
+    document.title = 'For Estate Agents | Arch9'
     setMetaDescription(
-      'Arch9 is the operating system for modern property agencies, connecting CRM, listings, leads, transactions, dashboards and commission forecasting.'
+      'Arch9 helps estate agents generate more enquiries, manage listings and move transactions from offer to registration in one connected workspace.'
     )
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#F8F4EC] text-[#05120F]">
+    <div className="min-h-screen bg-[#F7F4EE] text-[#101828]">
       <Header />
       <main>
-        <section className="mx-auto grid w-full max-w-[1440px] gap-10 px-6 pb-14 pt-[128px] md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:pb-20">
+        <section className="mx-auto grid w-full max-w-[1440px] gap-10 px-6 pb-10 pt-[128px] md:px-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-14">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">For modern agencies</p>
-            <h1 className="mt-5 max-w-[760px] text-[3.2rem] font-extrabold leading-[0.94] tracking-[-0.055em] text-[#05251D] md:text-[5rem]">
-              Turn listings into registrations.
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#0D4F45]">For agents</p>
+            <h1 className="mt-5 max-w-[700px] text-[3.4rem] font-extrabold leading-[0.96] tracking-[-0.04em] text-[#101828] md:text-[5rem]">
+              Turn listings into <span className="text-[#0D4F45]">registrations.</span>
             </h1>
-            <p className="mt-6 max-w-[650px] text-lg font-medium leading-8 text-[#31433D]">
+            <p className="mt-6 max-w-[620px] text-lg font-medium leading-8 text-[#344054]">
               Generate enquiries, qualify buyers and manage every transaction from listing to registration - all in one place.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="/contact" className="bridge-button-primary min-h-[54px] px-7">
-                Start Free Trial
+              <a
+                href="/sell"
+                className="inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-[#0D4F45] px-7 text-sm font-extrabold !text-white shadow-[0_18px_44px_rgba(13,79,69,0.22)] transition hover:-translate-y-0.5 hover:bg-[#0A4038] sm:w-auto"
+              >
+                List A Property
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/contact" className="inline-flex min-h-[54px] items-center justify-center rounded-full border border-[#0A3028]/18 bg-white/72 px-7 text-sm font-extrabold text-[#071E1A] transition hover:bg-white">
+              <a
+                href="/contact"
+                className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full border border-black/[0.16] bg-white/58 px-7 text-sm font-extrabold text-[#101828] transition hover:bg-white sm:w-auto"
+              >
                 Book A Demo
               </a>
             </div>
-            <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            <div className="mt-12 grid gap-5 sm:grid-cols-3">
               {trustIndicators.map((item, index) => {
                 const Icon = item.icon
                 return (
-                  <div key={item.title} className={`flex items-center gap-4 ${index ? 'sm:border-l sm:border-[#0A3028]/10 sm:pl-5' : ''}`}>
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#064537] shadow-[0_12px_34px_rgba(5,8,7,0.06)]">
+                  <div key={item.title} className={`group flex items-start gap-4 ${index ? 'sm:border-l sm:border-black/[0.08] sm:pl-6' : ''}`}>
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#101828] shadow-[0_12px_32px_rgba(16,24,40,0.05)] transition group-hover:text-[#0D4F45]">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-sm font-extrabold text-[#071E1A]">{item.title}</p>
-                      <p className="mt-1 text-xs font-semibold leading-5 text-[#31433D]">{item.copy}</p>
+                      <p className="text-sm font-extrabold text-[#101828]">{item.title}</p>
+                      <p className="mt-1 text-xs font-semibold leading-5 text-[#475467]">{item.copy}</p>
                     </div>
                   </div>
                 )
@@ -361,207 +382,71 @@ export default function AgentsSolution() {
           <HeroVisual />
         </section>
 
-        <section className="px-6 py-14 md:px-8 md:py-16">
+        <section className="px-6 py-12 md:px-8 md:py-14">
           <div className="mx-auto w-full max-w-[1280px]">
-            <div className="max-w-[820px]">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Complete agency system</p>
-              <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                Everything an agent needs to close more deals.
-              </h2>
-              <p className="mt-4 text-base font-medium leading-7 text-[#5B6B64]">
-                More than a CRM, more than listings and more than transaction tracking. Arch9 connects the work agents do every day.
-              </p>
-            </div>
-            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {agentFeatures.map((feature) => {
-                const Icon = feature.icon
-                return (
-                  <article key={feature.title} className="rounded-[22px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#E8F3EB] text-[#064537]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mt-5 text-lg font-extrabold tracking-[-0.03em] text-[#071E1A]">{feature.title}</h3>
-                    <p className="mt-3 text-sm font-medium leading-6 text-[#5B6B64]">{feature.copy}</p>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto grid w-full max-w-[1280px] gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="rounded-[28px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] md:p-8">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Built for the entire agency</p>
-              <h2 className="mt-4 text-[2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">One platform for every role in your agency.</h2>
-              <div className="mt-7 grid gap-3">
-                {agencyRoles.map((role, index) => (
-                  <div key={role.role} className="relative flex gap-4 rounded-[18px] bg-[#F8F4EC] p-4">
-                    {index < agencyRoles.length - 1 ? <span className="absolute bottom-[-12px] left-[29px] h-5 w-px bg-[#0A3028]/12" /> : null}
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#064537] text-sm font-extrabold text-white">{index + 1}</span>
-                    <span>
-                      <span className="block text-base font-extrabold text-[#071E1A]">{role.role}</span>
-                      <span className="mt-1 block text-sm font-medium leading-6 text-[#5B6B64]">{role.copy}</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] md:p-8">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">One connected transaction</p>
-              <h2 className="mt-4 text-[2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Every role connected around one transaction.</h2>
-              <p className="mt-4 text-base font-medium leading-7 text-[#5B6B64]">Everyone works from the same source of truth.</p>
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {connectedRoles.map((role) => (
-                  <div key={role} className="rounded-[18px] border border-[#0A3028]/8 bg-[#F8F4EC] px-4 py-3 text-center text-sm font-extrabold text-[#071E1A]">
-                    {role}
-                  </div>
-                ))}
-              </div>
-              <div className="mx-auto mt-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#064537] text-center text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_18px_54px_rgba(5,8,7,0.16)]">
-                Transaction
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto overflow-hidden rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] px-6 py-7 text-white shadow-[0_24px_80px_rgba(5,8,7,0.16)] md:max-w-[1280px] md:px-9">
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {marketplaceStats.map((stat, index) => {
-                const Icon = stat.icon
-                return (
-                  <div key={stat.label} className={`flex items-center gap-5 ${index ? 'xl:border-l xl:border-white/12 xl:pl-8' : ''}`}>
-                    <Icon className="h-9 w-9 text-[#8BD9B0]" />
-                    <div>
-                      <p className="text-3xl font-extrabold tracking-[-0.04em]">{stat.value}</p>
-                      <p className="mt-1 text-sm font-semibold text-white/82">{stat.label}</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto w-full max-w-[1280px]">
-            <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">How Arch9 works.</h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-4">
-              {howItWorks.map((step, index) => (
-                <div key={step.title} className="relative rounded-[22px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
-                  {index < howItWorks.length - 1 ? <span className="absolute right-[-18px] top-1/2 hidden h-px w-9 bg-[#0A3028]/14 md:block" /> : null}
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#006B4D]">{step.step}</p>
-                  <h3 className="mt-5 text-xl font-extrabold text-[#071E1A]">{step.title}</h3>
-                  <p className="mt-3 text-sm font-medium leading-6 text-[#5B6B64]">{step.copy}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto grid w-full max-w-[1280px] gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Built for principals</p>
-              <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                Agency visibility without micromanaging.
-              </h2>
-              <p className="mt-5 text-base font-medium leading-8 text-[#5B6B64]">
-                See what every agent is working on, where every deal stands and what needs attention - from one principal dashboard.
-              </p>
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                {principalBenefits.map((benefit) => (
-                  <div key={benefit.title} className="rounded-[18px] border border-[#0A3028]/8 bg-white p-4">
-                    <h3 className="text-sm font-extrabold text-[#071E1A]">{benefit.title}</h3>
-                    <p className="mt-2 text-sm font-medium leading-6 text-[#5B6B64]">{benefit.copy}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <PrincipalDashboardVisual />
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto w-full max-w-[1280px]">
-            <div className="max-w-[780px]">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#006B4D]">Pricing</p>
-              <h2 className="mt-4 text-[2.3rem] font-extrabold leading-tight tracking-[-0.045em] text-[#071E1A] md:text-[3.2rem]">
-                Simple pricing for modern agencies.
-              </h2>
-              <p className="mt-4 text-base font-medium leading-7 text-[#5B6B64]">Public pricing for agents and agencies. Add specialist services only when you need them.</p>
-            </div>
-            <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {pricingPlans.map((plan) => (
-                <div key={plan.name} className={`relative rounded-[26px] border bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] ${plan.badge ? 'border-[#006B4D]/28' : 'border-[#0A3028]/8'}`}>
-                  {plan.badge ? <span className="absolute right-5 top-5 rounded-full bg-[#064537] px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">{plan.badge}</span> : null}
-                  <h3 className="text-2xl font-extrabold text-[#071E1A]">{plan.name}</h3>
-                  <p className="mt-2 text-sm font-semibold text-[#5B6B64]">Ideal for: {plan.ideal}</p>
-                  <div className="mt-6 flex items-end gap-2">
-                    <p className="text-[3rem] font-extrabold tracking-[-0.05em] text-[#071E1A]">{plan.price}</p>
-                    <p className="pb-3 text-sm font-bold text-[#5B6B64]">{plan.suffix}</p>
-                  </div>
-                  <ul className="mt-6 grid gap-3">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#31433D]">
-                        <Check className="mt-1 h-4 w-4 shrink-0 text-[#006B4D]" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 rounded-[22px] border border-[#0A3028]/8 bg-white/72 p-5">
-              <p className="text-sm font-extrabold text-[#071E1A]">Additional services: Pay-As-You-Go</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {addOns.map((addon) => (
-                  <div key={addon} className="rounded-[16px] bg-[#F8F4EC] px-4 py-3 text-sm font-bold text-[#31433D]">{addon}</div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-14 md:px-8 md:pb-16">
-          <div className="mx-auto w-full max-w-[1280px]">
-            <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Real agencies. Real principals. Real agents.</h2>
-            <div className="mt-7 grid gap-5 lg:grid-cols-2">
-              {testimonials.map((testimonial) => (
-                <blockquote key={testimonial.name} className="rounded-[26px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
-                  <MessageSquareText className="h-7 w-7 text-[#006B4D]" />
-                  <p className="mt-5 text-xl font-semibold leading-8 tracking-[-0.03em] text-[#071E1A]">{testimonial.quote}</p>
-                  <footer className="mt-6">
-                    <p className="text-sm font-extrabold text-[#071E1A]">{testimonial.name}</p>
-                    <p className="mt-1 text-sm font-semibold text-[#5B6B64]">{testimonial.role}</p>
-                  </footer>
-                </blockquote>
+            <h2 className="mx-auto max-w-[760px] text-center text-[2.2rem] font-extrabold leading-tight tracking-[-0.04em] text-[#101828] md:text-[3rem]">
+              Everything an agent needs to close more deals.
+            </h2>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {agentFeatures.map((feature) => (
+                <FeatureCard key={feature.title} feature={feature} />
               ))}
             </div>
           </div>
         </section>
 
         <section className="px-6 pb-16 md:px-8 md:pb-20">
-          <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-7 text-white shadow-[0_24px_80px_rgba(5,8,7,0.16)] md:flex-row md:items-center md:justify-between md:p-9">
+          <div className="mx-auto w-full max-w-[1280px]">
+            <MetricsPanel />
+          </div>
+        </section>
+
+        <section className="px-6 pb-16 md:px-8 md:pb-20">
+          <div className="mx-auto grid w-full max-w-[1280px] gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em]">Ready to modernise your agency?</h2>
-              <p className="mt-2 max-w-[720px] text-sm font-medium leading-6 text-white/82 md:text-base">
-                Join agents and principals who are generating more leads, managing transactions better and reaching registration faster with Arch9.
-              </p>
+              <h2 className="text-xl font-extrabold tracking-[-0.03em] text-[#101828]">Recent success from agents like you.</h2>
+              <div className="mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+                {successStories.map((story) => (
+                  <SuccessCard key={story.title} story={story} />
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <a href="/contact" className="bridge-button-primary bridge-button-light min-h-[52px] justify-center px-7">
-                Start Free Trial
+            <div>
+              <h2 className="text-xl font-extrabold tracking-[-0.03em] text-[#101828]">Trusted by top performing agents.</h2>
+              <div className="mt-7">
+                <TestimonialCard />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-6 pb-8 md:px-8 md:pb-10">
+          <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-7 rounded-[22px] bg-[#111827] p-7 text-white shadow-[0_26px_80px_rgba(16,24,40,0.16)] md:flex-row md:items-center md:justify-between md:p-9">
+            <div className="flex items-center gap-6">
+              <div className="hidden h-20 w-20 shrink-0 items-center justify-center rounded-[18px] bg-white text-[#0D4F45] sm:flex">
+                <Rocket className="h-9 w-9" />
+              </div>
+              <div>
+                <h2 className="text-[2rem] font-extrabold tracking-[-0.04em] md:text-[2.6rem]">Ready to grow your business?</h2>
+                <p className="mt-2 max-w-[760px] text-sm font-medium leading-6 text-white/78 md:text-base">
+                  Join agents who are generating more enquiries and closing more deals with Arch9.
+                </p>
+              </div>
+            </div>
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <a href="/sell" className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#0D4F45] px-7 text-sm font-extrabold !text-white transition hover:bg-[#0A4038] sm:w-auto">
+                List A Property
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/contact" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-white/24 px-7 text-sm font-extrabold text-white transition hover:bg-white/10">
+              <a href="/contact" className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full border border-white/28 px-7 text-sm font-extrabold text-white transition hover:bg-white/10 sm:w-auto">
                 Book A Demo
               </a>
             </div>
           </div>
         </section>
+
+        <AgencyTrustBar />
+        <EcosystemSection />
       </main>
       <Footer />
     </div>

@@ -1,23 +1,19 @@
 export const footerMetrics = [
   {
-    value: '--',
-    label: 'Buyers & Sellers',
-    description: 'Connected from first enquiry to registration',
+    value: '120,000+',
+    label: 'Properties Listed',
   },
   {
-    value: '--',
-    label: 'Agents & Agencies',
-    description: 'Listings, leads, offers, and deal progress',
+    value: '15,000+',
+    label: 'Transactions Active',
   },
   {
-    value: '--',
-    label: 'Attorneys & Finance',
-    description: 'Transfer and bond workflows in one view',
+    value: '5,000+',
+    label: 'Professionals Using Arch9',
   },
   {
-    value: '--',
-    label: 'One Shared Workspace',
-    description: 'A single transaction spine for every party',
+    value: 'R8.4B+',
+    label: 'Transaction Value',
   },
 ]
 
@@ -46,7 +42,7 @@ export const footerLinkGroups = [
     links: [
       { label: 'Why Arch9', href: '/why-arch9' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'Book a Demo', href: '/contact' },
+      { label: 'Book A Demo', href: '/book-demo' },
       { label: 'Contact', href: '/contact' },
     ],
   },
