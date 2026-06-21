@@ -32,8 +32,6 @@ const propertyTypeOptions = ['Any', 'Apartment', 'Estate Home', 'Townhouse', 'De
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
 const bathroomOptions = ['Any', '1+', '2+', '3+']
 
-const popularSearches = ['Cape Town', 'Sandton', 'Umhlanga', 'Fourways', 'Blouberg', 'Pretoria East', 'More']
-
 const featurePillars = [
   {
     icon: Search,
@@ -65,16 +63,16 @@ const featurePillars = [
 function SearchSelect({ label, value, onChange, children }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.2em] text-[#7A7265]">{label}</span>
+      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
       <div className="relative">
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-14 w-full appearance-none rounded-[16px] border border-[rgba(6,45,37,0.1)] bg-[#F9F6EF] px-4 pr-10 text-sm font-bold text-[#062D25] outline-none transition focus:border-[#062D25]"
+          className="h-14 w-full appearance-none rounded-[14px] border border-black/[0.08] bg-white px-4 pr-10 text-sm font-semibold text-[#062D25] outline-none transition duration-200 focus:border-[#006B4D] focus:shadow-[0_0_0_4px_rgba(0,100,70,0.08)]"
         >
           {children}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7A7265]" />
+        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#05120F]/45" />
       </div>
     </label>
   )
@@ -83,14 +81,14 @@ function SearchSelect({ label, value, onChange, children }) {
 function SearchInput({ label, value, onChange, placeholder, icon: Icon }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.2em] text-[#7A7265]">{label}</span>
+      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
       <div className="relative">
-        {Icon ? <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7A7265]" /> : null}
+        {Icon ? <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#05120F]/45" /> : null}
         <input
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className={`h-14 w-full rounded-[16px] border border-[rgba(6,45,37,0.1)] bg-[#F9F6EF] px-4 text-sm font-bold text-[#062D25] outline-none transition placeholder:text-[#8A8478] focus:border-[#062D25] ${
+          className={`h-14 w-full rounded-[14px] border border-black/[0.08] bg-white px-4 text-sm font-semibold text-[#062D25] outline-none transition duration-200 placeholder:text-[#05120F]/42 focus:border-[#006B4D] focus:shadow-[0_0_0_4px_rgba(0,100,70,0.08)] ${
             Icon ? 'pl-11' : ''
           }`}
         />
@@ -127,11 +125,6 @@ function HeroSearchModule() {
     setRedirectUrl(query ? `/buy?${query}` : '/buy')
   }
 
-  function runPopularSearch(location) {
-    const query = buildPropertyQuery({ status, ...filters, location })
-    setRedirectUrl(query ? `/buy?${query}` : '/buy')
-  }
-
   return (
     <FadeUp className="relative z-10 mx-auto w-full max-w-[1320px]">
       <div className="ml-3 flex w-fit overflow-hidden rounded-t-[18px] border border-b-0 border-white/18 bg-white shadow-[0_18px_50px_rgba(3,18,15,0.18)] md:ml-4">
@@ -151,73 +144,63 @@ function HeroSearchModule() {
         ))}
       </div>
 
-      <div className="rounded-[24px] border border-white/28 bg-white p-4 shadow-[0_30px_100px_rgba(3,18,15,0.28)] md:p-5">
-        <form
-          onSubmit={submitSearch}
-          className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1.55fr_1.08fr_0.82fr_0.82fr_0.78fr_0.78fr_auto]"
-        >
-          <SearchInput
-            label="Location"
-            value={filters.location}
-            onChange={(value) => updateField('location', value)}
-            placeholder="Enter suburb or area"
-            icon={MapPin}
-          />
-          <SearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
-            {propertyTypeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </SearchSelect>
-          <SearchInput
-            label="Min Price"
-            value={filters.minPrice}
-            onChange={(value) => updateField('minPrice', value)}
-            placeholder="No Min"
-          />
-          <SearchInput
-            label="Max Price"
-            value={filters.maxPrice}
-            onChange={(value) => updateField('maxPrice', value)}
-            placeholder="No Max"
-          />
-          <SearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
-            {bedroomOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </SearchSelect>
-          <SearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
-            {bathroomOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </SearchSelect>
-          <button
-            type="submit"
-            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[16px] bg-[#062D25] px-6 text-sm font-extrabold text-white shadow-[0_16px_32px_rgba(3,18,15,0.18)] transition hover:scale-[1.02] xl:min-h-[76px] xl:self-end"
-          >
-            <Search className="h-4 w-4" />
-            Search
-          </button>
+      <div className="min-h-[250px] rounded-[24px] border border-black/[0.06] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:p-8 xl:p-10">
+        <form onSubmit={submitSearch}>
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
+            <SearchInput
+              label="Location"
+              value={filters.location}
+              onChange={(value) => updateField('location', value)}
+              placeholder="Enter suburb or area"
+              icon={MapPin}
+            />
+            <SearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
+              {propertyTypeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </SearchSelect>
+          </div>
+
+          <div className="mt-6 grid gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_220px]">
+            <SearchInput
+              label="Min Price"
+              value={filters.minPrice}
+              onChange={(value) => updateField('minPrice', value)}
+              placeholder="No Min"
+            />
+            <SearchInput
+              label="Max Price"
+              value={filters.maxPrice}
+              onChange={(value) => updateField('maxPrice', value)}
+              placeholder="No Max"
+            />
+            <SearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
+              {bedroomOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </SearchSelect>
+            <SearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
+              {bathroomOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </SearchSelect>
+            <button
+              type="submit"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 self-end rounded-[16px] bg-[#006B4D] px-6 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(0,107,77,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#005A40] focus:outline-none focus:ring-4 focus:ring-[#006B4D]/15"
+            >
+              <Search className="h-4 w-4" />
+              Search Properties
+            </button>
+          </div>
         </form>
 
-        <div className="mt-4 flex items-center gap-3 overflow-x-auto pb-1">
-          <span className="shrink-0 text-sm font-bold text-[#7A7265]">Popular searches:</span>
-          {popularSearches.map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => runPopularSearch(item)}
-              className="shrink-0 rounded-full border border-[rgba(6,45,37,0.1)] bg-[#163D34] px-4 py-2 text-sm font-bold text-white shadow-[0_10px_28px_rgba(3,18,15,0.12)] transition hover:bg-[#062D25]"
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        <p className="mt-5 text-sm font-semibold text-[#05120F]/55">Browse 128,457 properties across South Africa</p>
       </div>
     </FadeUp>
   )
