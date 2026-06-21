@@ -1,0 +1,77 @@
+export const areaInsights = {
+  Bryanston: {
+    averagePrice: 4200000,
+    medianPrice: 3850000,
+    averageDaysOnMarket: 48,
+    schools: ['Bryanston Primary', 'St Stithians College'],
+    shoppingCentres: ['Bryanston Shopping Centre', 'Nicolway Bryanston'],
+    hospitals: ['Mediclinic Sandton'],
+    gautrain: 'Sandton Gautrain Station',
+    airport: 'Lanseria International Airport',
+  },
+  'Sea Point': {
+    averagePrice: 5800000,
+    medianPrice: 5250000,
+    averageDaysOnMarket: 42,
+    schools: ['Sea Point Primary', 'Reddam House Atlantic Seaboard'],
+    shoppingCentres: ['The Point Mall', 'V&A Waterfront'],
+    hospitals: ['Mediclinic Cape Town'],
+    gautrain: 'Not available in Cape Town',
+    airport: 'Cape Town International Airport',
+  },
+  Waterfall: {
+    averagePrice: 5200000,
+    medianPrice: 4950000,
+    averageDaysOnMarket: 38,
+    schools: ['Reddam House Waterfall', 'Curro Waterfall'],
+    shoppingCentres: ['Mall of Africa', 'Waterfall Corner'],
+    hospitals: ['Netcare Waterfall City Hospital'],
+    gautrain: 'Midrand Gautrain Station',
+    airport: 'O.R. Tambo International Airport',
+  },
+  Morningside: {
+    averagePrice: 3100000,
+    medianPrice: 2850000,
+    averageDaysOnMarket: 35,
+    schools: ['Redhill School', 'Crawford Sandton'],
+    shoppingCentres: ['Morningside Shopping Centre', 'Sandton City'],
+    hospitals: ['Morningside Mediclinic'],
+    gautrain: 'Sandton Gautrain Station',
+    airport: 'O.R. Tambo International Airport',
+  },
+  'Pretoria East': {
+    averagePrice: 2400000,
+    medianPrice: 2100000,
+    averageDaysOnMarket: 51,
+    schools: ['Woodhill College', 'Curro Hazeldean'],
+    shoppingCentres: ['Menlyn Maine', 'Hazeldean Square'],
+    hospitals: ['Life Wilgers Hospital'],
+    gautrain: 'Hatfield Gautrain Station',
+    airport: 'O.R. Tambo International Airport',
+  },
+  Fourways: {
+    averagePrice: 2600000,
+    medianPrice: 2350000,
+    averageDaysOnMarket: 44,
+    schools: ['Crawford Fourways', 'HeronBridge College'],
+    shoppingCentres: ['Fourways Mall', 'Cedar Square'],
+    hospitals: ['Life Fourways Hospital'],
+    gautrain: 'Sandton Gautrain Station',
+    airport: 'Lanseria International Airport',
+  },
+  Foreshore: {
+    averagePrice: 3600000,
+    medianPrice: 3200000,
+    averageDaysOnMarket: 39,
+    schools: ['Jan van Riebeeck Primary', 'Cape Town High School'],
+    shoppingCentres: ['V&A Waterfront', 'Cape Quarter'],
+    hospitals: ['Netcare Christiaan Barnard Memorial Hospital'],
+    gautrain: 'Not available in Cape Town',
+    airport: 'Cape Town International Airport',
+  },
+}
+
+export function findAreaInsight(location = '') {
+  const match = Object.keys(areaInsights).find((area) => location.includes(area))
+  return areaInsights[match] || areaInsights.Bryanston
+}

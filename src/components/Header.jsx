@@ -1,177 +1,51 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import {
-  ArrowRight,
-  BarChart3,
-  Building2,
-  FileStack,
-  Landmark,
-  LayoutDashboard,
-  Mail,
-  Menu,
-  Smartphone,
-  UserRound,
-  Users,
-  WalletCards,
-  X,
-} from 'lucide-react'
+import { ArrowRight, ChevronDown, Mail, Menu, X } from 'lucide-react'
+import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
 import { motionEaseOut } from './motion/timing'
 
-const appAuthUrl = 'https://app.arch9.co.za'
+function isActivePath(pathname, item) {
+  if (item.menu) return false
+  return item.match?.some((path) => pathname === path || pathname.startsWith(`${path}/`))
+}
 
-const platformItems = [
-  { label: 'Overview', href: '/platform/overview' },
-  { label: 'How It Works', href: '/platform/overview#how-it-works' },
-  { label: 'Transaction Timeline', href: '/platform/overview#connected-timeline' },
-  { label: 'Document Collection', href: '/platform/overview#document-collection' },
-  { label: 'Client Portal', href: '/platform/overview#client-portal' },
-  { label: 'Reporting', href: '/platform/overview#outcomes' },
-]
-
-const solutionItems = [
-  { icon: Users, label: 'Agents', copy: 'Move the deal after the offer is signed.' },
-  { icon: Landmark, label: 'Attorneys', copy: 'Receive cleaner files and clearer context.' },
-  { icon: WalletCards, label: 'Bond Originators', copy: 'Keep finance visible to the right parties.' },
-  { icon: Building2, label: 'Developers', copy: 'See every sale moving through transfer.' },
-  { icon: UserRound, label: 'Buyers & Sellers', copy: 'Know what happens next from offer to registration.' },
-]
-
-const companyItems = [
-  { label: 'About Arch9', href: '/platform/overview' },
-  { label: 'Launch Partners', href: '/platform/overview#trust' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'Careers', href: '/contact' },
-]
-
-const homeNavItems = [
-  { label: 'Buy', href: '/properties' },
-  { label: 'Developments', href: '/developments' },
-  { label: 'Sell', href: '/#why-arch9' },
-  { label: 'Agents', href: '/#why-arch9' },
-  { label: 'Attorneys', href: '/#why-arch9' },
-  { label: 'Finance', href: '/#why-arch9' },
-  { label: 'Platform', menu: 'platform' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Company', menu: 'company' },
-]
-
-const standardNavItems = [
-  { label: 'Buy', href: '/properties' },
-  { label: 'Developments', href: '/developments' },
-  { label: 'Platform', menu: 'platform' },
-  { label: 'Solutions', menu: 'solutions' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Company', menu: 'company' },
-]
-
-function PlatformDropdown() {
+function SolutionsDropdown({ onNavigate }) {
   return (
-    <div className="grid w-[560px] grid-cols-[0.9fr_1.1fr] gap-4 rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+    <div className="w-[430px] rounded-[28px] border border-[#0A3028]/10 bg-white/92 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
       <div className="grid gap-1">
-        {platformItems.map((item) => (
+        {solutionNavItems.map((item) => (
           <a
-            key={item.label}
+            key={item.href}
             href={item.href}
-            className="rounded-[18px] px-4 py-3 text-sm font-bold text-[#B9B1A7] transition hover:bg-white/[0.08] hover:text-[#F3EEE6]"
-          >
-            {item.label}
-          </a>
-        ))}
-      </div>
-
-      <div className="rounded-[26px] border border-[rgba(134,228,194,0.22)] bg-[rgba(255,255,255,0.06)] p-4">
-        <div className="rounded-[22px] border border-[rgba(243,238,230,0.1)] bg-[#050807] p-4 text-[#F3EEE6]">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#86E4C2]" />
-            <span className="h-2 w-2 rounded-full bg-[#F3EEE6]/28" />
-            <span className="h-2 w-2 rounded-full bg-[#F3EEE6]/28" />
-          </div>
-          <div className="mt-5 grid gap-2">
-            {[LayoutDashboard, FileStack, Smartphone, BarChart3].map((Icon, index) => (
-              <div key={index} className="flex items-center gap-3 rounded-[14px] bg-white/[0.06] px-3 py-2">
-                <Icon className="h-4 w-4 text-[#86E4C2]" />
-                <span className="text-xs font-bold text-[#F3EEE6]">
-                  {['Timeline live', 'Documents ready', 'Client portal', 'Registration signal'][index]}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <h3 className="mt-4 text-xl font-extrabold leading-tight tracking-[-0.03em] text-[#F3EEE6]">
-          One transaction. Every party connected.
-        </h3>
-        <p className="mt-2 text-sm leading-6 text-[#B9B1A7]">
-          The platform view for everything between offer and registration.
-        </p>
-      </div>
-    </div>
-  )
-}
-
-function SolutionsDropdown() {
-  return (
-    <div className="w-[560px] rounded-[32px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-4 text-[#F3EEE6] shadow-[0_38px_110px_rgba(0,0,0,0.42)] backdrop-blur-xl">
-      <div className="grid gap-2">
-        {solutionItems.map((item) => {
-          const Icon = item.icon
-          return (
-            <a
-              key={item.label}
-              href="/#why-arch9"
-              className="group flex items-start gap-4 rounded-[20px] p-4 transition hover:bg-white/[0.08]"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] text-[#86E4C2] transition group-hover:scale-105">
-                <Icon className="h-4 w-4" />
-              </span>
-              <span>
-                <span className="block text-sm font-extrabold text-[#F3EEE6]">{item.label}</span>
-                <span className="mt-1 block text-sm leading-6 text-[#B9B1A7]">{item.copy}</span>
-              </span>
-            </a>
-          )
-        })}
-      </div>
-      <a href="/#why-arch9" className="mt-3 flex items-center justify-between rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-[#0D1613] px-4 py-3 text-sm font-extrabold text-[#86E4C2]">
-        View all solutions
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    </div>
-  )
-}
-
-function CompanyDropdown() {
-  return (
-    <div className="w-[280px] rounded-[28px] border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.95)] p-3 text-[#F3EEE6] shadow-[0_32px_90px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-      {companyItems.map((item) => (
-        <a
-          key={item.label}
-          href={item.href}
-          className="block rounded-[16px] px-4 py-3 text-sm font-bold text-[#B9B1A7] transition hover:bg-white/[0.08] hover:text-[#F3EEE6]"
-        >
-          {item.label}
-        </a>
-      ))}
-    </div>
-  )
-}
-
-function MobileMenuSection({ eyebrow, items, onNavigate }) {
-  return (
-    <section>
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86E4C2]">{eyebrow}</p>
-      <div className="mt-3 grid gap-1">
-        {items.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="flex min-h-12 items-center rounded-[18px] border border-transparent px-1 text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6] transition hover:border-[rgba(134,228,194,0.22)] hover:bg-white/[0.06] hover:px-4 hover:text-[#86E4C2]"
+            className="group grid gap-1 rounded-[20px] px-4 py-3 transition hover:bg-[#F4F0E8] focus-visible:bg-[#F4F0E8]"
             onClick={onNavigate}
           >
-            {item.label}
+            <span className="flex items-center justify-between gap-4 text-sm font-extrabold text-[#071E1A]">
+              {item.label}
+              <ArrowRight className="h-4 w-4 text-[#006B4D] opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
+            </span>
+            <span className="max-w-[330px] text-xs font-semibold leading-5 text-[#5B6B64]">{item.description}</span>
           </a>
         ))}
       </div>
-    </section>
+    </div>
+  )
+}
+
+function MobileNavLink({ href, children, onClick, featured = false }) {
+  return (
+    <a
+      href={href}
+      className={
+        featured
+          ? 'flex min-h-[56px] w-full items-center justify-center rounded-full bg-[#F3EEE6] px-5 text-base font-extrabold text-[#050807] shadow-[0_18px_42px_rgba(0,0,0,0.2)]'
+          : 'flex min-h-12 items-center rounded-[18px] px-1 text-[1.1rem] font-extrabold leading-[1.25] text-[#F3EEE6] transition hover:bg-white/[0.07] hover:px-4 hover:text-[#86E4C2]'
+      }
+      style={featured ? { backgroundColor: '#F3EEE6', color: '#050807' } : undefined}
+      onClick={onClick}
+    >
+      {children}
+    </a>
   )
 }
 
@@ -179,7 +53,11 @@ export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const isHome = window.location.pathname === '/'
+  const [pathname, setPathname] = useState(window.location.pathname)
+  const headerRef = useRef(null)
+  const navShellRef = useRef(null)
+  const solutionsButtonRef = useRef(null)
+  const isHome = pathname === '/'
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -199,34 +77,74 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
+    function handlePopState() {
+      setPathname(window.location.pathname)
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (!navShellRef.current?.contains(event.target)) {
+        setActiveMenu(null)
+      }
+    }
+
+    function handleKeydown(event) {
+      if (event.key === 'Escape') {
+        setActiveMenu(null)
+        setMobileOpen(false)
+        solutionsButtonRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    window.addEventListener('keydown', handleKeydown)
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown)
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!mobileOpen) return
 
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-
-    function handleKeydown(event) {
-      if (event.key === 'Escape') {
-        setMobileOpen(false)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeydown)
     return () => {
       document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeydown)
     }
   }, [mobileOpen])
 
-  const closeMobile = () => setMobileOpen(false)
+  function closeMobile() {
+    setMobileOpen(false)
+  }
+
+  function openSolutions() {
+    setActiveMenu('solutions')
+  }
+
+  function handleSolutionsKeyDown(event) {
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      setActiveMenu('solutions')
+      window.requestAnimationFrame(() => {
+        navShellRef.current?.querySelector('[data-solutions-dropdown] a')?.focus()
+      })
+    }
+  }
 
   return (
-    <header className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-6 pt-6 md:px-8">
+    <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
       <motion.div
         className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-[#86E4C2]"
         style={{ scaleX: shouldReduceMotion ? 0 : scaleX }}
       />
       <div
-        className={`pointer-events-auto relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between rounded-full px-5 transition duration-300 md:h-[80px] md:px-8 ${
+        ref={navShellRef}
+        className={`pointer-events-auto relative mx-auto grid h-16 w-full max-w-[1340px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-5 transition duration-300 md:h-[76px] md:px-7 ${
           isHome
             ? `border border-white/10 text-white shadow-none backdrop-blur-0 ${
                 scrolled
@@ -243,43 +161,73 @@ export default function Header() {
           ARCH9
         </a>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
-          {(isHome ? homeNavItems : standardNavItems).map((item) => (
-            <div key={item.label} className="relative" onMouseEnter={() => setActiveMenu(item.menu || null)}>
+        <nav className="hidden min-w-0 justify-self-center lg:flex lg:items-center lg:gap-1" aria-label="Primary navigation">
+          {primaryNavItems.map((item) => {
+            const active =
+              item.menu === 'solutions'
+                ? solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
+                : isActivePath(pathname, item)
+            if (item.menu === 'solutions') {
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setActiveMenu('solutions')}
+                >
+                  <button
+                    ref={solutionsButtonRef}
+                    type="button"
+                    className={`flex h-11 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition ${
+                      isHome
+                        ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
+                        : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+                    } ${active || activeMenu === 'solutions' ? 'bg-white/[0.08] text-white' : ''}`}
+                    aria-haspopup="menu"
+                    aria-expanded={activeMenu === 'solutions'}
+                    onClick={openSolutions}
+                    onKeyDown={handleSolutionsKeyDown}
+                  >
+                    {item.label}
+                    <ChevronDown className={`h-4 w-4 transition ${activeMenu === 'solutions' ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
+              )
+            }
+
+            return (
               <a
-                href={item.href || '#'}
+                key={item.href}
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className={`flex h-11 items-center rounded-full px-4 text-sm font-bold transition ${
                   isHome
-                    ? 'px-3 text-[0.8rem] text-white/80 hover:bg-white/[0.08] hover:text-white'
-                    : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
-                }`}
-                onClick={(event) => {
-                  if (item.menu) event.preventDefault()
-                }}
+                    ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
+                    : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+                } ${active ? 'bg-white/[0.1] text-white' : ''}`}
               >
                 {item.label}
               </a>
-            </div>
-          ))}
+            )
+          })}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 justify-self-end lg:flex">
           <a
             href={appAuthUrl}
             className={`rounded-full px-4 py-3 text-sm font-bold transition ${
-              isHome ? 'text-white/80 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/72 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+              isHome ? 'text-white/72 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/68 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
             }`}
           >
             Login
           </a>
-          <a href="/contact" className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm">
+          <a href={demoHref} className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm">
             Book a Demo
           </a>
         </div>
 
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6] lg:hidden"
+          className="flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6] lg:hidden"
           onClick={() => setMobileOpen(true)}
           aria-label="Open menu"
           aria-expanded={mobileOpen}
@@ -288,17 +236,17 @@ export default function Header() {
         </button>
 
         <AnimatePresence>
-          {activeMenu ? (
+          {activeMenu === 'solutions' ? (
             <motion.div
+              data-solutions-dropdown
               className="absolute left-1/2 top-[calc(100%+14px)] hidden -translate-x-1/2 lg:block"
+              role="menu"
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
-              transition={{ duration: shouldReduceMotion ? 0.01 : 0.22, ease: motionEaseOut }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
             >
-              {activeMenu === 'platform' ? <PlatformDropdown /> : null}
-              {activeMenu === 'solutions' ? <SolutionsDropdown /> : null}
-              {activeMenu === 'company' ? <CompanyDropdown /> : null}
+              <SolutionsDropdown onNavigate={() => setActiveMenu(null)} />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -331,110 +279,46 @@ export default function Header() {
               </button>
             </div>
 
-            <div className="my-8 h-px bg-[rgba(243,238,230,0.1)]" />
+            <div className="my-5 h-px bg-[rgba(243,238,230,0.1)]" />
 
             <motion.nav
-              className="grid gap-8"
+              className="grid gap-4"
               aria-label="Mobile navigation"
               initial="hidden"
               animate="visible"
               variants={{
                 hidden: {},
-                visible: { transition: { staggerChildren: 0.07, delayChildren: 0.08 } },
+                visible: { transition: { staggerChildren: 0.055, delayChildren: 0.08 } },
               }}
             >
-              {isHome ? (
-                <motion.div
-                  className="grid gap-1"
-                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
-                >
-                  {[
-                    { label: 'Buy', href: '/properties' },
-                    { label: 'Developments', href: '/developments' },
-                    { label: 'Sell', href: '/#why-arch9' },
-                    { label: 'Agents', href: '/#why-arch9' },
-                    { label: 'Attorneys', href: '/#why-arch9' },
-                    { label: 'Finance', href: '/#why-arch9' },
-                    { label: 'Platform', href: '/platform/overview' },
-                    { label: 'Pricing', href: '/pricing' },
-                    { label: 'Company', href: '/platform/overview#trust' },
-                  ].map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="flex min-h-12 items-center text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6]"
-                      onClick={closeMobile}
-                    >
+              <motion.div className="grid gap-1" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <MobileNavLink href="/buy" onClick={closeMobile}>Buy</MobileNavLink>
+                <MobileNavLink href="/developments" onClick={closeMobile}>Developments</MobileNavLink>
+                <MobileNavLink href="/sell" onClick={closeMobile}>Sell</MobileNavLink>
+                <MobileNavLink href="/property-intelligence" onClick={closeMobile}>Property Intelligence</MobileNavLink>
+              </motion.div>
+
+              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <p className="flex min-h-12 items-center px-1 text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2]">Solutions</p>
+                <div className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2">
+                  {solutionNavItems.map((item) => (
+                    <MobileNavLink key={item.href} href={item.href} onClick={closeMobile}>
                       {item.label}
-                    </a>
+                    </MobileNavLink>
                   ))}
-                </motion.div>
-              ) : (
-                <>
-                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                    <a
-                      href="/properties"
-                      className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
-                      onClick={closeMobile}
-                    >
-                      Buy
-                    </a>
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                    <a
-                      href="/developments"
-                      className="flex min-h-14 items-center rounded-[20px] border border-[rgba(134,228,194,0.22)] bg-white/[0.06] px-4 text-[1.35rem] font-extrabold leading-[1.3] text-[#F3EEE6]"
-                      onClick={closeMobile}
-                    >
-                      Developments
-                    </a>
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                    <MobileMenuSection eyebrow="Platform" items={platformItems} onNavigate={closeMobile} />
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                    <MobileMenuSection
-                      eyebrow="Solutions"
-                      items={solutionItems.map((item) => ({ label: item.label, href: '/#why-arch9' }))}
-                      onNavigate={closeMobile}
-                    />
-                  </motion.div>
+                </div>
+              </motion.section>
 
-                  <motion.div
-                    className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-5"
-                    variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
-                  >
-                    {[
-                      { label: 'Pricing', href: '/pricing' },
-                      { label: 'Company', href: '/#trust' },
-                    ].map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        className="flex min-h-12 items-center text-[1.25rem] font-bold leading-[1.3] text-[#F3EEE6]"
-                        onClick={closeMobile}
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </motion.div>
-                </>
-              )}
+              <motion.div className="grid gap-1 border-y border-[rgba(243,238,230,0.1)] py-4" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <MobileNavLink href="/pricing" onClick={closeMobile}>Pricing</MobileNavLink>
+                <MobileNavLink href={appAuthUrl} onClick={closeMobile}>Login</MobileNavLink>
+                <div className="mt-3">
+                  <MobileNavLink href={demoHref} onClick={closeMobile} featured>
+                    Book a Demo
+                  </MobileNavLink>
+                </div>
+              </motion.div>
             </motion.nav>
-
-            <motion.div
-              className="mt-8 grid gap-3"
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.35, ease: motionEaseOut }}
-            >
-              <a href="/contact" className="bridge-button-primary bridge-button-light min-h-[58px] w-full" onClick={closeMobile}>
-                Book a Demo
-              </a>
-              <a href={appAuthUrl} className="bridge-button-secondary min-h-[58px] w-full border-[rgba(243,238,230,0.42)] bg-transparent text-[#F3EEE6]" onClick={closeMobile}>
-                Login
-              </a>
-            </motion.div>
 
             <div className="mt-8 flex items-center gap-3">
               {[
@@ -456,7 +340,7 @@ export default function Header() {
               })}
             </div>
 
-            <p className="mt-8 pb-4 text-sm text-[#B9B1A7]">© 2024 Arch9. All rights reserved.</p>
+            <p className="mt-8 pb-4 text-sm text-[#B9B1A7]">© 2026 Arch9. All rights reserved.</p>
           </motion.div>
         ) : null}
       </AnimatePresence>

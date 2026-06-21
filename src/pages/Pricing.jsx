@@ -54,7 +54,7 @@ export default function Pricing() {
 
     description.setAttribute(
       'content',
-      'Arch9 pricing is shaped around your transaction volume, team size, and rollout scope.'
+      'Start with the Arch9 tools you need. Scale as your property team grows.'
     )
   }, [])
 
@@ -69,11 +69,14 @@ export default function Pricing() {
               Pricing
             </p>
             <h1 className="mt-6 text-[3.2rem] font-semibold leading-[0.92] tracking-[-0.07em] text-[#171412] sm:text-[4.2rem] lg:text-[4.8rem]">
-              Pricing shaped around how your team moves together.
+              Simple pricing for a connected property journey
             </h1>
             <p className="mx-auto mt-5 max-w-[680px] text-[1rem] leading-8 text-[#6e6357]">
-              Arch9 pricing is based on the number of roles, transactions, and rollout scope you need in one shared system.
+              Start with the tools you need. Scale as your team grows.
             </p>
+            <a href="/contact" className="bridge-button-primary mt-8">
+              Book a demo
+            </a>
           </div>
         </SectionContainer>
 
@@ -129,7 +132,7 @@ export default function Pricing() {
               <a href="/contact" className="bridge-button-primary">
                 Book a pricing call
               </a>
-              <a href="/platform/overview" className="bridge-button-secondary">
+              <a href="/platform" className="bridge-button-secondary">
                 View platform
               </a>
             </div>

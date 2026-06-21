@@ -1,3 +1,5 @@
+import { trackListingEvent } from './listingJourney'
+
 export function capturePropertyEnquiry({ property, enquiry }) {
   const lead = {
     id: `lead_${Date.now()}`,
@@ -23,6 +25,7 @@ export function capturePropertyEnquiry({ property, enquiry }) {
   const existingLeads = JSON.parse(localStorage.getItem('arch9_public_property_leads') || '[]')
   localStorage.setItem('arch9_public_property_leads', JSON.stringify([lead, ...existingLeads]))
   localStorage.setItem('arch9_latest_buyer_lead', JSON.stringify(lead))
+  trackListingEvent({ eventType: 'Property Enquiry Submitted', property, payload: { source: lead.source, leadId: lead.id } })
 
   return lead
 }

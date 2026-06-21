@@ -1,9 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowRight, Bath, BedDouble, CarFront, ChevronDown, MapPin, Search, SlidersHorizontal } from 'lucide-react'
+import { ArrowRight, Bath, BedDouble, Bell, CarFront, ChevronDown, Heart, MapPin, Scale, Search, SlidersHorizontal, X } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { formatListingPrice, properties, propertyTypes } from '../data/properties'
 import { readPropertyFilters } from '../lib/listingFilters'
+import {
+  calculateBond,
+  calculateTransferCosts,
+  captureAlertSubscription,
+  isPropertySaved,
+  readComparison,
+  toggleComparisonProperty,
+  toggleSavedProperty,
+  trackListingEvent,
+} from '../lib/listingJourney'
 
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
 const bathroomOptions = ['Any', '1+', '2+', '3+']
@@ -43,12 +53,11 @@ function InputField(props) {
   )
 }
 
-function PropertyCard({ property }) {
+function PropertyCard({ property, isSaved, isCompared, onSave, onCompare }) {
+  const repayment = calculateBond({ purchasePrice: property.price }).monthlyRepayment
+
   return (
-    <a
-      href={`/property/${property.slug}`}
-      className="group overflow-hidden rounded-[34px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(5,8,7,0.07)] transition duration-300 hover:-translate-y-2 hover:border-[#0A3028]/18 hover:shadow-[0_30px_90px_rgba(5,8,7,0.12)]"
-    >
+    <article className="group overflow-hidden rounded-[34px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(5,8,7,0.07)] transition duration-300 hover:-translate-y-2 hover:border-[#0A3028]/18 hover:shadow-[0_30px_90px_rgba(5,8,7,0.12)]">
       <div
         className="relative flex h-64 items-end overflow-hidden p-5"
         style={{
@@ -57,6 +66,24 @@ function PropertyCard({ property }) {
           backgroundPosition: 'center',
         }}
       >
+        <div className="absolute right-4 top-4 flex gap-2">
+          <button
+            type="button"
+            className={`flex h-11 w-11 items-center justify-center rounded-full border border-white/24 backdrop-blur-md transition ${isSaved ? 'bg-[#F3EEE6] text-[#006B4D]' : 'bg-white/14 text-white hover:bg-white/24'}`}
+            onClick={() => onSave(property)}
+            aria-label={isSaved ? 'Remove saved property' : 'Save property'}
+          >
+            <Heart className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
+          </button>
+          <button
+            type="button"
+            className={`flex h-11 w-11 items-center justify-center rounded-full border border-white/24 backdrop-blur-md transition ${isCompared ? 'bg-[#86E4C2] text-[#05120F]' : 'bg-white/14 text-white hover:bg-white/24'}`}
+            onClick={() => onCompare(property)}
+            aria-label={isCompared ? 'Remove from comparison' : 'Compare property'}
+          >
+            <Scale className="h-4 w-4" />
+          </button>
+        </div>
         <div className="relative rounded-full border border-white/20 bg-white/14 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md">
           {property.status}
         </div>
@@ -64,7 +91,7 @@ function PropertyCard({ property }) {
 
       <div className="p-6">
         <p className="text-sm font-black uppercase tracking-[0.18em] text-[#006B4D]">{property.type}</p>
-        <div className="mt-3 flex items-start justify-between gap-4">
+        <a href={`/property/${property.slug}`} className="mt-3 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-[#05120F]">{property.title}</h2>
             <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#4B5B55]">
@@ -73,8 +100,11 @@ function PropertyCard({ property }) {
             </p>
           </div>
           <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-[#006B4D] transition group-hover:translate-x-1" />
-        </div>
+        </a>
         <p className="mt-5 text-2xl font-extrabold text-[#05120F]">{formatListingPrice(property)}</p>
+        {property.listingType === 'for-sale' ? (
+          <p className="mt-2 text-sm font-bold text-[#006B4D]">Estimated repayment {formatListingPrice({ price: repayment, priceLabel: ' / month' })}</p>
+        ) : null}
         <p className="mt-3 text-sm leading-6 text-[#4B5B55]">{property.summary}</p>
 
         <div className="mt-6 grid grid-cols-4 gap-3 border-t border-[#0A3028]/8 pt-5 text-sm font-bold text-[#31433D]">
@@ -93,16 +123,84 @@ function PropertyCard({ property }) {
           <span className="text-right">{property.size}</span>
         </div>
       </div>
-    </a>
+    </article>
+  )
+}
+
+function ComparisonTray({ comparison, onRemove }) {
+  if (comparison.length === 0) return null
+
+  return (
+    <div className="mt-8 overflow-hidden rounded-[30px] border border-[#0A3028]/10 bg-[#071E1A] text-[#F3EEE6] shadow-[0_24px_80px_rgba(5,8,7,0.14)]">
+      <div className="flex flex-col gap-3 border-b border-white/10 p-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#86E4C2]">Property comparison</p>
+          <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.04em]">Compare up to 4 properties</h2>
+        </div>
+        <p className="text-sm font-semibold text-[#F3EEE6]/70">{comparison.length} selected</p>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[760px] text-left text-sm">
+          <thead className="text-xs uppercase tracking-[0.18em] text-[#86E4C2]">
+            <tr>
+              {['Property', 'Price', 'Beds', 'Baths', 'Parking', 'Area', 'Repayment', 'Transfer Costs', 'Agent'].map((heading) => (
+                <th key={heading} className="px-5 py-4 font-black">{heading}</th>
+              ))}
+              <th className="px-5 py-4" />
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((property) => {
+              const repayment = calculateBond({ purchasePrice: property.price }).monthlyRepayment
+              const transfer = calculateTransferCosts({ purchasePrice: property.price, bondAmount: property.price * 0.9 }).totalCashRequired
+              return (
+                <tr key={property.slug} className="border-t border-white/10 text-[#F3EEE6]/82">
+                  <td className="px-5 py-4 font-extrabold text-white">{property.title}</td>
+                  <td className="px-5 py-4">{formatListingPrice(property)}</td>
+                  <td className="px-5 py-4">{property.bedrooms}</td>
+                  <td className="px-5 py-4">{property.bathrooms}</td>
+                  <td className="px-5 py-4">{property.parking}</td>
+                  <td className="px-5 py-4">{property.size}</td>
+                  <td className="px-5 py-4">{formatListingPrice({ price: repayment })}</td>
+                  <td className="px-5 py-4">{formatListingPrice({ price: transfer })}</td>
+                  <td className="px-5 py-4">{property.agent}</td>
+                  <td className="px-5 py-4">
+                    <button type="button" className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white" onClick={() => onRemove(property)}>
+                      <X className="h-4 w-4" />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   )
 }
 
 export default function Properties() {
   const [filters, setFilters] = useState(() => readPropertyFilters())
+  const [savedSlugs, setSavedSlugs] = useState(() => properties.filter((property) => isPropertySaved(property.slug)).map((property) => property.slug))
+  const [comparison, setComparison] = useState(() => readComparison())
+  const [alertCreated, setAlertCreated] = useState(false)
 
   useEffect(() => {
-    document.title = 'Properties | Arch9'
-  }, [])
+    document.title = 'Find Your Next Property | Arch9'
+
+    let description = document.querySelector('meta[name="description"]')
+    if (!description) {
+      description = document.createElement('meta')
+      description.setAttribute('name', 'description')
+      document.head.appendChild(description)
+    }
+
+    description.setAttribute(
+      'content',
+      'Browse homes, developments, and property opportunities across South Africa with Arch9.'
+    )
+    trackListingEvent({ eventType: 'Property Search Viewed', payload: filters })
+  }, [filters])
 
   const filteredProperties = useMemo(() => {
     const minimumBedrooms = filters.bedrooms === 'Any' ? 0 : Number.parseInt(filters.bedrooms, 10)
@@ -136,6 +234,20 @@ export default function Properties() {
     setFilters((current) => ({ ...current, [key]: value }))
   }
 
+  function handleSave(property) {
+    const isSaved = toggleSavedProperty(property)
+    setSavedSlugs((current) => (isSaved ? [...current, property.slug] : current.filter((slug) => slug !== property.slug)))
+  }
+
+  function handleCompare(property) {
+    setComparison(toggleComparisonProperty(property))
+  }
+
+  function handleAlert() {
+    captureAlertSubscription(filters)
+    setAlertCreated(true)
+  }
+
   return (
     <div className="bridge-site-bg min-h-screen text-[#05120F]">
       <Header />
@@ -146,15 +258,18 @@ export default function Properties() {
             <div>
               <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Buy through the Arch9 network</p>
               <h1 className="mt-5 max-w-[720px] text-[3.2rem] font-extrabold leading-[0.94] tracking-[-0.055em] text-[#05251D] md:text-[5rem] xl:text-[6rem]">
-                Find property with a cleaner path to registration.
+                Find your next property
               </h1>
+              <a href="#property-search" className="bridge-button-primary mt-8">
+                Start browsing
+              </a>
             </div>
             <p className="max-w-[560px] text-lg font-medium leading-8 text-[#31433D] lg:justify-self-end">
-              Search selected properties and enquire directly into the Arch9 transaction network, where agents can follow up with property context already attached.
+              Browse homes, developments, and opportunities across South Africa.
             </p>
           </div>
 
-          <div className="mt-10 rounded-[34px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(5,8,7,0.08)] backdrop-blur-xl md:p-6">
+          <div id="property-search" className="mt-10 rounded-[34px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(5,8,7,0.08)] backdrop-blur-xl md:p-6">
             <div className="flex items-center gap-3 border-b border-[#0A3028]/8 pb-5">
               <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#071E1A] text-[#F3EEE6]">
                 <SlidersHorizontal className="h-5 w-5" />
@@ -204,6 +319,14 @@ export default function Properties() {
                 <Search className="h-4 w-4" />
                 Search Properties
               </button>
+              <button
+                type="button"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#0A3028]/10 bg-[#F8F4EC] px-5 text-sm font-extrabold text-[#071E1A] transition hover:border-[#006B4D]/30 hover:text-[#006B4D]"
+                onClick={handleAlert}
+              >
+                <Bell className="h-4 w-4" />
+                {alertCreated ? 'Alert Created' : 'Create Alert'}
+              </button>
               <label className="flex items-center gap-3 text-sm font-bold text-[#31433D]">
                 Sort
                 <SelectField value={filters.sort} onChange={(event) => updateFilter('sort', event.target.value)}>
@@ -217,9 +340,18 @@ export default function Properties() {
             </div>
           </div>
 
+          <ComparisonTray comparison={comparison} onRemove={handleCompare} />
+
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {filteredProperties.map((property) => (
-              <PropertyCard key={property.slug} property={property} />
+              <PropertyCard
+                key={property.slug}
+                property={property}
+                isSaved={savedSlugs.includes(property.slug)}
+                isCompared={comparison.some((item) => item.slug === property.slug)}
+                onSave={handleSave}
+                onCompare={handleCompare}
+              />
             ))}
           </div>
 

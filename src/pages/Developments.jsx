@@ -88,7 +88,19 @@ export default function Developments() {
   })
 
   useEffect(() => {
-    document.title = 'Developments | Arch9'
+    document.title = 'Discover New Developments | Arch9'
+
+    let description = document.querySelector('meta[name="description"]')
+    if (!description) {
+      description = document.createElement('meta')
+      description.setAttribute('name', 'description')
+      document.head.appendChild(description)
+    }
+
+    description.setAttribute(
+      'content',
+      'Explore new residential developments, launches, and investment opportunities with Arch9.'
+    )
   }, [])
 
   const filteredDevelopments = useMemo(() => {
@@ -109,15 +121,18 @@ export default function Developments() {
             <div>
               <p className="text-xs font-black uppercase tracking-[0.24em] text-[#006B4D]">Developments</p>
               <h1 className="mt-5 max-w-[720px] text-[3.2rem] font-extrabold leading-[0.94] tracking-[-0.055em] text-[#05251D] md:text-[5rem] xl:text-[6rem]">
-                Discover the latest developments.
+                Discover new developments
               </h1>
+              <a href="#development-listings" className="bridge-button-primary mt-8">
+                View developments
+              </a>
             </div>
             <p className="max-w-[560px] text-lg font-medium leading-8 text-[#31433D] lg:justify-self-end">
-              Explore South Africa&apos;s newest estates, apartments and investment opportunities, all presented with the same Arch9 transaction clarity.
+              Explore new residential developments, launches, and investment opportunities.
             </p>
           </div>
 
-          <div className="mt-10 rounded-[34px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(5,8,7,0.08)] backdrop-blur-xl md:p-6">
+          <div id="development-listings" className="mt-10 rounded-[34px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(5,8,7,0.08)] backdrop-blur-xl md:p-6">
             <div className="flex items-center gap-3 border-b border-[#0A3028]/8 pb-5">
               <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#071E1A] text-[#F3EEE6]">
                 <Search className="h-5 w-5" />
