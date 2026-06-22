@@ -1,3 +1,5 @@
+import { Building2, Landmark, Layers, Scale, UserRound } from 'lucide-react'
+
 export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/contact'
 
@@ -11,28 +13,43 @@ export const primaryNavItems = [
 
 export const solutionNavItems = [
   {
+    title: 'Agents',
     label: 'Agents',
     href: '/solutions/agents',
     description: 'Listings, leads, offers, documents, and transaction progress in one workspace.',
+    icon: UserRound,
+    cta: 'Explore Agents',
   },
   {
+    title: 'Attorneys',
     label: 'Attorneys',
     href: '/solutions/attorneys',
     description: 'Transfer matters connected to cleaner instructions and stakeholder updates.',
+    icon: Scale,
+    cta: 'Explore Attorneys',
   },
   {
+    title: 'Bond Originators',
     label: 'Bond Originators',
     href: '/solutions/bond-originators',
     description: 'Cleaner applications, bank submissions, and finance progress from day one.',
+    icon: Landmark,
+    cta: 'Explore Bond Originators',
   },
   {
+    title: 'Developers',
     label: 'Developers',
     href: '/solutions/developers',
     description: 'Development stock, buyers, agents, and sales progress connected end to end.',
+    icon: Building2,
+    cta: 'Explore Developers',
   },
   {
+    title: 'Platform Overview',
     label: 'Platform Overview',
-    href: '/solutions/platform',
+    href: '/platform',
     description: 'A shared transaction spine for every party in the property journey.',
+    icon: Layers,
+    cta: 'Explore Platform',
   },
 ]

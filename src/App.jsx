@@ -94,7 +94,7 @@ export default function App() {
     return <PlatformOverview />
   }
 
-  if (pathname === '/properties') {
+  if (pathname === '/properties' || pathname === '/for-sale') {
     return <Properties />
   }
 

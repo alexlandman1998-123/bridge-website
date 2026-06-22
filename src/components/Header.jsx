@@ -21,23 +21,34 @@ const primaryToolsMenu = toolsMenu.filter((category) => category.key !== 'profes
 
 function SolutionsDropdown({ onNavigate }) {
   return (
-    <div className="w-[430px] rounded-[24px] border border-[#0A3028]/10 bg-white/94 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl">
-      <div className="grid gap-1">
-        {solutionNavItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            role="menuitem"
-            className="group grid gap-1 rounded-[14px] px-4 py-3 transition hover:bg-[rgba(0,70,50,0.06)] focus-visible:bg-[rgba(0,70,50,0.06)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
-            onClick={onNavigate}
-          >
-            <span className="flex items-center justify-between gap-4 text-sm font-extrabold text-[#071E1A]">
-              {item.label}
-              <ArrowRight className="h-4 w-4 text-[#006B4D] opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
-            </span>
-            <span className="max-w-[330px] text-xs font-semibold leading-5 text-[#5B6B64]">{item.description}</span>
-          </a>
-        ))}
+    <div className="w-[calc(100vw-160px)] max-w-[1360px] rounded-[28px] border border-[rgba(15,23,42,0.08)] bg-white/98 px-11 py-9 text-[#0F172A] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl">
+      <div className="grid grid-cols-5 gap-0">
+        {solutionNavItems.map((item, index) => {
+          const Icon = item.icon
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              role="menuitem"
+              className={`group min-w-0 px-6 py-1 transition first:pl-0 last:pr-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E]/20 ${
+                index ? 'border-l border-[rgba(15,23,42,0.08)]' : ''
+              }`}
+              onClick={onNavigate}
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#E7F6EF] text-[#063F34] transition group-hover:bg-[#DFF2EA] group-hover:text-[#0F766E]">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span className="mt-5 block text-[19px] font-extrabold leading-tight tracking-[-0.02em] text-[#0B1F1A]">{item.title || item.label}</span>
+              <span className="mt-3 block max-w-[220px] text-[15px] font-semibold leading-[1.55] text-[rgba(15,23,42,0.62)]">
+                {item.description}
+              </span>
+              <span className="mt-8 inline-flex items-center gap-2 text-[15px] font-extrabold text-[#063F34] transition group-hover:text-[#0F766E]">
+                {item.cta}
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+              </span>
+            </a>
+          )
+        })}
       </div>
     </div>
   )
@@ -562,10 +573,11 @@ export default function Header() {
                         <a
                           key={item.href}
                           href={item.href}
-                          className="grid min-h-14 gap-1 rounded-[16px] px-3 py-3 text-[#F3EEE6] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
+                          className="group grid min-h-14 grid-cols-[1fr_auto] gap-x-3 gap-y-1 rounded-[16px] px-3 py-3 text-[#F3EEE6] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
                           onClick={closeMobile}
                         >
-                          <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.label}</span>
+                          <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.title || item.label}</span>
+                          <ChevronDown className="row-span-2 h-4 w-4 shrink-0 -rotate-90 self-center text-[#86E4C2]/80 transition group-hover:translate-x-1 group-hover:text-[#86E4C2]" />
                           <span className="text-xs font-semibold leading-5 text-[#B9B1A7]">{item.description}</span>
                         </a>
                       ))}

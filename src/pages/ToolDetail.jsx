@@ -3,6 +3,12 @@ import { ArrowLeft, ArrowRight, Calculator, CheckCircle2 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { getToolCategory, getToolHref, tools } from '../config/tools'
+import AffordabilityCalculatorPage from './AffordabilityCalculatorPage'
+import BondRepaymentCalculator from './BondRepaymentCalculator'
+import CashFlowCalculatorPage from './CashFlowCalculatorPage'
+import RentalYieldCalculatorPage from './RentalYieldCalculatorPage'
+import RoiCalculatorPage from './RoiCalculatorPage'
+import TransferCostCalculatorPage from './TransferCostCalculatorPage'
 
 function setMetaDescription(content) {
   let description = document.querySelector('meta[name="description"]')
@@ -23,9 +29,35 @@ export default function ToolDetail({ tool }) {
 
   useEffect(() => {
     if (!tool) return
+    if (tool.category === 'buyers' && ['affordability-calculator', 'bond-repayment-calculator', 'transfer-cost-calculator'].includes(tool.slug)) return
+    if (tool.category === 'investors' && ['cash-flow-calculator', 'rental-yield-calculator', 'roi-calculator'].includes(tool.slug)) return
     document.title = `${tool.title} | Property Tools | Arch9`
     setMetaDescription(tool.description)
   }, [tool])
+
+  if (tool?.category === 'buyers' && tool?.slug === 'affordability-calculator') {
+    return <AffordabilityCalculatorPage />
+  }
+
+  if (tool?.category === 'buyers' && tool?.slug === 'bond-repayment-calculator') {
+    return <BondRepaymentCalculator />
+  }
+
+  if (tool?.category === 'buyers' && tool?.slug === 'transfer-cost-calculator') {
+    return <TransferCostCalculatorPage />
+  }
+
+  if (tool?.category === 'investors' && tool?.slug === 'rental-yield-calculator') {
+    return <RentalYieldCalculatorPage />
+  }
+
+  if (tool?.category === 'investors' && tool?.slug === 'roi-calculator') {
+    return <RoiCalculatorPage />
+  }
+
+  if (tool?.category === 'investors' && tool?.slug === 'cash-flow-calculator') {
+    return <CashFlowCalculatorPage />
+  }
 
   if (!tool) {
     return (
