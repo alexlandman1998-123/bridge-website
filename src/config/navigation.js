@@ -1,14 +1,99 @@
-import { Building2, Landmark, Layers, Scale, UserRound } from 'lucide-react'
+import { BookOpen, Building2, Calculator, FileText, Home, Landmark, Layers, LineChart, Scale, Search, UserRound } from 'lucide-react'
 
 export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/contact'
 
 export const primaryNavItems = [
-  { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
-  { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
-  { label: 'Tools', menu: 'tools', match: ['/tools'], analyticsEvent: 'nav_tools_clicked' },
+  { label: 'Buy', menu: 'buy', match: ['/', '/properties', '/developments', '/tools/buyers'], analyticsEvent: 'nav_buy_clicked' },
   { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
+  { label: 'Tools', menu: 'tools', match: ['/tools'], analyticsEvent: 'nav_tools_clicked' },
+  { label: 'Resources', menu: 'resources', analyticsEvent: 'nav_resources_clicked' },
   { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
+  { label: 'About', href: '/why-arch9', match: ['/why-arch9'], analyticsEvent: 'nav_about_clicked' },
+]
+
+export const buyNavItems = [
+  {
+    label: 'Residential Properties',
+    href: '/properties',
+    description: 'Browse homes, apartments and estates across South Africa.',
+    icon: Home,
+  },
+  {
+    label: 'Commercial Properties',
+    href: '/commercial',
+    description: 'Explore commercial opportunities and connected transactions.',
+    icon: Building2,
+  },
+  {
+    label: 'New Developments',
+    href: '/developments',
+    description: 'Discover launches, estates and investment opportunities.',
+    icon: Search,
+  },
+  {
+    label: 'Affordability Calculator',
+    href: '/tools/buyers/affordability-calculator',
+    description: 'Understand what price range may fit your budget.',
+    icon: Calculator,
+  },
+  {
+    label: 'Bond Calculator',
+    href: '/tools/buyers/bond-repayment-calculator',
+    description: 'Estimate monthly bond repayments before you buy.',
+    icon: Landmark,
+  },
+  {
+    label: 'Transfer Cost Calculator',
+    href: '/tools/buyers/transfer-cost-calculator',
+    description: 'Estimate transfer duty and once-off transaction costs.',
+    icon: FileText,
+  },
+  {
+    label: 'Rental Yield Calculator',
+    href: '/tools/investors/rental-yield-calculator',
+    description: 'Analyse rental income, expenses and yield.',
+    icon: LineChart,
+  },
+  {
+    label: 'Buyer Guides',
+    href: '/buyer-guides',
+    description: 'Helpful resources for the buying journey.',
+    icon: BookOpen,
+  },
+]
+
+export const resourcesNavItems = [
+  {
+    label: 'Property Intelligence',
+    href: '/property-intelligence',
+    description: 'Market data, area insights and decision support.',
+    icon: LineChart,
+  },
+  {
+    label: 'Buyer Guides',
+    href: '/buyer-guides',
+    description: 'Practical guidance for buyers and investors.',
+    icon: BookOpen,
+  },
+  {
+    label: 'Seller Guides',
+    href: '/seller-guides',
+    description: 'Prepare, price and move through a cleaner sale.',
+    icon: FileText,
+  },
+  {
+    label: 'Help Centre',
+    href: '/help',
+    description: 'Support for teams and clients using Arch9.',
+    icon: UserRound,
+  },
+  {
+    label: 'Documentation',
+    href: '/docs',
+    description: 'Platform workflows, setup guidance and resources.',
+    icon: Layers,
+  },
 ]
 
 export const solutionNavItems = [

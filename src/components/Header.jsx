@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronDown, Mail, Menu, Sparkles, X } from 'lucide-react'
-import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
+import { appAuthUrl, buyNavItems, demoHref, primaryNavItems, resourcesNavItems, solutionNavItems } from '../config/navigation'
 import { toolsMenu } from '../config/tools'
 import { motionEaseOut } from './motion/timing'
 
@@ -18,6 +18,36 @@ function trackNavigationEvent(eventName) {
 }
 
 const primaryToolsMenu = toolsMenu.filter((category) => category.key !== 'professionals')
+
+function MenuLinkDropdown({ items, onNavigate, width = 'w-[520px]' }) {
+  return (
+    <div className={`${width} rounded-[24px] border border-[#0A3028]/10 bg-white/94 p-3 text-[#05120F] shadow-[0_34px_90px_rgba(5,8,7,0.18)] backdrop-blur-2xl`}>
+      <div className="grid gap-1">
+        {items.map((item) => {
+          const Icon = item.icon
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              role="menuitem"
+              className="group grid grid-cols-[auto_1fr_auto] items-start gap-3 rounded-[16px] px-4 py-3 transition hover:bg-[rgba(0,70,50,0.06)] focus-visible:bg-[rgba(0,70,50,0.06)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
+              onClick={onNavigate}
+            >
+              <span className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-[12px] bg-[#E8F5EE] text-[#064E3B]">
+                {Icon ? <Icon className="h-4 w-4" /> : null}
+              </span>
+              <span>
+                <span className="block text-sm font-extrabold text-[#071E1A]">{item.label}</span>
+                <span className="mt-1 block max-w-[360px] text-xs font-semibold leading-5 text-[#5B6B64]">{item.description}</span>
+              </span>
+              <ArrowRight className="mt-2 h-4 w-4 text-[#006B4D] opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
+            </a>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 function SolutionsDropdown({ onNavigate }) {
   return (
@@ -143,8 +173,10 @@ function MobileNavLink({ href, children, onClick, featured = false }) {
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileBuyOpen, setMobileBuyOpen] = useState(true)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(true)
   const [mobileToolsOpen, setMobileToolsOpen] = useState(true)
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false)
   const [mobileToolCategoryOpen, setMobileToolCategoryOpen] = useState('buyers')
   const [scrolled, setScrolled] = useState(false)
   const [pathname, setPathname] = useState(window.location.pathname)
@@ -239,15 +271,17 @@ export default function Header() {
 
   function closeMobile() {
     setMobileOpen(false)
+    setMobileBuyOpen(true)
     setMobileSolutionsOpen(true)
     setMobileToolsOpen(true)
+    setMobileResourcesOpen(false)
     setMobileToolCategoryOpen('buyers')
   }
 
   function openMenu(menu) {
     cancelCloseMenu()
     setActiveMenu(menu)
-    trackNavigationEvent(menu === 'tools' ? 'nav_tools_clicked' : 'nav_solutions_clicked')
+    trackNavigationEvent(`nav_${menu}_clicked`)
   }
 
   function handleMenuKeyDown(event, menu) {
@@ -256,14 +290,13 @@ export default function Header() {
       cancelCloseMenu()
       setActiveMenu(menu)
       window.requestAnimationFrame(() => {
-        navShellRef.current?.querySelector(`[data-${menu}-dropdown] a`)?.focus()
+        navShellRef.current?.querySelector(`[data-menu-dropdown="${menu}"] a`)?.focus()
       })
     }
   }
 
-  const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
-  const toolsIndex = primaryNavItems.findIndex((item) => item.menu === 'tools')
-  const firstMenuIndex = Math.min(...[solutionsIndex, toolsIndex].filter((index) => index >= 0))
+  const menuIndexes = primaryNavItems.map((item, index) => (item.menu ? index : -1)).filter((index) => index >= 0)
+  const firstMenuIndex = menuIndexes.length ? Math.min(...menuIndexes) : -1
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
 
@@ -300,6 +333,10 @@ export default function Header() {
                 ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
                 : item.menu === 'tools'
                   ? pathname === '/tools' || pathname.startsWith('/tools/')
+                : item.menu === 'buy'
+                  ? buyNavItems.some((buyItem) => pathname === buyItem.href || pathname.startsWith(`${buyItem.href}/`))
+                : item.menu === 'resources'
+                  ? resourcesNavItems.some((resource) => pathname === resource.href || pathname.startsWith(`${resource.href}/`))
                 : isActivePath(pathname, item)
             if (item.menu) {
               return (
@@ -381,6 +418,7 @@ export default function Header() {
         <AnimatePresence>
           {activeMenu ? (
             <motion.div
+              data-menu-dropdown={activeMenu}
               data-solutions-dropdown={activeMenu === 'solutions' ? true : undefined}
               data-tools-dropdown={activeMenu === 'tools' ? true : undefined}
               className="absolute left-1/2 top-[calc(100%+14px)] hidden -translate-x-1/2 lg:block"
@@ -394,6 +432,24 @@ export default function Header() {
             >
               {activeMenu === 'tools' ? (
                 <ToolsDropdown
+                  onNavigate={() => {
+                    cancelCloseMenu()
+                    setActiveMenu(null)
+                  }}
+                />
+              ) : activeMenu === 'buy' ? (
+                <MenuLinkDropdown
+                  items={buyNavItems}
+                  width="w-[640px]"
+                  onNavigate={() => {
+                    cancelCloseMenu()
+                    setActiveMenu(null)
+                  }}
+                />
+              ) : activeMenu === 'resources' ? (
+                <MenuLinkDropdown
+                  items={resourcesNavItems}
+                  width="w-[520px]"
                   onNavigate={() => {
                     cancelCloseMenu()
                     setActiveMenu(null)
@@ -465,6 +521,44 @@ export default function Header() {
                   </MobileNavLink>
                 ))}
               </motion.div>
+
+              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <button
+                  type="button"
+                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
+                  aria-expanded={mobileBuyOpen}
+                  onClick={() => {
+                    setMobileBuyOpen((open) => !open)
+                    trackNavigationEvent('nav_buy_clicked')
+                  }}
+                >
+                  <span>Buy</span>
+                  <ChevronDown className={`h-5 w-5 transition ${mobileBuyOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {mobileBuyOpen ? (
+                    <motion.div
+                      className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
+                    >
+                      {buyNavItems.map((item) => (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          className="grid min-h-14 gap-1 rounded-[16px] px-3 py-3 text-[#F3EEE6] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
+                          onClick={closeMobile}
+                        >
+                          <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.label}</span>
+                          <span className="text-xs font-semibold leading-5 text-[#B9B1A7]">{item.description}</span>
+                        </a>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </motion.section>
 
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <button
@@ -578,6 +672,44 @@ export default function Header() {
                         >
                           <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.title || item.label}</span>
                           <ChevronDown className="row-span-2 h-4 w-4 shrink-0 -rotate-90 self-center text-[#86E4C2]/80 transition group-hover:translate-x-1 group-hover:text-[#86E4C2]" />
+                          <span className="text-xs font-semibold leading-5 text-[#B9B1A7]">{item.description}</span>
+                        </a>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </motion.section>
+
+              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+                <button
+                  type="button"
+                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
+                  aria-expanded={mobileResourcesOpen}
+                  onClick={() => {
+                    setMobileResourcesOpen((open) => !open)
+                    trackNavigationEvent('nav_resources_clicked')
+                  }}
+                >
+                  <span>Resources</span>
+                  <ChevronDown className={`h-5 w-5 transition ${mobileResourcesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {mobileResourcesOpen ? (
+                    <motion.div
+                      className="mt-3 grid gap-1 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
+                    >
+                      {resourcesNavItems.map((item) => (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          className="grid min-h-14 gap-1 rounded-[16px] px-3 py-3 text-[#F3EEE6] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
+                          onClick={closeMobile}
+                        >
+                          <span className="text-[1.02rem] font-extrabold leading-[1.2]">{item.label}</span>
                           <span className="text-xs font-semibold leading-5 text-[#B9B1A7]">{item.description}</span>
                         </a>
                       ))}
