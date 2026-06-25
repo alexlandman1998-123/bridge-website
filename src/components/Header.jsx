@@ -199,7 +199,7 @@ export default function Header() {
       />
       <div
         ref={navShellRef}
-        className={`pointer-events-auto relative mx-auto grid h-16 w-full max-w-[1340px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-5 transition duration-300 md:h-[76px] md:px-7 ${
+        className={`pointer-events-auto relative mx-auto grid h-16 w-full max-w-[1500px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-5 transition duration-300 md:h-[76px] md:px-7 ${
           isHome
             ? `text-[#071E1A] ${
                 scrolled
