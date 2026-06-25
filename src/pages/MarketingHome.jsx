@@ -305,11 +305,11 @@ function WorkspacesSection() {
             copy="Purpose-built workspaces with the tools and visibility each role needs."
           />
         </div>
-        <div className="grid gap-5 md:grid-cols-2 2xl:grid-cols-3">
+        <div className="-mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 2xl:grid-cols-3">
           {workspaces.map((workspace) => {
             const Icon = workspace.icon
             return (
-              <article key={workspace.title} className="group overflow-hidden rounded-[14px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(7,30,26,0.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_84px_rgba(7,30,26,0.1)]">
+              <article key={workspace.title} className="group min-w-[82vw] max-w-[360px] snap-start overflow-hidden rounded-[14px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(7,30,26,0.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_84px_rgba(7,30,26,0.1)] md:min-w-0 md:max-w-none">
                 <div className="p-5">
                   <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#EAF7F0] text-[#064537]">
                     <Icon className="h-5 w-5" />
