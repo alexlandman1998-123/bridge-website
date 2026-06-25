@@ -316,13 +316,15 @@ function LiveTransactionSection() {
 function WorkspacesSection() {
   return (
     <section className="bg-white px-5 py-16 md:px-8 md:py-24">
-      <div className="mx-auto grid w-full max-w-[1500px] gap-9 lg:grid-cols-[0.24fr_0.76fr]">
-        <SectionIntro
-          eyebrow="One platform. Every role."
-          title="Built for every stakeholder."
-          copy="Purpose-built workspaces with the tools and visibility each role needs."
-        />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-[1500px] gap-8 lg:grid-cols-[minmax(360px,0.34fr)_minmax(0,0.66fr)] xl:gap-10">
+        <div className="max-w-[500px] lg:sticky lg:top-32 lg:self-start">
+          <SectionIntro
+            eyebrow="One platform. Every role."
+            title="Built for every stakeholder."
+            copy="Purpose-built workspaces with the tools and visibility each role needs."
+          />
+        </div>
+        <div className="grid gap-5 md:grid-cols-2 2xl:grid-cols-3">
           {workspaces.map((workspace) => {
             const Icon = workspace.icon
             return (
