@@ -24,21 +24,11 @@ import { findDevelopmentBySlug } from './data/developments'
 import { findAreaBySlug } from './data/propertyIntelligence'
 
 export default function App() {
-  const [pathname, setPathname] = useState(() => (window.location.pathname === '/buy' ? '/' : window.location.pathname))
+  const [pathname, setPathname] = useState(() => window.location.pathname)
 
   useEffect(() => {
     function handlePopState() {
-      if (window.location.pathname === '/buy') {
-        window.history.replaceState(null, '', '/')
-        setPathname('/')
-        return
-      }
-
       setPathname(window.location.pathname)
-    }
-
-    if (window.location.pathname === '/buy') {
-      window.history.replaceState(null, '', '/')
     }
 
     window.addEventListener('popstate', handlePopState)
@@ -175,6 +165,10 @@ export default function App() {
   if (pathname.startsWith('/property/')) {
     const slug = pathname.replace('/property/', '').replace(/\/$/, '')
     return <PropertyDetail slug={slug} />
+  }
+
+  if (pathname === '/buy') {
+    return <MarketingHome />
   }
 
   return <MarketingHome />

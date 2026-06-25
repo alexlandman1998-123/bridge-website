@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Search, Sparkles, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, Mail, Menu, Sparkles, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
 import { toolsMenu } from '../config/tools'
-import { buildPropertyQuery } from '../lib/listingFilters'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -19,166 +18,6 @@ function trackNavigationEvent(eventName) {
 }
 
 const primaryToolsMenu = toolsMenu.filter((category) => category.key !== 'professionals')
-
-const saleTypeOptions = [
-  { label: 'For Sale', value: 'for-sale' },
-  { label: 'To Rent', value: 'to-rent' },
-]
-
-const propertyTypeOptions = ['Any', 'Apartment', 'Estate Home', 'Townhouse', 'Development']
-const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
-const bathroomOptions = ['Any', '1+', '2+', '3+']
-
-function BuySearchInput({ label, value, onChange, placeholder, icon: Icon }) {
-  return (
-    <label className="block">
-      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
-      <div className="relative">
-        {Icon ? <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#05120F]/45" /> : null}
-        <input
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          placeholder={placeholder}
-          className={`h-14 w-full rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 placeholder:text-[#05120F]/42 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)] ${
-            Icon ? 'pl-11' : ''
-          }`}
-        />
-      </div>
-    </label>
-  )
-}
-
-function BuySearchSelect({ label, value, onChange, children }) {
-  return (
-    <label className="block">
-      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          className="h-14 w-full appearance-none rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 pr-10 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)]"
-        >
-          {children}
-        </select>
-        <span className="pointer-events-none absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#05120F]/48 shadow-[0_4px_14px_rgba(5,8,7,0.05)]">
-          <ChevronDown className="h-4 w-4" />
-        </span>
-      </div>
-    </label>
-  )
-}
-
-function BuySearchDashboard({ onNavigate, compact = false }) {
-  const [status, setStatus] = useState('for-sale')
-  const [filters, setFilters] = useState({
-    location: '',
-    type: 'Any',
-    minPrice: '',
-    maxPrice: '',
-    bedrooms: 'Any',
-    bathrooms: 'Any',
-  })
-
-  function updateField(key, value) {
-    setFilters((current) => ({ ...current, [key]: value }))
-  }
-
-  function submitSearch(event) {
-    event.preventDefault()
-    const query = buildPropertyQuery({ status, ...filters })
-    onNavigate?.()
-    window.location.assign(query ? `/properties?${query}` : '/properties')
-  }
-
-  return (
-    <div className="relative z-10 mx-auto w-full max-w-[1320px]">
-      <div className="ml-3 flex w-fit overflow-hidden rounded-t-[18px] border border-b-0 border-white/18 bg-white shadow-[0_18px_50px_rgba(3,18,15,0.18)] md:ml-4">
-        {saleTypeOptions.map((item) => (
-          <button
-            key={item.value}
-            type="button"
-            onClick={() => setStatus(item.value)}
-            className={`min-h-13 px-6 text-sm font-extrabold transition md:px-8 ${
-              status === item.value
-                ? 'bg-[#062D25] text-white shadow-[0_12px_24px_rgba(3,18,15,0.18)]'
-                : 'bg-[#F7F3EA] text-[#062D25] hover:bg-[#EFE9DD]'
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-
-      <div className={`${compact ? 'min-h-0 p-5' : 'min-h-[250px] p-6 md:p-8 xl:p-10'} rounded-[24px] border border-black/[0.06] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)]`}>
-        <form onSubmit={submitSearch}>
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
-            <BuySearchInput
-              label="Location"
-              value={filters.location}
-              onChange={(value) => updateField('location', value)}
-              placeholder="Enter suburb or area"
-              icon={MapPin}
-            />
-            <BuySearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
-              {propertyTypeOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </BuySearchSelect>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_220px]">
-            <BuySearchInput
-              label="Min Price"
-              value={filters.minPrice}
-              onChange={(value) => updateField('minPrice', value)}
-              placeholder="No Min"
-            />
-            <BuySearchInput
-              label="Max Price"
-              value={filters.maxPrice}
-              onChange={(value) => updateField('maxPrice', value)}
-              placeholder="No Max"
-            />
-            <BuySearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
-              {bedroomOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </BuySearchSelect>
-            <BuySearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
-              {bathroomOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </BuySearchSelect>
-            <button
-              type="submit"
-              className="col-span-2 inline-flex h-14 w-full items-center justify-center gap-2 self-end rounded-[16px] bg-[#064537] px-6 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(6,69,55,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#05352D] focus:outline-none focus:ring-4 focus:ring-[#064537]/15 lg:col-span-1"
-            >
-              <Search className="h-4 w-4" />
-              Search Properties
-            </button>
-          </div>
-        </form>
-
-        <p className="mt-5 text-sm font-semibold text-[#05120F]/55">Browse 128,457 properties across South Africa</p>
-      </div>
-    </div>
-  )
-}
-
-function BuyDropdown({ onNavigate }) {
-  return (
-    <div className="relative w-[min(1320px,calc(100vw-64px))] rounded-[28px] border border-[rgba(15,23,42,0.08)] bg-[#F7F3EA]/98 p-6 text-[#0F172A] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl">
-      <span className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[rgba(15,23,42,0.08)] bg-[#F7F3EA]/98" />
-      <BuySearchDashboard onNavigate={onNavigate} />
-    </div>
-  )
-}
 
 function SolutionsDropdown({ onNavigate }) {
   return (
@@ -304,7 +143,6 @@ function MobileNavLink({ href, children, onClick, featured = false }) {
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [mobileBuyOpen, setMobileBuyOpen] = useState(true)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(true)
   const [mobileToolsOpen, setMobileToolsOpen] = useState(true)
   const [mobileToolCategoryOpen, setMobileToolCategoryOpen] = useState('buyers')
@@ -314,7 +152,7 @@ export default function Header() {
   const navShellRef = useRef(null)
   const solutionsButtonRef = useRef(null)
   const closeMenuTimerRef = useRef(null)
-  const isHome = pathname === '/'
+  const isHome = pathname === '/' || pathname === '/buy'
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -401,7 +239,6 @@ export default function Header() {
 
   function closeMobile() {
     setMobileOpen(false)
-    setMobileBuyOpen(true)
     setMobileSolutionsOpen(true)
     setMobileToolsOpen(true)
     setMobileToolCategoryOpen('buyers')
@@ -410,7 +247,7 @@ export default function Header() {
   function openMenu(menu) {
     cancelCloseMenu()
     setActiveMenu(menu)
-    const eventName = menu === 'tools' ? 'nav_tools_clicked' : menu === 'solutions' ? 'nav_solutions_clicked' : 'nav_buy_clicked'
+    const eventName = menu === 'tools' ? 'nav_tools_clicked' : 'nav_solutions_clicked'
     trackNavigationEvent(eventName)
   }
 
@@ -425,10 +262,9 @@ export default function Header() {
     }
   }
 
-  const buyIndex = primaryNavItems.findIndex((item) => item.menu === 'buy')
   const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
   const toolsIndex = primaryNavItems.findIndex((item) => item.menu === 'tools')
-  const firstMenuIndex = Math.min(...[buyIndex, solutionsIndex, toolsIndex].filter((index) => index >= 0))
+  const firstMenuIndex = Math.min(...[solutionsIndex, toolsIndex].filter((index) => index >= 0))
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
 
@@ -465,9 +301,7 @@ export default function Header() {
                 ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
                 : item.menu === 'tools'
                   ? pathname === '/tools' || pathname.startsWith('/tools/')
-                  : item.menu === 'buy'
-                    ? pathname === '/properties' || pathname === '/for-sale' || pathname.startsWith('/properties/')
-                    : isActivePath(pathname, item)
+                  : isActivePath(pathname, item)
             if (item.menu) {
               return (
                 <div
@@ -548,7 +382,6 @@ export default function Header() {
         <AnimatePresence>
           {activeMenu ? (
             <motion.div
-              data-buy-dropdown={activeMenu === 'buy' ? true : undefined}
               data-solutions-dropdown={activeMenu === 'solutions' ? true : undefined}
               data-tools-dropdown={activeMenu === 'tools' ? true : undefined}
               className="absolute left-1/2 top-[calc(100%+14px)] hidden -translate-x-1/2 lg:block"
@@ -560,14 +393,7 @@ export default function Header() {
               onMouseEnter={cancelCloseMenu}
               onMouseLeave={scheduleCloseMenu}
             >
-              {activeMenu === 'buy' ? (
-                <BuyDropdown
-                  onNavigate={() => {
-                    cancelCloseMenu()
-                    setActiveMenu(null)
-                  }}
-                />
-              ) : activeMenu === 'tools' ? (
+              {activeMenu === 'tools' ? (
                 <ToolsDropdown
                   onNavigate={() => {
                     cancelCloseMenu()
@@ -640,34 +466,6 @@ export default function Header() {
                   </MobileNavLink>
                 ))}
               </motion.div>
-
-              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <button
-                  type="button"
-                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
-                  aria-expanded={mobileBuyOpen}
-                  onClick={() => {
-                    setMobileBuyOpen((open) => !open)
-                    trackNavigationEvent('nav_buy_clicked')
-                  }}
-                >
-                  <span>Buy</span>
-                  <ChevronDown className={`h-5 w-5 transition ${mobileBuyOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence initial={false}>
-                  {mobileBuyOpen ? (
-                    <motion.div
-                      className="mt-3 overflow-hidden rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-[#F7F3EA] p-2"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
-                    >
-                      <BuySearchDashboard compact onNavigate={closeMobile} />
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </motion.section>
 
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <button
