@@ -189,6 +189,7 @@ export default function Header() {
   const firstMenuIndex = solutionsIndex
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
+  const lightHomeHeader = isHome && !scrolled
 
   return (
     <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
@@ -200,10 +201,10 @@ export default function Header() {
         ref={navShellRef}
         className={`pointer-events-auto relative mx-auto grid h-16 w-full max-w-[1340px] grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full px-5 transition duration-300 md:h-[76px] md:px-7 ${
           isHome
-            ? `border border-white/10 text-white shadow-none backdrop-blur-0 ${
+            ? `text-[#071E1A] ${
                 scrolled
-                  ? 'bg-[rgba(6,45,37,0.92)] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_58px_rgba(3,18,15,0.28)] backdrop-blur-[16px]'
-                  : 'bg-transparent'
+                  ? 'border border-white/10 bg-[rgba(6,45,37,0.92)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_58px_rgba(3,18,15,0.28)] backdrop-blur-[16px]'
+                  : 'border border-[#0A3028]/8 bg-white/45 shadow-[0_18px_58px_rgba(7,30,26,0.04)] backdrop-blur-[10px]'
               }`
             : `border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] ${
                 scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
@@ -212,7 +213,7 @@ export default function Header() {
         onMouseEnter={cancelCloseMenu}
         onMouseLeave={scheduleCloseMenu}
       >
-        <a href="/" className={`text-[0.95rem] font-extrabold tracking-[0.24em] ${isHome ? 'text-white' : 'text-[#F3EEE6]'}`}>
+        <a href="/" className={`text-[0.95rem] font-extrabold tracking-[0.24em] ${lightHomeHeader ? 'text-[#071E1A]' : 'text-[#F3EEE6]'}`}>
           ARCH9
         </a>
 
@@ -236,10 +237,10 @@ export default function Header() {
                     ref={solutionsButtonRef}
                     type="button"
                     className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-[17px] font-normal transition xl:px-4 ${
-                      isHome
-                        ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
+                      lightHomeHeader
+                        ? 'text-[#071E1A]/72 hover:bg-[#064537]/7 hover:text-[#064537]'
                         : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
-                    } ${active || activeMenu === item.menu ? 'bg-white/[0.08] text-white' : ''}`}
+                    } ${active || activeMenu === item.menu ? (lightHomeHeader ? 'bg-[#064537]/8 text-[#064537]' : 'bg-white/[0.08] text-white') : ''}`}
                     aria-haspopup="menu"
                     aria-expanded={activeMenu === item.menu}
                     onClick={() => openMenu(item.menu)}
@@ -258,10 +259,10 @@ export default function Header() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={`flex h-11 items-center rounded-full px-3 text-[17px] font-normal transition xl:px-4 ${
-                  isHome
-                    ? 'text-white/82 hover:bg-white/[0.08] hover:text-white'
+                  lightHomeHeader
+                    ? 'text-[#071E1A]/72 hover:bg-[#064537]/7 hover:text-[#064537]'
                     : 'text-[#F3EEE6]/74 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
-                } ${active ? 'bg-white/[0.1] text-white' : ''}`}
+                } ${active ? (lightHomeHeader ? 'bg-[#064537]/8 text-[#064537]' : 'bg-white/[0.1] text-white') : ''}`}
                 onClick={() => trackNavigationEvent(item.analyticsEvent)}
               >
                 {item.label}
@@ -274,7 +275,7 @@ export default function Header() {
           <a
             href={appAuthUrl}
             className={`rounded-full px-4 py-3 text-[17px] font-normal transition ${
-              isHome ? 'text-white/72 hover:bg-white/[0.08] hover:text-white' : 'text-[#F3EEE6]/68 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
+              lightHomeHeader ? 'text-[#071E1A]/66 hover:bg-[#064537]/7 hover:text-[#064537]' : 'text-[#F3EEE6]/68 hover:bg-white/[0.07] hover:text-[#F3EEE6]'
             }`}
             onClick={() => trackNavigationEvent('nav_login_clicked')}
           >
@@ -282,7 +283,8 @@ export default function Header() {
           </a>
           <a
             href={demoHref}
-            className="bridge-button-primary bridge-button-light min-h-[46px] px-5 py-3 text-sm"
+            className="inline-flex min-h-[46px] items-center justify-center rounded-full bg-[#064537] px-5 py-3 text-sm font-extrabold text-white shadow-[0_16px_34px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 hover:bg-[#073B32]"
+            style={{ color: '#FFFFFF' }}
             onClick={() => trackNavigationEvent('nav_book_demo_clicked')}
           >
             Book a Demo
@@ -292,14 +294,19 @@ export default function Header() {
         <div className="flex items-center gap-2 justify-self-end lg:hidden">
           <a
             href={demoHref}
-            className="hidden min-h-11 items-center justify-center rounded-full bg-[#F3EEE6] px-4 text-xs font-extrabold text-[#071E1A] shadow-[0_14px_34px_rgba(0,0,0,0.14)] sm:inline-flex"
+            className="hidden min-h-11 items-center justify-center rounded-full bg-[#064537] px-4 text-xs font-extrabold text-white shadow-[0_14px_34px_rgba(6,69,55,0.18)] sm:inline-flex"
+            style={{ color: '#FFFFFF' }}
             onClick={() => trackNavigationEvent('nav_book_demo_clicked')}
           >
             Book Demo
           </a>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6]"
+            className={`flex h-11 w-11 items-center justify-center rounded-full border transition ${
+              lightHomeHeader
+                ? 'border-[#064537]/12 bg-white/55 text-[#064537]'
+                : 'border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6]'
+            }`}
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
             aria-expanded={mobileOpen}

@@ -1,7 +1,7 @@
 import { Building2, Landmark, Layers, Scale, UserRound } from 'lucide-react'
 
 export const appAuthUrl = 'https://app.arch9.co.za'
-export const demoHref = '/contact'
+export const demoHref = '/book-demo'
 
 export const primaryNavItems = [
   { label: 'Platform', href: '/platform', match: ['/platform'], analyticsEvent: 'nav_platform_clicked' },

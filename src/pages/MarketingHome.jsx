@@ -25,24 +25,23 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp } from '../components/motion/Reveal'
 
-const stakeholders = [
-  { label: 'Buyer', className: 'left-[7%] top-[16%]' },
-  { label: 'Seller', className: 'right-[6%] top-[17%]' },
-  { label: 'Agent', className: 'left-[3%] top-[48%]' },
-  { label: 'Attorney', className: 'right-[2%] top-[48%]' },
-  { label: 'Bond Originator', className: 'left-[10%] bottom-[14%]' },
-  { label: 'Developer', className: 'right-[9%] bottom-[14%]' },
-  { label: 'Municipality', className: 'left-1/2 top-[4%] -translate-x-1/2' },
-  { label: 'Bank', className: 'left-1/2 bottom-[4%] -translate-x-1/2' },
-  { label: 'Registration', className: 'left-1/2 top-[69%] -translate-x-1/2' },
+const orbitRoles = [
+  { label: 'Buyer', icon: Users, className: 'left-1/2 top-[7%] -translate-x-1/2' },
+  { label: 'Agent', icon: Users, className: 'right-[12%] top-[21%]' },
+  { label: 'Attorney', icon: Scale, className: 'right-[8%] top-1/2 -translate-y-1/2' },
+  { label: 'Bond Originator', icon: Landmark, className: 'right-[16%] bottom-[16%]' },
+  { label: 'Bank', icon: Landmark, className: 'left-1/2 bottom-[7%] -translate-x-1/2' },
+  { label: 'Municipality', icon: MapPinned, className: 'left-[12%] top-[21%]' },
+  { label: 'Developer', icon: Building2, className: 'left-[8%] top-1/2 -translate-y-1/2' },
+  { label: 'Registration', icon: BadgeCheck, className: 'left-[16%] bottom-[16%]' },
 ]
 
-const statusCards = [
-  { label: 'OTP Signed', className: 'left-5 top-[36%]' },
-  { label: 'Instruction Received', className: 'right-5 top-[35%]' },
-  { label: 'Application Started', className: 'left-[15%] bottom-[27%]' },
-  { label: 'Approved', className: 'right-[16%] bottom-[27%]' },
-  { label: 'Registered', className: 'left-1/2 bottom-[18%] -translate-x-1/2' },
+const orbitEvents = [
+  { label: 'OTP Signed', time: '9:12', className: 'left-[8%] top-[34%]' },
+  { label: 'Instruction Received', time: '9:13', className: 'right-[7%] top-[34%]' },
+  { label: 'Application Started', time: '9:18', className: 'left-[19%] bottom-[26%]' },
+  { label: 'Approved', time: '11:02', className: 'right-[20%] bottom-[26%]' },
+  { label: 'Registered', time: '15:42', className: 'left-1/2 bottom-[18%] -translate-x-1/2' },
 ]
 
 const trustLogos = ['Kingstons', 'Tyson Attorneys', 'Ooba', 'Meridian Realty', 'Blue Bond Originators']
@@ -194,63 +193,67 @@ function SectionIntro({ eyebrow, title, copy, center = false, light = false }) {
 
 function HeroNetworkGraphic() {
   return (
-    <div className="relative mx-auto min-h-[430px] w-full max-w-[640px] overflow-hidden rounded-[32px] border border-[#0A3028]/10 bg-white/82 p-4 shadow-[0_28px_90px_rgba(6,45,37,0.14)] backdrop-blur-xl md:min-h-[580px] md:rounded-[42px] md:p-6">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,rgba(134,228,194,0.18),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.72),rgba(246,248,244,0.9))]" />
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 640 580" aria-hidden="true">
+    <div className="relative mx-auto aspect-square w-full max-w-[620px] overflow-hidden rounded-[30px] border border-[#0A3028]/10 bg-white/86 shadow-[0_28px_90px_rgba(6,45,37,0.12)] backdrop-blur-xl md:rounded-[42px]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(134,228,194,0.18),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.9),rgba(247,250,246,0.92))]" />
+      <svg className="absolute inset-[7%] h-[86%] w-[86%]" viewBox="0 0 640 640" aria-hidden="true">
+        <circle cx="320" cy="320" r="124" fill="none" stroke="rgba(6,69,55,0.16)" strokeDasharray="4 7" strokeWidth="1.4" />
+        <circle cx="320" cy="320" r="224" fill="none" stroke="rgba(6,69,55,0.12)" strokeWidth="1.2" />
         <g stroke="rgba(6,69,55,0.16)" strokeWidth="1.2">
-          <line x1="320" y1="290" x2="94" y2="102" />
-          <line x1="320" y1="290" x2="546" y2="102" />
-          <line x1="320" y1="290" x2="72" y2="286" />
-          <line x1="320" y1="290" x2="568" y2="286" />
-          <line x1="320" y1="290" x2="118" y2="482" />
-          <line x1="320" y1="290" x2="522" y2="482" />
-          <line x1="320" y1="290" x2="320" y2="58" />
-          <line x1="320" y1="290" x2="320" y2="526" />
+          <line x1="320" y1="320" x2="320" y2="74" />
+          <line x1="320" y1="320" x2="494" y2="146" />
+          <line x1="320" y1="320" x2="566" y2="320" />
+          <line x1="320" y1="320" x2="494" y2="494" />
+          <line x1="320" y1="320" x2="320" y2="566" />
+          <line x1="320" y1="320" x2="146" y2="494" />
+          <line x1="320" y1="320" x2="74" y2="320" />
+          <line x1="320" y1="320" x2="146" y2="146" />
+        </g>
+        <g fill="#0E6A55">
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
+            const radians = (angle * Math.PI) / 180
+            return <circle key={angle} cx={320 + Math.sin(radians) * 124} cy={320 - Math.cos(radians) * 124} r="4" />
+          })}
         </g>
       </svg>
 
-      <div className="absolute left-1/2 top-1/2 z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[30px] border border-[#064537]/12 bg-[#064537] text-center text-white shadow-[0_24px_70px_rgba(6,69,55,0.25)] md:h-36 md:w-36 md:rounded-[36px]">
-        <span className="text-[0.72rem] font-black uppercase tracking-[0.22em] text-[#86E4C2]">Arch9</span>
-        <span className="mt-2 text-sm font-extrabold leading-tight md:text-base">Shared Transaction</span>
+      <div className="absolute left-1/2 top-1/2 z-20 flex h-[112px] w-[112px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-[radial-gradient(circle_at_34%_24%,#2B6D5E,#064537_58%,#042A23)] text-center text-white shadow-[0_24px_70px_rgba(6,69,55,0.28)] md:h-[148px] md:w-[148px]">
+        <span className="text-[0.74rem] font-black uppercase tracking-[0.28em] text-[#D5F8E9] md:text-[0.92rem]">Arch9</span>
+        <span className="mt-2 text-[10px] font-extrabold uppercase leading-tight tracking-[0.12em] text-white/84 md:text-xs">
+          Shared
+          <span className="block">Transaction</span>
+        </span>
       </div>
 
-      {stakeholders.map((item) => (
+      {orbitRoles.map((item) => {
+        const Icon = item.icon
+        return (
+          <div
+            key={item.label}
+            className={`absolute z-20 flex flex-col items-center gap-2 text-center text-[10px] font-extrabold leading-tight text-[#073B32] md:text-xs ${item.className}`}
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#064537]/10 bg-white text-[#064537] shadow-[0_14px_34px_rgba(6,45,37,0.08)] md:h-12 md:w-12">
+              <Icon className="h-4 w-4 md:h-5 md:w-5" />
+            </span>
+            <span className="max-w-[86px]">{item.label}</span>
+          </div>
+        )
+      })}
+
+      {orbitEvents.map((item) => (
         <div
           key={item.label}
-          className={`absolute z-10 hidden rounded-full border border-[#064537]/10 bg-white/88 px-3 py-2 text-center text-[11px] font-extrabold text-[#083C32] shadow-[0_12px_34px_rgba(6,45,37,0.08)] backdrop-blur md:block ${item.className}`}
+          className={`absolute z-30 hidden min-w-[112px] rounded-[14px] border border-[#064537]/8 bg-white/92 px-3 py-2 text-[11px] font-bold text-[#071E1A] shadow-[0_16px_38px_rgba(6,45,37,0.08)] backdrop-blur md:block ${item.className}`}
         >
-          {item.label}
+          <span className="block text-[#0E6A55]">{item.label}</span>
+          <span className="mt-0.5 block text-[10px] font-semibold text-[#6B7B74]">{item.time}</span>
         </div>
       ))}
 
-      {['Buyer', 'Agent', 'Attorney', 'Bank', 'Registration'].map((label, index) => (
-        <div
-          key={label}
-          className="absolute z-10 rounded-full border border-[#064537]/10 bg-white/90 px-3 py-2 text-[11px] font-extrabold text-[#083C32] shadow-[0_12px_34px_rgba(6,45,37,0.08)] backdrop-blur md:hidden"
-          style={{
-            left: `${[10, 8, 62, 66, 30][index]}%`,
-            top: `${[12, 64, 14, 64, 82][index]}%`,
-          }}
-        >
-          {label}
-        </div>
-      ))}
-
-      {statusCards.map((item) => (
-        <div
-          key={item.label}
-          className={`absolute z-20 hidden items-center gap-2 rounded-[18px] border border-[#064537]/10 bg-white/92 px-3 py-2 text-xs font-extrabold text-[#071E1A] shadow-[0_16px_42px_rgba(6,45,37,0.1)] backdrop-blur md:flex ${item.className}`}
-        >
-          <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" />
-          {item.label}
-        </div>
-      ))}
-
-      <div className="absolute bottom-5 left-5 right-5 z-20 grid gap-2 md:hidden">
-        {['OTP Signed', 'Instruction Received', 'Approved'].map((label) => (
-          <div key={label} className="flex items-center gap-2 rounded-[16px] border border-[#064537]/10 bg-white/92 px-3 py-2 text-xs font-extrabold text-[#071E1A] shadow-[0_12px_34px_rgba(6,45,37,0.08)]">
+      <div className="absolute bottom-4 left-4 right-4 z-30 grid grid-cols-2 gap-2 md:hidden">
+        {orbitEvents.slice(0, 4).map((item) => (
+          <div key={item.label} className="flex items-center gap-2 rounded-[14px] border border-[#064537]/10 bg-white/92 px-3 py-2 text-[10px] font-extrabold text-[#071E1A] shadow-[0_12px_34px_rgba(6,45,37,0.08)]">
             <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" />
-            {label}
+            {item.label}
           </div>
         ))}
       </div>
@@ -443,7 +446,11 @@ function SharedTransactionBand() {
               copy="Every stakeholder. Every update. One source of truth."
               light
             />
-            <a href="/contact" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-6 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5">
+            <a
+              href="/contact"
+              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-6 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5"
+              style={{ color: '#064537' }}
+            >
               See it in action
               <ArrowRight className="h-4 w-4" />
             </a>
@@ -524,7 +531,11 @@ function FinalCta() {
           <h2 className="max-w-[760px] text-[2.45rem] font-extrabold leading-none tracking-[-0.05em] md:text-[4.4rem]">
             Ready to modernise property?
           </h2>
-          <a href="/contact" className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-7 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5 sm:w-fit">
+          <a
+            href="/book-demo"
+            className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-7 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5 sm:w-fit"
+            style={{ color: '#064537' }}
+          >
             Book a Demo
             <ArrowRight className="h-4 w-4" />
           </a>
@@ -556,21 +567,25 @@ function MarketingHome() {
       <Header />
 
       <main>
-        <section className="relative overflow-hidden px-5 pb-16 pt-[112px] md:px-8 md:pb-24 md:pt-[150px]">
+        <section className="relative overflow-hidden px-5 pb-16 pt-[112px] md:px-8 md:pb-24 md:pt-[138px]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_12%,rgba(134,228,194,0.22),transparent_28%),radial-gradient(circle_at_18%_28%,rgba(6,69,55,0.08),transparent_30%)]" />
-          <div className="relative mx-auto grid w-full max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <FadeUp className="max-w-[760px]">
+          <div className="relative mx-auto grid w-full max-w-[1280px] gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+            <FadeUp className="max-w-[620px]">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
-              <h1 className="mt-5 text-[3.25rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#071E1A] sm:text-[4.2rem] md:text-[5.6rem]">
+              <h1 className="mt-5 text-[2.45rem] font-extrabold leading-[1.06] tracking-[-0.035em] text-[#071E1A] sm:text-[2.85rem] md:text-[3.3rem] xl:text-[3.65rem]">
                 One transaction.
                 <span className="block">Every stakeholder.</span>
-                <span className="block">Finally connected.</span>
+                <span className="block text-[#0E6A55]">Finally connected.</span>
               </h1>
-              <p className="mt-6 max-w-[680px] text-[1.08rem] font-medium leading-8 text-[#4F625B] md:text-[1.25rem] md:leading-9">
+              <p className="mt-6 max-w-[560px] text-[0.98rem] font-medium leading-7 text-[#52645D] md:text-[1.06rem] md:leading-8">
                 Arch9 is the shared transaction workspace connecting buyers, sellers, agents, attorneys, bond originators and developers - from first enquiry to registration.
               </p>
               <div className="mt-8 grid gap-3 sm:flex">
-                <a href="/contact" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#064537] px-7 text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5">
+                <a
+                  href="/book-demo"
+                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#064537] px-7 text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5"
+                  style={{ color: '#FFFFFF' }}
+                >
                   Book a Demo
                   <ArrowRight className="h-4 w-4" />
                 </a>

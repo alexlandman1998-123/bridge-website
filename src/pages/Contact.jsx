@@ -23,6 +23,10 @@ const roleOptions = [
 
 const teamSizeOptions = ['1-10', '11-25', '26-50', '51-100', '100+']
 const timelineOptions = ['Immediately', 'Within 30 days', 'This quarter', 'Exploring']
+const transactionTypeOptions = ['Residential resale', 'New developments', 'Bond origination', 'Transfers', 'Mixed portfolio']
+const currentSystemOptions = ['Email and WhatsApp', 'Spreadsheets', 'CRM', 'Matter management', 'Bond origination platform', 'Custom/internal system']
+const decisionRoleOptions = ['Decision maker', 'Influencer', 'Evaluator', 'Implementation owner', 'Other']
+const demoWindowOptions = ['This week', 'Next week', 'Next 2 weeks', 'Flexible']
 
 const initialForm = {
   firstName: '',
@@ -32,11 +36,16 @@ const initialForm = {
   company: '',
   role: '',
   teamSize: '',
+  transactionTypes: [],
+  monthlyTransactions: '',
+  currentSystems: [],
+  decisionRole: '',
   modules: [],
   currentWorkflow: '',
   biggestChallenge: '',
   goals: '',
   timeline: '',
+  preferredDemoWindow: '',
   notes: '',
 }
 
@@ -104,6 +113,15 @@ export default function Contact() {
       modules: current.modules.includes(module)
         ? current.modules.filter((item) => item !== module)
         : [...current.modules, module],
+    }))
+  }
+
+  function toggleListValue(key, value) {
+    setForm((current) => ({
+      ...current,
+      [key]: current[key].includes(value)
+        ? current[key].filter((item) => item !== value)
+        : [...current[key], value],
     }))
   }
 
@@ -272,6 +290,45 @@ export default function Contact() {
                     </Field>
                   </div>
 
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Monthly Transactions" hint="Rough deal, matter, application, or unit volume.">
+                      <Input value={form.monthlyTransactions} placeholder="e.g. 25 transfers / 80 leads" onChange={(event) => updateField('monthlyTransactions', event.target.value)} />
+                    </Field>
+                    <Field label="Decision Role">
+                      <Select value={form.decisionRole} onChange={(event) => updateField('decisionRole', event.target.value)}>
+                        <option value="">Select role in decision</option>
+                        {decisionRoleOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </Select>
+                    </Field>
+                  </div>
+
+                  <Field label="Transaction Types" hint="Select every workflow this demo should cover.">
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {transactionTypeOptions.map((type) => {
+                        const active = form.transactionTypes.includes(type)
+
+                        return (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => toggleListValue('transactionTypes', type)}
+                            className={`rounded-[18px] border px-4 py-3 text-left text-sm transition ${
+                              active
+                                ? 'border-[#171412] bg-[#171412] text-white'
+                                : 'border-[#e4d8cb] bg-[#fcf8f2] text-[#171412]'
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </Field>
+
                   <Field label="Which views matter first?" hint="Select the views you want to improve first.">
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
                       {moduleOptions.map((module) => {
@@ -295,6 +352,29 @@ export default function Contact() {
                     </div>
                   </Field>
 
+                  <Field label="Current Systems" hint="What should Arch9 fit around or replace?">
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {currentSystemOptions.map((system) => {
+                        const active = form.currentSystems.includes(system)
+
+                        return (
+                          <button
+                            key={system}
+                            type="button"
+                            onClick={() => toggleListValue('currentSystems', system)}
+                            className={`rounded-[18px] border px-4 py-3 text-left text-sm transition ${
+                              active
+                                ? 'border-[#171412] bg-[#171412] text-white'
+                                : 'border-[#e4d8cb] bg-[#fcf8f2] text-[#171412]'
+                            }`}
+                          >
+                            {system}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </Field>
+
                   <Field label="Current Process" hint="How does a typical transaction move through your team today?">
                     <Textarea value={form.currentWorkflow} onChange={(event) => updateField('currentWorkflow', event.target.value)} />
                   </Field>
@@ -305,6 +385,17 @@ export default function Contact() {
 
                   <Field label="What should success look like?">
                     <Textarea value={form.goals} onChange={(event) => updateField('goals', event.target.value)} />
+                  </Field>
+
+                  <Field label="Preferred Demo Window">
+                    <Select value={form.preferredDemoWindow} onChange={(event) => updateField('preferredDemoWindow', event.target.value)}>
+                      <option value="">Select preferred window</option>
+                      {demoWindowOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </Select>
                   </Field>
 
                   <Field label="Anything else we should know?">
