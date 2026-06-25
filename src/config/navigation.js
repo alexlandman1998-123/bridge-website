@@ -4,11 +4,11 @@ export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/contact'
 
 export const primaryNavItems = [
-  { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
+  { label: 'Platform', href: '/platform', match: ['/platform'], analyticsEvent: 'nav_platform_clicked' },
+  { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
   { label: 'Buy', href: '/buy', analyticsEvent: 'nav_buy_clicked' },
   { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
-  { label: 'Tools', menu: 'tools', match: ['/tools'], analyticsEvent: 'nav_tools_clicked' },
-  { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
+  { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
   { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
 ]
 

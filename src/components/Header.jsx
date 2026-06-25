@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import { ArrowRight, ChevronDown, Mail, Menu, Sparkles, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, Mail, Menu, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
-import { toolsMenu } from '../config/tools'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -16,8 +15,6 @@ function trackNavigationEvent(eventName) {
   window.dataLayer?.push({ event: eventName })
   window.dispatchEvent(new CustomEvent(eventName))
 }
-
-const primaryToolsMenu = toolsMenu.filter((category) => category.key !== 'professionals')
 
 function SolutionsDropdown({ onNavigate }) {
   return (
@@ -54,75 +51,6 @@ function SolutionsDropdown({ onNavigate }) {
   )
 }
 
-function ToolsDropdown({ onNavigate }) {
-  return (
-    <div className="relative w-[min(1040px,calc(100vw-64px))] rounded-[24px] border border-[rgba(15,23,42,0.08)] bg-white/98 p-7 text-[#111827] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl xl:p-8">
-      <span className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[rgba(15,23,42,0.08)] bg-white/98" />
-      <div className="grid gap-0 lg:grid-cols-[repeat(3,minmax(185px,1fr))_250px]">
-        {primaryToolsMenu.map((category) => {
-          const Icon = category.icon
-          return (
-            <div key={category.key} className="min-w-0 border-r border-[rgba(15,23,42,0.08)] px-5 first:pl-0 last:border-r-0">
-              <div className="flex min-h-[78px] items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[13px] bg-[#E8F5EE] text-[#064E3B]">
-                  <Icon className="h-[18px] w-[18px]" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[15px] font-extrabold leading-tight text-[#111827]">{category.menuTitle}</p>
-                  <p className="mt-2 max-w-[170px] text-xs font-semibold leading-5 text-[#667085]">{category.description}</p>
-                </div>
-              </div>
-              <div className="mt-4 grid gap-1">
-                {category.links.map((tool) => (
-                  <a
-                    key={tool.href}
-                    href={tool.href}
-                    role="menuitem"
-                    className="group flex min-h-9 items-center justify-between gap-2 rounded-[12px] px-3 text-[13px] font-semibold leading-4 text-[#344054] transition hover:bg-[#E8F5EE] hover:text-[#064E3B] focus-visible:bg-[#E8F5EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006B4D]/20"
-                    onClick={onNavigate}
-                  >
-                    <span>{tool.label}</span>
-                    <ChevronDown className="h-3.5 w-3.5 shrink-0 -rotate-90 text-[#064E3B]/52 transition group-hover:translate-x-1 group-hover:text-[#064E3B]" />
-                  </a>
-                ))}
-              </div>
-              <a
-                href={category.href}
-                role="menuitem"
-                className="mt-4 inline-flex min-h-9 items-center gap-2 rounded-full px-3 text-[13px] font-extrabold text-[#064E3B] transition hover:bg-[#E8F5EE]"
-                onClick={onNavigate}
-              >
-                {category.footerLabel}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          )
-        })}
-
-        <a
-          href="/tools"
-          role="menuitem"
-          className="group relative ml-6 overflow-hidden rounded-[20px] bg-[#064E3B] p-6 text-[#F8F6F2] shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]"
-          onClick={onNavigate}
-        >
-          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#86E4C2]/12 blur-2xl" />
-          <div className="relative flex h-12 w-12 items-center justify-center rounded-[16px] border border-white/14 bg-white/10 text-[#86E4C2] backdrop-blur">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          <p className="relative mt-8 text-xl font-extrabold tracking-[-0.04em] text-[#F8F6F2]">Property Intelligence</p>
-          <p className="relative mt-3 text-sm font-medium leading-6 text-[#F8F6F2]/72">
-            Free tools and calculators designed to help buyers, sellers and professionals make better decisions.
-          </p>
-          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-[#F8F6F2]">
-            Explore 20+ Property Tools
-            <ArrowRight className="h-4 w-4 text-[#86E4C2] transition group-hover:translate-x-1" />
-          </span>
-        </a>
-      </div>
-    </div>
-  )
-}
-
 function MobileNavLink({ href, children, onClick, featured = false }) {
   return (
     <a
@@ -144,8 +72,6 @@ export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(true)
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(true)
-  const [mobileToolCategoryOpen, setMobileToolCategoryOpen] = useState('buyers')
   const [scrolled, setScrolled] = useState(false)
   const [pathname, setPathname] = useState(window.location.pathname)
   const headerRef = useRef(null)
@@ -240,15 +166,12 @@ export default function Header() {
   function closeMobile() {
     setMobileOpen(false)
     setMobileSolutionsOpen(true)
-    setMobileToolsOpen(true)
-    setMobileToolCategoryOpen('buyers')
   }
 
   function openMenu(menu) {
     cancelCloseMenu()
     setActiveMenu(menu)
-    const eventName = menu === 'tools' ? 'nav_tools_clicked' : 'nav_solutions_clicked'
-    trackNavigationEvent(eventName)
+    trackNavigationEvent('nav_solutions_clicked')
   }
 
   function handleMenuKeyDown(event, menu) {
@@ -263,8 +186,7 @@ export default function Header() {
   }
 
   const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
-  const toolsIndex = primaryNavItems.findIndex((item) => item.menu === 'tools')
-  const firstMenuIndex = Math.min(...[solutionsIndex, toolsIndex].filter((index) => index >= 0))
+  const firstMenuIndex = solutionsIndex
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
 
@@ -299,9 +221,7 @@ export default function Header() {
             const active =
               item.menu === 'solutions'
                 ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
-                : item.menu === 'tools'
-                  ? pathname === '/tools' || pathname.startsWith('/tools/')
-                  : isActivePath(pathname, item)
+                : isActivePath(pathname, item)
             if (item.menu) {
               return (
                 <div
@@ -313,7 +233,7 @@ export default function Header() {
                   }}
                 >
                   <button
-                    ref={item.menu === 'solutions' ? solutionsButtonRef : undefined}
+                    ref={solutionsButtonRef}
                     type="button"
                     className={`flex h-11 items-center gap-1.5 rounded-full px-3 text-[17px] font-normal transition xl:px-4 ${
                       isHome
@@ -369,21 +289,29 @@ export default function Header() {
           </a>
         </div>
 
-        <button
-          type="button"
-          className="flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6] lg:hidden"
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
-          aria-expanded={mobileOpen}
-        >
-          <Menu className="h-5 w-5" />
-        </button>
+        <div className="flex items-center gap-2 justify-self-end lg:hidden">
+          <a
+            href={demoHref}
+            className="hidden min-h-11 items-center justify-center rounded-full bg-[#F3EEE6] px-4 text-xs font-extrabold text-[#071E1A] shadow-[0_14px_34px_rgba(0,0,0,0.14)] sm:inline-flex"
+            onClick={() => trackNavigationEvent('nav_book_demo_clicked')}
+          >
+            Book Demo
+          </a>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6]"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
 
         <AnimatePresence>
           {activeMenu ? (
             <motion.div
               data-solutions-dropdown={activeMenu === 'solutions' ? true : undefined}
-              data-tools-dropdown={activeMenu === 'tools' ? true : undefined}
               className="absolute left-1/2 top-[calc(100%+14px)] hidden -translate-x-1/2 lg:block"
               role="menu"
               initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8, scale: shouldReduceMotion ? 1 : 0.98 }}
@@ -393,21 +321,12 @@ export default function Header() {
               onMouseEnter={cancelCloseMenu}
               onMouseLeave={scheduleCloseMenu}
             >
-              {activeMenu === 'tools' ? (
-                <ToolsDropdown
-                  onNavigate={() => {
-                    cancelCloseMenu()
-                    setActiveMenu(null)
-                  }}
-                />
-              ) : (
-                <SolutionsDropdown
-                  onNavigate={() => {
-                    cancelCloseMenu()
-                    setActiveMenu(null)
-                  }}
-                />
-              )}
+              <SolutionsDropdown
+                onNavigate={() => {
+                  cancelCloseMenu()
+                  setActiveMenu(null)
+                }}
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -466,87 +385,6 @@ export default function Header() {
                   </MobileNavLink>
                 ))}
               </motion.div>
-
-              <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
-                <button
-                  type="button"
-                  className="flex min-h-12 w-full items-center justify-between rounded-[18px] px-1 text-left text-[1.1rem] font-extrabold leading-[1.25] text-[#86E4C2] transition hover:bg-white/[0.07] hover:px-4"
-                  aria-expanded={mobileToolsOpen}
-                  onClick={() => {
-                    setMobileToolsOpen((open) => !open)
-                    trackNavigationEvent('nav_tools_clicked')
-                  }}
-                >
-                  <span>Tools</span>
-                  <ChevronDown className={`h-5 w-5 transition ${mobileToolsOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence initial={false}>
-                  {mobileToolsOpen ? (
-                    <motion.div
-                      className="mt-3 grid gap-2 rounded-[24px] border border-[rgba(243,238,230,0.1)] bg-white/[0.05] p-2"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
-                    >
-                      {primaryToolsMenu.map((category) => {
-                        const open = mobileToolCategoryOpen === category.key
-                        return (
-                          <div key={category.key}>
-                            <button
-                              type="button"
-                              className="flex min-h-12 w-full items-center justify-between rounded-[16px] px-3 text-left text-sm font-extrabold text-[#F3EEE6] transition hover:bg-white/[0.07]"
-                              aria-expanded={open}
-                              onClick={() => setMobileToolCategoryOpen(open ? null : category.key)}
-                            >
-                              {category.title}
-                              <ChevronDown className={`h-4 w-4 text-[#86E4C2] transition ${open ? 'rotate-180' : ''}`} />
-                            </button>
-                            <AnimatePresence initial={false}>
-                              {open ? (
-                                <motion.div
-                                  className="grid gap-1 px-2 pb-2"
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: 'auto' }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: shouldReduceMotion ? 0.01 : 0.18, ease: motionEaseOut }}
-                                >
-                                  {category.links.map((tool) => (
-                                    <a
-                                      key={tool.href}
-                                      href={tool.href}
-                                      className="flex min-h-10 items-center rounded-[14px] px-3 text-xs font-semibold leading-5 text-[#B9B1A7] transition hover:bg-white/[0.07] hover:text-[#86E4C2]"
-                                      onClick={closeMobile}
-                                    >
-                                      {tool.label}
-                                    </a>
-                                  ))}
-                                  <a
-                                    href={category.href}
-                                    className="mt-1 flex min-h-10 items-center justify-between rounded-[14px] px-3 text-xs font-extrabold text-[#86E4C2] transition hover:bg-white/[0.07]"
-                                    onClick={closeMobile}
-                                  >
-                                    {category.footerLabel}
-                                    <ArrowRight className="h-3.5 w-3.5" />
-                                  </a>
-                                </motion.div>
-                              ) : null}
-                            </AnimatePresence>
-                          </div>
-                        )
-                      })}
-                      <a
-                        href="/tools"
-                        className="mt-2 flex min-h-12 items-center justify-between rounded-[18px] bg-[#F3EEE6] px-4 text-sm font-extrabold text-[#071E1A] shadow-[0_18px_42px_rgba(0,0,0,0.18)]"
-                        onClick={closeMobile}
-                      >
-                        Explore All Property Tools
-                        <ArrowRight className="h-4 w-4" />
-                      </a>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </motion.section>
 
               <motion.section variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
                 <button

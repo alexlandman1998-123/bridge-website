@@ -1,169 +1,276 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   ArrowRight,
+  BadgeCheck,
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
-  ChevronDown,
-  Home,
+  CircleDot,
+  ClipboardCheck,
+  Clock3,
+  FileCheck2,
+  FileText,
   Landmark,
-  MapPin,
-  Search,
+  LayoutDashboard,
+  Link2,
+  MapPinned,
+  Play,
   Scale,
+  ShieldCheck,
+  Sparkles,
   Users,
+  Workflow,
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp } from '../components/motion/Reveal'
-import { buildPropertyQuery } from '../lib/listingFilters'
-import { developments, formatDevelopmentPrice } from '../data/developments'
 
-const heroBackground =
-  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2400&q=80'
-
-const saleTypeOptions = [
-  { label: 'For Sale', value: 'for-sale' },
-  { label: 'To Rent', value: 'to-rent' },
+const stakeholders = [
+  { label: 'Buyer', className: 'left-[7%] top-[16%]' },
+  { label: 'Seller', className: 'right-[6%] top-[17%]' },
+  { label: 'Agent', className: 'left-[3%] top-[48%]' },
+  { label: 'Attorney', className: 'right-[2%] top-[48%]' },
+  { label: 'Bond Originator', className: 'left-[10%] bottom-[14%]' },
+  { label: 'Developer', className: 'right-[9%] bottom-[14%]' },
+  { label: 'Municipality', className: 'left-1/2 top-[4%] -translate-x-1/2' },
+  { label: 'Bank', className: 'left-1/2 bottom-[4%] -translate-x-1/2' },
+  { label: 'Registration', className: 'left-1/2 top-[69%] -translate-x-1/2' },
 ]
 
-const propertyTypeOptions = ['Any', 'Apartment', 'Estate Home', 'Townhouse', 'Development']
-const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
-const bathroomOptions = ['Any', '1+', '2+', '3+']
+const statusCards = [
+  { label: 'OTP Signed', className: 'left-5 top-[36%]' },
+  { label: 'Instruction Received', className: 'right-5 top-[35%]' },
+  { label: 'Application Started', className: 'left-[15%] bottom-[27%]' },
+  { label: 'Approved', className: 'right-[16%] bottom-[27%]' },
+  { label: 'Registered', className: 'left-1/2 bottom-[18%] -translate-x-1/2' },
+]
 
-const solutionCards = [
+const trustLogos = ['Kingstons', 'Tyson Attorneys', 'Ooba', 'Meridian Realty', 'Blue Bond Originators']
+
+const metrics = [
+  { value: '120,000+', label: 'Properties Listed' },
+  { value: '15,000+', label: 'Active Transactions' },
+  { value: '5,000+', label: 'Property Professionals' },
+  { value: 'R8.4B+', label: 'Transaction Value' },
+]
+
+const oldWayItems = [
+  'Agent CRM',
+  'Attorney software',
+  'Bond originator CRM',
+  'WhatsApp',
+  'Email',
+  'Phone calls',
+  'Dropbox',
+  'Clients asking "Any updates?"',
+]
+
+const arch9WayItems = [
+  'One shared transaction',
+  'Shared timeline',
+  'Live status updates',
+  'Centralised documents',
+  'Automated communication',
+  'Everyone aligned',
+  'From enquiry to registration',
+]
+
+const workflowSteps = [
   {
+    title: 'Capture',
+    copy: 'Create a transaction once.',
+    icon: FileText,
+    mock: ['Property', 'People', 'Milestones'],
+  },
+  {
+    title: 'Connect',
+    copy: 'Invite everyone automatically.',
+    icon: Link2,
+    mock: ['Buyer invited', 'Attorney assigned', 'Bank notified'],
+  },
+  {
+    title: 'Complete',
+    copy: 'Track progress through registration.',
+    icon: ClipboardCheck,
+    mock: ['Documents ready', 'Bond approved', 'Registered'],
+  },
+]
+
+const workspaces = [
+  {
+    title: 'Agent',
+    copy: 'Generate leads. Track prospects. Close deals faster.',
     icon: Users,
-    title: 'Agents',
-    copy: ['Generate more leads.', 'Track transactions.', 'Get paid faster.'],
-    href: '/solutions/agents',
   },
   {
-    icon: BriefcaseBusiness,
-    title: 'Attorneys',
-    copy: ['Cleaner instructions.', 'Better visibility.', 'Faster registrations.'],
-    href: '/solutions/attorneys',
+    title: 'Attorney',
+    copy: 'Receive instructions. Manage matters. Generate documents.',
+    icon: Scale,
   },
   {
+    title: 'Bond Originator',
+    copy: 'Manage applications. Track approvals. Collaborate seamlessly.',
     icon: Landmark,
-    title: 'Bond Originators',
-    copy: ['Better applications.', 'More approvals.', 'Less chasing.'],
-    href: '/solutions/bond-originators',
   },
   {
+    title: 'Developer',
+    copy: 'Launch developments. Manage buyers. Track sales pipeline.',
     icon: Building2,
-    title: 'Developers',
-    copy: ['More enquiries.', 'Better stock visibility.', 'Faster sell-through.'],
-    href: '/solutions/developers',
+  },
+  {
+    title: 'Buyer & Seller',
+    copy: 'Branded client portal. Upload documents. Track progress.',
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: 'Municipality & Other Stakeholders',
+    copy: 'Receive requests. Review documents. Issue certificates.',
+    icon: MapPinned,
   },
 ]
 
-const transactionRoles = [
-  { label: 'Buyer', icon: Home },
-  { label: 'Seller', icon: Users },
-  { label: 'Agent', icon: Users },
-  { label: 'Attorney', icon: BriefcaseBusiness },
-  { label: 'Bond Originator', icon: Landmark },
-  { label: 'Developer', icon: Building2 },
+const timelineRoles = ['Buyer', 'Seller', 'Agent', 'Attorney', 'Bond Originator', 'Developer', 'Municipality', 'Bank', 'Registration']
+
+const timelineEvents = [
+  '09:12 OTP Signed',
+  '09:13 Instruction Received',
+  '09:18 Application Started',
+  '11:02 Approved',
+  '15:42 Registered',
 ]
 
-const marketplaceMetrics = [
-  { value: '120,000+', title: 'Properties Listed', copy: 'Across South Africa', icon: Home },
-  { value: '15,000+', title: 'Transactions Active', copy: 'Every month', icon: CheckCircle2 },
-  { value: '5,000+', title: 'Professionals Using Arch9', copy: 'And growing', icon: Users },
-  { value: 'R8.4B+', title: 'Transaction Value', copy: 'Processed on Arch9', icon: Scale },
+const switchReasons = [
+  {
+    title: '30% Faster Registration',
+    copy: 'Reduce delays and close more deals.',
+    icon: Clock3,
+  },
+  {
+    title: 'One Shared Timeline',
+    copy: 'Everyone sees the same progress.',
+    icon: Workflow,
+  },
+  {
+    title: 'Automatic Document Collection',
+    copy: 'No more chasing. Ever.',
+    icon: FileCheck2,
+  },
+  {
+    title: 'Role-based Workspaces',
+    copy: 'Different work. Same transaction.',
+    icon: LayoutDashboard,
+  },
+  {
+    title: 'Branded Client Portals',
+    copy: 'Modern experience for your clients.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'No CRM Replacement',
+    copy: 'Works alongside your existing systems.',
+    icon: Sparkles,
+  },
 ]
 
-const solutionIconTone = [
-  'bg-[#D9E8C4] text-[#31582F]',
-  'bg-[#E5C39A] text-[#7C4D22]',
-  'bg-[#D9E8C4] text-[#31582F]',
-  'bg-[#E5C39A] text-[#7C4D22]',
-]
-
-const featuredDevelopmentCards = developments.slice(0, 3)
-
-function MetricIcon({ icon: Icon }) {
+function SectionIntro({ eyebrow, title, copy, center = false, light = false }) {
   return (
-    <div className="flex h-14 w-14 items-center justify-center rounded-[18px] bg-white/8 text-[#A9C98B]">
-      <Icon className="h-7 w-7" />
+    <div className={center ? 'mx-auto max-w-[780px] text-center' : 'max-w-[760px]'}>
+      {eyebrow ? (
+        <p className={`text-xs font-black uppercase tracking-[0.22em] ${light ? 'text-[#86E4C2]' : 'text-[#0E6A55]'}`}>
+          {eyebrow}
+        </p>
+      ) : null}
+      <h2 className={`mt-4 text-[2.25rem] font-extrabold leading-[1] tracking-[-0.045em] md:text-[3.8rem] ${light ? 'text-white' : 'text-[#071E1A]'}`}>
+        {title}
+      </h2>
+      {copy ? (
+        <p className={`mt-5 text-base font-medium leading-8 md:text-lg ${light ? 'text-white/70' : 'text-[#5B6B64]'}`}>
+          {copy}
+        </p>
+      ) : null}
     </div>
   )
 }
 
-function SolutionCard({ card, index }) {
-  const Icon = card.icon
+function HeroNetworkGraphic() {
   return (
-    <a
-      href={card.href}
-      className="group rounded-[22px] border border-[#0A3028]/8 bg-white p-7 shadow-[0_20px_60px_rgba(3,18,15,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(3,18,15,0.1)]"
-    >
-      <div className={`flex h-16 w-16 items-center justify-center rounded-full ${solutionIconTone[index]}`}>
-        <Icon className="h-8 w-8" />
+    <div className="relative mx-auto min-h-[430px] w-full max-w-[640px] overflow-hidden rounded-[32px] border border-[#0A3028]/10 bg-white/82 p-4 shadow-[0_28px_90px_rgba(6,45,37,0.14)] backdrop-blur-xl md:min-h-[580px] md:rounded-[42px] md:p-6">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,rgba(134,228,194,0.18),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.72),rgba(246,248,244,0.9))]" />
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 640 580" aria-hidden="true">
+        <g stroke="rgba(6,69,55,0.16)" strokeWidth="1.2">
+          <line x1="320" y1="290" x2="94" y2="102" />
+          <line x1="320" y1="290" x2="546" y2="102" />
+          <line x1="320" y1="290" x2="72" y2="286" />
+          <line x1="320" y1="290" x2="568" y2="286" />
+          <line x1="320" y1="290" x2="118" y2="482" />
+          <line x1="320" y1="290" x2="522" y2="482" />
+          <line x1="320" y1="290" x2="320" y2="58" />
+          <line x1="320" y1="290" x2="320" y2="526" />
+        </g>
+      </svg>
+
+      <div className="absolute left-1/2 top-1/2 z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[30px] border border-[#064537]/12 bg-[#064537] text-center text-white shadow-[0_24px_70px_rgba(6,69,55,0.25)] md:h-36 md:w-36 md:rounded-[36px]">
+        <span className="text-[0.72rem] font-black uppercase tracking-[0.22em] text-[#86E4C2]">Arch9</span>
+        <span className="mt-2 text-sm font-extrabold leading-tight md:text-base">Shared Transaction</span>
       </div>
-      <h3 className="mt-7 text-2xl font-extrabold tracking-[-0.045em] text-[#062D25]">{card.title}</h3>
-      <div className="mt-5 grid gap-1 text-base font-medium leading-7 text-[#4B5B55]">
-        {card.copy.map((line) => (
-          <p key={line}>{line}</p>
+
+      {stakeholders.map((item) => (
+        <div
+          key={item.label}
+          className={`absolute z-10 hidden rounded-full border border-[#064537]/10 bg-white/88 px-3 py-2 text-center text-[11px] font-extrabold text-[#083C32] shadow-[0_12px_34px_rgba(6,45,37,0.08)] backdrop-blur md:block ${item.className}`}
+        >
+          {item.label}
+        </div>
+      ))}
+
+      {['Buyer', 'Agent', 'Attorney', 'Bank', 'Registration'].map((label, index) => (
+        <div
+          key={label}
+          className="absolute z-10 rounded-full border border-[#064537]/10 bg-white/90 px-3 py-2 text-[11px] font-extrabold text-[#083C32] shadow-[0_12px_34px_rgba(6,45,37,0.08)] backdrop-blur md:hidden"
+          style={{
+            left: `${[10, 8, 62, 66, 30][index]}%`,
+            top: `${[12, 64, 14, 64, 82][index]}%`,
+          }}
+        >
+          {label}
+        </div>
+      ))}
+
+      {statusCards.map((item) => (
+        <div
+          key={item.label}
+          className={`absolute z-20 hidden items-center gap-2 rounded-[18px] border border-[#064537]/10 bg-white/92 px-3 py-2 text-xs font-extrabold text-[#071E1A] shadow-[0_16px_42px_rgba(6,45,37,0.1)] backdrop-blur md:flex ${item.className}`}
+        >
+          <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" />
+          {item.label}
+        </div>
+      ))}
+
+      <div className="absolute bottom-5 left-5 right-5 z-20 grid gap-2 md:hidden">
+        {['OTP Signed', 'Instruction Received', 'Approved'].map((label) => (
+          <div key={label} className="flex items-center gap-2 rounded-[16px] border border-[#064537]/10 bg-white/92 px-3 py-2 text-xs font-extrabold text-[#071E1A] shadow-[0_12px_34px_rgba(6,45,37,0.08)]">
+            <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" />
+            {label}
+          </div>
         ))}
       </div>
-      <span className="mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#0E6A55]">
-        Learn More
-        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-      </span>
-    </a>
-  )
-}
-
-function TransactionConnectionVisual() {
-  return (
-    <div className="relative w-full overflow-hidden rounded-[32px] border border-[#0A3028]/8 bg-white/62 p-5 shadow-[0_24px_80px_rgba(3,18,15,0.06)] md:p-8">
-      <div className="grid gap-4 md:grid-cols-6">
-        {transactionRoles.map((role) => {
-          const Icon = role.icon
-          return (
-            <div key={role.label} className="relative flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#0A3028]/8 bg-white text-[#064537] shadow-[0_14px_34px_rgba(3,18,15,0.08)]">
-                <Icon className="h-7 w-7" />
-              </div>
-              <p className="mt-3 text-xs font-extrabold text-[#062D25]">{role.label}</p>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="mx-auto mt-8 max-w-[760px]">
-        <div className="mx-auto h-8 w-px bg-[#0A3028]/14" />
-        <div className="mx-auto flex min-h-[58px] max-w-[420px] items-center justify-center gap-3 rounded-full bg-[linear-gradient(135deg,#05352D,#08221D)] px-8 text-sm font-extrabold text-white shadow-[0_22px_64px_rgba(3,18,15,0.18)]">
-          <CheckCircle2 className="h-5 w-5 text-[#A9C98B]" />
-          Shared Transaction
-        </div>
-        <div className="mx-auto h-8 w-px bg-[#0A3028]/14" />
-        <div className="mx-auto flex min-h-[54px] max-w-[250px] items-center justify-center gap-3 rounded-full border border-[#0A3028]/8 bg-white px-8 text-sm font-extrabold text-[#062D25] shadow-[0_16px_42px_rgba(3,18,15,0.06)]">
-          <CheckCircle2 className="h-5 w-5 text-[#4D7D35]" />
-          Registration
-        </div>
-      </div>
     </div>
   )
 }
 
-function SolutionsSection() {
+function TrustStrip() {
   return (
-    <section className="bg-[#F2EDE3] px-6 py-16 md:px-8 md:py-20">
+    <section className="bg-[#FAF8F3] px-5 py-10 md:px-8">
       <div className="mx-auto w-full max-w-[1280px]">
-        <div className="mx-auto max-w-[880px] text-center">
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-[#0E6A55]">Built for every role in property</p>
-          <h2 className="mt-4 text-[2.3rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.4rem]">
-            Solutions designed for how you work.
-          </h2>
-          <p className="mx-auto mt-4 max-w-[680px] text-base font-medium leading-8 text-[#61584D] md:text-lg">
-            Purpose-built workspaces for every stakeholder in the property journey.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {solutionCards.map((card, index) => (
-            <SolutionCard key={card.title} card={card} index={index} />
+        <p className="text-center text-xs font-black uppercase tracking-[0.24em] text-[#66736E]">Trusted by property professionals</p>
+        <div className="mt-6 flex snap-x gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-5 md:overflow-visible md:pb-0">
+          {trustLogos.map((logo) => (
+            <div
+              key={logo}
+              className="flex min-h-16 min-w-[170px] snap-start items-center justify-center rounded-[18px] border border-[#0A3028]/8 bg-white/70 px-5 text-center text-sm font-extrabold text-[#6D7974] shadow-[0_14px_38px_rgba(7,30,26,0.04)]"
+            >
+              {logo}
+            </div>
           ))}
         </div>
       </div>
@@ -171,275 +278,256 @@ function SolutionsSection() {
   )
 }
 
-function SharedTransactionSection() {
+function MetricsBar() {
   return (
-    <section className="bg-[#F7F3EA] px-6 py-16 md:px-8 md:py-20">
-      <div className="mx-auto grid w-full max-w-[1280px] gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-[#0E6A55]">One transaction. Every stakeholder.</p>
-          <h2 className="mt-4 text-[2.3rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.4rem]">
-            One transaction.
-            <span className="block">Every stakeholder.</span>
-          </h2>
-          <p className="mt-5 max-w-[520px] text-base font-medium leading-8 text-[#4B5B55] md:text-lg">
-            Arch9 connects buyers, sellers, agents, attorneys, bond originators and developers around one shared transaction from enquiry to registration.
-          </p>
-        </div>
-
-        <TransactionConnectionVisual />
-      </div>
-    </section>
-  )
-}
-
-function MarketplaceMetricsSection() {
-  return (
-    <section className="bg-[#F7F3EA] px-6 pb-16 md:px-8 md:pb-20">
-      <div className="mx-auto grid w-full max-w-[1280px] gap-6 rounded-[26px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-7 text-white shadow-[0_24px_80px_rgba(3,18,15,0.16)] md:grid-cols-2 md:p-9 xl:grid-cols-4">
-        {marketplaceMetrics.map((metric, index) => {
-          const Icon = metric.icon
-          return (
-            <div key={metric.title} className={`flex gap-5 ${index ? 'xl:border-l xl:border-white/14 xl:pl-8' : ''}`}>
-              <MetricIcon icon={Icon} />
-              <div>
-                <p className="text-[2.4rem] font-extrabold leading-none tracking-[-0.05em]">{metric.value}</p>
-                <p className="mt-4 text-base font-extrabold">{metric.title}</p>
-                <p className="mt-1 text-sm font-medium text-white/74">{metric.copy}</p>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </section>
-  )
-}
-
-function FinalCtaSection() {
-  return (
-    <section className="bg-[#F7F3EA] px-6 pb-16 md:px-8 md:pb-20">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-8 rounded-[24px] border border-[#0A3028]/8 bg-white p-8 shadow-[0_24px_80px_rgba(3,18,15,0.07)] md:flex-row md:items-center md:justify-between md:p-10">
-        <div>
-          <h2 className="max-w-[580px] text-[2.1rem] font-extrabold leading-[1] tracking-[-0.05em] text-[#062D25] md:text-[3rem]">
-            Ready to modernise your property business?
-          </h2>
-          <p className="mt-4 max-w-[620px] text-base font-medium leading-8 text-[#4B5B55]">
-            Join property professionals using Arch9 to connect, collaborate and close more deals.
-          </p>
-        </div>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <a href="/contact" className="bridge-button-primary min-h-[52px] justify-center px-8">
-            Book A Demo
-          </a>
-          <a href="/solutions/platform" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-[#0A3028]/22 bg-white px-8 text-sm font-extrabold text-[#062D25] transition hover:bg-[#F7F3EA]">
-            Explore Solutions
-          </a>
-        </div>
-      </div>
-    </section>
-  )
-}
-function SearchSelect({ label, value, onChange, children }) {
-  return (
-    <label className="block">
-      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          className="h-14 w-full appearance-none rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 pr-10 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)]"
-        >
-          {children}
-        </select>
-        <span className="pointer-events-none absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#05120F]/48 shadow-[0_4px_14px_rgba(5,8,7,0.05)]">
-          <ChevronDown className="h-4 w-4" />
-        </span>
-      </div>
-    </label>
-  )
-}
-
-function SearchInput({ label, value, onChange, placeholder, icon: Icon }) {
-  return (
-    <label className="block">
-      <span className="mb-2.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#05120F]/60">{label}</span>
-      <div className="relative">
-        {Icon ? <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#05120F]/45" /> : null}
-        <input
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          placeholder={placeholder}
-          className={`h-14 w-full rounded-[14px] border border-black/[0.08] bg-[#FCFBF8] px-4 text-sm font-semibold text-[#062D25] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] outline-none transition duration-200 placeholder:text-[#05120F]/42 focus:border-[#064537] focus:bg-white focus:shadow-[0_0_0_4px_rgba(6,69,55,0.08)] ${
-            Icon ? 'pl-11' : ''
-          }`}
-        />
-      </div>
-    </label>
-  )
-}
-
-function HeroSearchModule() {
-  const [status, setStatus] = useState('for-sale')
-  const [redirectUrl, setRedirectUrl] = useState('')
-  const [filters, setFilters] = useState({
-    location: '',
-    type: 'Any',
-    minPrice: '',
-    maxPrice: '',
-    bedrooms: 'Any',
-    bathrooms: 'Any',
-  })
-
-  useEffect(() => {
-    if (redirectUrl) {
-      window.location.assign(redirectUrl)
-    }
-  }, [redirectUrl])
-
-  function updateField(key, value) {
-    setFilters((current) => ({ ...current, [key]: value }))
-  }
-
-  function submitSearch(event) {
-    event.preventDefault()
-    const query = buildPropertyQuery({ status, ...filters })
-    setRedirectUrl(query ? `/properties?${query}` : '/properties')
-  }
-
-  return (
-    <FadeUp className="relative z-10 mx-auto w-full max-w-[1320px]">
-      <div className="ml-3 flex w-fit overflow-hidden rounded-t-[18px] border border-b-0 border-white/18 bg-white shadow-[0_18px_50px_rgba(3,18,15,0.18)] md:ml-4">
-        {saleTypeOptions.map((item) => (
-          <button
-            key={item.value}
-            type="button"
-            onClick={() => setStatus(item.value)}
-            className={`min-h-13 px-6 text-sm font-extrabold transition md:px-8 ${
-              status === item.value
-                ? 'bg-[#062D25] text-white shadow-[0_12px_24px_rgba(3,18,15,0.18)]'
-                : 'bg-[#F7F3EA] text-[#062D25] hover:bg-[#EFE9DD]'
-            }`}
-          >
-            {item.label}
-          </button>
+    <section className="bg-[#FAF8F3] px-5 py-6 md:px-8 md:py-10">
+      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-2 gap-4 rounded-[30px] bg-[#064537] p-5 text-white shadow-[0_26px_90px_rgba(6,69,55,0.2)] md:grid-cols-4 md:p-8">
+        {metrics.map((metric, index) => (
+          <div key={metric.label} className={`min-w-0 ${index > 1 ? 'border-t border-white/10 pt-4 md:border-t-0 md:pt-0' : ''} ${index ? 'md:border-l md:border-white/10 md:pl-8' : ''}`}>
+            <p className="text-[1.75rem] font-extrabold leading-none tracking-[-0.04em] md:text-[2.7rem]">{metric.value}</p>
+            <p className="mt-3 text-sm font-bold leading-5 text-white/72">{metric.label}</p>
+          </div>
         ))}
       </div>
-
-      <div className="min-h-[250px] rounded-[24px] border border-black/[0.06] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:p-8 xl:p-10">
-        <form onSubmit={submitSearch}>
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
-            <SearchInput
-              label="Location"
-              value={filters.location}
-              onChange={(value) => updateField('location', value)}
-              placeholder="Enter suburb or area"
-              icon={MapPin}
-            />
-            <SearchSelect label="Property Type" value={filters.type} onChange={(value) => updateField('type', value)}>
-              {propertyTypeOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </SearchSelect>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_220px]">
-            <SearchInput
-              label="Min Price"
-              value={filters.minPrice}
-              onChange={(value) => updateField('minPrice', value)}
-              placeholder="No Min"
-            />
-            <SearchInput
-              label="Max Price"
-              value={filters.maxPrice}
-              onChange={(value) => updateField('maxPrice', value)}
-              placeholder="No Max"
-            />
-            <SearchSelect label="Bedrooms" value={filters.bedrooms} onChange={(value) => updateField('bedrooms', value)}>
-              {bedroomOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </SearchSelect>
-            <SearchSelect label="Bathrooms" value={filters.bathrooms} onChange={(value) => updateField('bathrooms', value)}>
-              {bathroomOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </SearchSelect>
-            <button
-              type="submit"
-              className="col-span-2 inline-flex h-14 w-full items-center justify-center gap-2 self-end rounded-[16px] bg-[#064537] px-6 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(6,69,55,0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-[#05352D] focus:outline-none focus:ring-4 focus:ring-[#064537]/15 lg:col-span-1"
-            >
-              <Search className="h-4 w-4" />
-              Search Properties
-            </button>
-          </div>
-        </form>
-
-        <p className="mt-5 text-sm font-semibold text-[#05120F]/55">Browse 128,457 properties across South Africa</p>
-      </div>
-    </FadeUp>
+    </section>
   )
 }
 
-function DevelopmentRailSection() {
+function ProblemVisual({ calm = false }) {
+  const items = calm ? ['Transaction', 'Timeline', 'Documents', 'Updates', 'Registration'] : ['CRM', 'Email', 'WhatsApp', 'Calls', 'Files', 'Clients']
   return (
-    <section id="developments" className="bg-[#F7F3EA] pb-16 pt-28 md:pb-20 md:pt-32">
-      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-8">
-        <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
-          <FadeUp className="max-w-[520px]">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">New developments</p>
-            <h2 className="mt-4 text-[2.25rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#062D25] md:text-[3.6rem]">
-              Discover the latest developments.
-            </h2>
-            <p className="mt-5 max-w-[420px] text-base leading-8 text-[#61584D] md:text-lg">
-              Explore South Africa&apos;s newest estates, apartments and investment opportunities.
-            </p>
-            <a href="/developments" className="bridge-button-primary mt-7 w-full sm:w-fit">
-              View all developments
+    <div className={`mt-7 grid gap-3 ${calm ? 'grid-cols-1' : 'grid-cols-2'}`}>
+      {items.map((item, index) => (
+        <div
+          key={item}
+          className={`flex min-h-12 items-center gap-3 rounded-[16px] border px-4 text-sm font-extrabold ${
+            calm
+              ? 'border-[#064537]/10 bg-[#EAF7F0] text-[#064537]'
+              : 'border-[#E5DDD1] bg-white text-[#6A5F52]'
+          }`}
+          style={calm ? undefined : { transform: `translateY(${index % 2 ? 8 : 0}px)` }}
+        >
+          {calm ? <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" /> : <CircleDot className="h-4 w-4 text-[#A87945]" />}
+          {item}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ProblemSection() {
+  return (
+    <section className="bg-[#FAF8F3] px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <SectionIntro title="The problem with property transactions" center />
+        <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+          <article className="rounded-[28px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_22px_70px_rgba(7,30,26,0.06)] md:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#9B7250]">The old way</p>
+            <h3 className="mt-4 text-[2.1rem] font-extrabold leading-none tracking-[-0.045em] text-[#251F19]">
+              Disconnected.
+              <span className="block">Slow.</span>
+              <span className="block">Frustrating.</span>
+            </h3>
+            <ul className="mt-7 grid gap-3">
+              {oldWayItems.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#6A5F52]">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#A87945]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <ProblemVisual />
+          </article>
+
+          <div className="flex items-center justify-center text-[#0E6A55] lg:px-2">
+            <div className="flex h-12 w-12 rotate-90 items-center justify-center rounded-full bg-[#EAF7F0] shadow-[0_14px_34px_rgba(6,69,55,0.08)] lg:rotate-0">
+              <ArrowRight className="h-5 w-5" />
+            </div>
+          </div>
+
+          <article className="rounded-[28px] border border-[#064537]/12 bg-white p-6 shadow-[0_26px_80px_rgba(6,69,55,0.1)] md:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The Arch9 way</p>
+            <h3 className="mt-4 text-[2.1rem] font-extrabold leading-none tracking-[-0.045em] text-[#064537]">
+              Connected.
+              <span className="block">Transparent.</span>
+              <span className="block">Efficient.</span>
+            </h3>
+            <ul className="mt-7 grid gap-3">
+              {arch9WayItems.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#3F5A52]">
+                  <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#0E6A55]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <ProblemVisual calm />
+          </article>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function HowItWorksSection() {
+  return (
+    <section className="bg-white px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <SectionIntro title="How Arch9 works" center />
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {workflowSteps.map((step, index) => {
+            const Icon = step.icon
+            return (
+              <article key={step.title} className="rounded-[28px] border border-[#0A3028]/8 bg-[#FCFBF7] p-6 shadow-[0_20px_60px_rgba(7,30,26,0.05)] md:p-7">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-[15px] bg-[#064537] text-sm font-extrabold text-white">
+                    {index + 1}
+                  </span>
+                  <Icon className="h-6 w-6 text-[#0E6A55]" />
+                </div>
+                <h3 className="mt-7 text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">{step.title}</h3>
+                <p className="mt-2 text-base font-semibold leading-7 text-[#5B6B64]">{step.copy}</p>
+                <div className="mt-7 grid gap-2 rounded-[20px] border border-[#0A3028]/8 bg-white p-3">
+                  {step.mock.map((item) => (
+                    <div key={item} className="flex min-h-10 items-center justify-between rounded-[13px] bg-[#F4F7F2] px-3 text-xs font-extrabold text-[#3F5A52]">
+                      {item}
+                      <CheckCircle2 className="h-4 w-4 text-[#0E6A55]" />
+                    </div>
+                  ))}
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WorkspacesSection() {
+  return (
+    <section className="bg-[#FAF8F3] px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <SectionIntro
+          title="One platform. Different workspaces."
+          copy="Purpose-built workspaces for every role in the property journey."
+          center
+        />
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {workspaces.map((workspace) => {
+            const Icon = workspace.icon
+            return (
+              <article key={workspace.title} className="rounded-[26px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_22px_70px_rgba(7,30,26,0.055)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(7,30,26,0.08)] md:p-7">
+                <div className="flex h-13 w-13 items-center justify-center rounded-[18px] bg-[#EAF7F0] text-[#064537]">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-7 text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">{workspace.title}</h3>
+                <p className="mt-3 text-base font-medium leading-7 text-[#5B6B64]">{workspace.copy}</p>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SharedTransactionBand() {
+  return (
+    <section className="bg-[#FAF8F3] px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto w-full max-w-[1280px] overflow-hidden rounded-[34px] bg-[#064537] p-6 text-white shadow-[0_30px_100px_rgba(6,69,55,0.24)] md:p-10">
+        <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
+          <div>
+            <SectionIntro
+              eyebrow="Live transaction"
+              title="The shared transaction in action"
+              copy="Every stakeholder. Every update. One source of truth."
+              light
+            />
+            <a href="/contact" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-6 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5">
+              See it in action
               <ArrowRight className="h-4 w-4" />
             </a>
-          </FadeUp>
+          </div>
 
-          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 lg:overflow-visible">
-            {featuredDevelopmentCards.map((development) => (
-              <a
-                key={development.slug}
-                href={`/developments/${development.slug}`}
-                className="group relative min-w-[78%] snap-start overflow-hidden rounded-[30px] border border-[rgba(6,45,37,0.08)] bg-[#071E1A] shadow-[0_18px_54px_rgba(3,18,15,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(3,18,15,0.16)] sm:min-w-[56%] lg:min-w-0 lg:flex-1"
-              >
-                <div
-                  className="relative flex h-[340px] items-end p-5"
-                  style={{
-                    backgroundImage: `linear-gradient(180deg, rgba(5,18,15,0.06) 0%, rgba(5,18,15,0.72) 100%), url(${development.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                  }}
-                >
-                  <div className="absolute left-5 top-5 rounded-full border border-white/18 bg-white/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
-                    {development.status}
-                  </div>
-                  <div className="relative w-full rounded-[24px] border border-white/12 bg-[rgba(7,30,26,0.7)] p-5 text-white backdrop-blur-xl">
-                    <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#86E4C2]">{development.stage}</p>
-                    <h3 className="mt-2 text-[1.6rem] font-extrabold leading-[1] tracking-[-0.04em]">
-                      {development.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/75">{development.area}</p>
-                    <div className="mt-4 flex items-center justify-between gap-3">
-                      <span className="text-sm font-bold">{formatDevelopmentPrice(development)}</span>
-                      <span className="rounded-full border border-white/12 bg-white/8 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-[#86E4C2]">
-                        {development.availableUnits} units
-                      </span>
+          <div>
+            <div className="hidden rounded-[28px] border border-white/10 bg-white/[0.08] p-5 lg:block">
+              <div className="grid grid-cols-9 items-center gap-2">
+                {timelineRoles.map((role, index) => (
+                  <div key={role} className="relative min-w-0 text-center">
+                    <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#064537]">
+                      {index === timelineRoles.length - 1 ? <BadgeCheck className="h-4 w-4" /> : <CircleDot className="h-4 w-4" />}
                     </div>
+                    <p className="mt-3 truncate text-[10px] font-extrabold uppercase tracking-[0.08em] text-white/70">{role}</p>
+                    {index < timelineRoles.length - 1 ? <div className="absolute left-[calc(50%+22px)] top-5 h-px w-[calc(100%-18px)] bg-white/20" /> : null}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 grid grid-cols-5 gap-3">
+                {timelineEvents.map((event) => (
+                  <div key={event} className="rounded-[18px] border border-white/10 bg-white/[0.08] p-3 text-xs font-extrabold text-white">
+                    {event}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3 lg:hidden">
+              {timelineEvents.map((event, index) => (
+                <div key={event} className="grid grid-cols-[40px_1fr] gap-3">
+                  <div className="flex flex-col items-center">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#064537]">
+                      {index + 1}
+                    </span>
+                    {index < timelineEvents.length - 1 ? <span className="h-8 w-px bg-white/20" /> : null}
+                  </div>
+                  <div className="rounded-[18px] border border-white/10 bg-white/[0.08] p-4 text-sm font-extrabold text-white">
+                    {event}
                   </div>
                 </div>
-              </a>
-            ))}
+              ))}
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WhySwitchSection() {
+  return (
+    <section className="bg-white px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <SectionIntro title="Why property professionals switch to Arch9" center />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {switchReasons.map((reason) => {
+            const Icon = reason.icon
+            return (
+              <article key={reason.title} className="rounded-[24px] border border-[#0A3028]/8 bg-[#FCFBF7] p-5 shadow-[0_18px_54px_rgba(7,30,26,0.045)] md:p-6">
+                <Icon className="h-6 w-6 text-[#0E6A55]" />
+                <h3 className="mt-5 text-lg font-extrabold tracking-[-0.03em] text-[#071E1A]">{reason.title}</h3>
+                <p className="mt-2 text-sm font-medium leading-6 text-[#5B6B64]">{reason.copy}</p>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FinalCta() {
+  return (
+    <section className="bg-[#FAF8F3] px-5 pb-16 pt-6 md:px-8 md:pb-24">
+      <div className="mx-auto w-full max-w-[1280px] rounded-[34px] bg-[#064537] p-7 text-white shadow-[0_30px_100px_rgba(6,69,55,0.22)] md:p-10">
+        <p className="text-xs font-black uppercase tracking-[0.24em] text-[#86E4C2]">One transaction. Every stakeholder.</p>
+        <div className="mt-5 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <h2 className="max-w-[760px] text-[2.45rem] font-extrabold leading-none tracking-[-0.05em] md:text-[4.4rem]">
+            Ready to modernise property?
+          </h2>
+          <a href="/contact" className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-[#F3EEE6] px-7 text-sm font-extrabold text-[#064537] transition hover:-translate-y-0.5 sm:w-fit">
+            Book a Demo
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>
@@ -448,7 +536,7 @@ function DevelopmentRailSection() {
 
 function MarketingHome() {
   useEffect(() => {
-    document.title = 'Arch9 | Find property. Complete the journey.'
+    document.title = 'Arch9 | Shared Transaction Workspace for Property'
 
     let description = document.querySelector('meta[name="description"]')
     if (!description) {
@@ -459,54 +547,54 @@ function MarketingHome() {
 
     description.setAttribute(
       'content',
-      'Arch9 is the public front door for property search, developments and the connected transaction platform behind the deal.'
+      'Arch9 is the shared transaction workspace connecting buyers, sellers, agents, attorneys, bond originators and developers from first enquiry to registration.'
     )
   }, [])
 
   return (
-    <div className="bridge-site-bg min-h-screen text-[#062D25]">
+    <div className="min-h-screen bg-[#FAF8F3] text-[#071E1A]">
       <Header />
 
       <main>
-        <section
-          className="relative overflow-visible text-white"
-          style={{
-            minHeight: '680px',
-            backgroundImage: `linear-gradient(90deg, rgba(3, 22, 18, 0.82) 0%, rgba(3, 22, 18, 0.7) 36%, rgba(3, 22, 18, 0.28) 68%, rgba(3, 22, 18, 0.12) 100%), url(${heroBackground})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center right',
-          }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(134,228,194,0.12),transparent_26%),linear-gradient(180deg,rgba(3,22,18,0.08)_0%,rgba(3,22,18,0.18)_100%)]" />
-          <div className="relative mx-auto flex min-h-[680px] w-full max-w-[1440px] flex-col justify-between px-6 pb-0 pt-[96px] md:min-h-[760px] md:px-8 md:pt-[126px]">
-            <div className="max-w-[780px] pb-5 md:pb-6">
-              <FadeUp>
-                <div className="h-[15px]" aria-hidden="true" />
-                <h1 className="mt-5 text-[3rem] font-extrabold leading-[1] tracking-[-0.05em] text-white sm:text-[3.8rem] md:text-[5rem] xl:text-[5.7rem]">
-                  <span className="block">Find property.</span>
-                  <span className="block">Complete the journey.</span>
-                </h1>
-                <p className="mt-5 max-w-[620px] text-[1.05rem] leading-8 text-white/78 md:text-[1.2rem]">
-                  From first search to registration, everything is connected on Arch9.
-                </p>
-              </FadeUp>
-            </div>
+        <section className="relative overflow-hidden px-5 pb-16 pt-[112px] md:px-8 md:pb-24 md:pt-[150px]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_12%,rgba(134,228,194,0.22),transparent_28%),radial-gradient(circle_at_18%_28%,rgba(6,69,55,0.08),transparent_30%)]" />
+          <div className="relative mx-auto grid w-full max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <FadeUp className="max-w-[760px]">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
+              <h1 className="mt-5 text-[3.25rem] font-extrabold leading-[0.95] tracking-[-0.055em] text-[#071E1A] sm:text-[4.2rem] md:text-[5.6rem]">
+                One transaction.
+                <span className="block">Every stakeholder.</span>
+                <span className="block">Finally connected.</span>
+              </h1>
+              <p className="mt-6 max-w-[680px] text-[1.08rem] font-medium leading-8 text-[#4F625B] md:text-[1.25rem] md:leading-9">
+                Arch9 is the shared transaction workspace connecting buyers, sellers, agents, attorneys, bond originators and developers - from first enquiry to registration.
+              </p>
+              <div className="mt-8 grid gap-3 sm:flex">
+                <a href="/contact" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#064537] px-7 text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5">
+                  Book a Demo
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a href="/platform" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-[#0A3028]/12 bg-white px-7 text-sm font-extrabold text-[#071E1A] shadow-[0_16px_38px_rgba(7,30,26,0.06)] transition hover:-translate-y-0.5">
+                  <Play className="h-4 w-4" />
+                  Watch 60 sec overview
+                </a>
+              </div>
+            </FadeUp>
 
-            <div className="translate-y-16 md:translate-y-20">
-              <HeroSearchModule />
-            </div>
+            <FadeUp delay={0.12}>
+              <HeroNetworkGraphic />
+            </FadeUp>
           </div>
         </section>
 
-        <DevelopmentRailSection />
-
-        <SolutionsSection />
-
-        <SharedTransactionSection />
-
-        <MarketplaceMetricsSection />
-
-        <FinalCtaSection />
+        <TrustStrip />
+        <MetricsBar />
+        <ProblemSection />
+        <HowItWorksSection />
+        <WorkspacesSection />
+        <SharedTransactionBand />
+        <WhySwitchSection />
+        <FinalCta />
       </main>
 
       <Footer />
