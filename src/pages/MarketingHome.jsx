@@ -46,8 +46,6 @@ const orbitEvents = [
   { label: 'Registered', time: '15:42', className: 'left-1/2 bottom-[17%] -translate-x-1/2' },
 ]
 
-const trustLogos = ['Kingstons', 'Tyson Attorneys', 'Ooba', 'Meridian Realty', 'Blue Bond Originators']
-
 const metrics = [
   { value: '120,000+', label: 'Properties Listed', icon: Home },
   { value: '15,000+', label: 'Active Transactions', icon: CheckCircle2 },
@@ -202,23 +200,6 @@ function HeroNetworkGraphic() {
         </div>
       ))}
     </div>
-  )
-}
-
-function TrustStrip() {
-  return (
-    <section className="bg-[#FAF8F3] px-5 pb-5 pt-2 md:px-8 md:pb-8">
-      <div className="mx-auto w-full max-w-[1500px]">
-        <p className="text-center text-[0.68rem] font-black uppercase tracking-[0.32em] text-[#6E7A75]">Trusted by property professionals</p>
-        <div className="mt-6 grid gap-3 border-y border-[#0A3028]/8 py-5 sm:grid-cols-2 lg:grid-cols-5">
-          {trustLogos.map((logo) => (
-            <div key={logo} className="flex min-h-12 items-center justify-center border-[#0A3028]/8 text-center text-sm font-extrabold text-[#5F6C66] lg:border-l first:lg:border-l-0">
-              {logo}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
   )
 }
 
@@ -605,7 +586,6 @@ function MarketingHome() {
           </div>
         </section>
 
-        <TrustStrip />
         <MetricsBar />
         <LiveTransactionSection />
         <WorkspacesSection />
