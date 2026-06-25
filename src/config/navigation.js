@@ -10,6 +10,7 @@ export const primaryNavItems = [
   { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
   { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
   { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
+  { label: 'Resources', href: '/help', match: ['/help', '/docs', '/buyer-guides', '/seller-guides'], analyticsEvent: 'nav_resources_clicked' },
 ]
 
 export const solutionNavItems = [
