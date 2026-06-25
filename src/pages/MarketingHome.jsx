@@ -580,7 +580,7 @@ function MarketingHome() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.12}>
+            <FadeUp delay={0.12} className="hidden lg:block">
               <HeroNetworkGraphic />
             </FadeUp>
           </div>
