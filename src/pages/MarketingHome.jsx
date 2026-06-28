@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   ArrowRight,
   BadgeCheck,
@@ -11,6 +12,7 @@ import {
   Home,
   Landmark,
   LayoutDashboard,
+  LockKeyhole,
   MapPinned,
   Play,
   Scale,
@@ -22,12 +24,13 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp } from '../components/motion/Reveal'
+import { motionEaseOut } from '../components/motion/timing'
 
-const metrics = [
-  { value: '120,000+', label: 'Properties Listed', icon: Home },
-  { value: '15,000+', label: 'Active Transactions', icon: CheckCircle2 },
-  { value: '5,000+', label: 'Property Professionals', icon: Users },
-  { value: 'R8.4B+', label: 'Transaction Value', icon: Scale },
+const heroBenefits = [
+  { title: 'One shared timeline', copy: 'Everyone sees the same progress.', icon: Users },
+  { title: 'Buyer & seller portals', copy: 'Documents and updates in one place.', icon: ShieldCheck },
+  { title: 'Real-time progress', copy: 'Every update happens live and in sync.', icon: Workflow },
+  { title: 'Secure by design', copy: 'Enterprise-grade security for every transaction.', icon: LockKeyhole },
 ]
 
 const timelineRoles = [
@@ -51,6 +54,24 @@ const timelineEvents = [
 ]
 
 const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
+
+const heroStakeholders = [
+  { label: 'Buyer', icon: Users, initials: 'BU', view: 'Buyer view', title: 'Documents requested', copy: 'Upload FICA and see what happens next.', progress: 72 },
+  { label: 'Seller', icon: Users, initials: 'SE', view: 'Seller view', title: 'Sale moving forward', copy: 'Follow transfer progress without chasing.', progress: 76 },
+  { label: 'Agent', icon: BadgeCheck, initials: 'AG', view: 'Agent view', title: 'Everyone aligned', copy: 'Keep buyers, sellers and partners on the same live timeline.', progress: 80 },
+  { label: 'Attorney', icon: Scale, initials: 'AT', view: 'Attorney view', title: 'Transfer in progress', copy: 'Request documents and keep every party informed.', progress: 82 },
+  { label: 'Bond Originator', icon: Users, initials: 'BO', view: 'Originator view', title: 'Bond approved', copy: 'Finance progress is visible to the right people.', progress: 78 },
+  { label: 'Bank', icon: Landmark, initials: 'BK', view: 'Bank view', title: 'Approval recorded', copy: 'Key finance updates stay attached to the transaction.', progress: 74 },
+  { label: 'Developer', icon: Building2, initials: 'DV', view: 'Developer view', title: 'Registration lodged', copy: 'See every sale moving from offer to registration.', progress: 86 },
+]
+
+const heroUpdates = [
+  { time: '10:32', label: 'Buyer uploaded FICA', icon: FileCheck2 },
+  { time: '10:47', label: 'Bond approved', icon: CheckCircle2 },
+  { time: '11:02', label: 'Attorney uploaded draft deed', icon: Scale },
+  { time: '11:18', label: 'Registration lodged', icon: Landmark },
+  { time: '11:42', label: 'Transfer completed', icon: BadgeCheck },
+]
 
 const workspaces = [
   {
@@ -92,7 +113,7 @@ const workspaces = [
 ]
 
 const benefitItems = [
-  { title: '30% Faster Registration', copy: 'Reduce delays and close more deals.', icon: Clock3 },
+  { title: 'Faster registration', copy: 'Reduce delays and keep deals moving.', icon: Clock3 },
   { title: 'One Shared Timeline', copy: 'Everyone sees the same progress.', icon: Workflow },
   { title: 'Automatic Document Collection', copy: 'No more chasing. Ever.', icon: FileCheck2 },
   { title: 'Role-based Workspaces', copy: 'Different work. Same transaction.', icon: LayoutDashboard },
@@ -120,7 +141,89 @@ function SectionIntro({ eyebrow, title, copy, center = false, light = false }) {
   )
 }
 
-function HeroProductCard() {
+function StakeholderSelector({ selectedRole, onSelect }) {
+  return (
+    <motion.div
+      className="-mx-5 mt-8 flex snap-x gap-4 overflow-x-auto px-5 pb-3 md:mx-0 md:justify-center md:overflow-visible md:px-0 lg:mt-0"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, delay: 0.2, ease: motionEaseOut }}
+    >
+      {heroStakeholders.map((stakeholder) => {
+        const Icon = stakeholder.icon
+        const active = selectedRole === stakeholder.label
+
+        return (
+          <button
+            key={stakeholder.label}
+            type="button"
+            aria-pressed={active}
+            className="group min-w-[76px] snap-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E6A55]/25"
+            onClick={() => onSelect(stakeholder.label)}
+          >
+            <span
+              className={`mx-auto flex h-[56px] w-[56px] items-center justify-center rounded-full border bg-white shadow-[0_12px_34px_rgba(7,30,26,0.08)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.04] ${
+                active
+                  ? 'border-[#0E6A55] text-[#0E6A55] ring-4 ring-[#0E6A55]/12 shadow-[0_18px_44px_rgba(14,106,85,0.18)]'
+                  : 'border-[#0A3028]/10 text-[#071E1A]'
+              }`}
+            >
+              {['Buyer', 'Seller', 'Agent'].includes(stakeholder.label) ? (
+                <span className="text-sm font-black tracking-[-0.04em]">{stakeholder.initials}</span>
+              ) : (
+                <Icon className="h-5 w-5" />
+              )}
+            </span>
+            <span className={`mt-2 block text-[11px] font-black leading-tight tracking-[-0.02em] ${active ? 'text-[#0E6A55]' : 'text-[#071E1A]'}`}>
+              {stakeholder.label}
+            </span>
+            <span className={`mx-auto mt-2 block h-1.5 w-1.5 rounded-full ${active ? 'bg-[#0E6A55]' : 'bg-transparent'}`} />
+          </button>
+        )
+      })}
+    </motion.div>
+  )
+}
+
+function LiveUpdateCard({ update }) {
+  const Icon = update.icon
+
+  return (
+    <motion.div
+      key={update.label}
+      className="mt-7 flex items-center gap-3 rounded-[16px] border border-[#0A3028]/10 bg-white/80 p-4 shadow-[0_16px_44px_rgba(7,30,26,0.06)]"
+      initial={{ opacity: 0, y: 10, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -8, scale: 0.99 }}
+      transition={{ duration: 0.35, ease: motionEaseOut }}
+    >
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#EAF7F0] text-[#064537]">
+        <Icon className="h-4 w-4" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="text-sm font-extrabold text-[#071E1A]">{update.time}</span>
+          <span className="text-sm font-bold text-[#52645D]">{update.label}</span>
+        </div>
+        <div className="mt-1 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#0E8A69]" />
+          <span className="text-xs font-extrabold text-[#0E6A55]">Live update</span>
+        </div>
+      </div>
+      <div className="hidden -space-x-2 sm:flex">
+        {heroStakeholders.slice(0, 3).map((stakeholder) => (
+          <span key={stakeholder.label} className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#064537] text-[10px] font-black text-white">
+            {stakeholder.initials}
+          </span>
+        ))}
+        <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#F0F2EF] text-[10px] font-black text-[#52645D]">+3</span>
+      </div>
+    </motion.div>
+  )
+}
+
+function HeroProductCard({ selectedStakeholder, activeUpdate }) {
+  const shouldReduceMotion = useReducedMotion()
   const progressSteps = [
     { label: 'OTP Signed', time: '9:12', state: 'done' },
     { label: 'Buyer Onboarded', time: '10:18', state: 'done' },
@@ -139,7 +242,15 @@ function HeroProductCard() {
   ]
 
   return (
-    <div className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[28px] border border-[#0A3028]/10 bg-white/92 shadow-[0_34px_110px_rgba(6,45,37,0.14)] backdrop-blur-xl">
+    <div className="relative mx-auto mt-8 hidden w-full max-w-[760px] lg:mt-7 lg:block">
+      <div
+        className="absolute -inset-x-12 bottom-0 top-12 -z-10 rounded-[38px] bg-cover bg-center opacity-45 blur-[1.4px]"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg,rgba(250,248,243,0.92),rgba(250,248,243,0.38)),url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1300&q=82)',
+        }}
+      />
+      <div className="overflow-hidden rounded-[28px] border border-[#0A3028]/10 bg-white/92 shadow-[0_34px_110px_rgba(6,45,37,0.14)] backdrop-blur-xl">
       <div className="grid min-h-[430px] grid-cols-[72px_1fr]">
         <aside className="bg-[linear-gradient(180deg,#101923,#061B18)] text-white">
           <div className="flex h-20 items-center justify-center text-2xl font-black tracking-[0.16em]">A</div>
@@ -163,6 +274,7 @@ function HeroProductCard() {
         <div className="min-w-0">
           <header className="flex items-start justify-between gap-5 border-b border-[#0A3028]/8 px-8 py-7">
             <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#0E6A55]">{selectedStakeholder.view}</p>
               <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">14 Nicolson Street</h2>
               <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#6B7B74]">
                 <span className="h-2 w-2 rounded-full bg-[#0E8A69]" />
@@ -178,22 +290,38 @@ function HeroProductCard() {
           </header>
 
           <div className="px-8 py-12">
+            <div className="mb-8 flex items-start justify-between gap-5">
+              <div>
+                <h3 className="text-xl font-extrabold tracking-[-0.035em] text-[#071E1A]">{selectedStakeholder.title}</h3>
+                <p className="mt-1 text-sm font-semibold text-[#52645D]">{selectedStakeholder.copy}</p>
+              </div>
+              <span className="rounded-full bg-[#EAF7F0] px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#0E6A55]">
+                {selectedStakeholder.progress}% live
+              </span>
+            </div>
             <div className="relative grid grid-cols-5 gap-4">
               <div className="absolute left-[8%] right-[8%] top-5 h-px bg-[#D6DFDA]" />
-              <div className="absolute left-[8%] top-5 h-px w-[60%] bg-[#0E6A55]" />
+              <motion.div
+                className="absolute left-[8%] top-5 h-px bg-[#0E6A55]"
+                initial={{ width: shouldReduceMotion ? '66%' : 0 }}
+                animate={{ width: '66%' }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.85, ease: motionEaseOut }}
+              />
               {progressSteps.map((step) => (
                 <div key={step.label} className="relative z-10 text-center">
-                  <span
+                  <motion.span
                     className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border text-sm font-black shadow-sm ${
                       step.state === 'done'
                         ? 'border-[#0E6A55] bg-[#0E6A55] text-white'
                         : step.state === 'active'
                           ? 'border-[#0E6A55] bg-white text-[#0E6A55] ring-4 ring-[#E4F2EC]'
-                          : 'border-[#D6DFDA] bg-white text-[#B8C2BD]'
+                        : 'border-[#D6DFDA] bg-white text-[#B8C2BD]'
                     }`}
+                    animate={!shouldReduceMotion && step.state === 'active' ? { scale: [1, 1.08, 1] } : undefined}
+                    transition={!shouldReduceMotion && step.state === 'active' ? { duration: 2.4, repeat: Infinity, ease: 'easeInOut' } : undefined}
                   >
                     {step.state === 'pending' ? <span className="h-3 w-3 rounded-[4px] bg-current" /> : step.state === 'active' ? <span className="h-4 w-4 rounded-full bg-current" /> : <CheckCircle2 className="h-5 w-5" />}
-                  </span>
+                  </motion.span>
                   <p className="mt-5 text-sm font-bold leading-5 text-[#071E1A]">{step.label}</p>
                   {step.time ? <p className="mt-2 text-xs font-semibold text-[#8A978F]">{step.time}</p> : null}
                 </div>
@@ -216,6 +344,63 @@ function HeroProductCard() {
                 })}
               </div>
             </div>
+
+            <AnimatePresence mode="wait">
+              <LiveUpdateCard update={activeUpdate} />
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  )
+}
+
+function MobileHeroPreview({ selectedStakeholder, activeUpdate }) {
+  const progressSteps = ['OTP', 'Buyer', 'Finance', 'Transfer', 'Registration']
+
+  return (
+    <div className="relative mt-7 lg:hidden">
+      <div
+        className="absolute inset-x-[-20px] top-10 h-[230px] bg-cover bg-center opacity-40 blur-[1.2px]"
+        style={{
+          backgroundImage:
+            'linear-gradient(180deg,rgba(250,248,243,0.45),rgba(250,248,243,0.95)),url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80)',
+        }}
+      />
+      <div className="relative mx-auto max-w-[350px] rounded-[38px] border-[7px] border-[#151A18] bg-[#151A18] shadow-[0_28px_90px_rgba(6,69,55,0.25)]">
+        <div className="overflow-hidden rounded-[30px] bg-[#FFFCF6] p-5">
+          <div className="flex items-center justify-between">
+            <p className="text-xl font-black tracking-[0.28em] text-[#071E1A]">ARCH9</p>
+            <span className="h-8 w-8 rounded-full border border-[#0A3028]/10 bg-white" />
+          </div>
+          <p className="mt-7 text-[10px] font-black uppercase tracking-[0.2em] text-[#0E6A55]">The shared transaction workspace</p>
+          <h2 className="mt-4 text-[2rem] font-extrabold leading-[0.96] tracking-[-0.055em] text-[#071E1A]">
+            One transaction. Every stakeholder. <span className="text-[#0E6A55]">Finally connected.</span>
+          </h2>
+
+          <div className="mt-6 rounded-[22px] border border-[#0A3028]/8 bg-white p-4 shadow-[0_16px_44px_rgba(7,30,26,0.08)]">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0E6A55]">{selectedStakeholder.view}</p>
+                <h3 className="mt-2 text-base font-extrabold text-[#071E1A]">14 Nicolson Street</h3>
+                <p className="mt-1 text-xs font-bold text-[#52645D]">{selectedStakeholder.title}</p>
+              </div>
+              <span className="rounded-full bg-[#EAF7F0] px-3 py-1 text-[10px] font-black text-[#0E6A55]">{selectedStakeholder.progress}%</span>
+            </div>
+
+            <div className="mt-6 grid grid-cols-5 gap-2">
+              {progressSteps.map((step, index) => (
+                <div key={step} className="text-center">
+                  <span className={`mx-auto block h-4 w-4 rounded-full border ${index < 4 ? 'border-[#0E6A55] bg-[#0E6A55]' : 'border-[#0A3028]/16 bg-white'}`} />
+                  <p className="mt-2 text-[9px] font-black leading-tight text-[#071E1A]">{step}</p>
+                </div>
+              ))}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <LiveUpdateCard update={activeUpdate} />
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -223,24 +408,20 @@ function HeroProductCard() {
   )
 }
 
-function MetricsBar() {
+function HeroBenefitStrip() {
   return (
-    <section className="bg-[#FAF8F3] px-5 py-8 md:px-8 md:py-10">
-      <div className="mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-4 rounded-[18px] bg-[linear-gradient(135deg,#063F34,#031D18)] p-5 text-white shadow-[0_28px_90px_rgba(6,69,55,0.22)] sm:grid-cols-2 md:p-8 lg:grid-cols-4">
-        {metrics.map((metric, index) => {
-          const Icon = metric.icon
+    <section className="bg-[#FAF8F3] px-5 pb-8 md:px-8 md:pb-12">
+      <div className="mx-auto grid w-full max-w-[1320px] gap-3 rounded-[20px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(7,30,26,0.08)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
+        {heroBenefits.map((benefit) => {
+          const Icon = benefit.icon
           return (
-            <div key={metric.label} className={`min-w-0 ${index ? 'lg:border-l lg:border-white/12 lg:pl-8' : ''}`}>
-              <div className="flex items-center gap-4">
-                <span className="flex h-13 w-13 items-center justify-center rounded-full bg-[#DDF7C8]/12 text-[#BFF5A7]">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <div>
-                  <p className="text-[2rem] font-extrabold leading-none tracking-[-0.04em] md:text-[2.75rem]">{metric.value}</p>
-                  <p className="mt-2 text-sm font-bold leading-5 text-white/72">{metric.label}</p>
-                </div>
-              </div>
-            </div>
+            <article key={benefit.title} className="group rounded-[16px] p-3 transition duration-300 hover:-translate-y-1 hover:bg-[#FAF8F3]">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EAF7F0] text-[#064537] transition duration-300 group-hover:bg-[#064537] group-hover:text-white">
+                <Icon className="h-5 w-5" />
+              </span>
+              <h3 className="mt-4 text-base font-extrabold tracking-[-0.02em] text-[#071E1A]">{benefit.title}</h3>
+              <p className="mt-1.5 text-sm font-medium leading-6 text-[#52645D]">{benefit.copy}</p>
+            </article>
           )
         })}
       </div>
@@ -550,6 +731,12 @@ function FinalCta() {
 }
 
 function MarketingHome() {
+  const [selectedRole, setSelectedRole] = useState('Agent')
+  const [activeUpdateIndex, setActiveUpdateIndex] = useState(2)
+  const shouldReduceMotion = useReducedMotion()
+  const selectedStakeholder = heroStakeholders.find((stakeholder) => stakeholder.label === selectedRole) || heroStakeholders[2]
+  const activeUpdate = heroUpdates[activeUpdateIndex]
+
   useEffect(() => {
     document.title = 'Arch9 | Shared Transaction Workspace for Property'
 
@@ -566,6 +753,16 @@ function MarketingHome() {
     )
   }, [])
 
+  useEffect(() => {
+    if (shouldReduceMotion) return undefined
+
+    const updateTimer = window.setInterval(() => {
+      setActiveUpdateIndex((current) => (current + 1) % heroUpdates.length)
+    }, 3600)
+
+    return () => window.clearInterval(updateTimer)
+  }, [shouldReduceMotion])
+
   return (
     <div className="min-h-screen bg-[#FAF8F3] text-[#071E1A]">
       <Header />
@@ -575,33 +772,34 @@ function MarketingHome() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
           <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
           <div className="relative mx-auto grid w-full max-w-[1500px] gap-10 lg:grid-cols-[0.43fr_0.57fr] lg:items-center">
-            <FadeUp className="max-w-[680px]">
+            <FadeUp className="min-w-0 max-w-[680px]">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
-              <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.04] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
+              <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
                 One transaction.
                 <span className="block">Every stakeholder.</span>
                 <span className="block text-[#0E6A55]">Finally connected.</span>
               </h1>
-              <p className="mt-6 max-w-[560px] text-[1rem] font-medium leading-7 text-[#52645D] md:text-[1.12rem] md:leading-8">
-                The only workspace that connects agents, attorneys, banks, buyers and sellers in one live timeline. Less chasing. More clarity. Faster registration.
+              <p className="mt-7 max-w-[560px] text-[1rem] font-medium leading-7 text-[#52645D] md:text-[1.12rem] md:leading-8">
+                The only shared workspace connecting buyers, sellers, agents, attorneys and banks in one live transaction.
+                <span className="mt-3 block">Less chasing. More clarity. Faster registration.</span>
               </p>
-              <div className="mt-8 grid gap-3 sm:flex">
+              <div className="mt-10 grid gap-3 sm:flex">
                 <a
-                  href="/book-demo"
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#064537] px-7 text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5"
+                  href="/platform"
+                  className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#064537] px-5 text-center text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7"
                   style={{ color: '#FFFFFF' }}
                 >
-                  Book a Demo
+                  Explore a live transaction
                   <ArrowRight className="h-4 w-4" />
                 </a>
-                <a href="/platform" className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[#0A3028]/12 bg-white px-7 text-sm font-extrabold text-[#071E1A] shadow-[0_16px_38px_rgba(7,30,26,0.06)] transition hover:-translate-y-0.5">
+                <a href="/platform" className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full border border-[#0A3028]/12 bg-white px-5 text-center text-sm font-extrabold text-[#071E1A] shadow-[0_16px_38px_rgba(7,30,26,0.06)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7">
                   <Play className="h-4 w-4" />
                   Watch 60 sec overview
                 </a>
               </div>
-              <div className="mt-9 hidden md:block">
+              <div className="mt-14 hidden md:block">
                 <p className="text-sm font-medium text-[#6B7B74]">Trusted by leading agencies, attorneys and developers.</p>
-                <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490]">
+                <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490] opacity-80">
                   {heroTrustLogos.map((logo) => (
                     <span key={logo}>{logo}</span>
                   ))}
@@ -609,13 +807,23 @@ function MarketingHome() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.12} className="hidden lg:block">
-              <HeroProductCard />
+            <FadeUp delay={0.12} className="min-w-0">
+              <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
+              <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
+              <MobileHeroPreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
             </FadeUp>
           </div>
         </section>
 
-        <MetricsBar />
+        <HeroBenefitStrip />
+        <section className="bg-[#FAF8F3] px-5 pb-12 text-center md:hidden">
+          <p className="text-sm font-medium text-[#6B7B74]">Trusted by leading agencies, attorneys and developers.</p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490] opacity-70">
+            {heroTrustLogos.map((logo) => (
+              <span key={logo}>{logo}</span>
+            ))}
+          </div>
+        </section>
         <LiveTransactionSection />
         <WorkspacesSection />
         <ProductShowcaseSection />
