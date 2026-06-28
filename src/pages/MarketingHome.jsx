@@ -55,6 +55,9 @@ const timelineEvents = [
 
 const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
 
+const heroPropertyImage =
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=86'
+
 const heroStakeholders = [
   {
     label: 'Buyer',
@@ -367,10 +370,10 @@ function MobileHeroPreview({ selectedStakeholder, activeUpdate }) {
   return (
     <div className="relative mt-7 lg:hidden">
       <div
-        className="absolute inset-x-[-20px] top-10 h-[230px] bg-cover bg-center opacity-40 blur-[1.2px]"
+        className="absolute inset-x-[-20px] top-10 h-[230px] bg-cover opacity-42 blur-[1px]"
         style={{
-          backgroundImage:
-            'linear-gradient(180deg, rgba(250,248,243,0.45), rgba(250,248,243,0.95)), url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80)',
+          backgroundImage: `linear-gradient(180deg, rgba(250,248,243,0.28), rgba(250,248,243,0.94)), url(${heroPropertyImage})`,
+          backgroundPosition: 'center 72%',
         }}
       />
       <div className="relative mx-auto max-w-[360px] rounded-[26px] border border-[#0A3028]/8 bg-white/92 p-4 shadow-[0_24px_70px_rgba(6,69,55,0.16)] backdrop-blur-xl">
@@ -771,15 +774,15 @@ function MarketingHome() {
         <section className="relative overflow-hidden px-5 pb-14 pt-[112px] md:px-8 md:pb-20 md:pt-[124px]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
           <div
-            className="pointer-events-none absolute bottom-0 right-0 hidden h-[260px] w-[62%] bg-cover bg-center opacity-72 lg:block"
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[292px] w-[72%] bg-cover opacity-85 lg:block"
             style={{
-              backgroundImage:
-                'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 18%, rgba(250,248,243,0.08) 48%, rgba(250,248,243,0.05) 100%), linear-gradient(180deg, rgba(250,248,243,0) 0%, rgba(250,248,243,0.5) 76%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=84)',
+              backgroundImage: `linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.46) 17%, rgba(250,248,243,0.1) 47%, rgba(250,248,243,0.05) 100%), linear-gradient(180deg, rgba(250,248,243,0) 0%, rgba(250,248,243,0.26) 70%, #FAF8F3 100%), url(${heroPropertyImage})`,
+              backgroundPosition: 'center 76%',
             }}
           />
           <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
           <div className="relative mx-auto grid w-full max-w-[1540px] gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-16">
-            <FadeUp className="min-w-0 max-w-[680px]">
+            <FadeUp className="relative z-10 min-w-0 max-w-[680px]">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
               <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
                 One transaction.
@@ -814,13 +817,12 @@ function MarketingHome() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.12} className="relative min-w-0 lg:pb-24">
+            <FadeUp delay={0.12} className="relative z-0 min-w-0 lg:pb-24">
               <div
-                className="pointer-events-none absolute left-[-120px] right-[-80px] top-[235px] z-0 hidden h-[360px] rounded-[34px] bg-cover opacity-100 lg:block"
+                className="pointer-events-none absolute left-[-150px] right-[-90px] top-[226px] z-0 hidden h-[390px] rounded-[34px] bg-cover opacity-100 lg:block"
                 style={{
-                  backgroundImage:
-                    'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.44) 20%, rgba(250,248,243,0.08) 58%, rgba(250,248,243,0.02) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.08) 58%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=84)',
-                  backgroundPosition: 'center 62%',
+                  backgroundImage: `linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 20%, rgba(250,248,243,0.14) 56%, rgba(250,248,243,0.04) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.04) 58%, #FAF8F3 100%), url(${heroPropertyImage})`,
+                  backgroundPosition: 'center 74%',
                 }}
               />
               <div className="relative z-10">
