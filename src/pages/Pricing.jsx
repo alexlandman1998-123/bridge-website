@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -20,69 +20,95 @@ const rolePricing = {
     label: 'Agents',
     icon: Users,
     description: 'For estate agents and agencies of all sizes.',
-    pricingLabel: 'Pricing for agents',
     plans: [
       {
-        name: 'Professional',
-        price: 'R299',
-        annualPrice: 'R269',
-        suffix: 'Per user / month',
-        ideal: 'Perfect for individual agents.',
-        intro: '',
-        cta: 'Start Free Trial',
+        name: 'Transactional',
+        price: 'FREE',
+        suffix: '',
+        ideal: 'For agents who want to run transactions without a CRM.',
+        cta: 'Get Started Free',
         href: appAuthUrl,
-        features: ['CRM', 'Listings Management', 'Lead Management', 'Calendar & Appointments', 'Buyer Matching', 'Buyer Portal', 'Seller Portal', 'Mobile App Access'],
+        features: ['Unlimited transactions', 'Branding', 'Custom portals', 'Automations', 'Buyer and seller portals', 'Transaction tracking', 'CRM not included'],
       },
       {
-        name: 'Agency',
-        price: 'R499',
-        annualPrice: 'R449',
-        suffix: 'Per user / month',
-        ideal: 'Ideal for growing agencies and teams.',
-        intro: 'Everything in Professional, plus:',
+        name: 'CRM',
+        price: 'R199',
+        suffix: 'per user / month',
+        ideal: 'For agents and agencies that want to manage relationships and grow their business.',
         cta: 'Start Free Trial',
         href: appAuthUrl,
         featured: true,
         features: [
-          'Transaction Management',
-          'Offer Management',
-          'Document Generation',
-          'Automated Follow-Ups',
-          'Transaction Tracking',
-          'Roleplayer Collaboration',
-          'Principal Dashboard',
-          'Advanced Reporting',
+          'Everything in Transactional',
+          'CRM and contact management',
+          'Lead management',
+          'Buyer matching',
+          'Calendar and appointments',
+          'Tasks and activity tracking',
+          'Reporting and insights',
         ],
       },
       {
         name: 'Enterprise',
         price: 'Custom',
-        suffix: 'Tailored pricing for your business.',
-        ideal: 'Built for large, multi-branch agencies.',
-        intro: 'Everything in Agency, plus:',
+        suffix: '',
+        ideal: 'For large agencies, groups and multi-branch teams.',
         cta: 'Book a Demo',
         href: demoHref,
-        features: ['Branch Management', 'Advanced Permissions', 'Custom Workflows', 'API Access', 'Custom Integrations', 'Dedicated Account Manager', 'Priority Support'],
+        features: ['Everything in CRM', 'Branch management', 'Advanced permissions', 'Custom workflows', 'API access', 'Dedicated account manager', 'Priority support'],
       },
     ],
-    comparison: [
-      ['CRM', true, true, true],
-      ['Listings Management', true, true, true],
-      ['Lead Management', true, true, true],
-      ['Buyer & Seller Portals', true, true, true],
-      ['Transaction Management', false, true, true],
-      ['Offer Management', false, true, true],
-      ['Document Generation', false, true, true],
-      ['Automated Follow-Ups', false, true, true],
-      ['Principal Dashboard', false, true, true],
-      ['Advanced Reporting', false, true, true],
-      ['Branch Management', false, false, true],
-      ['API Access', false, false, true],
+    comparisonHeadings: [
+      { name: 'Transactional', subtitle: 'Free' },
+      { name: 'CRM', subtitle: 'R199 / user' },
+      { name: 'Enterprise', subtitle: 'Custom' },
+    ],
+    comparisonSections: [
+      {
+        title: 'Core',
+        rows: [
+          ['Unlimited transactions', true, true, true],
+          ['Branding', true, true, true],
+          ['Custom portals', true, true, true],
+          ['Buyer and seller portals', true, true, true],
+          ['Automations', true, true, true],
+          ['Transaction tracking', true, true, true],
+        ],
+      },
+      {
+        title: 'CRM',
+        rows: [
+          ['CRM and contact management', false, true, true],
+          ['Lead management', false, true, true],
+          ['Buyer matching', false, true, true],
+          ['Calendar and appointments', false, true, true],
+          ['Tasks and activity tracking', false, true, true],
+        ],
+      },
+      {
+        title: 'Reporting',
+        rows: [
+          ['Reporting and insights', false, true, true],
+          ['Principal dashboard', false, false, true],
+          ['Advanced reporting', false, false, true],
+        ],
+      },
+      {
+        title: 'Enterprise',
+        rows: [
+          ['Branch management', false, false, true],
+          ['Advanced permissions', false, false, true],
+          ['Custom workflows', false, false, true],
+          ['API access', false, false, true],
+          ['Dedicated account manager', false, false, true],
+          ['Priority support', false, false, true],
+        ],
+      },
     ],
     faqs: [
       ['Do I need a long-term contract?', 'No. You can cancel anytime.'],
-      ['Can I migrate from my current CRM?', 'Yes. We help teams migrate listings, leads and core client information.'],
       ['Is onboarding included?', 'Yes. Onboarding is included so your team can get set up properly.'],
+      ['Can I migrate from my current CRM?', 'Yes. We help teams migrate listings, leads and core client information.'],
       ['Do buyers and sellers need accounts?', 'No. Buyers and sellers can receive updates and complete key actions without needing a paid account.'],
       ['Are credit checks included?', 'Credit checks are available as pay-as-you-use add-ons.'],
       ['Are FICA checks included?', 'FICA checks are available as pay-as-you-use add-ons.'],
@@ -254,10 +280,10 @@ const trustItems = [
 ]
 
 const metrics = [
-  { value: '120,000+', label: 'Properties listed' },
-  { value: '15,000+', label: 'Transactions active' },
-  { value: '5,000+', label: 'Professionals using Arch9' },
-  { value: 'R8.4B+', label: 'In transaction value' },
+  { value: 'Built for', label: 'South African property teams' },
+  { value: 'Designed for', label: 'Agents, attorneys and originators' },
+  { value: 'Secure', label: 'Buyer and seller portals' },
+  { value: 'Connected', label: 'From enquiry to registration' },
 ]
 
 function setMetaDescription(content) {
@@ -270,12 +296,10 @@ function setMetaDescription(content) {
   description.setAttribute('content', content)
 }
 
-function PlanCard({ plan, billing }) {
-  const price = billing === 'annual' && plan.annualPrice ? plan.annualPrice : plan.price
-
+function PlanCard({ plan }) {
   return (
     <article
-      className={`relative rounded-[20px] border p-6 shadow-[0_22px_60px_rgba(5,8,7,0.06)] ${
+      className={`relative rounded-[24px] border p-6 shadow-[0_22px_60px_rgba(5,8,7,0.06)] ${
         plan.featured
           ? 'border-[#064537]/45 bg-white ring-1 ring-[#064537]/20'
           : 'border-[#0A3028]/8 bg-white'
@@ -289,9 +313,8 @@ function PlanCard({ plan, billing }) {
       <div className={plan.featured ? 'pt-7' : ''}>
         <h3 className="text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">{plan.name}</h3>
         <p className="mt-2 min-h-10 text-sm font-semibold leading-5 text-[#5B6B64]">{plan.ideal}</p>
-        <p className="mt-7 text-[3rem] font-extrabold tracking-[-0.06em] text-[#050807]">{price}</p>
-        <p className="mt-1 text-sm font-semibold text-[#5B6B64]">{plan.suffix}</p>
-        {plan.intro ? <p className="mt-5 text-sm font-extrabold text-[#071E1A]">{plan.intro}</p> : null}
+        <p className="mt-7 text-[3rem] font-extrabold tracking-[-0.06em] text-[#050807]">{plan.price}</p>
+        {plan.suffix ? <p className="mt-1 text-sm font-semibold text-[#5B6B64]">{plan.suffix}</p> : null}
         <ul className="mt-5 grid gap-3">
           {plan.features.map((feature) => (
             <li key={feature} className="flex items-start gap-3 text-sm font-semibold leading-5 text-[#31433D]">
@@ -305,8 +328,9 @@ function PlanCard({ plan, billing }) {
           className={`mt-8 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border px-5 text-sm font-extrabold transition ${
             plan.featured
               ? 'border-[#064537] bg-[#064537] text-white hover:bg-[#05352D]'
-              : 'border-[#0A3028]/28 text-[#071E1A] hover:bg-[#F8F4EC]'
+              : 'border-[#0A3028]/22 bg-white text-[#071E1A] hover:border-[#064537]/30 hover:bg-[#F8F4EC]'
           }`}
+          style={{ color: plan.featured ? '#FFFFFF' : '#071E1A' }}
         >
           {plan.cta}
         </a>
@@ -323,16 +347,102 @@ function ComparisonValue({ value }) {
   )
 }
 
+function getComparisonSections(role) {
+  if (role.comparisonSections) return role.comparisonSections
+  return [
+    {
+      title: 'Features',
+      rows: role.comparison,
+    },
+  ]
+}
+
+function getComparisonHeadings(role) {
+  if (role.comparisonHeadings) return role.comparisonHeadings
+  return role.plans.map((plan) => ({ name: plan.name, subtitle: plan.price }))
+}
+
+function FeatureComparison({ role }) {
+  const sections = getComparisonSections(role)
+  const headings = getComparisonHeadings(role)
+
+  return (
+    <>
+      <div className="hidden overflow-x-auto rounded-[24px] border border-[#0A3028]/10 bg-white shadow-[0_18px_54px_rgba(5,8,7,0.05)] md:block">
+        <table className="w-full min-w-[780px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-[#0A3028]/10">
+              <th className="w-[34%] px-5 py-5 text-left text-xs font-black uppercase tracking-[0.12em] text-[#071E1A]">Features</th>
+              {headings.map((heading) => (
+                <th key={heading.name} className="bg-[#064537] px-5 py-5 text-center text-xs font-black uppercase tracking-[0.1em] text-white">
+                  {heading.name}
+                  <span className="mt-1 block text-[11px] normal-case tracking-[-0.01em] text-white/72">{heading.subtitle}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sections.map((section) => (
+              <Fragment key={section.title}>
+                <tr key={`${section.title}-heading`} className="bg-[#F8F4EC]">
+                  <td colSpan={headings.length + 1} className="px-5 py-3 text-xs font-black uppercase tracking-[0.16em] text-[#064537]">
+                    {section.title}
+                  </td>
+                </tr>
+                {section.rows.map((row) => (
+                  <tr key={row[0]} className="border-b border-[#0A3028]/8 last:border-b-0">
+                    <td className="px-5 py-3 font-bold text-[#31433D]">{row[0]}</td>
+                    {row.slice(1).map((value, index) => (
+                      <td key={`${row[0]}-${headings[index].name}`} className="px-5 py-3 text-center">
+                        <ComparisonValue value={value} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="grid gap-4 md:hidden">
+        {headings.map((heading, planIndex) => (
+          <article key={heading.name} className="rounded-[20px] border border-[#0A3028]/8 bg-white p-5 shadow-[0_12px_34px_rgba(5,8,7,0.04)]">
+            <h3 className="text-lg font-extrabold text-[#071E1A]">{heading.name} features</h3>
+            <p className="mt-1 text-sm font-semibold text-[#5B6B64]">{heading.subtitle}</p>
+            <div className="mt-5 grid gap-5">
+              {sections.map((section) => (
+                <div key={`${heading.name}-${section.title}`}>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-[#064537]">{section.title}</p>
+                  <ul className="mt-3 grid gap-2">
+                    {section.rows.map((row) => {
+                      const included = row[planIndex + 1]
+                      return (
+                        <li key={`${heading.name}-${row[0]}`} className="flex items-start justify-between gap-3 text-sm font-semibold leading-5 text-[#31433D]">
+                          <span>{row[0]}</span>
+                          {included ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#4D7D35]" /> : <span className="shrink-0 text-[#A29A90]">-</span>}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </>
+  )
+}
+
 export default function Pricing() {
   const [selectedRoleKey, setSelectedRoleKey] = useState('agents')
-  const [billing, setBilling] = useState('monthly')
   const [openFaq, setOpenFaq] = useState(0)
   const selectedRole = rolePricing[selectedRoleKey]
-  const otherRoles = useMemo(() => roleOrder.filter((roleKey) => roleKey !== selectedRoleKey), [selectedRoleKey])
 
   useEffect(() => {
     document.title = 'Role-Based Pricing | Arch9'
-    setMetaDescription('Choose pricing for agents, attorneys, bond originators and developers. Start with the tools you need and scale as your business grows.')
+    setMetaDescription('Simple, transparent pricing for agents and agencies using Arch9.')
   }, [])
 
   function selectRole(roleKey) {
@@ -345,25 +455,18 @@ export default function Pricing() {
       <Header />
 
       <main>
-        <section className="mx-auto w-full max-w-[1440px] px-6 pb-12 pt-[128px] md:px-8">
+        <section className="mx-auto w-full max-w-[1440px] px-6 pb-16 pt-[144px] md:px-8">
           <div className="mx-auto max-w-[920px] text-center">
-            <p className="mx-auto inline-flex rounded-full bg-white px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#5B6B64] shadow-[0_10px_34px_rgba(5,8,7,0.04)]">
-              Pricing
-            </p>
-            <h1 className="mt-5 text-[3.1rem] font-extrabold leading-[0.96] tracking-[-0.055em] text-[#05251D] md:text-[5rem]">
+            <h1 className="text-[3rem] font-extrabold leading-[0.98] tracking-[-0.055em] text-[#05251D] md:text-[4.7rem] xl:whitespace-nowrap">
               Pricing built around how you work.
             </h1>
-            <p className="mx-auto mt-5 max-w-[720px] text-lg font-medium leading-8 text-[#31433D]">
-              Whether you're an agent, attorney, bond originator or developer, Arch9 has a solution built for your business.
-            </p>
-            <p className="mx-auto mt-3 max-w-[640px] text-sm font-semibold leading-6 text-[#6C776F]">
-              Start with the tools you need today and scale as your business grows.
+            <p className="mx-auto mt-5 max-w-[640px] text-lg font-medium leading-8 text-[#31433D]">
+              Simple, transparent pricing for agents and agencies.
             </p>
           </div>
 
-          <div className="mt-10">
-            <p className="mb-4 text-center text-xs font-black uppercase tracking-[0.22em] text-[#071E1A]">1. Choose your role</p>
-            <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+          <div className="mt-16">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {roleOrder.map((roleKey) => {
                 const role = rolePricing[roleKey]
                 const Icon = role.icon
@@ -373,7 +476,7 @@ export default function Pricing() {
                     key={roleKey}
                     type="button"
                     aria-pressed={active}
-                    className={`min-h-[190px] min-w-[250px] snap-start rounded-[22px] border p-6 text-left transition md:min-w-0 ${
+                    className={`min-h-[180px] rounded-[22px] border p-6 text-left transition ${
                       active
                         ? 'border-white/70 bg-[#064537] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55),0_24px_70px_rgba(5,8,7,0.2)]'
                         : 'border-[#0A3028]/10 bg-white text-[#071E1A] shadow-[0_18px_54px_rgba(5,8,7,0.05)] hover:-translate-y-1'
@@ -390,34 +493,15 @@ export default function Pricing() {
           </div>
         </section>
 
-        <section className="border-y border-[#0A3028]/6 bg-white/35 px-6 py-10 md:px-8">
+        <section className="border-y border-[#0A3028]/6 bg-white/35 px-6 py-16 md:px-8 md:py-20">
           <div className="mx-auto w-full max-w-[1280px]">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#071E1A]">2. {selectedRole.pricingLabel}</p>
-              <div className="inline-flex w-fit rounded-full border border-[#0A3028]/8 bg-white p-1 shadow-[0_12px_34px_rgba(5,8,7,0.04)]">
-                {[
-                  ['monthly', 'Pay Monthly'],
-                  ['annual', 'Pay Annually (Save 10%)'],
-                ].map(([value, label]) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className={`rounded-full px-5 py-3 text-xs font-extrabold transition ${billing === value ? 'bg-[#064537] text-white' : 'text-[#6C5F4F] hover:bg-[#F8F4EC]'}`}
-                    onClick={() => setBilling(value)}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={`mt-7 grid gap-6 ${selectedRole.plans.length === 3 ? 'lg:grid-cols-3' : 'mx-auto max-w-[860px] lg:grid-cols-2'}`}>
+            <div className={`grid gap-6 ${selectedRole.plans.length === 3 ? 'lg:grid-cols-3' : 'mx-auto max-w-[860px] lg:grid-cols-2'}`}>
               {selectedRole.plans.map((plan) => (
-                <PlanCard key={plan.name} plan={plan} billing={billing} />
+                <PlanCard key={plan.name} plan={plan} />
               ))}
             </div>
 
-            <div className="mt-8 grid gap-3 rounded-[20px] border border-[#0A3028]/8 bg-white/70 p-4 shadow-[0_18px_54px_rgba(5,8,7,0.04)] md:grid-cols-4">
+            <div className="mt-12 grid gap-3 rounded-[22px] border border-[#0A3028]/8 bg-white/70 p-5 shadow-[0_18px_54px_rgba(5,8,7,0.04)] md:grid-cols-4">
               {trustItems.map((item) => (
                 <div key={item.title} className="flex items-center gap-3 rounded-[16px] px-3 py-3">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F8F4EC] text-[#064537]">
@@ -433,44 +517,18 @@ export default function Pricing() {
           </div>
         </section>
 
-        <section className="px-6 py-12 md:px-8">
+        <section className="px-6 py-16 md:px-8 md:py-20">
           <div className="mx-auto grid w-full max-w-[1280px] gap-6 lg:grid-cols-[1fr_320px]">
             <div>
-              <p className="mb-5 text-xs font-black uppercase tracking-[0.22em] text-[#071E1A]">3. Feature comparison ({selectedRole.label})</p>
-              <div className="overflow-x-auto rounded-[20px] border border-[#0A3028]/10 bg-white shadow-[0_18px_54px_rgba(5,8,7,0.05)]">
-                <table className="w-full min-w-[720px] border-collapse text-sm">
-                  <thead>
-                    <tr className="border-b border-[#0A3028]/10">
-                      <th className="w-[34%] px-5 py-4 text-left text-xs font-black uppercase tracking-[0.12em] text-[#071E1A]">Features</th>
-                      {selectedRole.plans.map((plan) => (
-                        <th key={plan.name} className="bg-[#064537] px-5 py-4 text-center text-xs font-black uppercase tracking-[0.1em] text-white">
-                          {plan.name}
-                          <span className="mt-1 block text-[11px] normal-case tracking-[-0.01em] text-white/72">{plan.price}</span>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {selectedRole.comparison.map((row) => (
-                      <tr key={row[0]} className="border-b border-[#0A3028]/8 last:border-b-0">
-                        <td className="px-5 py-3 font-bold text-[#31433D]">{row[0]}</td>
-                        {row.slice(1).map((value, index) => (
-                          <td key={`${row[0]}-${selectedRole.plans[index].name}`} className="px-5 py-3 text-center">
-                            <ComparisonValue value={value} />
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <h2 className="mb-6 text-[2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Feature comparison</h2>
+              <FeatureComparison role={selectedRole} />
             </div>
 
             <aside className="rounded-[22px] border border-[#0A3028]/8 bg-white p-6 shadow-[0_18px_54px_rgba(5,8,7,0.05)] lg:mt-10">
-              <h2 className="text-xl font-extrabold tracking-[-0.03em] text-[#071E1A]">Not {selectedRoleKey === 'agents' ? 'an agent' : `in ${selectedRole.label.toLowerCase()}`}?</h2>
-              <p className="mt-2 text-sm font-medium leading-6 text-[#5B6B64]">View pricing for your role.</p>
+              <h2 className="text-xl font-extrabold tracking-[-0.03em] text-[#071E1A]">Not an agent?</h2>
+              <p className="mt-2 text-sm font-medium leading-6 text-[#5B6B64]">Viewing pricing for agents.</p>
               <div className="mt-5 grid gap-3">
-                {otherRoles.map((roleKey) => (
+                {roleOrder.filter((roleKey) => roleKey !== 'agents').map((roleKey) => (
                   <button
                     key={roleKey}
                     type="button"
@@ -486,9 +544,9 @@ export default function Pricing() {
           </div>
         </section>
 
-        <section className="px-6 pb-12 md:px-8">
+        <section className="px-6 pb-16 md:px-8 md:pb-20">
           <div className="mx-auto w-full max-w-[1280px]">
-            <p className="mb-5 text-xs font-black uppercase tracking-[0.22em] text-[#071E1A]">4. Frequently asked questions</p>
+            <h2 className="mb-6 text-[2rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">Frequently asked questions</h2>
             <div className="grid gap-3 lg:grid-cols-2">
               {selectedRole.faqs.map(([question, answer], index) => (
                 <div key={question} className="rounded-[16px] border border-[#0A3028]/8 bg-white shadow-[0_12px_34px_rgba(5,8,7,0.03)]">
@@ -512,7 +570,7 @@ export default function Pricing() {
           <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-6 rounded-[24px] bg-[linear-gradient(135deg,#05352D,#08221D)] p-8 text-white shadow-[0_24px_80px_rgba(5,8,7,0.16)] md:flex-row md:items-center md:justify-between md:p-10">
             <div>
               <h2 className="text-[2.2rem] font-extrabold tracking-[-0.04em]">Ready to get started?</h2>
-              <p className="mt-3 max-w-[560px] text-base font-medium leading-7 text-white/80">Book a demo and see how Arch9 can transform your business.</p>
+              <p className="mt-3 max-w-[640px] text-base font-medium leading-7 text-white/80">Book a demo and see how Arch9 can help your agency manage transactions, clients and growth in one place.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a href={demoHref} className="bridge-button-primary bridge-button-light min-h-[52px] justify-center px-8">
@@ -533,7 +591,7 @@ export default function Pricing() {
                   <Scale className="h-5 w-5" />
                 </span>
                 <span>
-                  <span className="block text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">{metric.value}</span>
+                  <span className="block text-lg font-extrabold tracking-[-0.03em] text-[#071E1A]">{metric.value}</span>
                   <span className="text-sm font-semibold text-[#5B6B64]">{metric.label}</span>
                 </span>
               </div>
