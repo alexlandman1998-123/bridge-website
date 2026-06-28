@@ -1,6 +1,6 @@
 import { Bath, BedDouble, Building2, Home, MapPin, Trees } from 'lucide-react'
 
-export const propertyTypes = ['Apartment', 'Estate Home', 'Townhouse', 'Development']
+export const propertyTypes = ['Apartment', 'House', 'Estate Home', 'Townhouse', 'Development', 'Commercial', 'Vacant Land']
 
 export const properties = [
   {

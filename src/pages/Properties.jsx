@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight, Bath, BedDouble, Bell, CarFront, ChevronDown, Heart, MapPin, Scale, Search, SlidersHorizontal, X } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { formatListingPrice, properties, propertyTypes } from '../data/properties'
+import { formatListingPrice, propertyTypes } from '../data/properties'
 import { readPropertyFilters } from '../lib/listingFilters'
 import {
   calculateBond,
@@ -14,6 +14,7 @@ import {
   toggleSavedProperty,
   trackListingEvent,
 } from '../lib/listingJourney'
+import { fetchPublicListings } from '../lib/publicListingsApi'
 
 const bedroomOptions = ['Any', '1+', '2+', '3+', '4+']
 const bathroomOptions = ['Any', '1+', '2+', '3+']
@@ -91,7 +92,7 @@ function PropertyCard({ property, isSaved, isCompared, onSave, onCompare }) {
 
       <div className="p-6">
         <p className="text-sm font-black uppercase tracking-[0.18em] text-[#006B4D]">{property.type}</p>
-        <a href={`/property/${property.slug}`} className="mt-3 flex items-start justify-between gap-4">
+        <a href={`/buy/${property.slug}`} className="mt-3 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-[#05120F]">{property.title}</h2>
             <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#4B5B55]">
@@ -181,7 +182,10 @@ function ComparisonTray({ comparison, onRemove }) {
 
 export default function Properties() {
   const [filters, setFilters] = useState(() => readPropertyFilters())
-  const [savedSlugs, setSavedSlugs] = useState(() => properties.filter((property) => isPropertySaved(property.slug)).map((property) => property.slug))
+  const [publicProperties, setPublicProperties] = useState([])
+  const [listingsLoading, setListingsLoading] = useState(true)
+  const [listingsError, setListingsError] = useState('')
+  const [savedSlugs, setSavedSlugs] = useState([])
   const [comparison, setComparison] = useState(() => readComparison())
   const [alertCreated, setAlertCreated] = useState(false)
 
@@ -202,33 +206,44 @@ export default function Properties() {
     trackListingEvent({ eventType: 'Property Search Viewed', payload: filters })
   }, [filters])
 
-  const filteredProperties = useMemo(() => {
-    const minimumBedrooms = filters.bedrooms === 'Any' ? 0 : Number.parseInt(filters.bedrooms, 10)
-    const minimumBathrooms = filters.bathrooms === 'Any' ? 0 : Number.parseInt(filters.bathrooms, 10)
-    const minPrice = filters.minPrice ? Number(filters.minPrice) : 0
-    const maxPrice = filters.maxPrice ? Number(filters.maxPrice) : Number.POSITIVE_INFINITY
+  useEffect(() => {
+    let cancelled = false
 
-    return properties
-      .filter((property) => {
-        const matchesLocation = `${property.location} ${property.title}`.toLowerCase().includes(filters.location.toLowerCase())
-        const matchesType = filters.type === 'Any' || property.type === filters.type
-        const matchesStatus = !filters.status || property.listingType === filters.status
-        return (
-          matchesLocation &&
-          matchesType &&
-          matchesStatus &&
-          property.price >= minPrice &&
-          property.price <= maxPrice &&
-          property.bedrooms >= minimumBedrooms &&
-          property.bathrooms >= minimumBathrooms
-        )
+    queueMicrotask(() => {
+      if (cancelled) return
+      setListingsLoading(true)
+      setListingsError('')
+    })
+
+    fetchPublicListings(filters)
+      .then((result) => {
+        if (cancelled) return
+        setPublicProperties(result.items)
+        setSavedSlugs(result.items.filter((property) => isPropertySaved(property.slug)).map((property) => property.slug))
       })
+      .catch((error) => {
+        if (cancelled) return
+        setPublicProperties([])
+        setSavedSlugs([])
+        setListingsError(error?.message || 'Published listings could not be loaded.')
+      })
+      .finally(() => {
+        if (!cancelled) setListingsLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [filters])
+
+  const filteredProperties = useMemo(() => {
+    return [...publicProperties]
       .sort((a, b) => {
         if (filters.sort === 'price-asc') return a.price - b.price
         if (filters.sort === 'price-desc') return b.price - a.price
-        return 0
+        return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime()
       })
-  }, [filters])
+  }, [filters.sort, publicProperties])
 
   function updateFilter(key, value) {
     setFilters((current) => ({ ...current, [key]: value }))
@@ -276,7 +291,9 @@ export default function Properties() {
               </div>
               <div>
                 <h2 className="text-lg font-extrabold text-[#05120F]">Property search</h2>
-                <p className="text-sm text-[#5B6B64]">{filteredProperties.length} properties available</p>
+                <p className="text-sm text-[#5B6B64]">
+                  {listingsLoading ? 'Loading published listings' : `${filteredProperties.length} published properties available`}
+                </p>
               </div>
             </div>
 
@@ -342,24 +359,41 @@ export default function Properties() {
 
           <ComparisonTray comparison={comparison} onRemove={handleCompare} />
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {filteredProperties.map((property) => (
-              <PropertyCard
-                key={property.slug}
-                property={property}
-                isSaved={savedSlugs.includes(property.slug)}
-                isCompared={comparison.some((item) => item.slug === property.slug)}
-                onSave={handleSave}
-                onCompare={handleCompare}
-              />
-            ))}
-          </div>
+          {listingsLoading ? (
+            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <div key={item} className="overflow-hidden rounded-[34px] border border-[#0A3028]/8 bg-white shadow-[0_22px_70px_rgba(5,8,7,0.07)]">
+                  <div className="h-64 animate-pulse bg-[#EFE8DC]" />
+                  <div className="space-y-4 p-6">
+                    <div className="h-5 w-28 animate-pulse rounded-full bg-[#EFE8DC]" />
+                    <div className="h-8 w-4/5 animate-pulse rounded-full bg-[#EFE8DC]" />
+                    <div className="h-5 w-3/5 animate-pulse rounded-full bg-[#EFE8DC]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredProperties.length ? (
+            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {filteredProperties.map((property) => (
+                <PropertyCard
+                  key={property.slug}
+                  property={property}
+                  isSaved={savedSlugs.includes(property.slug)}
+                  isCompared={comparison.some((item) => item.slug === property.slug)}
+                  onSave={handleSave}
+                  onCompare={handleCompare}
+                />
+              ))}
+            </div>
+          ) : null}
 
-          {filteredProperties.length === 0 ? (
+          {!listingsLoading && filteredProperties.length === 0 ? (
             <div className="mt-8 rounded-[30px] border border-[#0A3028]/8 bg-white p-8 text-center shadow-[0_18px_54px_rgba(5,8,7,0.06)]">
-              <h2 className="text-2xl font-extrabold text-[#05120F]">No properties match those filters yet.</h2>
+              <h2 className="text-2xl font-extrabold text-[#05120F]">
+                {listingsError ? 'Published listings could not load.' : 'No published properties match those filters yet.'}
+              </h2>
               <p className="mx-auto mt-3 max-w-[520px] text-sm leading-6 text-[#4B5B55]">
-                Try widening the area, price range or bedroom count. New Arch9 network listings will appear here as they are published.
+                {listingsError || 'Try widening the area, price range or bedroom count. New Arch9 network listings will appear here once they pass the public publishing checks.'}
               </p>
             </div>
           ) : null}

@@ -2,14 +2,10 @@ import { useEffect } from 'react'
 import {
   ArrowRight,
   BadgeCheck,
-  BarChart3,
-  Bell,
   BriefcaseBusiness,
   Building2,
-  CalendarDays,
   CheckCircle2,
   CircleDot,
-  ClipboardCheck,
   Clock3,
   FileCheck2,
   Home,
@@ -26,25 +22,6 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp } from '../components/motion/Reveal'
-
-const orbitRoles = [
-  { label: 'Buyer', icon: Users, className: 'left-1/2 top-[6%] -translate-x-1/2' },
-  { label: 'Agent', icon: Users, className: 'right-[11%] top-[20%]' },
-  { label: 'Attorney', icon: Scale, className: 'right-[6%] top-1/2 -translate-y-1/2' },
-  { label: 'Bond Originator', icon: Landmark, className: 'right-[15%] bottom-[16%]' },
-  { label: 'Bank', icon: Landmark, className: 'left-1/2 bottom-[6%] -translate-x-1/2' },
-  { label: 'Registration', icon: BadgeCheck, className: 'left-[15%] bottom-[16%]' },
-  { label: 'Developer', icon: Building2, className: 'left-[6%] top-1/2 -translate-y-1/2' },
-  { label: 'Municipality', icon: MapPinned, className: 'left-[11%] top-[20%]' },
-]
-
-const orbitEvents = [
-  { label: 'OTP Signed', time: '9:12', className: 'left-[7%] top-[34%]' },
-  { label: 'Instruction Received', time: '9:13', className: 'right-[7%] top-[34%]' },
-  { label: 'Application Started', time: '9:18', className: 'left-[18%] bottom-[25%]' },
-  { label: 'Approved', time: '11:02', className: 'right-[20%] bottom-[25%]' },
-  { label: 'Registered', time: '15:42', className: 'left-1/2 bottom-[17%] -translate-x-1/2' },
-]
 
 const metrics = [
   { value: '120,000+', label: 'Properties Listed', icon: Home },
@@ -72,6 +49,8 @@ const timelineEvents = [
   { time: '11:02', label: 'Approved', span: 'col-start-5' },
   { time: '15:42', label: 'Registered', span: 'col-start-9' },
 ]
+
+const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
 
 const workspaces = [
   {
@@ -141,64 +120,105 @@ function SectionIntro({ eyebrow, title, copy, center = false, light = false }) {
   )
 }
 
-function HeroNetworkGraphic() {
+function HeroProductCard() {
+  const progressSteps = [
+    { label: 'OTP Signed', time: '9:12', state: 'done' },
+    { label: 'Buyer Onboarded', time: '10:18', state: 'done' },
+    { label: 'Finance Approved', time: '11:02', state: 'done' },
+    { label: 'Transfer in Progress', time: '', state: 'active' },
+    { label: 'Registration', time: '', state: 'pending' },
+  ]
+
+  const stakeholders = [
+    { label: 'Buyer', icon: Users },
+    { label: 'Agent', icon: Users },
+    { label: 'Attorney', icon: Scale },
+    { label: 'Bank', icon: Landmark },
+    { label: 'Bond Originator', icon: FileCheck2 },
+    { label: 'Municipality', icon: Building2 },
+  ]
+
   return (
-    <div className="relative mx-auto aspect-[1.42/1] w-full max-w-[760px] overflow-hidden rounded-[30px] border border-[#0A3028]/10 bg-white/88 shadow-[0_34px_110px_rgba(6,45,37,0.14)] backdrop-blur-xl md:rounded-[42px]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(134,228,194,0.19),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.94),rgba(248,251,247,0.94))]" />
-      <svg className="absolute inset-[5%] h-[90%] w-[90%]" viewBox="0 0 760 520" aria-hidden="true">
-        <circle cx="380" cy="260" r="98" fill="none" stroke="rgba(6,69,55,0.17)" strokeDasharray="4 7" strokeWidth="1.5" />
-        <circle cx="380" cy="260" r="174" fill="none" stroke="rgba(6,69,55,0.13)" strokeWidth="1.2" />
-        <g stroke="rgba(6,69,55,0.16)" strokeWidth="1.2">
-          <line x1="380" y1="260" x2="380" y2="74" />
-          <line x1="380" y1="260" x2="512" y2="128" />
-          <line x1="380" y1="260" x2="566" y2="260" />
-          <line x1="380" y1="260" x2="512" y2="392" />
-          <line x1="380" y1="260" x2="380" y2="446" />
-          <line x1="380" y1="260" x2="248" y2="392" />
-          <line x1="380" y1="260" x2="194" y2="260" />
-          <line x1="380" y1="260" x2="248" y2="128" />
-        </g>
-        <g fill="#0E6A55">
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
-            const radians = (angle * Math.PI) / 180
-            return <circle key={angle} cx={380 + Math.sin(radians) * 98} cy={260 - Math.cos(radians) * 98} r="4" />
+    <div className="relative mx-auto w-full max-w-[760px] overflow-hidden rounded-[28px] border border-[#0A3028]/10 bg-white/92 shadow-[0_34px_110px_rgba(6,45,37,0.14)] backdrop-blur-xl">
+      <div className="grid min-h-[430px] grid-cols-[72px_1fr]">
+        <aside className="bg-[linear-gradient(180deg,#101923,#061B18)] text-white">
+          <div className="flex h-20 items-center justify-center text-2xl font-black tracking-[0.16em]">A</div>
+          {[
+            { icon: Home, active: true },
+            { icon: Workflow },
+            { icon: FileCheck2 },
+            { icon: Users },
+            { icon: Clock3 },
+            { icon: LayoutDashboard },
+          ].map((item, index) => {
+            const Icon = item.icon
+            return (
+              <div key={index} className={`flex h-16 items-center justify-center ${item.active ? 'bg-[#006B4D]' : 'text-white/76'}`}>
+                <Icon className="h-5 w-5" />
+              </div>
+            )
           })}
-        </g>
-      </svg>
+        </aside>
 
-      <div className="absolute left-1/2 top-1/2 z-20 flex h-[118px] w-[118px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-[radial-gradient(circle_at_34%_24%,#2B6D5E,#064537_58%,#042A23)] text-center text-white shadow-[0_24px_70px_rgba(6,69,55,0.28)] md:h-[154px] md:w-[154px]">
-        <span className="text-[0.78rem] font-black uppercase tracking-[0.3em] text-[#D5F8E9] md:text-[0.96rem]">Arch9</span>
-        <span className="mt-2 text-[10px] font-extrabold uppercase leading-tight tracking-[0.12em] text-white/84 md:text-xs">
-          Shared
-          <span className="block">Transaction</span>
-        </span>
-      </div>
+        <div className="min-w-0">
+          <header className="flex items-start justify-between gap-5 border-b border-[#0A3028]/8 px-8 py-7">
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-[-0.04em] text-[#071E1A]">14 Nicolson Street</h2>
+              <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#6B7B74]">
+                <span className="h-2 w-2 rounded-full bg-[#0E8A69]" />
+                Residential Sale
+              </p>
+            </div>
+            <div className="flex items-center -space-x-2">
+              {['#0E8A69', '#2F6E86', '#D19C81'].map((color) => (
+                <span key={color} className="h-9 w-9 rounded-full border-2 border-white shadow-sm" style={{ backgroundColor: color }} />
+              ))}
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-[#F0F2EF] text-xs font-extrabold text-[#52645D]">+3</span>
+            </div>
+          </header>
 
-      {orbitRoles.map((item) => {
-        const Icon = item.icon
-        return (
-          <div
-            key={item.label}
-            className={`absolute z-20 flex flex-col items-center gap-2 text-center text-[10px] font-extrabold leading-tight text-[#073B32] md:text-xs ${item.className}`}
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#064537]/10 bg-white text-[#064537] shadow-[0_14px_34px_rgba(6,45,37,0.08)] md:h-12 md:w-12">
-              <Icon className="h-4 w-4 md:h-5 md:w-5" />
-            </span>
-            <span className="max-w-[88px]">{item.label}</span>
+          <div className="px-8 py-12">
+            <div className="relative grid grid-cols-5 gap-4">
+              <div className="absolute left-[8%] right-[8%] top-5 h-px bg-[#D6DFDA]" />
+              <div className="absolute left-[8%] top-5 h-px w-[60%] bg-[#0E6A55]" />
+              {progressSteps.map((step) => (
+                <div key={step.label} className="relative z-10 text-center">
+                  <span
+                    className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border text-sm font-black shadow-sm ${
+                      step.state === 'done'
+                        ? 'border-[#0E6A55] bg-[#0E6A55] text-white'
+                        : step.state === 'active'
+                          ? 'border-[#0E6A55] bg-white text-[#0E6A55] ring-4 ring-[#E4F2EC]'
+                          : 'border-[#D6DFDA] bg-white text-[#B8C2BD]'
+                    }`}
+                  >
+                    {step.state === 'pending' ? <span className="h-3 w-3 rounded-[4px] bg-current" /> : step.state === 'active' ? <span className="h-4 w-4 rounded-full bg-current" /> : <CheckCircle2 className="h-5 w-5" />}
+                  </span>
+                  <p className="mt-5 text-sm font-bold leading-5 text-[#071E1A]">{step.label}</p>
+                  {step.time ? <p className="mt-2 text-xs font-semibold text-[#8A978F]">{step.time}</p> : null}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 rounded-[16px] border border-[#0A3028]/10 bg-white/80 p-5">
+              <p className="text-sm font-medium text-[#52645D]">Everyone sees the same progress. In real time.</p>
+              <div className="mt-5 grid grid-cols-3 gap-3 xl:grid-cols-6">
+                {stakeholders.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <div key={item.label} className="flex items-center gap-2 text-xs font-extrabold text-[#071E1A]">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EAF7F0] text-[#064537]">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      {item.label}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           </div>
-        )
-      })}
-
-      {orbitEvents.map((item, index) => (
-        <div
-          key={item.label}
-          className={`absolute z-30 hidden min-w-[126px] rounded-[14px] border border-[#064537]/8 bg-white/94 px-3 py-2 text-[11px] font-bold text-[#071E1A] shadow-[0_16px_38px_rgba(6,45,37,0.08)] backdrop-blur md:block ${item.className}`}
-          style={{ animationDelay: `${index * 120}ms` }}
-        >
-          <span className="block text-[#0E6A55]">{item.label}</span>
-          <span className="mt-0.5 block text-[10px] font-semibold text-[#6B7B74]">{item.time}</span>
         </div>
-      ))}
+      </div>
     </div>
   )
 }
@@ -552,8 +572,9 @@ function MarketingHome() {
 
       <main>
         <section className="relative overflow-hidden px-5 pb-12 pt-[112px] md:px-8 md:pb-16 md:pt-[124px]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(134,228,194,0.24),transparent_28%),radial-gradient(circle_at_18%_28%,rgba(6,69,55,0.08),transparent_30%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
-          <div className="relative mx-auto grid w-full max-w-[1500px] gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
+          <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
+          <div className="relative mx-auto grid w-full max-w-[1500px] gap-10 lg:grid-cols-[0.43fr_0.57fr] lg:items-center">
             <FadeUp className="max-w-[680px]">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
               <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.04] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
@@ -562,7 +583,7 @@ function MarketingHome() {
                 <span className="block text-[#0E6A55]">Finally connected.</span>
               </h1>
               <p className="mt-6 max-w-[560px] text-[1rem] font-medium leading-7 text-[#52645D] md:text-[1.12rem] md:leading-8">
-                Arch9 connects buyers, sellers, agents, attorneys, bond originators and developers in one shared transaction workspace.
+                The only workspace that connects agents, attorneys, banks, buyers and sellers in one live timeline. Less chasing. More clarity. Faster registration.
               </p>
               <div className="mt-8 grid gap-3 sm:flex">
                 <a
@@ -578,10 +599,18 @@ function MarketingHome() {
                   Watch 60 sec overview
                 </a>
               </div>
+              <div className="mt-9 hidden md:block">
+                <p className="text-sm font-medium text-[#6B7B74]">Trusted by leading agencies, attorneys and developers.</p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490]">
+                  {heroTrustLogos.map((logo) => (
+                    <span key={logo}>{logo}</span>
+                  ))}
+                </div>
+              </div>
             </FadeUp>
 
             <FadeUp delay={0.12} className="hidden lg:block">
-              <HeroNetworkGraphic />
+              <HeroProductCard />
             </FadeUp>
           </div>
         </section>

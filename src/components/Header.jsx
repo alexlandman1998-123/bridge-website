@@ -78,7 +78,13 @@ export default function Header() {
   const navShellRef = useRef(null)
   const solutionsButtonRef = useRef(null)
   const closeMenuTimerRef = useRef(null)
-  const isHome = pathname === '/' || pathname === '/buy'
+  const isHome = pathname === '/'
+  const navItems = isHome
+    ? [
+        ...primaryNavItems.filter((item) => ['Platform', 'Solutions', 'Pricing', 'Resources'].includes(item.label)),
+        { label: 'About', href: '/why-arch9', match: ['/why-arch9'], analyticsEvent: 'nav_about_clicked' },
+      ]
+    : primaryNavItems
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -185,10 +191,10 @@ export default function Header() {
     }
   }
 
-  const solutionsIndex = primaryNavItems.findIndex((item) => item.menu === 'solutions')
+  const solutionsIndex = navItems.findIndex((item) => item.menu === 'solutions')
   const firstMenuIndex = solutionsIndex
-  const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(0, firstMenuIndex) : primaryNavItems).filter((item) => !item.menu)
-  const mobileNavAfterMenus = (firstMenuIndex >= 0 ? primaryNavItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
+  const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? navItems.slice(0, firstMenuIndex) : navItems).filter((item) => !item.menu)
+  const mobileNavAfterMenus = (firstMenuIndex >= 0 ? navItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
   const lightHomeHeader = isHome && !scrolled
 
   return (
@@ -204,7 +210,7 @@ export default function Header() {
             ? `text-[#071E1A] ${
                 scrolled
                   ? 'border border-white/10 bg-[rgba(6,45,37,0.92)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_58px_rgba(3,18,15,0.28)] backdrop-blur-[16px]'
-                  : 'border border-[#0A3028]/8 bg-white/45 shadow-[0_18px_58px_rgba(7,30,26,0.04)] backdrop-blur-[10px]'
+                  : 'border border-transparent bg-transparent shadow-none'
               }`
             : `border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] ${
                 scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
@@ -218,7 +224,7 @@ export default function Header() {
         </a>
 
         <nav className="hidden min-w-0 justify-self-center lg:flex lg:items-center lg:gap-2 xl:gap-3" aria-label="Primary navigation">
-          {primaryNavItems.map((item) => {
+          {navItems.map((item) => {
             const active =
               item.menu === 'solutions'
                 ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
@@ -283,11 +289,12 @@ export default function Header() {
           </a>
           <a
             href={demoHref}
-            className="inline-flex min-h-[46px] items-center justify-center rounded-full bg-[#064537] px-5 py-3 text-sm font-extrabold text-white shadow-[0_16px_34px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 hover:bg-[#073B32]"
+            className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-[#064537] px-5 py-3 text-sm font-extrabold text-white shadow-[0_16px_34px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 hover:bg-[#073B32]"
             style={{ color: '#FFFFFF' }}
             onClick={() => trackNavigationEvent('nav_book_demo_clicked')}
           >
             Book a Demo
+            <ArrowRight className="h-4 w-4" />
           </a>
         </div>
 

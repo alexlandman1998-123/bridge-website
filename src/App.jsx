@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Contact from './pages/Contact'
-import PlatformOverview from './pages/Home'
+import PlatformHome from './pages/Home'
+import PlatformOverview from './pages/PlatformOverview'
 import Pricing from './pages/Pricing'
 import Properties from './pages/Properties'
 import Developments from './pages/Developments'
@@ -14,7 +15,6 @@ import SolutionPage from './pages/SolutionPage'
 import AgentsSolution from './pages/AgentsSolution'
 import AttorneysSolution from './pages/AttorneysSolution'
 import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
-import PlatformSolution from './pages/PlatformSolution'
 import Tools from './pages/Tools'
 import ToolCategory from './pages/ToolCategory'
 import ToolDetail from './pages/ToolDetail'
@@ -71,21 +71,26 @@ export default function App() {
       return <BondOriginatorsSolution />
     }
     if (solutionKey === 'platform') {
-      return <PlatformSolution />
+      return <PlatformOverview />
     }
     return <SolutionPage pageKey={solutionKey} />
   }
 
   if (pathname === '/platform') {
-    return <LandingPage pageKey="platform" />
-  }
-
-  if (pathname === '/platform/overview' || pathname.startsWith('/platform/overview/')) {
     return <PlatformOverview />
   }
 
-  if (pathname === '/properties' || pathname === '/for-sale') {
+  if (pathname === '/platform/overview' || pathname.startsWith('/platform/overview/')) {
+    return <PlatformHome />
+  }
+
+  if (pathname === '/buy' || pathname === '/properties' || pathname === '/for-sale') {
     return <Properties />
+  }
+
+  if (pathname.startsWith('/buy/')) {
+    const slug = pathname.replace('/buy/', '').replace(/\/$/, '')
+    return <PropertyDetail slug={slug} />
   }
 
   if (pathname === '/property-intelligence') {
@@ -165,10 +170,6 @@ export default function App() {
   if (pathname.startsWith('/property/')) {
     const slug = pathname.replace('/property/', '').replace(/\/$/, '')
     return <PropertyDetail slug={slug} />
-  }
-
-  if (pathname === '/buy') {
-    return <MarketingHome />
   }
 
   return <MarketingHome />

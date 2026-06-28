@@ -6,7 +6,7 @@ export const demoHref = '/book-demo'
 export const primaryNavItems = [
   { label: 'Platform', href: '/platform', match: ['/platform'], analyticsEvent: 'nav_platform_clicked' },
   { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
-  { label: 'Buy', href: '/buy', analyticsEvent: 'nav_buy_clicked' },
+  { label: 'Buy', href: '/buy', match: ['/buy'], analyticsEvent: 'nav_buy_clicked' },
   { label: 'Sell', href: '/sell', match: ['/sell'], analyticsEvent: 'nav_sell_clicked' },
   { label: 'Developments', href: '/developments', match: ['/developments'], analyticsEvent: 'nav_developments_clicked' },
   { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
@@ -50,7 +50,7 @@ export const solutionNavItems = [
     title: 'Platform Overview',
     label: 'Platform Overview',
     href: '/platform',
-    description: 'A shared transaction spine for every party in the property journey.',
+    description: 'One shared workspace for everyone in the property journey.',
     icon: Layers,
     cta: 'Explore Platform',
   },

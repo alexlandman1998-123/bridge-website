@@ -26,6 +26,7 @@ import { findPropertyBySlug, formatListingPrice, properties } from '../data/prop
 import { findAreaInsight } from '../data/areaInsights'
 import { slugify } from '../data/propertyIntelligence'
 import { capturePropertyEnquiry } from '../lib/leads'
+import { fetchPublicListingBySlug } from '../lib/publicListingsApi'
 import {
   PRIME_RATE,
   calculateAffordability,
@@ -450,7 +451,10 @@ function NotFound() {
 }
 
 export default function PropertyDetail({ slug }) {
-  const property = findPropertyBySlug(slug)
+  const staticProperty = findPropertyBySlug(slug)
+  const [publicProperty, setPublicProperty] = useState(null)
+  const [publicLoading, setPublicLoading] = useState(() => !staticProperty)
+  const property = staticProperty || publicProperty
   const [enquiry, setEnquiry] = useState(initialEnquiry)
   const [lead, setLead] = useState(null)
   const [viewing, setViewing] = useState(initialViewing)
@@ -459,10 +463,62 @@ export default function PropertyDetail({ slug }) {
   const [compared, setCompared] = useState(false)
 
   useEffect(() => {
+    if (staticProperty) {
+      queueMicrotask(() => {
+        setPublicLoading(false)
+        setSaved(isPropertySaved(staticProperty.slug))
+      })
+      return undefined
+    }
+
+    let cancelled = false
+    queueMicrotask(() => {
+      if (!cancelled) setPublicLoading(true)
+    })
+    fetchPublicListingBySlug(slug)
+      .then((listing) => {
+        if (cancelled) return
+        setPublicProperty(listing)
+        setSaved(listing ? isPropertySaved(listing.slug) : false)
+      })
+      .catch(() => {
+        if (!cancelled) setPublicProperty(null)
+      })
+      .finally(() => {
+        if (!cancelled) setPublicLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [slug, staticProperty])
+
+  useEffect(() => {
     if (!property) return
     document.title = `${property.title} | Arch9`
     trackListingEvent({ eventType: 'Property Viewed', property })
   }, [property])
+
+  if (publicLoading && !property) {
+    return (
+      <div className="bridge-site-bg min-h-screen text-[#05120F]">
+        <Header />
+        <main className="bg-[#F8F4EC] pt-[112px]">
+          <section className="mx-auto w-full max-w-[1440px] px-6 pb-16 pt-8 md:px-8 lg:pb-24">
+            <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+              <div className="min-h-[520px] animate-pulse rounded-[42px] bg-[#EFE8DC]" />
+              <div className="space-y-4 rounded-[36px] bg-white p-7">
+                <div className="h-10 w-36 animate-pulse rounded-full bg-[#EFE8DC]" />
+                <div className="h-16 w-full animate-pulse rounded-full bg-[#EFE8DC]" />
+                <div className="h-6 w-3/4 animate-pulse rounded-full bg-[#EFE8DC]" />
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 
   if (!property) {
     return <NotFound />
@@ -510,7 +566,7 @@ export default function PropertyDetail({ slug }) {
 
       <main className="bg-[#F8F4EC] pt-[112px]">
         <section className="mx-auto w-full max-w-[1440px] px-6 pb-16 pt-8 md:px-8 lg:pb-24">
-          <a href="/properties" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
+          <a href="/buy" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#006B4D]">
             <ArrowLeft className="h-4 w-4" />
             Back to properties
           </a>
