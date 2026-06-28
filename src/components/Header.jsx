@@ -79,12 +79,7 @@ export default function Header() {
   const solutionsButtonRef = useRef(null)
   const closeMenuTimerRef = useRef(null)
   const isHome = pathname === '/'
-  const navItems = isHome
-    ? [
-        ...primaryNavItems.filter((item) => ['Platform', 'Solutions', 'Pricing', 'Resources'].includes(item.label)),
-        { label: 'About', href: '/why-arch9', match: ['/why-arch9'], analyticsEvent: 'nav_about_clicked' },
-      ]
-    : primaryNavItems
+  const navItems = primaryNavItems
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
