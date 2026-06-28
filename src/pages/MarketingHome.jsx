@@ -56,9 +56,36 @@ const timelineEvents = [
 const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
 
 const heroStakeholders = [
-  { label: 'Buyer', icon: Users, initials: 'BU', view: 'Buyer view', title: 'Documents requested', copy: 'Upload FICA and see what happens next.', progress: 72 },
-  { label: 'Seller', icon: Users, initials: 'SE', view: 'Seller view', title: 'Sale moving forward', copy: 'Follow transfer progress without chasing.', progress: 76 },
-  { label: 'Agent', icon: BadgeCheck, initials: 'AG', view: 'Agent view', title: 'Everyone aligned', copy: 'Keep buyers, sellers and partners on the same live timeline.', progress: 80 },
+  {
+    label: 'Buyer',
+    icon: Users,
+    initials: 'BU',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80',
+    view: 'Buyer view',
+    title: 'Documents requested',
+    copy: 'Upload FICA and see what happens next.',
+    progress: 72,
+  },
+  {
+    label: 'Seller',
+    icon: Users,
+    initials: 'SE',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
+    view: 'Seller view',
+    title: 'Sale moving forward',
+    copy: 'Follow transfer progress without chasing.',
+    progress: 76,
+  },
+  {
+    label: 'Agent',
+    icon: BadgeCheck,
+    initials: 'AG',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80',
+    view: 'Agent view',
+    title: 'Everyone aligned',
+    copy: 'Keep buyers, sellers and partners on the same live timeline.',
+    progress: 80,
+  },
   { label: 'Attorney', icon: Scale, initials: 'AT', view: 'Attorney view', title: 'Transfer in progress', copy: 'Request documents and keep every party informed.', progress: 82 },
   { label: 'Bond Originator', icon: Users, initials: 'BO', view: 'Originator view', title: 'Bond approved', copy: 'Finance progress is visible to the right people.', progress: 78 },
   { label: 'Bank', icon: Landmark, initials: 'BK', view: 'Bank view', title: 'Approval recorded', copy: 'Key finance updates stay attached to the transaction.', progress: 74 },
@@ -143,45 +170,56 @@ function SectionIntro({ eyebrow, title, copy, center = false, light = false }) {
 
 function StakeholderSelector({ selectedRole, onSelect }) {
   return (
-    <motion.div
-      className="-mx-5 mt-8 flex snap-x gap-4 overflow-x-auto px-5 pb-3 md:mx-0 md:justify-center md:overflow-visible md:px-0 lg:mt-0"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, delay: 0.2, ease: motionEaseOut }}
-    >
-      {heroStakeholders.map((stakeholder) => {
-        const Icon = stakeholder.icon
-        const active = selectedRole === stakeholder.label
+    <div>
+      <motion.div
+        className="hidden items-center justify-center gap-2 pb-4 text-xs font-black tracking-[-0.02em] text-[#0E6A55] lg:flex"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.12, ease: motionEaseOut }}
+      >
+        <span>Switch roles. See everything.</span>
+        <ArrowRight className="h-3.5 w-3.5 rotate-90" />
+      </motion.div>
+      <motion.div
+        className="-mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-3 md:mx-0 md:justify-center md:gap-5 md:overflow-visible md:px-0"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.2, ease: motionEaseOut }}
+      >
+        {heroStakeholders.map((stakeholder) => {
+          const Icon = stakeholder.icon
+          const active = selectedRole === stakeholder.label
 
-        return (
-          <button
-            key={stakeholder.label}
-            type="button"
-            aria-pressed={active}
-            className="group min-w-[76px] snap-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E6A55]/25"
-            onClick={() => onSelect(stakeholder.label)}
-          >
-            <span
-              className={`mx-auto flex h-[56px] w-[56px] items-center justify-center rounded-full border bg-white shadow-[0_12px_34px_rgba(7,30,26,0.08)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.04] ${
-                active
-                  ? 'border-[#0E6A55] text-[#0E6A55] ring-4 ring-[#0E6A55]/12 shadow-[0_18px_44px_rgba(14,106,85,0.18)]'
-                  : 'border-[#0A3028]/10 text-[#071E1A]'
-              }`}
+          return (
+            <button
+              key={stakeholder.label}
+              type="button"
+              aria-pressed={active}
+              className="group min-w-[76px] snap-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E6A55]/25"
+              onClick={() => onSelect(stakeholder.label)}
             >
-              {['Buyer', 'Seller', 'Agent'].includes(stakeholder.label) ? (
-                <span className="text-sm font-black tracking-[-0.04em]">{stakeholder.initials}</span>
-              ) : (
-                <Icon className="h-5 w-5" />
-              )}
-            </span>
-            <span className={`mt-2 block text-[11px] font-black leading-tight tracking-[-0.02em] ${active ? 'text-[#0E6A55]' : 'text-[#071E1A]'}`}>
-              {stakeholder.label}
-            </span>
-            <span className={`mx-auto mt-2 block h-1.5 w-1.5 rounded-full ${active ? 'bg-[#0E6A55]' : 'bg-transparent'}`} />
-          </button>
-        )
-      })}
-    </motion.div>
+              <span
+                className={`mx-auto flex h-[58px] w-[58px] items-center justify-center overflow-hidden rounded-full border bg-white text-[#071E1A] shadow-[0_12px_34px_rgba(7,30,26,0.08)] transition duration-200 group-hover:-translate-y-1 group-hover:scale-[1.05] group-hover:shadow-[0_18px_42px_rgba(7,30,26,0.12)] ${
+                  active
+                    ? 'border-[#0E6A55] text-[#0E6A55] ring-4 ring-[#0E6A55]/12 shadow-[0_18px_44px_rgba(14,106,85,0.18)]'
+                    : 'border-[#0A3028]/10'
+                }`}
+              >
+                {stakeholder.avatar ? (
+                  <img src={stakeholder.avatar} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <Icon className="h-5 w-5" />
+                )}
+              </span>
+              <span className={`mt-2 block text-[11px] font-black leading-tight tracking-[-0.02em] ${active ? 'text-[#0E6A55]' : 'text-[#071E1A]'}`}>
+                {stakeholder.label}
+              </span>
+              <span className={`mx-auto mt-2 block h-1.5 w-1.5 rounded-full ${active ? 'bg-[#0E6A55]' : 'bg-transparent'}`} />
+            </button>
+          )
+        })}
+      </motion.div>
+    </div>
   )
 }
 
@@ -232,28 +270,12 @@ function HeroProductCard({ selectedStakeholder, activeUpdate, className = '' }) 
     { label: 'Registration', time: '', state: 'pending' },
   ]
 
-  const stakeholders = [
-    { label: 'Buyer', icon: Users },
-    { label: 'Agent', icon: Users },
-    { label: 'Attorney', icon: Scale },
-    { label: 'Bank', icon: Landmark },
-    { label: 'Bond Originator', icon: FileCheck2 },
-    { label: 'Municipality', icon: Building2 },
-  ]
-
   return (
-    <div className={`relative mx-auto mt-8 hidden w-full max-w-[700px] lg:mt-6 lg:block ${className}`}>
-      <div
-        className="absolute -inset-x-12 bottom-0 top-12 -z-10 rounded-[38px] bg-cover bg-center opacity-45 blur-[1.4px]"
-        style={{
-          backgroundImage:
-            'linear-gradient(90deg,rgba(250,248,243,0.92),rgba(250,248,243,0.38)),url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1300&q=82)',
-        }}
-      />
-      <div className="overflow-hidden rounded-[28px] border border-[#0A3028]/10 bg-white/92 shadow-[0_34px_110px_rgba(6,45,37,0.14)] backdrop-blur-xl">
-      <div className="grid min-h-[365px] grid-cols-[64px_1fr]">
+    <div className={`relative mx-auto mt-8 hidden w-full max-w-[790px] lg:mt-8 lg:block ${className}`}>
+      <div className="overflow-hidden rounded-[30px] border border-[#0A3028]/10 bg-white/94 shadow-[0_38px_120px_rgba(6,45,37,0.16)] backdrop-blur-xl">
+      <div className="grid min-h-[350px] grid-cols-[72px_1fr]">
         <aside className="bg-[linear-gradient(180deg,#101923,#061B18)] text-white">
-          <div className="flex h-[72px] items-center justify-center text-2xl font-black tracking-[0.16em]">A</div>
+          <div className="flex h-[78px] items-center justify-center text-2xl font-black tracking-[0.16em]">A</div>
           {[
             { icon: Home, active: true },
             { icon: Workflow },
@@ -264,18 +286,18 @@ function HeroProductCard({ selectedStakeholder, activeUpdate, className = '' }) 
           ].map((item, index) => {
             const Icon = item.icon
             return (
-              <div key={index} className={`flex h-[52px] items-center justify-center ${item.active ? 'bg-[#006B4D]' : 'text-white/76'}`}>
-                <Icon className="h-[18px] w-[18px]" />
+              <div key={index} className={`flex h-[56px] items-center justify-center transition duration-200 hover:bg-white/8 ${item.active ? 'bg-[#006B4D]' : 'text-white/76'}`}>
+                <Icon className="h-5 w-5 transition duration-200 hover:scale-[1.05]" />
               </div>
             )
           })}
         </aside>
 
         <div className="min-w-0">
-          <header className="flex items-start justify-between gap-5 border-b border-[#0A3028]/8 px-7 py-5">
+          <header className="flex items-start justify-between gap-5 border-b border-[#0A3028]/8 px-8 py-6">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#0E6A55]">{selectedStakeholder.view}</p>
-              <h2 className="text-[1.45rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">14 Nicolson Street</h2>
+              <h2 className="text-[1.65rem] font-extrabold tracking-[-0.04em] text-[#071E1A]">14 Nicolson Street</h2>
               <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-[#6B7B74]">
                 <span className="h-2 w-2 rounded-full bg-[#0E8A69]" />
                 Residential Sale
@@ -289,8 +311,8 @@ function HeroProductCard({ selectedStakeholder, activeUpdate, className = '' }) 
             </div>
           </header>
 
-          <div className="px-7 py-8">
-            <div className="mb-7 flex items-start justify-between gap-5">
+          <div className="px-8 py-8">
+            <div className="mb-8 flex items-start justify-between gap-5">
               <div>
                 <h3 className="text-lg font-extrabold tracking-[-0.035em] text-[#071E1A]">{selectedStakeholder.title}</h3>
                 <p className="mt-1 text-sm font-semibold text-[#52645D]">{selectedStakeholder.copy}</p>
@@ -310,7 +332,7 @@ function HeroProductCard({ selectedStakeholder, activeUpdate, className = '' }) 
               {progressSteps.map((step) => (
                 <div key={step.label} className="relative z-10 text-center">
                   <motion.span
-                    className={`mx-auto flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black shadow-sm ${
+                    className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border text-sm font-black shadow-sm ${
                       step.state === 'done'
                         ? 'border-[#0E6A55] bg-[#0E6A55] text-white'
                         : step.state === 'active'
@@ -322,27 +344,10 @@ function HeroProductCard({ selectedStakeholder, activeUpdate, className = '' }) 
                   >
                     {step.state === 'pending' ? <span className="h-3 w-3 rounded-[4px] bg-current" /> : step.state === 'active' ? <span className="h-4 w-4 rounded-full bg-current" /> : <CheckCircle2 className="h-5 w-5" />}
                   </motion.span>
-                  <p className="mt-4 text-xs font-bold leading-4 text-[#071E1A]">{step.label}</p>
+                  <p className="mt-4 text-sm font-bold leading-4 text-[#071E1A]">{step.label}</p>
                   {step.time ? <p className="mt-2 text-xs font-semibold text-[#8A978F]">{step.time}</p> : null}
                 </div>
               ))}
-            </div>
-
-            <div className="mt-8 rounded-[16px] border border-[#0A3028]/10 bg-white/80 p-4">
-              <p className="text-sm font-medium text-[#52645D]">Everyone sees the same progress. In real time.</p>
-              <div className="mt-4 grid grid-cols-3 gap-3 xl:grid-cols-6">
-                {stakeholders.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <div key={item.label} className="flex items-center gap-2 text-xs font-extrabold text-[#071E1A]">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#064537]">
-                        <Icon className="h-3.5 w-3.5" />
-                      </span>
-                      {item.label}
-                    </div>
-                  )
-                })}
-              </div>
             </div>
 
             <AnimatePresence mode="wait">
@@ -365,113 +370,41 @@ function MobileHeroPreview({ selectedStakeholder, activeUpdate }) {
         className="absolute inset-x-[-20px] top-10 h-[230px] bg-cover bg-center opacity-40 blur-[1.2px]"
         style={{
           backgroundImage:
-            'linear-gradient(180deg,rgba(250,248,243,0.45),rgba(250,248,243,0.95)),url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80)',
+            'linear-gradient(180deg, rgba(250,248,243,0.45), rgba(250,248,243,0.95)), url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80)',
         }}
       />
-      <div className="relative mx-auto max-w-[350px] rounded-[38px] border-[7px] border-[#151A18] bg-[#151A18] shadow-[0_28px_90px_rgba(6,69,55,0.25)]">
-        <div className="overflow-hidden rounded-[30px] bg-[#FFFCF6] p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-xl font-black tracking-[0.28em] text-[#071E1A]">ARCH9</p>
-            <span className="h-8 w-8 rounded-full border border-[#0A3028]/10 bg-white" />
+      <div className="relative mx-auto max-w-[360px] rounded-[26px] border border-[#0A3028]/8 bg-white/92 p-4 shadow-[0_24px_70px_rgba(6,69,55,0.16)] backdrop-blur-xl">
+        <div className="flex items-start justify-between gap-3 border-b border-[#0A3028]/8 pb-4">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#0E6A55]">{selectedStakeholder.view}</p>
+            <h3 className="mt-2 text-lg font-extrabold text-[#071E1A]">14 Nicolson Street</h3>
+            <p className="mt-1 flex items-center gap-2 text-xs font-bold text-[#52645D]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0E8A69]" />
+              Residential Sale
+            </p>
           </div>
-          <p className="mt-7 text-[10px] font-black uppercase tracking-[0.2em] text-[#0E6A55]">The shared transaction workspace</p>
-          <h2 className="mt-4 text-[2rem] font-extrabold leading-[0.96] tracking-[-0.055em] text-[#071E1A]">
-            One transaction. Every stakeholder. <span className="text-[#0E6A55]">Finally connected.</span>
-          </h2>
+          <span className="rounded-full bg-[#EAF7F0] px-3 py-1 text-[10px] font-black text-[#0E6A55]">{selectedStakeholder.progress}%</span>
+        </div>
 
-          <div className="mt-6 rounded-[22px] border border-[#0A3028]/8 bg-white p-4 shadow-[0_16px_44px_rgba(7,30,26,0.08)]">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0E6A55]">{selectedStakeholder.view}</p>
-                <h3 className="mt-2 text-base font-extrabold text-[#071E1A]">14 Nicolson Street</h3>
-                <p className="mt-1 text-xs font-bold text-[#52645D]">{selectedStakeholder.title}</p>
+        <div className="pt-5">
+          <h4 className="text-base font-extrabold tracking-[-0.03em] text-[#071E1A]">{selectedStakeholder.title}</h4>
+          <p className="mt-1 text-xs font-semibold leading-5 text-[#52645D]">{selectedStakeholder.copy}</p>
+
+          <div className="mt-5 grid grid-cols-5 gap-2">
+            {progressSteps.map((step, index) => (
+              <div key={step} className="text-center">
+                <span className={`mx-auto block h-4 w-4 rounded-full border ${index < 4 ? 'border-[#0E6A55] bg-[#0E6A55]' : 'border-[#0A3028]/16 bg-white'}`} />
+                <p className="mt-2 text-[9px] font-black leading-tight text-[#071E1A]">{step}</p>
               </div>
-              <span className="rounded-full bg-[#EAF7F0] px-3 py-1 text-[10px] font-black text-[#0E6A55]">{selectedStakeholder.progress}%</span>
-            </div>
-
-            <div className="mt-6 grid grid-cols-5 gap-2">
-              {progressSteps.map((step, index) => (
-                <div key={step} className="text-center">
-                  <span className={`mx-auto block h-4 w-4 rounded-full border ${index < 4 ? 'border-[#0E6A55] bg-[#0E6A55]' : 'border-[#0A3028]/16 bg-white'}`} />
-                  <p className="mt-2 text-[9px] font-black leading-tight text-[#071E1A]">{step}</p>
-                </div>
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              <LiveUpdateCard update={activeUpdate} />
-            </AnimatePresence>
+            ))}
           </div>
+
+          <AnimatePresence mode="wait">
+            <LiveUpdateCard update={activeUpdate} />
+          </AnimatePresence>
         </div>
       </div>
     </div>
-  )
-}
-
-function DesktopPhonePreview({ selectedStakeholder, activeUpdate }) {
-  const progressSteps = ['OTP', 'Buyer', 'Finance', 'Transfer', 'Reg.']
-  const Icon = activeUpdate.icon
-
-  return (
-    <motion.div
-      className="relative hidden xl:block"
-      initial={{ opacity: 0, x: 18, scale: 0.98 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ duration: 0.65, delay: 0.28, ease: motionEaseOut }}
-    >
-      <div className="mx-auto w-[250px] rounded-[40px] border-[7px] border-[#171C1A] bg-[#171C1A] shadow-[0_28px_90px_rgba(6,69,55,0.24)] 2xl:w-[285px]">
-        <div className="overflow-hidden rounded-[32px] bg-[#FFFCF6] px-4 py-5">
-          <div className="flex items-center justify-between">
-            <p className="text-[1.05rem] font-black tracking-[0.28em] text-[#071E1A]">ARCH9</p>
-            <span className="h-8 w-8 rounded-full border border-[#0A3028]/10 bg-white" />
-          </div>
-          <p className="mt-6 text-[8px] font-black uppercase tracking-[0.18em] text-[#0E6A55]">The shared transaction workspace</p>
-          <h2 className="mt-3 text-[1.35rem] font-extrabold leading-[0.98] tracking-[-0.05em] text-[#071E1A] 2xl:text-[1.55rem]">
-            One transaction. Every stakeholder. <span className="text-[#0E6A55]">Finally connected.</span>
-          </h2>
-
-          <div className="mt-5 rounded-[20px] border border-[#0A3028]/8 bg-white p-3 shadow-[0_14px_34px_rgba(7,30,26,0.08)]">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="text-[9px] font-black uppercase tracking-[0.14em] text-[#0E6A55]">{selectedStakeholder.view}</p>
-                <h3 className="mt-1.5 text-sm font-extrabold text-[#071E1A]">14 Nicolson Street</h3>
-              </div>
-              <span className="rounded-full bg-[#EAF7F0] px-2 py-1 text-[9px] font-black text-[#0E6A55]">{selectedStakeholder.progress}%</span>
-            </div>
-
-            <div className="mt-5 grid grid-cols-5 gap-1.5">
-              {progressSteps.map((step, index) => (
-                <div key={step} className="text-center">
-                  <span className={`mx-auto block h-3.5 w-3.5 rounded-full border ${index < 4 ? 'border-[#0E6A55] bg-[#0E6A55]' : 'border-[#0A3028]/16 bg-white'}`} />
-                  <p className="mt-1.5 text-[7px] font-black leading-tight text-[#071E1A]">{step}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 rounded-[14px] border border-[#0A3028]/8 bg-[#FAF8F3] p-3">
-              <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[10px] bg-[#EAF7F0] text-[#064537]">
-                  <Icon className="h-3.5 w-3.5" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-extrabold text-[#071E1A]">{activeUpdate.time}</p>
-                  <p className="truncate text-[10px] font-bold text-[#52645D]">{activeUpdate.label}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href="/platform"
-            className="mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full bg-[#064537] px-4 text-xs font-extrabold text-white"
-            style={{ color: '#FFFFFF' }}
-          >
-            Explore a live transaction
-            <ArrowRight className="h-3.5 w-3.5" />
-          </a>
-        </div>
-      </div>
-    </motion.div>
   )
 }
 
@@ -837,15 +770,8 @@ function MarketingHome() {
       <main>
         <section className="relative overflow-hidden px-5 pb-14 pt-[112px] md:px-8 md:pb-20 md:pt-[124px]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
-          <div
-            className="absolute inset-x-0 bottom-0 hidden h-[310px] bg-cover bg-center opacity-45 blur-[1px] lg:block"
-            style={{
-              backgroundImage:
-                'linear-gradient(180deg,rgba(250,248,243,0)_0%,rgba(250,248,243,0.8)_78%,#FAF8F3_100%),url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=82)',
-            }}
-          />
           <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
-          <div className="relative mx-auto grid w-full max-w-[1760px] gap-9 lg:grid-cols-[0.39fr_0.61fr] lg:items-start xl:grid-cols-[500px_minmax(560px,1fr)_260px] 2xl:grid-cols-[600px_720px_300px]">
+          <div className="relative mx-auto grid w-full max-w-[1540px] gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-16">
             <FadeUp className="min-w-0 max-w-[680px]">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
               <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
@@ -881,12 +807,21 @@ function MarketingHome() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.12} className="min-w-0 xl:-mt-5">
-              <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
-              <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} className="2xl:max-w-[760px]" />
-              <MobileHeroPreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
+            <FadeUp delay={0.12} className="relative min-w-0 lg:pb-24">
+              <div
+                className="pointer-events-none absolute left-[-120px] right-[-80px] top-[235px] z-0 hidden h-[360px] rounded-[34px] bg-cover opacity-100 lg:block"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 20%, rgba(250,248,243,0.08) 58%, rgba(250,248,243,0.02) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.1) 58%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82)',
+                  backgroundPosition: 'center 62%',
+                }}
+              />
+              <div className="relative z-10">
+                <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
+                <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} className="xl:max-w-[840px]" />
+                <MobileHeroPreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
+              </div>
             </FadeUp>
-            <DesktopPhonePreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
           </div>
         </section>
 
