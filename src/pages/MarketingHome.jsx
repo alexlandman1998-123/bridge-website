@@ -770,6 +770,13 @@ function MarketingHome() {
       <main>
         <section className="relative overflow-hidden px-5 pb-14 pt-[112px] md:px-8 md:pb-20 md:pt-[124px]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
+          <div
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[260px] w-[62%] bg-cover bg-center opacity-72 lg:block"
+            style={{
+              backgroundImage:
+                'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 18%, rgba(250,248,243,0.08) 48%, rgba(250,248,243,0.05) 100%), linear-gradient(180deg, rgba(250,248,243,0) 0%, rgba(250,248,243,0.5) 76%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=84)',
+            }}
+          />
           <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
           <div className="relative mx-auto grid w-full max-w-[1540px] gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-16">
             <FadeUp className="min-w-0 max-w-[680px]">
@@ -812,7 +819,7 @@ function MarketingHome() {
                 className="pointer-events-none absolute left-[-120px] right-[-80px] top-[235px] z-0 hidden h-[360px] rounded-[34px] bg-cover opacity-100 lg:block"
                 style={{
                   backgroundImage:
-                    'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 20%, rgba(250,248,243,0.08) 58%, rgba(250,248,243,0.02) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.1) 58%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=82)',
+                    'linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.44) 20%, rgba(250,248,243,0.08) 58%, rgba(250,248,243,0.02) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.08) 58%, #FAF8F3 100%), url(https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=84)',
                   backgroundPosition: 'center 62%',
                 }}
               />
