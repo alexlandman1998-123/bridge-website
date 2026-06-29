@@ -205,7 +205,7 @@ export default function Header() {
             ? `text-[#071E1A] ${
                 scrolled
                   ? 'border border-white/10 bg-[rgba(6,45,37,0.92)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_18px_58px_rgba(3,18,15,0.28)] backdrop-blur-[16px]'
-                  : 'border border-transparent bg-transparent shadow-none'
+                  : 'border border-[#0A3028]/8 bg-white/58 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_18px_54px_rgba(7,30,26,0.055)] backdrop-blur-xl'
               }`
             : `border border-[rgba(243,238,230,0.12)] bg-[rgba(7,30,26,0.92)] text-[#F3EEE6] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_58px_rgba(5,8,7,0.22)] backdrop-blur-[14px] ${
                 scrolled ? 'bg-[rgba(7,30,26,0.96)] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_22px_70px_rgba(5,8,7,0.32)]' : ''
