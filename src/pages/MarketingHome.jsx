@@ -173,15 +173,6 @@ function StakeholderSelector({ selectedRole, onSelect }) {
   return (
     <div>
       <motion.div
-        className="hidden items-center justify-center gap-2 pb-4 text-xs font-black tracking-[-0.02em] text-[#0E6A55] lg:flex"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.12, ease: motionEaseOut }}
-      >
-        <span>Switch roles. See everything.</span>
-        <ArrowRight className="h-3.5 w-3.5 rotate-90" />
-      </motion.div>
-      <motion.div
         className="-mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-3 md:mx-0 md:justify-center md:gap-5 md:overflow-visible md:px-0"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -410,13 +401,13 @@ function TrustedLogoMarquee({ compact = false }) {
   const logoSet = [...rotatingTrustLogos, ...rotatingTrustLogos]
 
   return (
-    <div className={`${compact ? 'mx-auto max-w-[360px]' : 'max-w-[620px]'}`}>
+    <div className={`mx-auto ${compact ? 'max-w-[360px]' : 'w-full max-w-[1320px]'}`}>
       <p className={`text-sm font-medium text-[#6B7B74] ${compact ? 'text-center' : ''}`}>
         Trusted by leading agencies, attorneys and developers.
       </p>
       <div className="relative mt-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_16%,black_84%,transparent)]">
         <motion.div
-          className="flex w-max items-center gap-9 text-lg font-black text-[#8A9490] opacity-78"
+          className={`flex w-max items-center text-lg font-black text-[#7C8A84] opacity-72 ${compact ? 'gap-9' : 'gap-14 md:gap-20'}`}
           animate={shouldReduceMotion ? undefined : { x: ['0%', '-50%'] }}
           transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'linear', repeat: Infinity }}
         >
@@ -433,17 +424,17 @@ function TrustedLogoMarquee({ compact = false }) {
 
 function HeroBenefitStrip() {
   return (
-    <section className="relative z-20 -mt-8 bg-transparent px-5 pb-8 md:-mt-12 md:px-8 md:pb-12">
-      <div className="mx-auto grid w-full max-w-[1320px] gap-3 rounded-[20px] border border-[#0A3028]/8 bg-white/86 p-5 shadow-[0_24px_80px_rgba(7,30,26,0.08)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
+    <section className="relative z-20 -mt-3 bg-transparent px-5 pb-5 md:-mt-5 md:px-8 md:pb-6 lg:-mt-24">
+      <div className="mx-auto grid w-full max-w-[1440px] gap-2 rounded-[22px] border border-[#0A3028]/8 bg-white/92 p-4 shadow-[0_26px_86px_rgba(7,30,26,0.09)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-[#0A3028]/8">
         {heroBenefits.map((benefit) => {
           const Icon = benefit.icon
           return (
-            <article key={benefit.title} className="group rounded-[16px] p-3 transition duration-300 hover:-translate-y-1 hover:bg-[#FAF8F3]">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EAF7F0] text-[#064537] transition duration-300 group-hover:bg-[#064537] group-hover:text-white">
+            <article key={benefit.title} className="group rounded-[16px] p-3 transition duration-300 hover:-translate-y-1 hover:bg-[#FAF8F3] lg:px-7">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EAF7F0] text-[#064537] transition duration-300 group-hover:bg-[#064537] group-hover:text-white">
                 <Icon className="h-5 w-5" />
               </span>
-              <h3 className="mt-4 text-base font-extrabold tracking-[-0.02em] text-[#071E1A]">{benefit.title}</h3>
-              <p className="mt-1.5 text-sm font-medium leading-6 text-[#52645D]">{benefit.copy}</p>
+              <h3 className="mt-3 text-base font-extrabold tracking-[-0.02em] text-[#071E1A]">{benefit.title}</h3>
+              <p className="mt-1 text-sm font-medium leading-6 text-[#52645D]">{benefit.copy}</p>
             </article>
           )
         })}
@@ -791,60 +782,61 @@ function MarketingHome() {
       <Header />
 
       <main>
-        <section className="relative overflow-hidden px-5 pb-14 pt-[112px] md:px-8 md:pb-20 md:pt-[124px]">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
+        <section className="relative overflow-hidden bg-[#FAF8F3]">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_45%,#FAF8F3_100%)]" />
           <div
-            className="pointer-events-none absolute bottom-0 right-0 hidden h-[292px] w-[72%] bg-cover opacity-85 lg:block"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] min-h-[520px] bg-cover bg-center opacity-62"
             style={{
-              backgroundImage: `linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.46) 17%, rgba(250,248,243,0.1) 47%, rgba(250,248,243,0.05) 100%), linear-gradient(180deg, rgba(250,248,243,0) 0%, rgba(250,248,243,0.26) 70%, #FAF8F3 100%), url(${heroPropertyImage})`,
-              backgroundPosition: 'center 76%',
+              backgroundImage: `linear-gradient(180deg,#FFFFFF 0%,rgba(255,255,255,0.92) 18%,rgba(255,255,255,0.58) 38%,rgba(250,248,243,0.28) 62%,#FAF8F3 100%), linear-gradient(90deg,#FAF8F3 0%,rgba(250,248,243,0.26) 20%,rgba(250,248,243,0.08) 52%,rgba(250,248,243,0.18) 100%), url(${heroPropertyImage})`,
+              backgroundPosition: 'center 72%',
             }}
           />
-          <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.055)_0,rgba(6,69,55,0.055)_1px,transparent_2px,transparent_18px)] opacity-45 lg:block" />
-          <div className="relative mx-auto grid w-full max-w-[1540px] gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-16">
-            <FadeUp className="relative z-10 min-w-0 max-w-[680px]">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
-              <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
-                One transaction.
-                <span className="block">Every stakeholder.</span>
-                <span className="block text-[#0E6A55]">Finally connected.</span>
-              </h1>
-              <p className="mt-7 max-w-[560px] text-[1rem] font-medium leading-7 text-[#52645D] md:text-[1.12rem] md:leading-8">
-                The only shared workspace connecting buyers, sellers, agents, attorneys and banks in one live transaction.
-                <span className="mt-3 block">Less chasing. More clarity. Faster registration.</span>
-              </p>
-              <div className="mt-10 grid gap-3 sm:flex">
-                <a
-                  href="/platform"
-                  className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#064537] px-5 text-center text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7 lg:whitespace-nowrap"
-                  style={{ color: '#FFFFFF' }}
-                >
-                  Explore a live transaction
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a href="/platform" className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full border border-[#0A3028]/12 bg-white px-5 text-center text-sm font-extrabold text-[#071E1A] shadow-[0_16px_38px_rgba(7,30,26,0.06)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7 lg:whitespace-nowrap">
-                  <Play className="h-4 w-4" />
-                  Watch 60 sec overview
-                </a>
-              </div>
-              <div className="mt-14 hidden md:block">
-                <TrustedLogoMarquee />
-              </div>
-            </FadeUp>
+          <div className="absolute inset-x-0 bottom-0 h-[46%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.62)_34%,rgba(250,248,243,0.94)_100%)]" />
+          <div className="absolute bottom-0 left-0 right-0 hidden h-56 bg-[repeating-radial-gradient(ellipse_at_center,rgba(6,69,55,0.045)_0,rgba(6,69,55,0.045)_1px,transparent_2px,transparent_18px)] opacity-35 lg:block" />
 
-            <FadeUp delay={0.12} className="relative z-0 min-w-0 lg:pb-24">
-              <div className="relative z-10">
-                <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
-                <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} className="xl:max-w-[840px]" />
-                <MobileHeroPreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
-              </div>
-            </FadeUp>
+          <div className="relative z-10 px-5 pb-8 pt-[112px] md:px-8 md:pb-10 md:pt-[124px] lg:pb-12">
+            <div className="mx-auto grid w-full max-w-[1540px] gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-center xl:gap-14">
+              <FadeUp className="relative z-10 min-w-0 max-w-[680px]">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-[#0E6A55]">The shared transaction workspace</p>
+                <h1 className="mt-5 text-[2.55rem] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#071E1A] sm:text-[3.05rem] md:text-[3.65rem] xl:text-[4.05rem]">
+                  One transaction.
+                  <span className="block">Every stakeholder.</span>
+                  <span className="block text-[#0E6A55]">Finally connected.</span>
+                </h1>
+                <p className="mt-7 max-w-[560px] text-[1rem] font-medium leading-7 text-[#52645D] md:text-[1.12rem] md:leading-8">
+                  The only shared workspace connecting buyers, sellers, agents, attorneys and banks in one live transaction.
+                  <span className="mt-3 block">Less chasing. More clarity. Faster registration.</span>
+                </p>
+                <div className="mt-10 grid gap-3 sm:flex">
+                  <a
+                    href="/platform"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[#064537] px-5 text-center text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(6,69,55,0.2)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7 lg:whitespace-nowrap"
+                    style={{ color: '#FFFFFF' }}
+                  >
+                    Explore a live transaction
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/platform" className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full border border-[#0A3028]/12 bg-white px-5 text-center text-sm font-extrabold text-[#071E1A] shadow-[0_16px_38px_rgba(7,30,26,0.06)] transition hover:-translate-y-0.5 sm:w-auto sm:px-7 lg:whitespace-nowrap">
+                    <Play className="h-4 w-4" />
+                    Watch 60 sec overview
+                  </a>
+                </div>
+              </FadeUp>
+
+              <FadeUp delay={0.12} className="relative z-0 min-w-0 lg:pb-16">
+                <div className="relative z-10">
+                  <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
+                  <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} className="xl:max-w-[840px]" />
+                  <MobileHeroPreview selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} />
+                </div>
+              </FadeUp>
+            </div>
           </div>
-        </section>
 
-        <HeroBenefitStrip />
-        <section className="bg-[#FAF8F3] px-5 pb-12 md:hidden">
-          <TrustedLogoMarquee compact />
+          <HeroBenefitStrip />
+          <section className="relative z-20 px-5 pb-12 pt-1 md:px-8 md:pb-16">
+            <TrustedLogoMarquee />
+          </section>
         </section>
         <LiveTransactionSection />
         <WorkspacesSection />
