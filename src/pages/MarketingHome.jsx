@@ -54,6 +54,7 @@ const timelineEvents = [
 ]
 
 const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
+const rotatingTrustLogos = [...heroTrustLogos, 'Pam Golding', 'Seeff']
 
 const heroPropertyImage =
   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=86'
@@ -63,7 +64,6 @@ const heroStakeholders = [
     label: 'Buyer',
     icon: Users,
     initials: 'BU',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80',
     view: 'Buyer view',
     title: 'Documents requested',
     copy: 'Upload FICA and see what happens next.',
@@ -73,7 +73,6 @@ const heroStakeholders = [
     label: 'Seller',
     icon: Users,
     initials: 'SE',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
     view: 'Seller view',
     title: 'Sale moving forward',
     copy: 'Follow transfer progress without chasing.',
@@ -83,7 +82,6 @@ const heroStakeholders = [
     label: 'Agent',
     icon: BadgeCheck,
     initials: 'AG',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80',
     view: 'Agent view',
     title: 'Everyone aligned',
     copy: 'Keep buyers, sellers and partners on the same live timeline.',
@@ -208,11 +206,7 @@ function StakeholderSelector({ selectedRole, onSelect }) {
                     : 'border-[#0A3028]/10'
                 }`}
               >
-                {stakeholder.avatar ? (
-                  <img src={stakeholder.avatar} alt="" className="h-full w-full object-cover" />
-                ) : (
-                  <Icon className="h-5 w-5" />
-                )}
+                <Icon className="h-5 w-5" />
               </span>
               <span className={`mt-2 block text-[11px] font-black leading-tight tracking-[-0.02em] ${active ? 'text-[#0E6A55]' : 'text-[#071E1A]'}`}>
                 {stakeholder.label}
@@ -406,6 +400,32 @@ function MobileHeroPreview({ selectedStakeholder, activeUpdate }) {
             <LiveUpdateCard update={activeUpdate} />
           </AnimatePresence>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function TrustedLogoMarquee({ compact = false }) {
+  const shouldReduceMotion = useReducedMotion()
+  const logoSet = [...rotatingTrustLogos, ...rotatingTrustLogos]
+
+  return (
+    <div className={`${compact ? 'mx-auto max-w-[360px]' : 'max-w-[620px]'}`}>
+      <p className={`text-sm font-medium text-[#6B7B74] ${compact ? 'text-center' : ''}`}>
+        Trusted by leading agencies, attorneys and developers.
+      </p>
+      <div className="relative mt-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_16%,black_84%,transparent)]">
+        <motion.div
+          className="flex w-max items-center gap-9 text-lg font-black text-[#8A9490] opacity-78"
+          animate={shouldReduceMotion ? undefined : { x: ['0%', '-50%'] }}
+          transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'linear', repeat: Infinity }}
+        >
+          {logoSet.map((logo, index) => (
+            <span key={`${logo}-${index}`} className="shrink-0 whitespace-nowrap">
+              {logo}
+            </span>
+          ))}
+        </motion.div>
       </div>
     </div>
   )
@@ -772,7 +792,7 @@ function MarketingHome() {
 
       <main>
         <section className="relative overflow-hidden px-5 pb-14 pt-[112px] md:px-8 md:pb-20 md:pt-[124px]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_30%,rgba(134,228,194,0.20),transparent_30%),radial-gradient(circle_at_22%_55%,rgba(6,69,55,0.06),transparent_34%),linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)]" />
           <div
             className="pointer-events-none absolute bottom-0 right-0 hidden h-[292px] w-[72%] bg-cover opacity-85 lg:block"
             style={{
@@ -808,23 +828,11 @@ function MarketingHome() {
                 </a>
               </div>
               <div className="mt-14 hidden md:block">
-                <p className="text-sm font-medium text-[#6B7B74]">Trusted by leading agencies, attorneys and developers.</p>
-                <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490] opacity-80">
-                  {heroTrustLogos.map((logo) => (
-                    <span key={logo}>{logo}</span>
-                  ))}
-                </div>
+                <TrustedLogoMarquee />
               </div>
             </FadeUp>
 
             <FadeUp delay={0.12} className="relative z-0 min-w-0 lg:pb-24">
-              <div
-                className="pointer-events-none absolute left-[-150px] right-[-90px] top-[226px] z-0 hidden h-[390px] rounded-[34px] bg-cover opacity-100 lg:block"
-                style={{
-                  backgroundImage: `linear-gradient(90deg, #FAF8F3 0%, rgba(250,248,243,0.5) 20%, rgba(250,248,243,0.14) 56%, rgba(250,248,243,0.04) 100%), linear-gradient(180deg, rgba(250,248,243,0.02) 0%, rgba(250,248,243,0.04) 58%, #FAF8F3 100%), url(${heroPropertyImage})`,
-                  backgroundPosition: 'center 74%',
-                }}
-              />
               <div className="relative z-10">
                 <StakeholderSelector selectedRole={selectedRole} onSelect={setSelectedRole} />
                 <HeroProductCard selectedStakeholder={selectedStakeholder} activeUpdate={activeUpdate} className="xl:max-w-[840px]" />
@@ -835,13 +843,8 @@ function MarketingHome() {
         </section>
 
         <HeroBenefitStrip />
-        <section className="bg-[#FAF8F3] px-5 pb-12 text-center md:hidden">
-          <p className="text-sm font-medium text-[#6B7B74]">Trusted by leading agencies, attorneys and developers.</p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-lg font-black text-[#8A9490] opacity-70">
-            {heroTrustLogos.map((logo) => (
-              <span key={logo}>{logo}</span>
-            ))}
-          </div>
+        <section className="bg-[#FAF8F3] px-5 pb-12 md:hidden">
+          <TrustedLogoMarquee compact />
         </section>
         <LiveTransactionSection />
         <WorkspacesSection />
