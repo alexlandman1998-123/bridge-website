@@ -3,8 +3,6 @@ export const footerLinkGroups = [
     title: 'Properties',
     links: [
       { label: 'Browse Properties', href: '/' },
-      { label: 'Developments', href: '/developments' },
-      { label: 'Sell Property', href: '/sell' },
       { label: 'Commercial Property', href: '/commercial' },
     ],
   },
@@ -22,7 +20,6 @@ export const footerLinkGroups = [
     title: 'Company',
     links: [
       { label: 'Why Arch9', href: '/why-arch9' },
-      { label: 'Pricing', href: '/pricing' },
       { label: 'Book A Demo', href: '/book-demo' },
       { label: 'Contact', href: '/contact' },
     ],
