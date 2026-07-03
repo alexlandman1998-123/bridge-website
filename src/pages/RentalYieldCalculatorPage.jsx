@@ -15,6 +15,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
 import RentalYieldCalculator from '../components/tools/RentalYieldCalculator'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const trustBadges = [
   {
@@ -93,20 +94,38 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 export default function RentalYieldCalculatorPage() {
   useEffect(() => {
-    document.title = 'Rental Yield Calculator | Arch9 Property Tools'
-    setMetaDescription('Calculate gross rental yield, net rental yield and monthly cash flow for a property investment in South Africa.')
+    const description = 'Calculate gross rental yield, net rental yield and monthly cash flow for a property investment in South Africa.'
+    const path = '/tools/investors/rental-yield-calculator'
+
+    setPageSeo({
+      title: 'Rental Yield Calculator | Arch9 Property Tools',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Investors', href: '/tools/investors' },
+          { name: 'Rental Yield Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Rental Yield Calculator | Arch9 Property Tools',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Rental Yield Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property investors'],
+          featureList: ['Gross yield calculation', 'Net yield calculation', 'Monthly cash flow estimate'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   return (

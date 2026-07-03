@@ -18,6 +18,7 @@ import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
 import Tools from './pages/Tools'
 import ToolCategory from './pages/ToolCategory'
 import ToolDetail from './pages/ToolDetail'
+import NotFound from './pages/NotFound'
 import { landingPages } from './config/landingPages'
 import { getToolByRoute } from './config/tools'
 import { findDevelopmentBySlug } from './data/developments'
@@ -172,5 +173,9 @@ export default function App() {
     return <PropertyDetail slug={slug} />
   }
 
-  return <MarketingHome />
+  if (pathname === '/') {
+    return <MarketingHome />
+  }
+
+  return <NotFound />
 }

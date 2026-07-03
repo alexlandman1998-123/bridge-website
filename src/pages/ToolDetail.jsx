@@ -9,16 +9,7 @@ import CashFlowCalculatorPage from './CashFlowCalculatorPage'
 import RentalYieldCalculatorPage from './RentalYieldCalculatorPage'
 import RoiCalculatorPage from './RoiCalculatorPage'
 import TransferCostCalculatorPage from './TransferCostCalculatorPage'
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
+import { breadcrumbJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 export default function ToolDetail({ tool }) {
   const category = getToolCategory(tool?.category)
@@ -31,9 +22,32 @@ export default function ToolDetail({ tool }) {
     if (!tool) return
     if (tool.category === 'buyers' && ['affordability-calculator', 'bond-repayment-calculator', 'transfer-cost-calculator'].includes(tool.slug)) return
     if (tool.category === 'investors' && ['cash-flow-calculator', 'rental-yield-calculator', 'roi-calculator'].includes(tool.slug)) return
-    document.title = `${tool.title} | Property Tools | Arch9`
-    setMetaDescription(tool.description)
-  }, [tool])
+    setPageSeo({
+      title: `${tool.title} | Property Tools | Arch9`,
+      description: tool.description,
+      canonicalPath: getToolHref(tool),
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: category?.title || 'Property Tools', href: category?.href || '/tools' },
+          { name: tool.title, href: getToolHref(tool) },
+        ]),
+        webPageJsonLd({
+          name: `${tool.title} | Property Tools | Arch9`,
+          description: tool.description,
+          path: getToolHref(tool),
+        }),
+        softwareApplicationJsonLd({
+          name: tool.title,
+          description: tool.description,
+          path: getToolHref(tool),
+          applicationCategory: 'FinanceApplication',
+          audience: [category?.title || 'Property teams'],
+        }),
+      ],
+    })
+  }, [category, tool])
 
   if (tool?.category === 'buyers' && tool?.slug === 'affordability-calculator') {
     return <AffordabilityCalculatorPage />

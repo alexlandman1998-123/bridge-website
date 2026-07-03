@@ -26,6 +26,7 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { breadcrumbJsonLd, serviceJsonLd, setPageSeo, softwareApplicationJsonLd } from '../lib/seo'
 
 const trustIndicators = [
   {
@@ -262,16 +263,6 @@ const testimonials = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 function ApplicationWorkspaceVisual() {
   return (
     <div className="relative rounded-[34px] border border-[#0A3028]/10 bg-[#071E1A] p-5 text-white shadow-[0_34px_110px_rgba(5,8,7,0.18)] md:p-7">
@@ -359,10 +350,35 @@ function CommandCentreVisual() {
 
 export default function BondOriginatorsSolution() {
   useEffect(() => {
-    document.title = 'Bond Origination Operating System | Arch9'
-    setMetaDescription(
+    const description =
       'Arch9 helps bond originators receive cleaner applications, manage consultants, track bank submissions and keep agents updated from application to approval.'
-    )
+
+    setPageSeo({
+      title: 'Bond Origination Operating System | Arch9',
+      description,
+      canonicalPath: '/solutions/bond-originators',
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Solutions', href: '/platform' },
+          { name: 'Bond Originators', href: '/solutions/bond-originators' },
+        ]),
+        serviceJsonLd({
+          name: 'Arch9 for Bond Originators',
+          description,
+          path: '/solutions/bond-originators',
+          serviceType: 'Bond origination transaction workspace',
+          audience: ['Bond originators', 'Mortgage consultants'],
+        }),
+        softwareApplicationJsonLd({
+          name: 'Arch9 for Bond Originators',
+          description,
+          path: '/solutions/bond-originators',
+          audience: ['Bond originators', 'Mortgage consultants'],
+          featureList: ['Application tracking', 'Document collection', 'Bank submission visibility', 'Agent updates'],
+        }),
+      ],
+    })
   }, [])
 
   return (

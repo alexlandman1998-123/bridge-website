@@ -33,6 +33,7 @@ import SectionHeading from '../components/SectionHeading'
 import { FadeIn, FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
 import { motionEaseOut } from '../components/motion/timing'
 import { formatPrice, properties } from '../data/properties'
+import { setPageSeo } from '../lib/seo'
 import CTASection from '../sections/CTASection'
 
 const problemCards = [
@@ -1118,19 +1119,13 @@ function TrustSection() {
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'Arch9 | The future of property transactions'
-
-    let description = document.querySelector('meta[name="description"]')
-    if (!description) {
-      description = document.createElement('meta')
-      description.setAttribute('name', 'description')
-      document.head.appendChild(description)
-    }
-
-    description.setAttribute(
-      'content',
-      'Arch9 is the connected transaction workspace for agents, attorneys, bond originators, developers and clients moving property deals from offer to registration.'
-    )
+    setPageSeo({
+      title: 'Arch9 | The future of property transactions',
+      description:
+        'Arch9 is the connected transaction workspace for agents, attorneys, bond originators, developers and clients moving property deals from offer to registration.',
+      canonicalPath: '/platform',
+      indexable: false,
+    })
   }, [])
 
   return (

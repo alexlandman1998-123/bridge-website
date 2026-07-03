@@ -25,6 +25,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp } from '../components/motion/Reveal'
 import { motionEaseOut } from '../components/motion/timing'
+import { itemListJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd, websiteJsonLd } from '../lib/seo'
 
 const heroBenefits = [
   { title: 'One shared timeline', copy: 'Everyone sees the same progress.', icon: Users },
@@ -55,6 +56,7 @@ const timelineEvents = [
 
 const heroTrustLogos = ['Harcourts', 'RE/MAX', 'Ooba', 'Lew Geffen', "Sotheby's"]
 const rotatingTrustLogos = [...heroTrustLogos, 'Pam Golding', 'Seeff']
+const showTrustedLogoMarquee = false
 
 const heroPropertyImage =
   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=86'
@@ -399,6 +401,10 @@ function MobileHeroPreview({ selectedStakeholder, activeUpdate }) {
 function TrustedLogoMarquee({ compact = false }) {
   const shouldReduceMotion = useReducedMotion()
   const logoSet = [...rotatingTrustLogos, ...rotatingTrustLogos]
+
+  if (!showTrustedLogoMarquee) {
+    return <div aria-hidden="true" className={`mx-auto min-h-[78px] ${compact ? 'max-w-[360px]' : 'w-full max-w-[1320px]'}`} />
+  }
 
   return (
     <div className={`mx-auto ${compact ? 'max-w-[360px]' : 'w-full max-w-[1320px]'}`}>
@@ -752,19 +758,36 @@ function MarketingHome() {
   const activeUpdate = heroUpdates[activeUpdateIndex]
 
   useEffect(() => {
-    document.title = 'Arch9 | Shared Transaction Workspace for Property'
-
-    let description = document.querySelector('meta[name="description"]')
-    if (!description) {
-      description = document.createElement('meta')
-      description.setAttribute('name', 'description')
-      document.head.appendChild(description)
-    }
-
-    description.setAttribute(
-      'content',
+    const description =
       'Arch9 is the shared transaction workspace connecting buyers, sellers, agents, attorneys, bond originators and developers from first enquiry to registration.'
-    )
+
+    setPageSeo({
+      title: 'Arch9 | Shared Transaction Workspace for Property',
+      description,
+      canonicalPath: '/',
+      jsonLd: [
+        websiteJsonLd(),
+        webPageJsonLd({
+          name: 'Arch9 | Shared Transaction Workspace for Property',
+          description,
+          path: '/',
+        }),
+        softwareApplicationJsonLd({
+          description,
+          path: '/',
+          audience: ['Estate agents', 'Conveyancing attorneys', 'Bond originators', 'Property developers', 'Property buyers', 'Property sellers'],
+          featureList: ['Shared transaction timeline', 'Role-based portals', 'Document and update tracking', 'Real-time transaction progress'],
+        }),
+        itemListJsonLd([
+          { name: 'Platform Overview', href: '/platform' },
+          { name: 'For Estate Agents', href: '/solutions/agents' },
+          { name: 'For Attorneys', href: '/solutions/attorneys' },
+          { name: 'For Bond Originators', href: '/solutions/bond-originators' },
+          { name: 'For Developers', href: '/solutions/developers' },
+          { name: 'Property Tools', href: '/tools' },
+        ]),
+      ],
+    })
   }, [])
 
   useEffect(() => {

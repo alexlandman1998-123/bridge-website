@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { breadcrumbJsonLd, serviceJsonLd, setPageSeo, softwareApplicationJsonLd } from '../lib/seo'
 
 const heroImage =
   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=84'
@@ -119,16 +120,6 @@ const ecosystemCards = [
     copy: 'One transaction. One source of truth.',
   },
 ]
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
 
 function HeroVisual() {
   return (
@@ -328,10 +319,35 @@ function EcosystemSection() {
 
 export default function AgentsSolution() {
   useEffect(() => {
-    document.title = 'For Estate Agents | Arch9'
-    setMetaDescription(
+    const description =
       'Arch9 helps estate agents generate more enquiries, manage listings and move transactions from offer to registration in one connected workspace.'
-    )
+
+    setPageSeo({
+      title: 'For Estate Agents | Arch9',
+      description,
+      canonicalPath: '/solutions/agents',
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Solutions', href: '/platform' },
+          { name: 'Estate Agents', href: '/solutions/agents' },
+        ]),
+        serviceJsonLd({
+          name: 'Arch9 for Estate Agents',
+          description,
+          path: '/solutions/agents',
+          serviceType: 'Estate agent transaction workspace',
+          audience: ['Estate agents', 'Real estate agencies'],
+        }),
+        softwareApplicationJsonLd({
+          name: 'Arch9 for Estate Agents',
+          description,
+          path: '/solutions/agents',
+          audience: ['Estate agents', 'Real estate agencies'],
+          featureList: ['Lead and listing context', 'Buyer matching', 'Transaction tracking', 'Stakeholder updates'],
+        }),
+      ],
+    })
   }, [])
 
   return (

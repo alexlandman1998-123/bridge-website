@@ -25,6 +25,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
+import { setPageSeo } from '../lib/seo'
 
 const propertyImage = 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=85'
 const listingImage = 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80'
@@ -99,17 +100,6 @@ const transactionMilestones = [
   { title: 'Registration', copy: 'Property is registered.', icon: ClipboardCheck },
   { title: 'Keys Handed Over', copy: 'Journey complete.', icon: KeyRound },
 ]
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-
-  description.setAttribute('content', content)
-}
 
 function CTAButton({ href, children, variant = 'primary' }) {
   const isPrimary = variant === 'primary'
@@ -387,8 +377,12 @@ function TransactionTimeline() {
 
 export default function Sell() {
   useEffect(() => {
-    document.title = 'Property Listings Should Work Harder | Arch9'
-    setMetaDescription('List on Arch9 and turn every buyer enquiry into the beginning of a connected property journey from enquiry to registration.')
+    setPageSeo({
+      title: 'Property Listings Should Work Harder | Arch9',
+      description: 'List on Arch9 and turn every buyer enquiry into the beginning of a connected property journey from enquiry to registration.',
+      canonicalPath: '/solutions/agents',
+      indexable: false,
+    })
   }, [])
 
   return (

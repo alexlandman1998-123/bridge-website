@@ -3,16 +3,7 @@ import { ArrowRight, Search, Sparkles } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { getToolHref, getToolsByCategory, toolCategories, tools } from '../config/tools'
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
+import { breadcrumbJsonLd, itemListJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 function ToolCard({ tool }) {
   const Icon = tool.icon
@@ -54,8 +45,26 @@ function CategoryCard({ category }) {
 
 export default function Tools() {
   useEffect(() => {
-    document.title = 'Property Tools | Arch9'
-    setMetaDescription('Free calculators, estimators and property intelligence tools for buyers, sellers, agents, investors and developers.')
+    const description = 'Free calculators, estimators and property intelligence tools for buyers, sellers, agents, investors and developers.'
+
+    setPageSeo({
+      title: 'Property Tools | Arch9',
+      description,
+      canonicalPath: '/tools',
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+        ]),
+        webPageJsonLd({
+          name: 'Property Tools | Arch9',
+          description,
+          path: '/tools',
+          type: 'CollectionPage',
+        }),
+        itemListJsonLd(tools.map((tool) => ({ name: tool.title, href: getToolHref(tool) }))),
+      ],
+    })
   }, [])
 
   const featuredTools = tools.filter((tool) => tool.featured).slice(0, 6)

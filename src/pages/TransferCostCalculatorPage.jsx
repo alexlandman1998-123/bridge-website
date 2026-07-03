@@ -15,6 +15,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
 import TransferCostCalculator from '../components/tools/TransferCostCalculator'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const trustBadges = [
   {
@@ -93,20 +94,38 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 export default function TransferCostCalculatorPage() {
   useEffect(() => {
-    document.title = 'Transfer Cost Calculator | Arch9 Property Tools'
-    setMetaDescription('Estimate transfer duty, attorney transfer fees and once-off buying costs when purchasing property in South Africa.')
+    const description = 'Estimate transfer duty, attorney transfer fees and once-off buying costs when purchasing property in South Africa.'
+    const path = '/tools/buyers/transfer-cost-calculator'
+
+    setPageSeo({
+      title: 'Transfer Cost Calculator | Arch9 Property Tools',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Buyers', href: '/tools/buyers' },
+          { name: 'Transfer Cost Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Transfer Cost Calculator | Arch9 Property Tools',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Transfer Cost Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property buyers'],
+          featureList: ['Transfer duty estimate', 'Attorney transfer fee estimate', 'Once-off buying cost estimate'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   return (

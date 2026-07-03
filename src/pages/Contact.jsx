@@ -20,6 +20,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { submitDemoEnquiry } from '../lib/demoEnquiriesApi'
+import { breadcrumbJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 const totalSteps = 6
 
@@ -676,7 +677,29 @@ function DemoWizard() {
 
 export default function Contact() {
   useEffect(() => {
-    document.title = 'Book a Demo | Arch9'
+    const isBookDemoRoute = window.location.pathname === '/book-demo'
+    const description = 'Book a tailored Arch9 demo and see how one shared property transaction workspace connects every stakeholder.'
+
+    setPageSeo({
+      title: 'Book a Demo | Arch9',
+      description,
+      canonicalPath: '/book-demo',
+      indexable: isBookDemoRoute,
+      jsonLd: isBookDemoRoute
+        ? [
+            breadcrumbJsonLd([
+              { name: 'Home', href: '/' },
+              { name: 'Book a Demo', href: '/book-demo' },
+            ]),
+            webPageJsonLd({
+              name: 'Book a Demo | Arch9',
+              description,
+              path: '/book-demo',
+              type: 'ContactPage',
+            }),
+          ]
+        : [],
+    })
   }, [])
 
   return (

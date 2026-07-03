@@ -14,6 +14,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { appAuthUrl, demoHref } from '../config/navigation'
+import { setPageSeo } from '../lib/seo'
 
 const rolePricing = {
   agents: {
@@ -286,16 +287,6 @@ const metrics = [
   { value: 'Connected', label: 'From enquiry to registration' },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 function PlanCard({ plan }) {
   return (
     <article
@@ -441,8 +432,12 @@ export default function Pricing() {
   const selectedRole = rolePricing[selectedRoleKey]
 
   useEffect(() => {
-    document.title = 'Role-Based Pricing | Arch9'
-    setMetaDescription('Simple, transparent pricing for agents and agencies using Arch9.')
+    setPageSeo({
+      title: 'Role-Based Pricing | Arch9',
+      description: 'Simple, transparent pricing for agents and agencies using Arch9.',
+      canonicalPath: '/book-demo',
+      indexable: false,
+    })
   }, [])
 
   function selectRole(roleKey) {

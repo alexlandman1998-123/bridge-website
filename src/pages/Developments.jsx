@@ -16,6 +16,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { developments, formatDevelopmentPrice } from '../data/developments'
+import { setPageSeo } from '../lib/seo'
 
 const heroImage =
   'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1800&q=86'
@@ -305,19 +306,12 @@ export default function Developments() {
   })
 
   useEffect(() => {
-    document.title = 'Discover New Developments | Arch9'
-
-    let description = document.querySelector('meta[name="description"]')
-    if (!description) {
-      description = document.createElement('meta')
-      description.setAttribute('name', 'description')
-      document.head.appendChild(description)
-    }
-
-    description.setAttribute(
-      'content',
-      'Browse apartments, estates and investment opportunities from leading developers across South Africa.'
-    )
+    setPageSeo({
+      title: 'Discover New Developments | Arch9',
+      description: 'Browse apartments, estates and investment opportunities from leading developers across South Africa.',
+      canonicalPath: '/solutions/developers',
+      indexable: false,
+    })
   }, [])
 
   const filteredDevelopments = useMemo(() => {

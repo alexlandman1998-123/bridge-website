@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { breadcrumbJsonLd, serviceJsonLd, setPageSeo, softwareApplicationJsonLd } from '../lib/seo'
 
 const trustIndicators = [
   {
@@ -217,16 +218,6 @@ const testimonials = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 function MatterWorkspaceVisual() {
   return (
     <div className="relative rounded-[34px] border border-[#0A3028]/10 bg-[#071E1A] p-5 text-white shadow-[0_34px_110px_rgba(5,8,7,0.18)] md:p-7">
@@ -313,10 +304,35 @@ function RegistrationDashboardVisual() {
 
 export default function AttorneysSolution() {
   useEffect(() => {
-    document.title = 'Conveyancing Operating System | Arch9'
-    setMetaDescription(
+    const description =
       'Arch9 helps conveyancing firms receive cleaner instructions, reduce chasing, improve matter visibility and move transfer, bond and cancellation matters to registration faster.'
-    )
+
+    setPageSeo({
+      title: 'Conveyancing Operating System | Arch9',
+      description,
+      canonicalPath: '/solutions/attorneys',
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Solutions', href: '/platform' },
+          { name: 'Attorneys', href: '/solutions/attorneys' },
+        ]),
+        serviceJsonLd({
+          name: 'Arch9 for Conveyancing Attorneys',
+          description,
+          path: '/solutions/attorneys',
+          serviceType: 'Conveyancing transaction workspace',
+          audience: ['Conveyancing attorneys', 'Law firms'],
+        }),
+        softwareApplicationJsonLd({
+          name: 'Arch9 for Conveyancing Attorneys',
+          description,
+          path: '/solutions/attorneys',
+          audience: ['Conveyancing attorneys', 'Law firms'],
+          featureList: ['Matter visibility', 'Document collection', 'Milestone updates', 'Stakeholder collaboration'],
+        }),
+      ],
+    })
   }, [])
 
   return (

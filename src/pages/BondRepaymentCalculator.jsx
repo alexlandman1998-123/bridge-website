@@ -16,6 +16,7 @@ import CalculatorShell from '../components/tools/CalculatorShell'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
 import ResultSummary from '../components/tools/ResultSummary'
 import SliderInput from '../components/tools/SliderInput'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 import {
   buildRepaymentSchedule,
   calculateBondRepayment,
@@ -116,16 +117,6 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 function getCurrentMonthValue() {
   const now = new Date()
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
@@ -138,8 +129,36 @@ export default function BondRepaymentCalculator() {
   const [startDate, setStartDate] = useState(getCurrentMonthValue)
 
   useEffect(() => {
-    document.title = 'Bond Repayment Calculator | Arch9 Property Tools'
-    setMetaDescription('Estimate your monthly bond repayments in South Africa based on loan amount, interest rate and loan term.')
+    const description = 'Estimate your monthly bond repayments in South Africa based on loan amount, interest rate and loan term.'
+    const path = '/tools/buyers/bond-repayment-calculator'
+
+    setPageSeo({
+      title: 'Bond Repayment Calculator | Arch9 Property Tools',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Buyers', href: '/tools/buyers' },
+          { name: 'Bond Repayment Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Bond Repayment Calculator | Arch9 Property Tools',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Bond Repayment Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property buyers', 'Bond applicants'],
+          featureList: ['Monthly repayment estimate', 'Loan amount input', 'Interest rate input', 'Loan term input'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   const result = useMemo(

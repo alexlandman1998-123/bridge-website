@@ -16,6 +16,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import AffordabilityCalculator from '../components/tools/AffordabilityCalculator'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const trustBadges = [
   {
@@ -106,20 +107,38 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 export default function AffordabilityCalculatorPage() {
   useEffect(() => {
-    document.title = 'Property Affordability Calculator | Arch9'
-    setMetaDescription('Calculate how much property you can afford based on your income, expenses, debt and deposit.')
+    const description = 'Calculate how much property you can afford based on your income, expenses, debt and deposit.'
+    const path = '/tools/buyers/affordability-calculator'
+
+    setPageSeo({
+      title: 'Property Affordability Calculator | Arch9',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Buyers', href: '/tools/buyers' },
+          { name: 'Affordability Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Property Affordability Calculator | Arch9',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Property Affordability Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property buyers', 'Bond applicants'],
+          featureList: ['Income input', 'Expense input', 'Deposit input', 'Estimated affordable property price'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   return (

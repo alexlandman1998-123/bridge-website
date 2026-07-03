@@ -24,6 +24,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
 import familyHomeImage from '../assets/platform/family-home.png'
+import { breadcrumbJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const roles = [
   {
@@ -145,16 +146,6 @@ const simpleSteps = [
     icon: ShieldCheck,
   },
 ]
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
 
 function SectionIntro({ title, copy, align = 'center' }) {
   return (
@@ -281,8 +272,30 @@ export default function PlatformOverview() {
   const [activeRole, setActiveRole] = useState(roles[0])
 
   useEffect(() => {
-    document.title = 'Platform Overview | Arch9'
-    setMetaDescription('Arch9 gives everyone involved in buying or selling a property one shared workspace from offer accepted to registration.')
+    const description = 'Arch9 gives everyone involved in buying or selling a property one shared workspace from offer accepted to registration.'
+
+    setPageSeo({
+      title: 'Platform Overview | Arch9',
+      description,
+      canonicalPath: '/platform',
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Platform', href: '/platform' },
+        ]),
+        webPageJsonLd({
+          name: 'Platform Overview | Arch9',
+          description,
+          path: '/platform',
+        }),
+        softwareApplicationJsonLd({
+          description,
+          path: '/platform',
+          audience: ['Property transaction teams', 'Estate agents', 'Attorneys', 'Bond originators', 'Developers'],
+          featureList: ['Shared workspace', 'Role selection', 'Transaction progress tracking', 'Document collaboration'],
+        }),
+      ],
+    })
   }, [])
 
   return (

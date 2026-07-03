@@ -3,16 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { getToolCategory, getToolHref, getToolsByCategory } from '../config/tools'
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
+import { breadcrumbJsonLd, itemListJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 function CategoryToolCard({ tool }) {
   const Icon = tool.icon
@@ -41,9 +32,28 @@ export default function ToolCategory({ categoryKey }) {
 
   useEffect(() => {
     if (!category) return
-    document.title = `${category.title} Property Tools | Arch9`
-    setMetaDescription(`${category.description} Explore free Arch9 tools for ${category.title.toLowerCase()}.`)
-  }, [category])
+    const description = `${category.description} Explore free Arch9 tools for ${category.title.toLowerCase()}.`
+
+    setPageSeo({
+      title: `${category.title} Property Tools | Arch9`,
+      description,
+      canonicalPath: `/tools/${category.key}`,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: category.title, href: `/tools/${category.key}` },
+        ]),
+        webPageJsonLd({
+          name: `${category.title} Property Tools | Arch9`,
+          description,
+          path: `/tools/${category.key}`,
+          type: 'CollectionPage',
+        }),
+        itemListJsonLd(categoryTools.map((tool) => ({ name: tool.title, href: getToolHref(tool) }))),
+      ],
+    })
+  }, [category, categoryTools])
 
   if (!category) {
     return (

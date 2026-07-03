@@ -27,6 +27,7 @@ import { findAreaInsight } from '../data/areaInsights'
 import { slugify } from '../data/propertyIntelligence'
 import { capturePropertyEnquiry } from '../lib/leads'
 import { fetchPublicListingBySlug } from '../lib/publicListingsApi'
+import { setPageSeo } from '../lib/seo'
 import {
   PRIME_RATE,
   calculateAffordability,
@@ -426,7 +427,12 @@ function RegistrationTrackerPreview() {
 
 function NotFound() {
   useEffect(() => {
-    document.title = 'Property not found | Arch9'
+    setPageSeo({
+      title: 'Property not found | Arch9',
+      description: 'This Arch9 property listing is not available.',
+      canonicalPath: '/',
+      indexable: false,
+    })
   }, [])
 
   return (
@@ -495,7 +501,12 @@ export default function PropertyDetail({ slug }) {
 
   useEffect(() => {
     if (!property) return
-    document.title = `${property.title} | Arch9`
+    setPageSeo({
+      title: `${property.title} | Arch9`,
+      description: `${property.title} in ${property.area || property.location || 'South Africa'}. This property page is no longer part of the active Arch9 public sitemap.`,
+      canonicalPath: window.location.pathname,
+      indexable: false,
+    })
     trackListingEvent({ eventType: 'Property Viewed', property })
   }, [property])
 

@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { captureDevelopmentEnquiry } from '../lib/developmentLeads'
 import { findDevelopmentBySlug, formatDevelopmentPrice } from '../data/developments'
+import { setPageSeo } from '../lib/seo'
 
 const initialEnquiry = {
   firstName: '',
@@ -42,7 +43,12 @@ function Textarea(props) {
 
 function NotFound() {
   useEffect(() => {
-    document.title = 'Development not found | Arch9'
+    setPageSeo({
+      title: 'Development not found | Arch9',
+      description: 'This Arch9 development is not available.',
+      canonicalPath: '/solutions/developers',
+      indexable: false,
+    })
   }, [])
 
   return (
@@ -73,7 +79,12 @@ export default function DevelopmentDetail({ slug }) {
 
   useEffect(() => {
     if (!development) return
-    document.title = `${development.title} | Arch9`
+    setPageSeo({
+      title: `${development.title} | Arch9`,
+      description: `${development.title} in ${development.area}, ${development.city}. This development page is no longer part of the active Arch9 public sitemap.`,
+      canonicalPath: window.location.pathname,
+      indexable: false,
+    })
   }, [development])
 
   if (!development) {

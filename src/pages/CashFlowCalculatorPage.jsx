@@ -13,6 +13,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CashFlowCalculator from '../components/tools/CashFlowCalculator'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const trustBadges = [
   {
@@ -91,20 +92,38 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 export default function CashFlowCalculatorPage() {
   useEffect(() => {
-    document.title = 'Property Cash Flow Calculator | Arch9 Property Tools'
-    setMetaDescription('Calculate monthly rental cash flow after expenses, vacancy allowance and bond repayments for a property investment.')
+    const description = 'Calculate monthly rental cash flow after expenses, vacancy allowance and bond repayments for a property investment.'
+    const path = '/tools/investors/cash-flow-calculator'
+
+    setPageSeo({
+      title: 'Property Cash Flow Calculator | Arch9 Property Tools',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Investors', href: '/tools/investors' },
+          { name: 'Cash Flow Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Property Cash Flow Calculator | Arch9 Property Tools',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Property Cash Flow Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property investors'],
+          featureList: ['Rental income input', 'Operating expense input', 'Vacancy allowance input', 'Monthly cash flow estimate'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   return (

@@ -3,16 +3,7 @@ import { ArrowRight, CheckCircle2, CircleDot, FileStack, Layers3, UsersRound } f
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { solutionPages } from '../config/solutionPages'
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
+import { breadcrumbJsonLd, serviceJsonLd, setPageSeo, softwareApplicationJsonLd } from '../lib/seo'
 
 function SolutionHero({ page }) {
   return (
@@ -149,11 +140,36 @@ function SolutionCTA({ page }) {
 
 export default function SolutionPage({ pageKey }) {
   const page = solutionPages[pageKey] || solutionPages.platform
+  const canonicalPath = solutionPages[pageKey] ? `/solutions/${pageKey}` : '/platform'
 
   useEffect(() => {
-    document.title = page.metaTitle
-    setMetaDescription(page.metaDescription)
-  }, [page])
+    setPageSeo({
+      title: page.metaTitle,
+      description: page.metaDescription,
+      canonicalPath,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Solutions', href: '/platform' },
+          { name: page.eyebrow || page.title, href: canonicalPath },
+        ]),
+        serviceJsonLd({
+          name: page.metaTitle.replace(' | Arch9', ''),
+          description: page.metaDescription,
+          path: canonicalPath,
+          serviceType: 'Property transaction workspace',
+          audience: [page.eyebrow || 'Property teams'],
+        }),
+        softwareApplicationJsonLd({
+          name: page.metaTitle.replace(' | Arch9', ''),
+          description: page.metaDescription,
+          path: canonicalPath,
+          audience: [page.eyebrow || 'Property teams'],
+          featureList: page.features?.slice(0, 6) || [],
+        }),
+      ],
+    })
+  }, [canonicalPath, page])
 
   return (
     <div className="min-h-screen bg-[#F8F4EC] text-[#05120F]">

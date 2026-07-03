@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import heroImage from '../assets/hero.png'
 import { landingPages } from '../config/landingPages'
+import { breadcrumbJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 const pageIcons = {
   sell: Building2,
@@ -20,26 +21,54 @@ const proofPoints = [
   'Documents, updates, and next actions are easier to track',
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
+const landingCanonicalPaths = {
+  agents: '/solutions/agents',
+  attorneys: '/solutions/attorneys',
+  'bond-originators': '/solutions/bond-originators',
+  developers: '/solutions/developers',
+  platform: '/platform',
 }
+
+const indexableLandingPages = new Set([
+  'commercial',
+  'why-arch9',
+  'help',
+  'docs',
+  'privacy',
+  'terms',
+  'security',
+  'cookies',
+])
 
 export default function LandingPage({ pageKey }) {
   const page = landingPages[pageKey] || landingPages.platform
   const Icon = pageIcons[pageKey] || FileStack
   const secondaryHref = page.secondaryHref || '/'
   const secondaryLabel = page.secondaryLabel || 'View listings'
+  const canonicalPath = landingCanonicalPaths[pageKey] || `/${pageKey}`
+  const isIndexable = indexableLandingPages.has(pageKey)
 
   useEffect(() => {
-    document.title = page.metaTitle
-    setMetaDescription(page.subtitle)
-  }, [page])
+    setPageSeo({
+      title: page.metaTitle,
+      description: page.subtitle,
+      canonicalPath,
+      indexable: isIndexable,
+      jsonLd: isIndexable
+        ? [
+            breadcrumbJsonLd([
+              { name: 'Home', href: '/' },
+              { name: page.eyebrow, href: canonicalPath },
+            ]),
+            webPageJsonLd({
+              name: page.metaTitle,
+              description: page.subtitle,
+              path: canonicalPath,
+            }),
+          ]
+        : [],
+    })
+  }, [canonicalPath, isIndexable, page])
 
   return (
     <div className="bridge-site-bg min-h-screen text-[#05120F]">

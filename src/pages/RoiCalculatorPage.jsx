@@ -14,6 +14,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import RelatedToolCard from '../components/tools/RelatedToolCard'
 import RoiCalculator from '../components/tools/RoiCalculator'
+import { breadcrumbJsonLd, faqJsonLd, setPageSeo, softwareApplicationJsonLd, webPageJsonLd } from '../lib/seo'
 
 const trustBadges = [
   {
@@ -92,20 +93,38 @@ const faqs = [
   },
 ]
 
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
-
 export default function RoiCalculatorPage() {
   useEffect(() => {
-    document.title = 'Property ROI Calculator | Arch9 Property Tools'
-    setMetaDescription('Calculate estimated property ROI using rental income, expenses, financing costs and projected capital growth.')
+    const description = 'Calculate estimated property ROI using rental income, expenses, financing costs and projected capital growth.'
+    const path = '/tools/investors/roi-calculator'
+
+    setPageSeo({
+      title: 'Property ROI Calculator | Arch9 Property Tools',
+      description,
+      canonicalPath: path,
+      jsonLd: [
+        breadcrumbJsonLd([
+          { name: 'Home', href: '/' },
+          { name: 'Tools', href: '/tools' },
+          { name: 'Investors', href: '/tools/investors' },
+          { name: 'ROI Calculator', href: path },
+        ]),
+        webPageJsonLd({
+          name: 'Property ROI Calculator | Arch9 Property Tools',
+          description,
+          path,
+        }),
+        softwareApplicationJsonLd({
+          name: 'Property ROI Calculator',
+          description,
+          path,
+          applicationCategory: 'FinanceApplication',
+          audience: ['Property investors'],
+          featureList: ['Rental income input', 'Expense input', 'Financing cost input', 'Projected return estimate'],
+        }),
+        faqJsonLd(faqs),
+      ],
+    })
   }, [])
 
   return (

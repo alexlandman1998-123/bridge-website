@@ -31,6 +31,7 @@ import {
 } from '../lib/listingJourney'
 import { fetchPublicListings } from '../lib/publicListingsApi'
 import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
+import { setPageSeo } from '../lib/seo'
 
 const heroImage = 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85'
 
@@ -127,16 +128,6 @@ const trustPoints = [
   { title: 'End-to-end support', copy: "We're with you all the way", icon: CalendarCheck },
   { title: 'South Africa wide', copy: 'Homes in all the right places', icon: MapPin },
 ]
-
-function setMetaDescription(content) {
-  let description = document.querySelector('meta[name="description"]')
-  if (!description) {
-    description = document.createElement('meta')
-    description.setAttribute('name', 'description')
-    document.head.appendChild(description)
-  }
-  description.setAttribute('content', content)
-}
 
 function SaleRentalToggle({ value, onChange }) {
   return (
@@ -597,8 +588,12 @@ export default function Properties() {
   const [savedSlugs, setSavedSlugs] = useState([])
 
   useEffect(() => {
-    document.title = 'Find Your Next Property | Arch9'
-    setMetaDescription('Discover homes, developments and investment opportunities from trusted agencies across South Africa with Arch9.')
+    setPageSeo({
+      title: 'Find Your Next Property | Arch9',
+      description: 'Discover homes, developments and investment opportunities from trusted agencies across South Africa with Arch9.',
+      canonicalPath: '/',
+      indexable: false,
+    })
     trackListingEvent({ eventType: 'Property Search Viewed', payload: filters })
   }, [filters])
 
