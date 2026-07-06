@@ -19,7 +19,7 @@ export const footerLinkGroups = [
   {
     title: 'Company',
     links: [
-      { label: 'Why Arch9', href: '/why-arch9' },
+      { label: 'About Arch9', href: '/about' },
       { label: 'Book A Demo', href: '/book-demo' },
       { label: 'Contact', href: '/contact' },
     ],

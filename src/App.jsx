@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Contact from './pages/Contact'
+import About from './pages/About'
 import PlatformHome from './pages/Home'
 import PlatformOverview from './pages/PlatformOverview'
 import Pricing from './pages/Pricing'
@@ -38,6 +39,10 @@ export default function App() {
 
   if (pathname === '/contact' || pathname === '/book-demo') {
     return <Contact />
+  }
+
+  if (pathname === '/about' || pathname === '/why-arch9') {
+    return <About />
   }
 
   if (pathname === '/pricing') {
