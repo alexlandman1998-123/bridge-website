@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronDown, Mail, Menu, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
+import { ROLE_LINKS_VISIBLE } from '../config/release'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -16,11 +17,11 @@ function trackNavigationEvent(eventName) {
   window.dispatchEvent(new CustomEvent(eventName))
 }
 
-function SolutionsDropdown({ onNavigate }) {
+function SolutionsDropdown({ items = solutionNavItems, onNavigate }) {
   return (
     <div className="w-[calc(100vw-160px)] max-w-[1360px] rounded-[28px] border border-[rgba(15,23,42,0.08)] bg-white/98 px-11 py-9 text-[#0F172A] shadow-[0_34px_90px_rgba(5,8,7,0.16)] backdrop-blur-2xl">
-      <div className="grid grid-cols-5 gap-0">
-        {solutionNavItems.map((item, index) => {
+      <div className="grid gap-0" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
+        {items.map((item, index) => {
           const Icon = item.icon
           return (
             <a
@@ -191,6 +192,9 @@ export default function Header() {
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? navItems.slice(0, firstMenuIndex) : navItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? navItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
   const lightHomeHeader = isHome && !scrolled
+  const visibleSolutionNavItems = ROLE_LINKS_VISIBLE
+    ? solutionNavItems
+    : solutionNavItems.filter((item) => !['/solutions/developers', '/solutions/buyers-sellers'].includes(item.href))
 
   return (
     <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">
@@ -222,7 +226,7 @@ export default function Header() {
           {navItems.map((item) => {
             const active =
               item.menu === 'solutions'
-                ? pathname.startsWith('/solutions/') || solutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
+                ? pathname.startsWith('/solutions/') || visibleSolutionNavItems.some((solution) => pathname === solution.href || pathname.startsWith(`${solution.href}/`))
                 : isActivePath(pathname, item)
             if (item.menu) {
               return (
@@ -331,6 +335,7 @@ export default function Header() {
               onMouseLeave={scheduleCloseMenu}
             >
               <SolutionsDropdown
+                items={visibleSolutionNavItems}
                 onNavigate={() => {
                   cancelCloseMenu()
                   setActiveMenu(null)
@@ -417,7 +422,7 @@ export default function Header() {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: shouldReduceMotion ? 0.01 : 0.2, ease: motionEaseOut }}
                     >
-                      {solutionNavItems.map((item) => (
+                      {visibleSolutionNavItems.map((item) => (
                         <a
                           key={item.href}
                           href={item.href}
