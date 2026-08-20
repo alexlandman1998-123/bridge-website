@@ -23,7 +23,6 @@ import ToolDetail from './pages/ToolDetail'
 import NotFound from './pages/NotFound'
 import { landingPages } from './config/landingPages'
 import { getRolePageKeyFromPath } from './config/rolePages'
-import { isRoleGatewayHome } from './config/release'
 import { getToolByRoute } from './config/tools'
 import { findDevelopmentBySlug } from './data/developments'
 import { findAreaBySlug } from './data/propertyIntelligence'
@@ -190,7 +189,7 @@ export default function App() {
   }
 
   if (pathname === '/') {
-    return isRoleGatewayHome ? <MarketingHome /> : <PlatformHome />
+    return <MarketingHome />
   }
 
   return <NotFound />

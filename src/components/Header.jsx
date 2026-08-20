@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronDown, Mail, Menu, X } from 'lucide-react'
 import { appAuthUrl, demoHref, primaryNavItems, solutionNavItems } from '../config/navigation'
-import { ROLE_LINKS_VISIBLE } from '../config/release'
 import { motionEaseOut } from './motion/timing'
 
 function isActivePath(pathname, item) {
@@ -192,9 +191,7 @@ export default function Header() {
   const mobileNavBeforeMenus = (firstMenuIndex >= 0 ? navItems.slice(0, firstMenuIndex) : navItems).filter((item) => !item.menu)
   const mobileNavAfterMenus = (firstMenuIndex >= 0 ? navItems.slice(firstMenuIndex) : []).filter((item) => !item.menu)
   const lightHomeHeader = isHome && !scrolled
-  const visibleSolutionNavItems = ROLE_LINKS_VISIBLE
-    ? solutionNavItems
-    : solutionNavItems.filter((item) => !['/solutions/developers', '/solutions/buyers-sellers'].includes(item.href))
+  const visibleSolutionNavItems = solutionNavItems
 
   return (
     <header ref={headerRef} className="pointer-events-none fixed left-0 right-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-6">

@@ -30,10 +30,6 @@ npm run build
 
 ## Notes
 
-- The homepage is now a focused standalone marketing experience in `src/pages/Home.jsx`.
+- The homepage is now the role-gateway experience in `src/pages/MarketingHome.jsx`.
 - The visual system in `src/index.css` mirrors the premium neutral styling used in the original Bridge landing page.
-- Release controls:
-  - `VITE_ARCH9_HOME_VARIANT=legacy|role-gateway`
-  - `VITE_ARCH9_ROLE_LINKS=true|false`
-  - Default local development shows the role-gateway homepage and links.
-  - Production can stay on the legacy homepage with role links hidden until the final switch.
+- The homepage and role-specific routes are now always rendered from the shared public site shell.
