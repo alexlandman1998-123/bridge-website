@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import heroImage from '../assets/hero.png'
 import { landingPages } from '../config/landingPages'
+import { roleRoutes } from '../config/rolePages'
 import { breadcrumbJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 const pageIcons = {
@@ -22,10 +23,10 @@ const proofPoints = [
 ]
 
 const landingCanonicalPaths = {
-  agents: '/solutions/agents',
-  attorneys: '/solutions/attorneys',
-  'bond-originators': '/solutions/bond-originators',
-  developers: '/solutions/developers',
+  agents: roleRoutes.agency,
+  attorneys: roleRoutes.attorney,
+  'bond-originators': roleRoutes['bond-originator'],
+  developers: roleRoutes.developer,
   platform: '/platform',
 }
 

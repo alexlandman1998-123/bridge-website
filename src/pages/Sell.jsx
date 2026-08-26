@@ -25,6 +25,7 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
+import { roleRoutes } from '../config/rolePages'
 import { setPageSeo } from '../lib/seo'
 
 const propertyImage = 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=85'
@@ -380,7 +381,7 @@ export default function Sell() {
     setPageSeo({
       title: 'Property Listings Should Work Harder | Arch9',
       description: 'List on Arch9 and turn every buyer enquiry into the beginning of a connected property journey from enquiry to registration.',
-      canonicalPath: '/solutions/agents',
+      canonicalPath: roleRoutes.agency,
       indexable: false,
     })
   }, [])

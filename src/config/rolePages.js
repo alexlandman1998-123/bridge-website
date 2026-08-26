@@ -1,5 +1,4 @@
 import {
-  ArrowRightLeft,
   BadgeCheck,
   Banknote,
   BellRing,
@@ -8,7 +7,6 @@ import {
   CheckCircle2,
   ClipboardCheck,
   FileCheck2,
-  FolderKanban,
   Home,
   Landmark,
   LayoutDashboard,
@@ -30,57 +28,101 @@ export const transactionStages = [
   { id: 'registration', label: 'Registration' },
 ]
 
+export const roleRoutes = {
+  agency: '/solutions/agency/dashboard',
+  developer: '/solutions/developer/dashboard',
+  attorney: '/solutions/attorney/dashboard',
+  'bond-originator': '/solutions/bond-originator/dashboard',
+  'buyer-seller': '/solutions/buyer-seller/dashboard',
+}
+
 export const roleOptions = [
   {
-    key: 'agents',
-    label: 'Agents & Agencies',
-    shortLabel: 'Agent',
-    href: '/solutions/agents',
+    key: 'agency',
+    label: 'Agency',
+    shortLabel: 'Agency',
+    href: roleRoutes.agency,
     icon: UserRound,
-    description: 'Manage the journey from first lead to registered sale.',
+    description: 'Manage listings, leads, offers and handover from one dashboard.',
     activeStages: ['listed', 'offer', 'otp', 'registration'],
   },
   {
-    key: 'developers',
-    label: 'Developers',
+    key: 'developer',
+    label: 'Developer',
     shortLabel: 'Developer',
-    href: '/solutions/developers',
+    href: roleRoutes.developer,
     icon: Building2,
     description: 'Connect inventory, buyers, agents and registrations.',
     activeStages: ['listed', 'offer', 'finance', 'transfer', 'registration'],
   },
   {
-    key: 'attorneys',
-    label: 'Attorneys',
-    shortLabel: 'Attorney',
-    href: '/solutions/attorneys',
-    icon: Scale,
-    description: 'Run matters with complete transaction context.',
-    activeStages: ['transfer', 'registration'],
-  },
-  {
-    key: 'bond-originators',
-    label: 'Bond Originators',
+    key: 'bond-originator',
+    label: 'Bond Originator',
     shortLabel: 'Finance',
-    href: '/solutions/bond-originators',
+    href: roleRoutes['bond-originator'],
     icon: Landmark,
     description: 'Track applications, bank submissions and approvals.',
     activeStages: ['finance'],
   },
   {
-    key: 'buyers-sellers',
+    key: 'attorney',
+    label: 'Attorney',
+    shortLabel: 'Attorney',
+    href: roleRoutes.attorney,
+    icon: Scale,
+    description: 'Run matters with complete transaction context.',
+    activeStages: ['transfer', 'registration'],
+  },
+  {
+    key: 'buyer-seller',
     label: 'Buyer / Seller',
     shortLabel: 'Client',
-    href: '/solutions/buyers-sellers',
+    href: roleRoutes['buyer-seller'],
     icon: Home,
-    description: 'See what is happening, what is needed and what happens next.',
+    description: 'See what is happening, what is needed and what comes next.',
     activeStages: ['otp', 'onboarding', 'finance', 'transfer', 'registration'],
   },
 ]
 
+export const roleGatewayOptions = [
+  {
+    key: 'agency',
+    label: 'Estate Agency',
+    heading: 'Estate Agency',
+    href: roleRoutes.agency,
+    icon: UserRound,
+    description: 'Run your agency from lead to registration.',
+  },
+  {
+    key: 'developer',
+    label: 'Property Developer',
+    heading: 'Property Developer',
+    href: roleRoutes.developer,
+    icon: Building2,
+    description: 'Manage developments, sales and transactions.',
+  },
+  {
+    key: 'bond-originator',
+    label: 'Bond Originator',
+    heading: 'Bond Originator',
+    href: roleRoutes['bond-originator'],
+    icon: Landmark,
+    description: 'Manage applications from referral to registration.',
+  },
+  {
+    key: 'attorney',
+    label: 'Property Attorney',
+    heading: 'Property Attorney',
+    href: roleRoutes.attorney,
+    icon: Scale,
+    description: 'Manage matters, clients and transactions in one place.',
+  },
+]
+
 export const rolePages = {
-  developers: {
-    key: 'developers',
+  developer: {
+    key: 'developer',
+    path: roleRoutes.developer,
     eyebrow: 'For property developers',
     headline: 'From reservation to registration. One operating system for your development.',
     supportingCopy:
@@ -143,7 +185,7 @@ export const rolePages = {
     journey: {
       title: 'One development transaction. Every role player connected.',
       copy: 'Arch9 sits behind the sale as the shared infrastructure that keeps each party working from the same source of truth.',
-      activeRoles: ['Developer', 'Agent', 'Buyer / Seller', 'Finance', 'Attorney', 'Registration'],
+      activeRoles: ['Developer', 'Agency', 'Buyer / Seller', 'Finance', 'Attorney', 'Registration'],
     },
     socialProof: {
       quote:
@@ -160,8 +202,9 @@ export const rolePages = {
     seoDescription:
       'Arch9 connects development inventory, buyer leads, agents, finance, attorneys and registration progress in one shared transaction workspace.',
   },
-  'buyers-sellers': {
-    key: 'buyers-sellers',
+  'buyer-seller': {
+    key: 'buyer-seller',
+    path: roleRoutes['buyer-seller'],
     eyebrow: 'For buyers and sellers',
     headline: 'Track your property transaction like a parcel.',
     supportingCopy:
@@ -171,7 +214,7 @@ export const rolePages = {
     heroVisual: {
       label: 'Client transaction portal',
       title: 'Sale in progress',
-      subtitle: 'Buyer · Seller · Agent · Attorney · Finance',
+      subtitle: 'Buyer · Seller · Agency · Attorney · Finance',
       progressLabel: 'Sold to registered',
       progress: 74,
       stats: [
@@ -223,8 +266,8 @@ export const rolePages = {
     },
     journey: {
       title: 'Your transaction is still managed by professionals. Arch9 makes it visible.',
-      copy: 'Agents, finance partners and attorneys keep doing their work. You get a clearer view of the journey they are moving forward.',
-      activeRoles: ['Buyer / Seller', 'Agent', 'Finance', 'Attorney', 'Registration'],
+      copy: 'Agency, finance partners and attorneys keep doing their work. You get a clearer view of the journey they are moving forward.',
+      activeRoles: ['Buyer / Seller', 'Agency', 'Finance', 'Attorney', 'Registration'],
     },
     socialProof: {
       quote:
@@ -244,10 +287,12 @@ export const rolePages = {
 }
 
 const rolePathAliases = {
-  '/solutions/developers': 'developers',
-  '/developers': 'developers',
-  '/solutions/buyers-sellers': 'buyers-sellers',
-  '/buyers-sellers': 'buyers-sellers',
+  '/solutions/developer/dashboard': 'developer',
+  '/developers': 'developer',
+  '/solutions/developers': 'developer',
+  '/solutions/buyer-seller/dashboard': 'buyer-seller',
+  '/buyers-sellers': 'buyer-seller',
+  '/solutions/buyers-sellers': 'buyer-seller',
 }
 
 export function getRolePageKeyFromPath(pathname = '/') {

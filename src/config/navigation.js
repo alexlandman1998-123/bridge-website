@@ -1,4 +1,5 @@
 import { Building2, Home, Landmark, Layers, Scale, UserRound } from 'lucide-react'
+import { roleRoutes } from './rolePages'
 
 export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/book-demo'
@@ -11,41 +12,41 @@ export const primaryNavItems = [
 
 export const solutionNavItems = [
   {
-    title: 'Agents',
-    label: 'Agents',
-    href: '/solutions/agents',
+    title: 'Agency',
+    label: 'Agency',
+    href: roleRoutes.agency,
     description: 'Listings, leads, offers, documents, and transaction progress in one workspace.',
     icon: UserRound,
-    cta: 'Explore Agents',
+    cta: 'Explore Agency',
   },
   {
-    title: 'Attorneys',
-    label: 'Attorneys',
-    href: '/solutions/attorneys',
+    title: 'Attorney',
+    label: 'Attorney',
+    href: roleRoutes.attorney,
     description: 'Transfer matters connected to cleaner instructions and stakeholder updates.',
     icon: Scale,
-    cta: 'Explore Attorneys',
+    cta: 'Explore Attorney',
   },
   {
-    title: 'Bond Originators',
-    label: 'Bond Originators',
-    href: '/solutions/bond-originators',
+    title: 'Bond Originator',
+    label: 'Bond Originator',
+    href: roleRoutes['bond-originator'],
     description: 'Cleaner applications, bank submissions, and finance progress from day one.',
     icon: Landmark,
-    cta: 'Explore Bond Originators',
+    cta: 'Explore Bond Originator',
   },
   {
-    title: 'Developers',
-    label: 'Developers',
-    href: '/solutions/developers',
+    title: 'Developer',
+    label: 'Developer',
+    href: roleRoutes.developer,
     description: 'Development stock, buyers, agents, and sales progress connected end to end.',
     icon: Building2,
-    cta: 'Explore Developers',
+    cta: 'Explore Developer',
   },
   {
-    title: 'Buyers & Sellers',
-    label: 'Buyers & Sellers',
-    href: '/solutions/buyers-sellers',
+    title: 'Buyer / Seller',
+    label: 'Buyer / Seller',
+    href: roleRoutes['buyer-seller'],
     description: 'A clearer client portal for documents, milestones, finance and registration progress.',
     icon: Home,
     cta: 'Explore Client View',

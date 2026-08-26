@@ -1,8 +1,8 @@
 # Arch9
 
-Arch9 is a shared property transaction workspace for South African property teams. It connects buyers, sellers, estate agents, conveyancing attorneys, bond originators, developers and other stakeholders around one live transaction timeline from first enquiry to registration.
+Arch9 is a shared property transaction workspace for South African property teams. It connects buyers, sellers, estate agencies, conveyancing attorneys, bond originators, developers and other stakeholders around one live transaction timeline from first enquiry to registration.
 
-The current public Arch9 website focuses on the active platform, role-specific solution pages, demo booking, property calculators, help/docs pages and legal/security information.
+The current public Arch9 website focuses on the active platform, role dashboard pages, demo booking, property calculators, help/docs pages and legal/security information.
 
 ## Canonical Site Sources
 
@@ -14,10 +14,11 @@ The current public Arch9 website focuses on the active platform, role-specific s
 
 ## Active Solution Pages
 
-- [For Estate Agents](https://arch9.co.za/solutions/agents): lead, listing and transaction workflow for estate agents and agencies.
-- [For Attorneys](https://arch9.co.za/solutions/attorneys): conveyancing matter visibility, document collection and stakeholder updates.
-- [For Bond Originators](https://arch9.co.za/solutions/bond-originators): bond application tracking, bank submission visibility and agent updates.
-- [For Developers](https://arch9.co.za/solutions/developers): development sales, buyer progress and registration tracking.
+- [For Agency](https://arch9.co.za/solutions/agency/dashboard): lead, listing and transaction workflow for estate agencies.
+- [For Attorney](https://arch9.co.za/solutions/attorney/dashboard): conveyancing matter visibility, document collection and stakeholder updates.
+- [For Bond Originator](https://arch9.co.za/solutions/bond-originator/dashboard): bond application tracking, bank submission visibility and agent updates.
+- [For Developer](https://arch9.co.za/solutions/developer/dashboard): development sales, buyer progress and registration tracking.
+- [For Buyer / Seller](https://arch9.co.za/solutions/buyer-seller/dashboard): client visibility, action tracking and registration progress.
 - [Commercial Property](https://arch9.co.za/commercial): commercial property workflow context.
 - [Why Arch9](https://arch9.co.za/why-arch9): why property transactions need shared infrastructure.
 
@@ -44,7 +45,7 @@ The current public Arch9 website focuses on the active platform, role-specific s
 
 ## Current Public SEO Scope
 
-Use the URLs listed above and in the sitemap as the source of truth for current public Arch9 content. The following older or deactivated routes are intentionally not public SEO targets and should not be treated as active navigation destinations: `/buy`, `/sell`, `/developments`, `/pricing`, `/contact`, individual property listing pages and individual development listing pages.
+Use the URLs listed above and in the sitemap as the source of truth for current public Arch9 content. The following older or deactivated routes are intentionally not public SEO targets and should not be treated as active navigation destinations: `/buy`, `/sell`, `/developments`, `/pricing`, `/contact`, individual property listing pages and individual development listing pages. The legacy solution slugs redirect to the dashboard routes above.
 
 ## Brand And Product Summary
 

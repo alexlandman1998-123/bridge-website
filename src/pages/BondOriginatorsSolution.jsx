@@ -354,26 +354,26 @@ export default function BondOriginatorsSolution() {
       'Arch9 helps bond originators receive cleaner applications, manage consultants, track bank submissions and keep agents updated from application to approval.'
 
     setPageSeo({
-      title: 'Bond Origination Operating System | Arch9',
+      title: 'Bond Originator Dashboard | Arch9',
       description,
-      canonicalPath: '/solutions/bond-originators',
+      canonicalPath: '/solutions/bond-originator/dashboard',
       jsonLd: [
         breadcrumbJsonLd([
           { name: 'Home', href: '/' },
           { name: 'Solutions', href: '/platform' },
-          { name: 'Bond Originators', href: '/solutions/bond-originators' },
+          { name: 'Bond Originator', href: '/solutions/bond-originator/dashboard' },
         ]),
         serviceJsonLd({
-          name: 'Arch9 for Bond Originators',
+          name: 'Arch9 for Bond Originator',
           description,
-          path: '/solutions/bond-originators',
+          path: '/solutions/bond-originator/dashboard',
           serviceType: 'Bond origination transaction workspace',
           audience: ['Bond originators', 'Mortgage consultants'],
         }),
         softwareApplicationJsonLd({
-          name: 'Arch9 for Bond Originators',
+          name: 'Arch9 for Bond Originator',
           description,
-          path: '/solutions/bond-originators',
+          path: '/solutions/bond-originator/dashboard',
           audience: ['Bond originators', 'Mortgage consultants'],
           featureList: ['Application tracking', 'Document collection', 'Bank submission visibility', 'Agent updates'],
         }),

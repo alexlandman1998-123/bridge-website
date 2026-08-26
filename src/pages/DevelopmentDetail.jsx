@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { captureDevelopmentEnquiry } from '../lib/developmentLeads'
 import { findDevelopmentBySlug, formatDevelopmentPrice } from '../data/developments'
+import { roleRoutes } from '../config/rolePages'
 import { setPageSeo } from '../lib/seo'
 
 const initialEnquiry = {
@@ -46,7 +47,7 @@ function NotFound() {
     setPageSeo({
       title: 'Development not found | Arch9',
       description: 'This Arch9 development is not available.',
-      canonicalPath: '/solutions/developers',
+      canonicalPath: roleRoutes.developer,
       indexable: false,
     })
   }, [])
@@ -82,7 +83,7 @@ export default function DevelopmentDetail({ slug }) {
     setPageSeo({
       title: `${development.title} | Arch9`,
       description: `${development.title} in ${development.area}, ${development.city}. This development page is no longer part of the active Arch9 public sitemap.`,
-      canonicalPath: window.location.pathname,
+      canonicalPath: roleRoutes.developer,
       indexable: false,
     })
   }, [development])

@@ -20,31 +20,51 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta
       name="description"
-      content="Arch9 is the connected transaction workspace for agents, attorneys, bond originators, developers and clients moving property deals from offer to registration."
+      content="Arch9 connects agencies, developers, attorneys, bond originators and buyers or sellers around one shared property transaction."
     />
     <link rel="canonical" href="https://arch9.co.za/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_ZA" />
     <meta property="og:site_name" content="Arch9" />
     <meta property="og:url" content="https://arch9.co.za/" />
-    <meta property="og:title" content="Arch9 | The future of property transactions" />
+    <meta property="og:title" content="Arch9 | Choose your role" />
     <meta
       property="og:description"
-      content="Arch9 gives every party one shared view of the deal, connecting agents, attorneys, bond originators, developers and clients around one live transaction."
+      content="Arch9 gives every role player one connected view of the transaction, from agency to registration."
     />
     <meta property="og:image" content="https://arch9.co.za/brand/icons/pwa-icon-512.png" />
     <meta property="og:image:alt" content="Arch9" />
     <meta property="og:image:width" content="512" />
     <meta property="og:image:height" content="512" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Arch9 | The future of property transactions" />
+    <meta name="twitter:title" content="Arch9 | Choose your role" />
     <meta
       name="twitter:description"
-      content="One connected transaction workspace from offer to registration."
+      content="One connected property transaction workspace for agencies, developers, attorneys, bond originators and buyers or sellers."
     />
     <meta name="twitter:image" content="https://arch9.co.za/brand/icons/pwa-icon-512.png" />
     <meta name="twitter:image:alt" content="Arch9" />
-    <title>Arch9 | The future of property transactions</title>
+    <title>Arch9 | Choose your role</title>
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        }
+        if (!f._fbq) f._fbq = n
+        n.push = n
+        n.loaded = !0
+        n.version = '2.0'
+        n.queue = []
+        t = b.createElement(e)
+        t.async = !0
+        t.src = v
+        s = b.getElementsByTagName(e)[0]
+        s.parentNode.insertBefore(t, s)
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+      fbq('init', '2520166111782311')
+      fbq('track', 'PageView')
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -53,12 +73,15 @@
         "name": "Arch9",
         "url": "https://arch9.co.za/",
         "logo": "https://arch9.co.za/brand/icons/pwa-icon-512.png",
-        "description": "Arch9 is the connected property transaction workspace for agents, attorneys, bond originators, developers, buyers, and sellers."
+        "description": "Arch9 is the connected property transaction workspace for agencies, attorneys, bond originators, developers, buyers, and sellers."
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2520166111782311&ev=PageView&noscript=1" alt="" />
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
