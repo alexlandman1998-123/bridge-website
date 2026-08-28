@@ -6,13 +6,11 @@ import {
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
-  Clock3,
   FileText,
   Landmark,
   LayoutDashboard,
   MoreHorizontal,
   Scale,
-  ShieldCheck,
   Sparkles,
   Users,
   Workflow,
@@ -625,9 +623,11 @@ function DemoWizard() {
 
   return (
     <section className="mx-auto w-full max-w-[980px] rounded-[26px] border border-white/80 bg-white/82 p-5 shadow-[0_28px_90px_rgba(23,20,18,0.08)] backdrop-blur-xl md:p-8">
-      <WizardHeader currentStep={currentStep} />
+      <div className="hidden md:block">
+        <WizardHeader currentStep={currentStep} />
+      </div>
 
-      <div className="mt-7 rounded-[26px] border border-[#E8DED2] bg-white/92 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] md:p-8">
+      <div className="rounded-[26px] border border-[#E8DED2] bg-white/92 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] md:mt-7 md:p-8">
         {submitted ? (
           <SuccessState onReset={resetWizard} />
         ) : (
@@ -654,23 +654,6 @@ function DemoWizard() {
         )}
       </div>
 
-      <div className="mt-5 grid gap-3 rounded-[20px] border border-[#E8DED2] bg-white/70 p-4 text-xs font-semibold text-[#6F6457] md:grid-cols-4 md:items-center">
-        <div className="flex items-center gap-3">
-          <ShieldCheck className="h-5 w-5 text-[#064537]" />
-          <span><strong className="block text-[#171412]">Your data is secure</strong> We never share your information</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <Clock3 className="h-5 w-5 text-[#064537]" />
-          <span><strong className="block text-[#171412]">Quick and easy</strong> Takes less than 60 seconds</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <Users className="h-5 w-5 text-[#064537]" />
-          <span><strong className="block text-[#171412]">Tailored for you</strong> We'll personalise your demo</span>
-        </div>
-        <p className="text-center md:text-right">
-          Already use Arch9? <a href="https://app.arch9.co.za" className="font-black text-[#064537]">Login</a>
-        </p>
-      </div>
     </section>
   )
 }
