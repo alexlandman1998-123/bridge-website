@@ -1,4 +1,4 @@
-import { Building2, Home, Landmark, Layers, Scale, UserRound } from 'lucide-react'
+import { Building2, Landmark, Layers, Scale, UserRound } from 'lucide-react'
 
 export const appAuthUrl = 'https://app.arch9.co.za'
 export const demoHref = '/book-demo'
@@ -41,14 +41,6 @@ export const solutionNavItems = [
     description: 'Development stock, buyers, agents, and sales progress connected end to end.',
     icon: Building2,
     cta: 'Explore Developers',
-  },
-  {
-    title: 'Buyers & Sellers',
-    label: 'Buyers & Sellers',
-    href: '/solutions/buyers-sellers',
-    description: 'A clearer client portal for documents, milestones, finance and registration progress.',
-    icon: Home,
-    cta: 'Explore Client View',
   },
   {
     title: 'Platform Overview',

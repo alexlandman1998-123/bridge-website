@@ -13,7 +13,6 @@ export const footerLinkGroups = [
       { label: 'For Attorneys', href: '/solutions/attorneys' },
       { label: 'For Bond Originators', href: '/solutions/bond-originators' },
       { label: 'For Developers', href: '/solutions/developers' },
-      { label: 'For Buyers & Sellers', href: '/solutions/buyers-sellers' },
       { label: 'Platform Overview', href: '/solutions/platform' },
     ],
   },

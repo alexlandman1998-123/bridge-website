@@ -1,16 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/join",
-      "destination": "https://admin.arch9.co.za/join",
-      "permanent": false
-    },
-    {
-      "source": "/join/",
-      "destination": "https://admin.arch9.co.za/join",
-      "permanent": false
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",

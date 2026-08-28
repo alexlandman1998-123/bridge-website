@@ -16,21 +16,17 @@ import SolutionPage from './pages/SolutionPage'
 import AgentsSolution from './pages/AgentsSolution'
 import AttorneysSolution from './pages/AttorneysSolution'
 import BondOriginatorsSolution from './pages/BondOriginatorsSolution'
-import RoleLandingPage from './pages/RoleLandingPage'
 import Tools from './pages/Tools'
 import ToolCategory from './pages/ToolCategory'
 import ToolDetail from './pages/ToolDetail'
 import NotFound from './pages/NotFound'
 import { landingPages } from './config/landingPages'
-import { getRolePageKeyFromPath } from './config/rolePages'
-import { isRoleGatewayHome } from './config/release'
 import { getToolByRoute } from './config/tools'
 import { findDevelopmentBySlug } from './data/developments'
 import { findAreaBySlug } from './data/propertyIntelligence'
 
 export default function App() {
   const [pathname, setPathname] = useState(() => window.location.pathname)
-  const rolePageKey = getRolePageKeyFromPath(pathname)
 
   useEffect(() => {
     function handlePopState() {
@@ -83,14 +79,7 @@ export default function App() {
     if (solutionKey === 'platform') {
       return <PlatformOverview />
     }
-    if (rolePageKey) {
-      return <RoleLandingPage role={rolePageKey} />
-    }
     return <SolutionPage pageKey={solutionKey} />
-  }
-
-  if (rolePageKey) {
-    return <RoleLandingPage role={rolePageKey} />
   }
 
   if (pathname === '/platform') {
@@ -190,7 +179,7 @@ export default function App() {
   }
 
   if (pathname === '/') {
-    return isRoleGatewayHome ? <MarketingHome /> : <PlatformHome />
+    return <MarketingHome />
   }
 
   return <NotFound />
