@@ -16,7 +16,6 @@ import {
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { developments, formatDevelopmentPrice } from '../data/developments'
-import { roleRoutes } from '../config/rolePages'
 import { setPageSeo } from '../lib/seo'
 
 const heroImage =
@@ -310,7 +309,7 @@ export default function Developments() {
     setPageSeo({
       title: 'Discover New Developments | Arch9',
       description: 'Browse apartments, estates and investment opportunities from leading developers across South Africa.',
-      canonicalPath: roleRoutes.developer,
+      canonicalPath: '/solutions/developers',
       indexable: false,
     })
   }, [])

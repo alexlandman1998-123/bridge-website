@@ -1,5 +1,3 @@
-import { roleRoutes } from './rolePages'
-
 export const footerLinkGroups = [
   {
     title: 'Properties',
@@ -11,11 +9,11 @@ export const footerLinkGroups = [
   {
     title: 'Solutions',
     links: [
-      { label: 'For Agency', href: roleRoutes.agency },
-      { label: 'For Attorney', href: roleRoutes.attorney },
-      { label: 'For Bond Originator', href: roleRoutes['bond-originator'] },
-      { label: 'For Developer', href: roleRoutes.developer },
-      { label: 'For Buyer / Seller', href: roleRoutes['buyer-seller'] },
+      { label: 'For Agents', href: '/solutions/agents' },
+      { label: 'For Attorneys', href: '/solutions/attorneys' },
+      { label: 'For Bond Originators', href: '/solutions/bond-originators' },
+      { label: 'For Developers', href: '/solutions/developers' },
+      { label: 'For Buyers & Sellers', href: '/solutions/buyers-sellers' },
       { label: 'Platform Overview', href: '/solutions/platform' },
     ],
   },

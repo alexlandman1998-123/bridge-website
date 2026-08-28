@@ -1,10 +1,10 @@
 import { ArrowRightLeft, CircleDot } from 'lucide-react'
 import { transactionStages } from '../../config/rolePages'
 
-const fallbackRoles = ['Agency', 'Developer', 'Buyer / Seller', 'Finance', 'Attorney', 'Registration']
+const connectedRoles = ['Developer', 'Agent', 'Buyer / Seller', 'Finance', 'Attorney', 'Registration']
 
 export default function ConnectedJourney({ page, compact = false }) {
-  const activeRoles = page?.journey?.activeRoles || fallbackRoles
+  const activeRoles = page?.journey?.activeRoles || []
 
   return (
     <section className={`${compact ? 'px-0 py-0' : 'bg-[#071E1A] px-5 py-16 text-white md:px-8 md:py-24'}`}>
@@ -31,8 +31,6 @@ export default function ConnectedJourney({ page, compact = false }) {
 }
 
 function JourneyMap({ activeRoles = [], light = false }) {
-  const connectedRoles = activeRoles.length ? activeRoles : fallbackRoles
-
   return (
     <div>
       <div className="grid gap-3 md:grid-cols-6">

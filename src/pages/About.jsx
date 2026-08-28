@@ -19,7 +19,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { FadeUp, StaggerContainer, StaggerItem } from '../components/motion/Reveal'
 import aboutArchitectureImage from '../assets/about-architecture.png'
-import { roleRoutes } from '../config/rolePages'
 import { breadcrumbJsonLd, setPageSeo, webPageJsonLd } from '../lib/seo'
 
 const changeCards = [
@@ -97,28 +96,28 @@ const roles = [
     href: '/platform',
   },
   {
-    title: 'Agency',
+    title: 'Agent',
     copy: 'Manage deals, clients and documents in one place.',
     icon: BriefcaseBusiness,
-    href: roleRoutes.agency,
+    href: '/solutions/agents',
   },
   {
     title: 'Attorney',
     copy: 'Run matters efficiently with full visibility.',
     icon: Scale,
-    href: roleRoutes.attorney,
+    href: '/solutions/attorneys',
   },
   {
     title: 'Bond Originator',
     copy: 'Process applications faster with real-time insights.',
     icon: Landmark,
-    href: roleRoutes['bond-originator'],
+    href: '/solutions/bond-originators',
   },
   {
     title: 'Developer',
     copy: 'Manage projects and compliance with ease.',
     icon: Building2,
-    href: roleRoutes.developer,
+    href: '/solutions/developers',
   },
 ]
 
@@ -138,7 +137,7 @@ const dashboardStages = [
 
 const outcomes = [
   {
-    title: 'Agencies',
+    title: 'Agents',
     copy: 'Spend less time following up. More time building relationships.',
   },
   {

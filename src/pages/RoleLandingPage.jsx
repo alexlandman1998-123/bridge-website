@@ -11,8 +11,8 @@ import { rolePages } from '../config/rolePages'
 import { breadcrumbJsonLd, serviceJsonLd, setPageSeo, softwareApplicationJsonLd } from '../lib/seo'
 
 export default function RoleLandingPage({ role }) {
-  const page = rolePages[role] || rolePages.developer
-  const canonicalPath = page.path
+  const page = rolePages[role] || rolePages.developers
+  const canonicalPath = `/solutions/${page.key}`
 
   useEffect(() => {
     setPageSeo({

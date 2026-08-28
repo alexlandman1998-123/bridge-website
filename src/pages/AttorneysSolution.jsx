@@ -308,26 +308,26 @@ export default function AttorneysSolution() {
       'Arch9 helps conveyancing firms receive cleaner instructions, reduce chasing, improve matter visibility and move transfer, bond and cancellation matters to registration faster.'
 
     setPageSeo({
-      title: 'Attorney Transaction Dashboard | Arch9',
+      title: 'Conveyancing Operating System | Arch9',
       description,
-      canonicalPath: '/solutions/attorney/dashboard',
+      canonicalPath: '/solutions/attorneys',
       jsonLd: [
         breadcrumbJsonLd([
           { name: 'Home', href: '/' },
           { name: 'Solutions', href: '/platform' },
-          { name: 'Attorney', href: '/solutions/attorney/dashboard' },
+          { name: 'Attorneys', href: '/solutions/attorneys' },
         ]),
         serviceJsonLd({
-          name: 'Arch9 for Attorney',
+          name: 'Arch9 for Conveyancing Attorneys',
           description,
-          path: '/solutions/attorney/dashboard',
+          path: '/solutions/attorneys',
           serviceType: 'Conveyancing transaction workspace',
           audience: ['Conveyancing attorneys', 'Law firms'],
         }),
         softwareApplicationJsonLd({
-          name: 'Arch9 for Attorney',
+          name: 'Arch9 for Conveyancing Attorneys',
           description,
-          path: '/solutions/attorney/dashboard',
+          path: '/solutions/attorneys',
           audience: ['Conveyancing attorneys', 'Law firms'],
           featureList: ['Matter visibility', 'Document collection', 'Milestone updates', 'Stakeholder collaboration'],
         }),

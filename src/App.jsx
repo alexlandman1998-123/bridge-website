@@ -70,21 +70,6 @@ export default function App() {
 
   if (pathname.startsWith('/solutions/')) {
     const solutionKey = pathname.replace('/solutions/', '').replace(/\/$/, '')
-    if (solutionKey === 'agency/dashboard') {
-      return <AgentsSolution />
-    }
-    if (solutionKey === 'attorney/dashboard') {
-      return <AttorneysSolution />
-    }
-    if (solutionKey === 'bond-originator/dashboard') {
-      return <BondOriginatorsSolution />
-    }
-    if (rolePageKey) {
-      return <RoleLandingPage role={rolePageKey} />
-    }
-    if (solutionKey === 'platform') {
-      return <PlatformOverview />
-    }
     if (solutionKey === 'agents') {
       return <AgentsSolution />
     }
@@ -93,6 +78,12 @@ export default function App() {
     }
     if (solutionKey === 'bond-originators') {
       return <BondOriginatorsSolution />
+    }
+    if (solutionKey === 'platform') {
+      return <PlatformOverview />
+    }
+    if (rolePageKey) {
+      return <RoleLandingPage role={rolePageKey} />
     }
     return <SolutionPage pageKey={solutionKey} />
   }
