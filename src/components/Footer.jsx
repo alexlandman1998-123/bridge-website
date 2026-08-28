@@ -21,16 +21,15 @@ export default function Footer() {
       <section className="px-6 py-16 md:px-8 md:py-20 lg:py-24">
         <div className="mx-auto grid w-full max-w-[1400px] gap-12 md:grid-cols-2 lg:grid-cols-[1.65fr_0.78fr_1fr_0.8fr_0.92fr] lg:gap-20">
           <div className="md:col-span-2 lg:col-span-1">
-            <a href="/" className="inline-flex min-h-11 items-center text-[1rem] font-extrabold tracking-[0.24em] text-[#F8F6F2] transition duration-200 ease-out hover:text-[#86E4C2]">
+            <a href="/" className="inline-flex min-h-11 items-center text-[1rem] font-extrabold text-[#F8F6F2] transition duration-200 ease-out hover:text-[#86E4C2]">
               ARCH9
             </a>
-            <p className="mt-8 text-[1.55rem] font-semibold leading-tight tracking-[-0.04em] text-[#F8F6F2]">
-              One property journey.
+            <p className="mt-8 text-[1.55rem] font-semibold leading-tight text-[#F8F6F2]">
+              Your entire real estate business.
             </p>
-            <p className="mt-4 text-base font-semibold text-white/65">From first enquiry to registration.</p>
+            <p className="mt-4 text-base font-semibold text-white/65">One connected operating platform.</p>
             <p className="mt-6 max-w-[450px] text-base font-medium leading-8 text-white/65">
-              Arch9 connects buyers, sellers, agents, attorneys, bond originators and developers through one shared
-              transaction workspace.
+              Run listings, leads, CRM and transactions in one place, then connect every professional required to move a sale to registration.
             </p>
             <a href="mailto:hello@arch9.co.za" className="mt-7 inline-flex min-h-11 items-center text-sm font-extrabold text-white/75 transition duration-200 ease-out hover:text-[#86E4C2]">
               hello@arch9.co.za
@@ -64,7 +63,7 @@ export default function Footer() {
 
       <section className="border-t border-white/[0.08] px-6 md:px-8">
         <div className="mx-auto flex w-full max-w-[1400px] flex-col items-center justify-center gap-5 py-6 text-sm font-semibold text-white/65 md:flex-row md:justify-between">
-          <p>Built in South Africa 🇿🇦</p>
+          <p>Built in South Africa</p>
 
           <div className="hidden lg:block">{socialNav}</div>
 

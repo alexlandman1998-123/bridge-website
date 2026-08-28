@@ -35,7 +35,7 @@ function SolutionsDropdown({ onNavigate }) {
               <span className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#E7F6EF] text-[#063F34] transition group-hover:bg-[#DFF2EA] group-hover:text-[#0F766E]">
                 <Icon className="h-5 w-5" />
               </span>
-              <span className="mt-5 block text-[19px] font-extrabold leading-tight tracking-[-0.02em] text-[#0B1F1A]">{item.title || item.label}</span>
+              <span className="mt-5 block text-[19px] font-extrabold leading-tight text-[#0B1F1A]">{item.title || item.label}</span>
               <span className="mt-3 block max-w-[220px] text-[15px] font-semibold leading-[1.55] text-[rgba(15,23,42,0.62)]">
                 {item.description}
               </span>
@@ -214,7 +214,12 @@ export default function Header() {
         onMouseEnter={cancelCloseMenu}
         onMouseLeave={scheduleCloseMenu}
       >
-        <a href="/" className={`text-[0.95rem] font-extrabold tracking-[0.24em] ${lightHomeHeader ? 'text-[#071E1A]' : 'text-[#F3EEE6]'}`}>
+        <a href="/" aria-label="Arch9 home" className={`inline-flex items-center gap-2.5 text-[0.95rem] font-extrabold ${lightHomeHeader ? 'text-[#071E1A]' : 'text-[#F3EEE6]'}`}>
+          <img
+            src={lightHomeHeader ? '/brand/icons/arch9-icon-dark-48.png' : '/brand/icons/arch9-icon-light-48.png'}
+            alt=""
+            className="h-7 w-7"
+          />
           ARCH9
         </a>
 
@@ -355,7 +360,8 @@ export default function Header() {
             transition={{ duration: shouldReduceMotion ? 0.01 : 0.35, ease: motionEaseOut }}
           >
             <div className="flex min-h-[58px] items-center justify-between">
-              <a href="/" className="text-[0.95rem] font-extrabold tracking-[0.24em] text-[#F3EEE6]" onClick={closeMobile}>
+              <a href="/" aria-label="Arch9 home" className="inline-flex items-center gap-2.5 text-[0.95rem] font-extrabold text-[#F3EEE6]" onClick={closeMobile}>
+                <img src="/brand/icons/arch9-icon-light-48.png" alt="" className="h-7 w-7" />
                 ARCH9
               </a>
               <button
@@ -485,7 +491,7 @@ export default function Header() {
                     className="flex h-12 w-12 items-center justify-center rounded-full border border-[rgba(243,238,230,0.12)] bg-white/[0.06] text-[#F3EEE6] transition hover:border-[rgba(134,228,194,0.22)] hover:text-[#86E4C2]"
                     aria-label={item.label}
                   >
-                    {Icon ? <Icon className="h-4 w-4" /> : <span className="text-xs font-black uppercase tracking-[-0.02em]">{item.mark}</span>}
+                    {Icon ? <Icon className="h-4 w-4" /> : <span className="text-xs font-black uppercase">{item.mark}</span>}
                   </a>
                 )
               })}

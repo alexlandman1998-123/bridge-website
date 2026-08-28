@@ -7,6 +7,8 @@ export const primaryNavItems = [
   { label: 'Platform', href: '/platform', match: ['/platform'], analyticsEvent: 'nav_platform_clicked' },
   { label: 'Solutions', menu: 'solutions', analyticsEvent: 'nav_solutions_clicked' },
   { label: 'Resources', href: '/help', match: ['/help', '/docs', '/buyer-guides', '/seller-guides'], analyticsEvent: 'nav_resources_clicked' },
+  { label: 'Pricing', href: '/pricing', match: ['/pricing'], analyticsEvent: 'nav_pricing_clicked' },
+  { label: 'About', href: '/about', match: ['/about', '/why-arch9'], analyticsEvent: 'nav_about_clicked' },
 ]
 
 export const solutionNavItems = [

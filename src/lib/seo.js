@@ -115,7 +115,7 @@ export function organizationJsonLd() {
     url: toAbsoluteUrl('/'),
     logo: DEFAULT_OG_IMAGE,
     description:
-      'Arch9 is a shared property transaction workspace for agents, attorneys, bond originators, developers, buyers and sellers.',
+      'Arch9 is the real estate operating platform connecting agency operations, clients and property transaction professionals.',
   }
 }
 

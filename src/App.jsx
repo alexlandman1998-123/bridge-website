@@ -3,6 +3,7 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import PlatformHome from './pages/Home'
 import PlatformOverview from './pages/PlatformOverview'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import Pricing from './pages/Pricing'
 import Properties from './pages/Properties'
 import Developments from './pages/Developments'
@@ -43,6 +44,10 @@ export default function App() {
 
   if (pathname === '/about' || pathname === '/why-arch9') {
     return <About />
+  }
+
+  if (pathname === '/privacy') {
+    return <PrivacyPolicy />
   }
 
   if (pathname === '/pricing') {
