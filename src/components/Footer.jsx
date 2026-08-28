@@ -1,7 +1,17 @@
 import { ArrowRight } from 'lucide-react'
 import { footerLegalLinks, footerLinkGroups, footerSocialLinks } from '../config/footer'
+import { ROLE_LINKS_VISIBLE } from '../config/release'
 
 export default function Footer() {
+  const visibleFooterLinkGroups = footerLinkGroups.map((group) => {
+    if (group.title !== 'Solutions' || ROLE_LINKS_VISIBLE) return group
+
+    return {
+      ...group,
+      links: group.links.filter((link) => !['/solutions/developers', '/solutions/buyers-sellers'].includes(link.href)),
+    }
+  })
+
   const socialNav = (
     <nav aria-label="Social links">
       <ul className="flex flex-wrap items-center gap-5">
@@ -42,7 +52,7 @@ export default function Footer() {
             <div className="mt-7 text-sm font-semibold text-white/65 lg:hidden">{socialNav}</div>
           </div>
 
-          {footerLinkGroups.map((group) => (
+          {visibleFooterLinkGroups.map((group) => (
             <nav key={group.title} aria-label={`${group.title} footer links`}>
               <h2 className="text-sm font-extrabold text-[#F8F6F2]">{group.title}</h2>
               <ul className="mt-6 grid gap-2">
