@@ -43,7 +43,7 @@ export function Arch9Mark({ light = false, compact = false }) {
   return (
     <span className="inline-flex items-center gap-2.5">
       <img
-        src={light ? '/brand/icons/arch9-icon-light-48.png' : '/brand/icons/arch9-icon-dark-48.png'}
+        src={light ? '/brand/icons/arch9-icon-dark-48.png' : '/brand/icons/arch9-icon-light-48.png'}
         alt=""
         className={compact ? 'h-6 w-6' : 'h-8 w-8'}
       />
@@ -82,7 +82,7 @@ export function DashboardPreview({ activeTab = 'dashboard', compact = false, cla
     <div className={`overflow-hidden rounded-[10px] border border-[#071E1A]/10 bg-[#F7F9F7] shadow-[0_32px_100px_rgba(7,30,26,0.15)] ${className}`}>
       <div className={`grid ${compact ? 'grid-cols-[46px_1fr]' : 'grid-cols-[58px_1fr] md:grid-cols-[66px_1fr]'}`}>
         <aside className="flex flex-col items-center bg-[#071E1A] py-4">
-          <img src="/brand/icons/arch9-icon-light-48.png" alt="" className="h-7 w-7" />
+          <img src="/brand/icons/arch9-icon-dark-48.png" alt="" className="h-7 w-7" />
           <div className="mt-7 grid gap-1.5">
             <SidebarIcon icon={Home} />
             <SidebarIcon icon={SelectedIcon} active />
@@ -210,6 +210,8 @@ export function PhoneDashboardPreview({ className = '' }) {
 }
 
 export function ProductTabs({ activeId, onChange, className = '' }) {
+  const shouldReduceMotion = useReducedMotion()
+
   function handleKeyDown(event, currentIndex) {
     const lastIndex = platformTabs.length - 1
     let nextIndex = currentIndex
@@ -230,7 +232,7 @@ export function ProductTabs({ activeId, onChange, className = '' }) {
     <div className={`-mx-5 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:px-0 ${className}`}>
       <div className="flex min-w-max border-b border-[#071E1A]/12" role="tablist" aria-label="Explore Arch9 platform features">
         {platformTabs.map((tab, index) => (
-          <button
+          <motion.button
             key={tab.id}
             type="button"
             role="tab"
@@ -240,12 +242,23 @@ export function ProductTabs({ activeId, onChange, className = '' }) {
             tabIndex={activeId === tab.id ? 0 : -1}
             onClick={() => onChange(tab.id)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`min-h-12 px-4 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B6B50] ${
-              activeId === tab.id ? 'border-b-2 border-[#0B6B50] text-[#071E1A]' : 'text-[#697872] hover:text-[#071E1A]'
+            whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.18, ease: motionEaseOut }}
+            className={`relative min-h-12 rounded-t-[6px] px-4 text-sm font-bold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B6B50] ${
+              activeId === tab.id ? 'bg-[#F1F8F4] text-[#071E1A]' : 'text-[#697872] hover:bg-[#F7FAF8] hover:text-[#071E1A]'
             }`}
           >
-            {tab.label}
-          </button>
+            <span className="relative z-10">{tab.label}</span>
+            {activeId === tab.id ? (
+              <motion.span
+                layoutId="platform-tab-indicator"
+                data-platform-tab-indicator
+                className="absolute inset-x-3 bottom-[-1px] h-[2px] rounded-full bg-[#0B6B50] shadow-[0_0_12px_rgba(11,107,80,0.34)]"
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
+              />
+            ) : null}
+          </motion.button>
         ))}
       </div>
     </div>

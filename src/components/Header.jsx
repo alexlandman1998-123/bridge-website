@@ -216,7 +216,7 @@ export default function Header() {
       >
         <a href="/" aria-label="Arch9 home" className={`inline-flex items-center gap-2.5 text-[0.95rem] font-extrabold ${lightHomeHeader ? 'text-[#071E1A]' : 'text-[#F3EEE6]'}`}>
           <img
-            src={lightHomeHeader ? '/brand/icons/arch9-icon-dark-48.png' : '/brand/icons/arch9-icon-light-48.png'}
+            src={lightHomeHeader ? '/brand/icons/arch9-icon-light-48.png' : '/brand/icons/arch9-icon-dark-48.png'}
             alt=""
             className="h-7 w-7"
           />
@@ -361,7 +361,7 @@ export default function Header() {
           >
             <div className="flex min-h-[58px] items-center justify-between">
               <a href="/" aria-label="Arch9 home" className="inline-flex items-center gap-2.5 text-[0.95rem] font-extrabold text-[#F3EEE6]" onClick={closeMobile}>
-                <img src="/brand/icons/arch9-icon-light-48.png" alt="" className="h-7 w-7" />
+                <img src="/brand/icons/arch9-icon-dark-48.png" alt="" className="h-7 w-7" />
                 ARCH9
               </a>
               <button

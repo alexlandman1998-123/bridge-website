@@ -33,6 +33,7 @@ function PrimaryButton({ href, children, light = false, className = '' }) {
   return (
     <a
       href={href}
+      style={{ color: light ? '#064537' : '#FFFFFF' }}
       className={`inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full px-6 text-sm font-extrabold transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
         light
           ? 'bg-white text-[#064537] shadow-[0_18px_50px_rgba(0,0,0,0.18)] focus-visible:outline-white'
@@ -65,11 +66,12 @@ function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden bg-white">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,rgba(250,245,237,0),#FAF5ED)]" />
-      <div className="relative mx-auto grid min-h-[92svh] w-full max-w-[1600px] gap-10 px-5 pb-20 pt-[120px] md:px-8 md:pt-[140px] lg:grid-cols-[0.41fr_0.59fr] lg:items-center lg:gap-12 lg:pb-24 xl:gap-20">
-        <FadeUp className="relative z-10 max-w-[650px]">
+      <div className="relative mx-auto grid min-h-[92svh] w-full max-w-[1600px] gap-10 px-5 pb-20 pt-[120px] md:px-8 md:pt-[140px] lg:grid-cols-[0.45fr_0.55fr] lg:items-center lg:gap-12 lg:pb-24 xl:gap-16">
+        <FadeUp className="relative z-10 max-w-[760px]">
           <Eyebrow>The real estate operating platform</Eyebrow>
-          <h1 className="mt-5 text-[2.75rem] font-extrabold leading-[0.98] text-[#071E1A] sm:text-[3.4rem] md:text-[4.4rem] lg:text-[4.8rem] xl:text-[5.5rem]">
-            Your entire real estate business. <span className="block text-[#0B6B50]">One platform.</span>
+          <h1 className="mt-5 text-[2.55rem] font-bold leading-[1.02] text-[#071E1A] sm:text-[3.1rem] md:text-[3.8rem] lg:text-[4rem] xl:text-[4.1rem]">
+            Your entire <span className="md:block">real estate business.</span>
+            <span className="block text-[#0B6B50]">One platform.</span>
           </h1>
           <p className="mt-7 max-w-[590px] text-base font-semibold leading-7 text-[#455650] md:text-[1.08rem] md:leading-8">
             Listings. Leads. CRM. Transactions. Buyers. Sellers. Attorneys. Finance. Websites. One connected system.
@@ -150,14 +152,14 @@ function PricingHighlight() {
         <FadeUp>
           <Eyebrow light>A better way to run your business</Eyebrow>
           <div className="mt-6">
-            <p className="text-[6.8rem] font-extrabold leading-[0.8] text-white md:text-[9rem] lg:text-[10.5rem]">R0.</p>
+            <p className="text-[8rem] font-extrabold leading-[0.72] text-white md:text-[11rem] lg:text-[13rem] xl:text-[14rem]">R0.</p>
             <p className="mt-5 text-3xl font-extrabold text-[#86E4C2] md:text-4xl">Not a typo.</p>
           </div>
           <p className="mt-7 max-w-[420px] text-lg font-semibold leading-8 text-white/84">
             Run your agency on Arch9 without another monthly software bill.
           </p>
           <p className="mt-4 max-w-[430px] text-sm font-medium leading-7 text-white/62">
-            Arch9 is transaction funded. You only pay when a property successfully registers.
+            The transaction fee is paid by the buyer or seller, not the agency.
           </p>
           <div className="mt-8 lg:hidden"><FeatureAccordion features={corePlatformFeatures} /></div>
         </FadeUp>
@@ -189,8 +191,7 @@ function PlatformExplorer() {
     <section id="platform-explorer" className="bg-white px-5 py-16 md:px-8 md:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-[1500px]">
         <FadeUp>
-          <Eyebrow>Explore the Arch9 platform</Eyebrow>
-          <h2 className="mt-4 max-w-[760px] text-[2.65rem] font-extrabold leading-[0.98] text-[#071E1A] md:text-[4.3rem]">Everything you need. All connected.</h2>
+          <h2 className="max-w-[760px] text-[2.65rem] font-extrabold leading-[0.98] text-[#071E1A] md:text-[4.3rem]">Everything you need. All connected.</h2>
         </FadeUp>
         <ProductTabs activeId={activeTab} onChange={setActiveTab} className="mt-9" />
 
@@ -275,7 +276,7 @@ function ConnectedTransaction() {
             {stakeholders.slice(0, 2).map((stakeholder) => <StakeholderNode key={stakeholder.label} stakeholder={stakeholder} />)}
             <div className="relative z-20 flex min-w-[132px] flex-col items-center text-center">
               <span className="flex h-[88px] w-[88px] -translate-y-[10px] items-center justify-center rounded-full border border-[#86E4C2] bg-[#061612] shadow-[0_0_42px_rgba(50,220,159,0.38)]">
-                <img src="/brand/icons/arch9-icon-light-48.png" alt="Arch9" className="h-11 w-11" />
+                <img src="/brand/icons/arch9-icon-dark-48.png" alt="Arch9" className="h-11 w-11" />
               </span>
               <p className="mt-1 text-xs font-extrabold text-[#86E4C2]">ARCH9</p>
             </div>
@@ -288,7 +289,7 @@ function ConnectedTransaction() {
               <StakeholderNode stakeholder={coreStakeholders[0]} compact />
               <div className="relative z-20 flex w-[88px] flex-col items-center">
                 <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#86E4C2] bg-[#061612] shadow-[0_0_32px_rgba(50,220,159,0.34)]">
-                  <img src="/brand/icons/arch9-icon-light-48.png" alt="Arch9" className="h-8 w-8" />
+                  <img src="/brand/icons/arch9-icon-dark-48.png" alt="Arch9" className="h-8 w-8" />
                 </span>
                 <p className="mt-2 text-xs font-extrabold text-[#86E4C2]">ARCH9</p>
               </div>
@@ -338,7 +339,13 @@ function PublishingSection() {
               const Icon = destination.icon
               return (
                 <div key={destination.label} className="flex items-center gap-4 rounded-[8px] border border-[#071E1A]/8 bg-[#FAF5ED] p-3 shadow-[0_12px_30px_rgba(7,30,26,0.04)]">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-xs font-extrabold text-[#0B6B50]">{Icon ? <Icon className="h-5 w-5" /> : destination.mark}</span>
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center text-[#0B6B50]">
+                    {destination.logo ? (
+                      <img src={destination.logo} alt="" className="h-10 w-10 object-contain" />
+                    ) : (
+                      <Icon className="h-6 w-6" />
+                    )}
+                  </span>
                   <div><p className="text-sm font-extrabold text-[#071E1A]">{destination.label}</p><p className="mt-0.5 text-[10px] font-bold text-[#73817C]">{destination.status}</p></div>
                 </div>
               )
@@ -368,24 +375,23 @@ function SocialProof() {
 }
 
 function FinalCta() {
-  const proofPoints = ['R0 monthly platform', 'Everything in one place', 'Transaction funded', 'Built for real estate']
+  const proofPoints = ['R0 monthly platform', 'Everything in one place', 'Buyer or seller funded', 'Built for real estate']
   return (
-    <section className="relative overflow-hidden bg-[#071E1A] px-5 py-16 text-white md:px-8 md:py-24">
+    <section className="relative overflow-hidden bg-[#071E1A] px-5 py-16 text-white md:px-8 md:py-20 lg:py-24">
       <div className="pointer-events-none absolute -bottom-28 right-[-80px] h-[380px] w-[380px] rounded-full border border-[#86E4C2]/8" />
       <div className="pointer-events-none absolute -bottom-12 right-[10px] h-[240px] w-[240px] rotate-45 border border-[#86E4C2]/8" />
-      <div className="relative mx-auto grid w-full max-w-[1360px] gap-10 lg:grid-cols-[0.48fr_0.52fr] lg:items-end">
+      <div className="relative mx-auto grid w-full max-w-[1420px] gap-12 lg:grid-cols-[0.52fr_0.48fr] lg:items-center lg:gap-16 xl:gap-20">
         <FadeUp>
-          <Eyebrow light>Built for the modern agency</Eyebrow>
-          <h2 className="mt-5 max-w-[740px] text-[2.8rem] font-extrabold leading-[0.98] md:text-[4.4rem]">Ready to run your agency differently?</h2>
+          <h2 className="max-w-[740px] text-[2.8rem] font-extrabold leading-[1.02] md:text-[4.15rem]">Ready to run your agency differently?</h2>
           <p className="mt-6 max-w-[590px] text-base font-medium leading-7 text-white/66">See how Arch9 can transform the way your team manages listings, clients and transactions.</p>
         </FadeUp>
         <div>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {proofPoints.map((point) => <p key={point} className="flex items-center gap-3 text-sm font-bold text-white/78"><CircleCheck className="h-4 w-4 text-[#86E4C2]" /> {point}</p>)}
           </div>
-          <div className="mt-8 grid gap-3 sm:flex">
-            <PrimaryButton href="/book-demo" light className="w-full sm:w-auto">Book a Demo</PrimaryButton>
-            <SecondaryButton href="/platform" light className="w-full sm:w-auto">See the Platform</SecondaryButton>
+          <div className="mt-10 grid gap-3 sm:flex sm:flex-wrap">
+            <PrimaryButton href="/book-demo" light className="w-full sm:min-w-[190px] sm:w-auto">Book a Demo</PrimaryButton>
+            <SecondaryButton href="/platform" light className="w-full sm:min-w-[210px] sm:w-auto">See the Platform</SecondaryButton>
           </div>
         </div>
       </div>

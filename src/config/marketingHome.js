@@ -143,8 +143,8 @@ export const stakeholders = [
 ]
 
 export const publishingDestinations = [
-  { label: 'Property24', mark: '24', status: 'Built to connect' },
-  { label: 'Private Property', mark: 'PP', status: 'Built to connect' },
+  { label: 'Property24', logo: '/brand/partners/property24.png', status: 'Built to connect' },
+  { label: 'Private Property', logo: '/brand/partners/private-property.png', status: 'Built to connect' },
   { label: 'Your Website', icon: Globe2, status: 'Connected' },
 ]
 
